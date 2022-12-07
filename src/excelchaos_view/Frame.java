@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.util.Locale;
 
 /**
  *
@@ -15,51 +16,51 @@ public class Frame extends JFrame implements ActionListener {
     private JMenu actionMenu, helpMenu, docuMenu;
     private JMenuItem insertItem, updateItem, deleteItem, seeItem, aboutUsItem, docuItem;
     private JPanel eastPanel, centerPanel;
-    private JLabel name, vorname, wohnadresse, privatEmail, privateTelefonnummer, geburtsdatum,
-            staatangehoerigkeit1, staatangehoerigkeit2, personalnummer, tuid, vertragMit, status,
+    private JLabel name, vorname, strasse, hausnummer, adresszusatz, plz, stadt, privatEmail, privateTelefonnummer, geburtsdatum,
+            nationalityFirst, nationalitySecond, personalnummer, tuid, vertragMit, status,
             gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, inventarList;
 
-    private JTextField tfName, tfVorname, tfWohnadresse, tfPrivatEmail, tfPrivateTelefonnummer, tfGeburtsdatum,
+    private JTextField tfName, tfVorname, tfStrasse, tfHausnummer, tfAdresszusatz, tfPLZ, tfStadt, tfPrivatEmail, tfPrivateTelefonnummer, tfGeburtsdatum,
             tfPersonalnummer, tfTuid, tfVertragMit, tfGehaltEingeplanntBis, tfTranspondernummer, tfBueronummer,
             tfTelefonnummerTUDA, tfInventarList;
 
 
-    private JComboBox nationality, nationality2, statusPicklist;
-    private JCheckBox checkBoxZweiteStaatsangehoerigkeit;
+    private JComboBox nationalityPickList, nationalityPickList2, statusPicklist;
+    private JCheckBox nationalityCheckBox;
 
     private DefaultListModel<String> model = new DefaultListModel<>();
     private JList<String> list = new JList<>(model);
     private JButton submit, reset;
     private JPanel centerUp, centerDown;
 
-    private int beginYPos=50;
-    private int factor=0;
-    private final int Y_INCREASE=30;
-    private final int LABEL_X_POS=20;
-    private final int FIELD_X_POS=200;
-    private final int LABEL_WIDTH=180;
-    private final int LABEL_HEIGHT=25;
-    private final int FIELD_WIDTH=400;
-    private final int FIELD_HEIGHT=25;
+    private int beginYPos = 50;
+    private int factor = 0;
+    private final int Y_INCREASE = 30;
+    private final int LABEL_X_POS = 20;
+    private final int FIELD_X_POS = 200;
+    private final int LABEL_WIDTH = 180;
+    private final int LABEL_HEIGHT = 25;
+    private final int FIELD_WIDTH = 400;
+    private final int FIELD_HEIGHT = 25;
 
 
-    Font f1=new Font(Font.SANS_SERIF, Font.PLAIN, 13);
-    Font f2=new Font(Font.SANS_SERIF, Font.PLAIN, 15);
+    Font f1 = new Font(Font.SANS_SERIF, Font.PLAIN, 13);
+    Font f2 = new Font(Font.SANS_SERIF, Font.PLAIN, 15);
 
     /**
      *
      */
-    public Frame(){
-        menubar=new JMenuBar();
+    public Frame() {
+        menubar = new JMenuBar();
         menubar.setBackground(Color.WHITE);
 
-        actionMenu=new JMenu("Actions".toUpperCase());
+        actionMenu = new JMenu("Aktivitäten".toUpperCase());
         actionMenu.setFont(f1);
         actionMenu.setMnemonic(KeyEvent.VK_A);
-        helpMenu=new JMenu("Help".toUpperCase());
+        helpMenu = new JMenu("Hilfe".toUpperCase());
         helpMenu.setFont(f1);
         helpMenu.setMnemonic(KeyEvent.VK_H);
-        docuMenu=new JMenu("Documentation".toUpperCase());
+        docuMenu = new JMenu("Dokumentation".toUpperCase());
         docuMenu.setFont(f1);
         docuMenu.setMnemonic(KeyEvent.VK_D);
 
@@ -67,22 +68,22 @@ public class Frame extends JFrame implements ActionListener {
         menubar.add(helpMenu);
         menubar.add(docuMenu);
 
-        insertItem=new JMenuItem("Neue Person anlegen");
+        insertItem = new JMenuItem("Neue Person anlegen");
         insertItem.setFont(f2);
         insertItem.setMnemonic(KeyEvent.VK_I);
-        updateItem=new JMenuItem("Update existing entries");
+        updateItem = new JMenuItem("Bestehende Einträge aktualisieren");
         updateItem.setFont(f2);
         updateItem.setMnemonic(KeyEvent.VK_U);
-        deleteItem=new JMenuItem("Delete existing entries");
+        deleteItem = new JMenuItem("Bestehende Einträge löschen");
         deleteItem.setFont(f2);
         deleteItem.setMnemonic(KeyEvent.VK_E);
-        seeItem=new JMenuItem("Daten anzeigen");
+        seeItem = new JMenuItem("Daten anzeigen");
         seeItem.setFont(f2);
         seeItem.setMnemonic(KeyEvent.VK_S);
-        aboutUsItem=new JMenuItem("About");
+        aboutUsItem = new JMenuItem("Über");
         aboutUsItem.setFont(f2);
         aboutUsItem.setMnemonic(KeyEvent.VK_U);
-        docuItem=new JMenuItem("Documentation v1.0");
+        docuItem = new JMenuItem("Dokumentation v1.0");
         docuItem.setFont(f2);
         docuItem.setMnemonic(KeyEvent.VK_T);
 
@@ -98,23 +99,23 @@ public class Frame extends JFrame implements ActionListener {
         docuMenu.add(aboutUsItem);
         docuMenu.add(docuItem);
 
-        eastPanel=new JPanel();
+        eastPanel = new JPanel();
         eastPanel.setBackground(Color.white);
         eastPanel.setLayout(new BorderLayout());
-        model.addElement("ACTIONS LOG");
-        eastPanel.add(list,BorderLayout.CENTER);
-        eastPanel.setPreferredSize(new Dimension(150,100));
+        model.addElement("Historie");
+        eastPanel.add(list, BorderLayout.CENTER);
+        eastPanel.setPreferredSize(new Dimension(150, 100));
 
-        centerPanel=new JPanel();
+        centerPanel = new JPanel();
         centerPanel.setBackground(Color.white);
         centerPanel.setLayout(new BorderLayout());
-        centerPanel.setPreferredSize(new Dimension(100,100));
+        centerPanel.setPreferredSize(new Dimension(100, 100));
 
         this.setTitle("EXCELCHAOS");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit out of application
         this.setResizable(true); // die Groesse des angezeigten Fensters kann mit der Maus gezogen/geaendert werden
-        this.setSize(750,750);
-        this.setLayout(new BorderLayout(10,10));
+        this.setSize(750, 750);
+        this.setLayout(new BorderLayout(10, 10));
         this.setJMenuBar(menubar);
         this.add(eastPanel, BorderLayout.EAST);
         this.add(centerPanel, BorderLayout.CENTER);
@@ -123,16 +124,15 @@ public class Frame extends JFrame implements ActionListener {
     }
 
     /**
-     *
      * @param e
      */
     @Override
     public void actionPerformed(ActionEvent e) {
 
         // Was passiert, wenn checkBoxZweiteStaatsangehoerigkeit angeklickt (auf TRUE gesetzt) wurde:
-        if (e.getSource()==checkBoxZweiteStaatsangehoerigkeit ) {
-            staatangehoerigkeit2.setVisible(true);
-            nationality2.setVisible(true);
+        if (e.getSource() == nationalityCheckBox) {
+            nationalitySecond.setVisible(true);
+            nationalityPickList2.setVisible(true);
         }
 
 
@@ -152,7 +152,7 @@ public class Frame extends JFrame implements ActionListener {
         if (deleteItem.equals(e.getSource())) {
             doDeleteItem();
         }
-        if(e.getSource()==submit){
+        if (e.getSource() == submit) {
             System.out.println("submitting");
             File file = new File("D:\\INTELLIJ BP CHAOS\\BPchaos\\src\\main\\java\\bp\\view\\data.txt");
             FileWriter fr = null;
@@ -163,12 +163,12 @@ public class Frame extends JFrame implements ActionListener {
             }
             BufferedWriter br = new BufferedWriter(fr);
             try {
-                br.write(tfName.getText()+","+tfVorname.getText()+","+tfWohnadresse.getText()+","
-                        +tfPrivatEmail.getText()+","+tfPrivateTelefonnummer.getText()+","+tfGeburtsdatum.getText()+","
-                        + nationality.getSelectedItem().toString() +","+ nationality2.getSelectedItem().toString()+","+tfPersonalnummer.getText()+","
-                        +tfTuid.getText()+","+tfVertragMit.getText()+","+statusPicklist.getSelectedItem().toString()+","
-                        +tfGehaltEingeplanntBis.getText()+","+tfTranspondernummer.getText()+","+tfBueronummer.getText()+","
-                        +tfTelefonnummerTUDA.getText()+","+tfInventarList.getText()+"\n"
+                br.write(tfName.getText() + "," + tfVorname.getText() + "," + tfStrasse.getText() + ","
+                        + tfPrivatEmail.getText() + "," + tfPrivateTelefonnummer.getText() + "," + tfGeburtsdatum.getText() + ","
+                        + nationalityPickList.getSelectedItem().toString() + "," + nationalityPickList2.getSelectedItem().toString() + "," + tfPersonalnummer.getText() + ","
+                        + tfTuid.getText() + "," + tfVertragMit.getText() + "," + statusPicklist.getSelectedItem().toString() + ","
+                        + tfGehaltEingeplanntBis.getText() + "," + tfTranspondernummer.getText() + "," + tfBueronummer.getText() + ","
+                        + tfTelefonnummerTUDA.getText() + "," + tfInventarList.getText() + "\n"
                 );
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
@@ -184,7 +184,7 @@ public class Frame extends JFrame implements ActionListener {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-            model.addElement("ENTRY INSERTED!");
+            model.addElement("Eintrag eingefügt!");
             centerPanel.removeAll();
             centerPanel.revalidate();
             centerPanel.repaint();
@@ -208,7 +208,6 @@ public class Frame extends JFrame implements ActionListener {
     }
 
     /**
-     *
      * @throws IOException
      */
     private void doSeeItem() throws IOException {
@@ -216,11 +215,11 @@ public class Frame extends JFrame implements ActionListener {
         centerPanel.setLayout(new BorderLayout());
         System.out.println("SEEING ITEMS");
 
-        String column[]={"NAME","VORNAME","WOHNADRESSE","PRIVAT E-MAIL","PRIVAT TELEFONNR",
-                "GEBURTSDATUM","STAATANGEHOERIGKEIT 1","STAATANGEHOERIGKEIT 2","PERSONAL NR","TUID","VERTRAG MIT",
-                "STATUS", "GEHALT EINGEPLANNT BIS", "TRANSPONDERNR","BUERONUMMER","TELEFONNR TUDA","INVENTAR LIST"
+        String column[] = {"NAME", "VORNAME", "WOHNADRESSE", "PRIVAT E-MAIL", "PRIVAT TELEFONNR",
+                "GEBURTSDATUM", "STAATANGEHOERIGKEIT 1", "STAATANGEHOERIGKEIT 2", "PERSONAL NR", "TUID", "VERTRAG MIT",
+                "STATUS", "GEHALT EINGEPLANNT BIS", "TRANSPONDERNR", "BUERONUMMER", "TELEFONNR TUDA", "INVENTAR LIST"
         };
-        File f=new File("D:\\INTELLIJ BP CHAOS\\BPchaos\\src\\main\\java\\bp\\view\\data.txt");
+        File f = new File("D:\\INTELLIJ BP CHAOS\\BPchaos\\src\\main\\java\\bp\\view\\data.txt");
         try {
             BufferedReader br = new BufferedReader(new FileReader(f));
             int lines = 0;
@@ -264,8 +263,8 @@ public class Frame extends JFrame implements ActionListener {
         System.out.println("INSERTING ITEMS");
         centerPanel.removeAll();
         centerPanel.setLayout(new BorderLayout());
-        centerUp=new JPanel();
-        centerDown=new JPanel();
+        centerUp = new JPanel();
+        centerDown = new JPanel();
 
         centerUp.setLayout(null);
         centerDown.setLayout(new GridLayout());
@@ -274,170 +273,208 @@ public class Frame extends JFrame implements ActionListener {
 
         model.addElement("INSERTING ENTRY");
 
-        name=new JLabel("NACHNAME?");
+        name = new JLabel("Nachname");
         centerUp.add(name);
-        name.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
-        tfName=new JTextField();
-        tfName.setBounds(FIELD_X_POS,beginYPos+factor*Y_INCREASE,FIELD_WIDTH,FIELD_HEIGHT);
+        name.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfName = new JTextField();
+        tfName.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(tfName);
         factor++;
 
-        vorname=new JLabel("VORNAME?");
-        vorname.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
+        vorname = new JLabel("Vorname");
+        vorname.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
         centerUp.add(vorname);
-        tfVorname=new JTextField();
-        tfVorname.setBounds(FIELD_X_POS,beginYPos+factor*Y_INCREASE,FIELD_WIDTH,FIELD_HEIGHT);
+        tfVorname = new JTextField();
+        tfVorname.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(tfVorname);
         factor++;
 
         // An dieser Stelle müssen folgende 6 Felder hinzugefügt werden: Straße, Hausnummer, Adresszusatz, PLZ, Stadt, Land
-        wohnadresse=new JLabel("WOHNADRESSE?");
-        centerUp.add(wohnadresse);
-        wohnadresse.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
-        tfWohnadresse=new JTextField();
-        tfWohnadresse.setBounds(FIELD_X_POS, beginYPos+factor*Y_INCREASE, FIELD_WIDTH,FIELD_HEIGHT);
-        centerUp.add(tfWohnadresse);
+        strasse = new JLabel("Straße");
+        centerUp.add(strasse);
+        strasse.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfStrasse = new JTextField();
+        tfStrasse.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
+        centerUp.add(tfStrasse);
         factor++;
 
-        privatEmail=new JLabel("PRIVAT EMAIL?");
+        // Hausnummer
+        hausnummer = new JLabel("Hausnummer");
+        centerUp.add(hausnummer);
+        hausnummer.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfHausnummer = new JTextField();
+        tfHausnummer.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
+        centerUp.add(tfHausnummer);
+        factor++;
+
+        // Adresszusatz
+        adresszusatz = new JLabel("Adresszusatz");
+        centerUp.add(adresszusatz);
+        adresszusatz.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfAdresszusatz = new JTextField();
+        tfAdresszusatz.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
+        centerUp.add(tfAdresszusatz);
+        factor++;
+
+        // PLZ
+        plz = new JLabel("PLZ");
+        centerUp.add(plz);
+        plz.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfPLZ = new JTextField();
+        tfPLZ.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
+        centerUp.add(tfPLZ);
+        factor++;
+
+        // Stadt
+        stadt = new JLabel("Stadt");
+        centerUp.add(stadt);
+        stadt.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfStadt = new JTextField();
+        tfStadt.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
+        centerUp.add(tfStadt);
+        factor++;
+
+        // Land -> soll Land als Feld eingefügt werden????
+
+        privatEmail = new JLabel("Private E-mail Adresse");
         centerUp.add(privatEmail);
-        privatEmail.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
-        tfPrivatEmail=new JTextField();
-        tfPrivatEmail.setBounds(FIELD_X_POS, beginYPos+factor*Y_INCREASE, FIELD_WIDTH,FIELD_HEIGHT);
+        privatEmail.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfPrivatEmail = new JTextField();
+        tfPrivatEmail.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(tfPrivatEmail);
         factor++;
 
-        privateTelefonnummer=new JLabel("PRIVAT TELEFONNR?");
+        privateTelefonnummer = new JLabel("Private Telefonnummer");
         centerUp.add(privateTelefonnummer);
-        privateTelefonnummer.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
-        tfPrivateTelefonnummer=new JTextField();
-        tfPrivateTelefonnummer.setBounds(FIELD_X_POS, beginYPos+factor*Y_INCREASE, FIELD_WIDTH,FIELD_HEIGHT);
+        privateTelefonnummer.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfPrivateTelefonnummer = new JTextField();
+        tfPrivateTelefonnummer.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(tfPrivateTelefonnummer);
         factor++;
 
-        geburtsdatum=new JLabel("GEBURTSDATUM?");
+        geburtsdatum = new JLabel("Geburtsdatum");
         centerUp.add(geburtsdatum);
-        geburtsdatum.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
-        tfGeburtsdatum=new JTextField();
-        tfGeburtsdatum.setBounds(FIELD_X_POS, beginYPos+factor*Y_INCREASE, FIELD_WIDTH,FIELD_HEIGHT);
+        geburtsdatum.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfGeburtsdatum = new JTextField();
+        tfGeburtsdatum.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(tfGeburtsdatum); // Wird hier das Gebutsdatum eingetragen? Soll man hier vor dem Eintragen eine Fallunterscheidung anlegen?
         factor++;
 
         // Das Feld sollte als Auswahlliste angelegt sein!
-        staatangehoerigkeit1=new JLabel("STAATANGEHOERIGKEIT 1?");
-        centerUp.add(staatangehoerigkeit1);
-        staatangehoerigkeit1.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
+        nationalityFirst = new JLabel("Staatsangehörigkeit");
+        centerUp.add(nationalityFirst);
+        nationalityFirst.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
 
-        String[] nationalityArray = { "Afghanistan", "Ägypten", "Australien", "Belgien", "Chile",
-                "China", "Deutschland", "Finnland", "Indien", "Italien", "Kanada" }; // Ist nur ein Beispiel an Auswahl
-        nationality = new JComboBox(nationalityArray);
-        nationality.setMaximumRowCount(5); // die Anzahl der Reihen in der Auswahlliste, die bei der Wahl angezeigt werden
-        nationality.setBounds(FIELD_X_POS, beginYPos+factor*Y_INCREASE, FIELD_WIDTH,FIELD_HEIGHT);
-        centerUp.add(nationality);
-        //tfStaatangehoerigkeit1=new JTextField(); // Textfeld, bei dem die Eingabe erfolgt
-        //tfStaatangehoerigkeit1.setBounds(FIELD_X_POS, beginYPos+factor*Y_INCREASE, FIELD_WIDTH,FIELD_HEIGHT); // Groesse + Position von dem Textfeld
-        //centerUp.add(tfStaatangehoerigkeit1); // Einfügen des Textfeldes zu dem Panel
+        String[] nationalityArray = {"Afghanistan", "Ägypten", "Australien", "Belgien", "Chile",
+                "China", "Deutschland", "Finnland", "Indien", "Italien", "Kanada"}; // Ist nur ein Beispiel an Auswahl
+        nationalityPickList = new JComboBox(nationalityArray);
+        nationalityPickList.setMaximumRowCount(5); // die Anzahl der Reihen in der Auswahlliste, die bei der Wahl angezeigt werden
+        nationalityPickList.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
+        centerUp.add(nationalityPickList);
         factor++;
 
         // Checkbox, die abfragt, ob eine zweite Staatsangehoerigkeit vorhanden ist. Wenn diese TRUE ist, erst dann sollte "STAATANGEHOERIGKEIT 2?" sichtbar und der Eintrag auch möglich sein!
-        checkBoxZweiteStaatsangehoerigkeit = new JCheckBox("zweite Staatsangehörigkeit?", false);
-        checkBoxZweiteStaatsangehoerigkeit.setBounds(FIELD_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
-        centerUp.add(checkBoxZweiteStaatsangehoerigkeit);
-        checkBoxZweiteStaatsangehoerigkeit.addActionListener(this);
+        nationalityCheckBox = new JCheckBox("zweite Staatsangehörigkeit?", false);
+        nationalityCheckBox.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        centerUp.add(nationalityCheckBox);
+        nationalityCheckBox.addActionListener(this);
         factor++;
 
         // Sichtbarkeit von dem Label mit dem dazugehörigen Textfeld für die Eintragung
-        staatangehoerigkeit2 = new JLabel("STAATANGEHOERIGKEIT 2?");
-        centerUp.add(staatangehoerigkeit2);
-        staatangehoerigkeit2.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
-        staatangehoerigkeit2.setVisible(false);
-        String[] nationalityArray2 = { "Keine", "Deutschland", "Afghanistan", "Ägypten", "Australien", "Belgien", "Chile",
-                "China", "Finnland", "Indien", "Italien", "Kanada" }; // Ist nur ein Beispiel an Auswahl
-        nationality2 = new JComboBox(nationalityArray2);
-        nationality2.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
-        centerUp.add(nationality2);
-        nationality2.setVisible(false);
+        nationalitySecond = new JLabel("Zweite Staatsangehörigkeit");
+        centerUp.add(nationalitySecond);
+        nationalitySecond.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        nationalitySecond.setVisible(false);
+        String[] nationalityArray2 = {"Keine", "Deutschland", "Afghanistan", "Ägypten", "Australien", "Belgien", "Chile",
+                "China", "Finnland", "Indien", "Italien", "Kanada"}; // Ist nur ein Beispiel an Auswahl
+        nationalityPickList2 = new JComboBox(nationalityArray2);
+        nationalityPickList2.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
+        centerUp.add(nationalityPickList2);
+        nationalityPickList2.setVisible(false);
         factor++;
 
-        personalnummer=new JLabel("PERSONALNR?");
+        personalnummer = new JLabel("Personalnummer");
         centerUp.add(personalnummer);
-        personalnummer.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
-        tfPersonalnummer=new JTextField();
-        tfPersonalnummer.setBounds(FIELD_X_POS,beginYPos+factor*Y_INCREASE,FIELD_WIDTH,FIELD_HEIGHT);
+        personalnummer.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfPersonalnummer = new JTextField();
+        tfPersonalnummer.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(tfPersonalnummer);
         factor++;
 
-        tuid=new JLabel("TUID?");
-        tuid.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
+        tuid = new JLabel("TU-ID");
+        tuid.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
         centerUp.add(tuid);
-        tfTuid =new JTextField();
-        tfTuid.setBounds(FIELD_X_POS,beginYPos+factor*Y_INCREASE,FIELD_WIDTH,FIELD_HEIGHT);
+        tfTuid = new JTextField();
+        tfTuid.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(tfTuid);
         factor++;
 
-        vertragMit=new JLabel("VERTRAG MIT?");
+        vertragMit = new JLabel("VERTRAG MIT?");
         centerUp.add(vertragMit);
-        vertragMit.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
-        tfVertragMit =new JTextField();
-        tfVertragMit.setBounds(FIELD_X_POS, beginYPos+factor*Y_INCREASE, FIELD_WIDTH,FIELD_HEIGHT);
+        vertragMit.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfVertragMit = new JTextField();
+        tfVertragMit.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(tfVertragMit);
         factor++;
 
-        status=new JLabel("STATUS?");
+        status = new JLabel("Status");
         centerUp.add(status);
-        status.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
-        String[] statusArray = {"WiMi", "ATM", "SHK"};
+        status.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        String[] statusArray = {"Nicht ausgewählt", "WiMi", "ATM", "SHK"};
         statusPicklist = new JComboBox(statusArray);
-        statusPicklist.setBounds(FIELD_X_POS, beginYPos+factor*Y_INCREASE, FIELD_WIDTH,FIELD_HEIGHT);
+        statusPicklist.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(statusPicklist);
         factor++;
 
-        gehaltEingeplanntBis=new JLabel("GEHALT EINGEPLANNT BIS?");
+        //Wenn oben ATM oder WiMi ausgewählt wird, dann haben diese weiteren Felder.
+        // Welche genau - ist unbekannt, muss geklärt und eingetragen werden (Viktoria)
+
+        gehaltEingeplanntBis = new JLabel("Gehalt eingeplant bis");
         centerUp.add(gehaltEingeplanntBis);
-        gehaltEingeplanntBis.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
-        tfGehaltEingeplanntBis=new JTextField();
-        tfGehaltEingeplanntBis.setBounds(FIELD_X_POS, beginYPos+factor*Y_INCREASE, FIELD_WIDTH,FIELD_HEIGHT);
+        gehaltEingeplanntBis.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfGehaltEingeplanntBis = new JTextField();
+        tfGehaltEingeplanntBis.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(tfGehaltEingeplanntBis);
         factor++;
 
-        transpondernummer=new JLabel("TRANSPONDERNR?");
+        transpondernummer = new JLabel("Transpondernummer");
         centerUp.add(transpondernummer);
-        transpondernummer.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
-        tfTranspondernummer=new JTextField();
-        tfTranspondernummer.setBounds(FIELD_X_POS, beginYPos+factor*Y_INCREASE, FIELD_WIDTH,FIELD_HEIGHT);
+        transpondernummer.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfTranspondernummer = new JTextField();
+        tfTranspondernummer.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(tfTranspondernummer);
         factor++;
 
-        bueronummer=new JLabel("BUERONUMMER?");
+        bueronummer = new JLabel("Büronummer");
         centerUp.add(bueronummer);
-        bueronummer.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
-        tfBueronummer=new JTextField();
-        tfBueronummer.setBounds(FIELD_X_POS, beginYPos+factor*Y_INCREASE, FIELD_WIDTH,FIELD_HEIGHT);
+        bueronummer.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfBueronummer = new JTextField();
+        tfBueronummer.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(tfBueronummer);
         factor++;
 
-        telefonnummerTUDA =new JLabel("TELEFON TUDA?");
+        telefonnummerTUDA = new JLabel("Telefon TU-DA");
         centerUp.add(telefonnummerTUDA);
-        telefonnummerTUDA.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
-        tfTelefonnummerTUDA=new JTextField();
-        tfTelefonnummerTUDA.setBounds(FIELD_X_POS, beginYPos+factor*Y_INCREASE, FIELD_WIDTH,FIELD_HEIGHT);
+        telefonnummerTUDA.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfTelefonnummerTUDA = new JTextField();
+        tfTelefonnummerTUDA.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(tfTelefonnummerTUDA);
         factor++;
 
-        inventarList =new JLabel("INVENTAR?");
+        inventarList = new JLabel("INVENTAR?");
         centerUp.add(inventarList);
-        inventarList.setBounds(LABEL_X_POS,beginYPos+factor*Y_INCREASE,LABEL_WIDTH,LABEL_HEIGHT);
-        tfInventarList =new JTextField();
-        tfInventarList.setBounds(FIELD_X_POS, beginYPos+factor*Y_INCREASE, FIELD_WIDTH,FIELD_HEIGHT);
+        inventarList.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfInventarList = new JTextField();
+        tfInventarList.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(tfInventarList);
 
-        beginYPos=50;
-        factor=0;
+        beginYPos = 50;
+        factor = 0;
 
-        submit=new JButton("submit");
+        submit = new JButton("Person speichern");
         submit.addActionListener(this);
         centerDown.add(submit);
-        reset=new JButton("reset");
+        reset = new JButton("Felder zurücksetzen");
         centerDown.add(reset);
 
         centerPanel.revalidate();
@@ -445,5 +482,5 @@ public class Frame extends JFrame implements ActionListener {
     }
 
 
-
 }
+
