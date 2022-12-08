@@ -2,13 +2,16 @@ package excelchaos_view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 public class MainFrame extends JFrame {
     private JMenuBar menubar;
     private JMenu actionMenu, helpMenu, docuMenu;
     private JMenuItem insertItem, updateItem, deleteItem, seeItem, aboutUsItem, docuItem;
-    private MainMenuPanel mainMenu;
+    private JTabbedPane tabs;
+
+
     Font f1 = new Font(Font.SANS_SERIF, Font.PLAIN, 13);
     Font f2 = new Font(Font.SANS_SERIF, Font.PLAIN, 15);
 
@@ -24,7 +27,7 @@ public class MainFrame extends JFrame {
         docuMenu = new JMenu("Dokumentation".toUpperCase());
         docuMenu.setFont(f1);
         docuMenu.setMnemonic(KeyEvent.VK_D);
-        mainMenu = new MainMenuPanel();
+        tabs = new JTabbedPane(JTabbedPane.TOP,JTabbedPane.SCROLL_TAB_LAYOUT);
 
         menubar.add(actionMenu);
         menubar.add(helpMenu);
@@ -54,11 +57,29 @@ public class MainFrame extends JFrame {
         docuMenu.add(aboutUsItem);
         docuMenu.add(docuItem);
 
+
         setTitle("EXCELCHAOS");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(true);
         setSize(750, 750);
         setJMenuBar(menubar);
+        add(tabs);
 
+
+
+    }
+    public JTabbedPane getTabs(){
+        return tabs;
+    }
+    public JMenuItem getInsertItem(){
+        return insertItem;
+    }
+    public JMenuItem getSeeItem(){
+        return seeItem;
+    }
+
+    public void setActionListener(ActionListener l){
+        insertItem.addActionListener(l);
+        seeItem.addActionListener(l);
     }
 }

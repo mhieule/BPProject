@@ -21,12 +21,11 @@ public class MainMenuPanel extends JPanel {
         gehaltsliste.setText("Gehaltsliste");
         inventarliste.setText("Inventarliste");
         title.setText("Hauptmenü");
-        GridLayout layout = new GridLayout(2,2);
-        setLayout(layout);
-        add(personenliste);
-        add(gehaltsliste);
-        add(inventarliste);
-        setBackground(Color.RED);
+
+        add(title,BorderLayout.PAGE_START);
+        add(personenliste,BorderLayout.CENTER);
+        add(gehaltsliste,BorderLayout.CENTER);
+        add(inventarliste, BorderLayout.CENTER);
 
     }
     public void setActionListener(ActionListener l){

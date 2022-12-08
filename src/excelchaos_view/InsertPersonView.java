@@ -2,20 +2,9 @@ package excelchaos_view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.io.*;
-import java.util.Locale;
 
-/**
- *
- */
-public class Frame extends JFrame implements ActionListener {
-    private JMenuBar menubar;
-    private JMenu actionMenu, helpMenu, docuMenu;
-    private JMenuItem insertItem, updateItem, deleteItem, seeItem, aboutUsItem, docuItem;
-    private JPanel eastPanel, centerPanel;
+public class InsertPersonView extends JPanel {
     private JLabel name, vorname, strasse, hausnummer, adresszusatz, plz, stadt, privatEmail, privateTelefonnummer, geburtsdatum,
             nationalityFirst, nationalitySecond, personalnummer, tuid, vertragMit, status,
             gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, inventarList;
@@ -28,9 +17,8 @@ public class Frame extends JFrame implements ActionListener {
     private JComboBox nationalityPickList, nationalityPickList2, statusPicklist;
     private JCheckBox nationalityCheckBox;
 
-    private DefaultListModel<String> model = new DefaultListModel<>();
-    private JList<String> list = new JList<>(model);
     private JButton submit, reset;
+
     private JPanel centerUp, centerDown;
 
     private int beginYPos = 50;
@@ -43,235 +31,17 @@ public class Frame extends JFrame implements ActionListener {
     private final int FIELD_WIDTH = 400;
     private final int FIELD_HEIGHT = 25;
 
-
-    Font f1 = new Font(Font.SANS_SERIF, Font.PLAIN, 13);
-    Font f2 = new Font(Font.SANS_SERIF, Font.PLAIN, 15);
-
-    /**
-     *
-     */
-    public Frame() {
-        menubar = new JMenuBar();
-        menubar.setBackground(Color.WHITE);
-
-        actionMenu = new JMenu("Aktivitäten".toUpperCase());
-        actionMenu.setFont(f1);
-        actionMenu.setMnemonic(KeyEvent.VK_A);
-        helpMenu = new JMenu("Hilfe".toUpperCase());
-        helpMenu.setFont(f1);
-        helpMenu.setMnemonic(KeyEvent.VK_H);
-        docuMenu = new JMenu("Dokumentation".toUpperCase());
-        docuMenu.setFont(f1);
-        docuMenu.setMnemonic(KeyEvent.VK_D);
-
-        menubar.add(actionMenu);
-        menubar.add(helpMenu);
-        menubar.add(docuMenu);
-
-        insertItem = new JMenuItem("Neue Person anlegen");
-        insertItem.setFont(f2);
-        insertItem.setMnemonic(KeyEvent.VK_I);
-        updateItem = new JMenuItem("Bestehende Einträge aktualisieren");
-        updateItem.setFont(f2);
-        updateItem.setMnemonic(KeyEvent.VK_U);
-        deleteItem = new JMenuItem("Bestehende Einträge löschen");
-        deleteItem.setFont(f2);
-        deleteItem.setMnemonic(KeyEvent.VK_E);
-        seeItem = new JMenuItem("Daten anzeigen");
-        seeItem.setFont(f2);
-        seeItem.setMnemonic(KeyEvent.VK_S);
-        aboutUsItem = new JMenuItem("Über");
-        aboutUsItem.setFont(f2);
-        aboutUsItem.setMnemonic(KeyEvent.VK_U);
-        docuItem = new JMenuItem("Dokumentation v1.0");
-        docuItem.setFont(f2);
-        docuItem.setMnemonic(KeyEvent.VK_T);
-
-        insertItem.addActionListener(this);
-        updateItem.addActionListener(this);
-        deleteItem.addActionListener(this);
-        seeItem.addActionListener(this);
-
-        actionMenu.add(seeItem);
-        actionMenu.add(insertItem);
-        actionMenu.add(updateItem);
-        actionMenu.add(deleteItem);
-        docuMenu.add(aboutUsItem);
-        docuMenu.add(docuItem);
-
-        eastPanel = new JPanel();
-        eastPanel.setBackground(Color.white);
-        eastPanel.setLayout(new BorderLayout());
-        model.addElement("Historie");
-        eastPanel.add(list, BorderLayout.CENTER);
-        eastPanel.setPreferredSize(new Dimension(150, 100));
-
-        centerPanel = new JPanel();
-        centerPanel.setBackground(Color.white);
-        centerPanel.setLayout(new BorderLayout());
-        centerPanel.setPreferredSize(new Dimension(100, 100));
-
-        this.setTitle("EXCELCHAOS");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit out of application
-        this.setResizable(true); // die Groesse des angezeigten Fensters kann mit der Maus gezogen/geaendert werden
-        this.setSize(750, 750);
-        this.setLayout(new BorderLayout(10, 10));
-        this.setJMenuBar(menubar);
-        this.add(eastPanel, BorderLayout.EAST);
-        this.add(centerPanel, BorderLayout.CENTER);
-        this.setVisible(true);
-
-    }
-
-    /**
-     * @param e
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        // Was passiert, wenn checkBoxZweiteStaatsangehoerigkeit angeklickt (auf TRUE gesetzt) wurde:
-        if (e.getSource() == nationalityCheckBox) {
-            nationalitySecond.setVisible(true);
-            nationalityPickList2.setVisible(true);
-        }
-
-
-        if (insertItem.equals(e.getSource())) {
-            doInsertItem();
-        }
-        if (seeItem.equals(e.getSource())) {
-            try {
-                doSeeItem();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-        if (updateItem.equals(e.getSource())) {
-            doUpdateItem();
-        }
-        if (deleteItem.equals(e.getSource())) {
-            doDeleteItem();
-        }
-        if (e.getSource() == submit) {
-            System.out.println("submitting");
-            File file = new File("D:\\INTELLIJ BP CHAOS\\BPchaos\\src\\main\\java\\bp\\view\\data.txt");
-            FileWriter fr = null;
-            try {
-                fr = new FileWriter(file, true);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            BufferedWriter br = new BufferedWriter(fr);
-            try {
-                br.write(tfName.getText() + "," + tfVorname.getText() + "," + tfStrasse.getText() + ","
-                        + tfPrivatEmail.getText() + "," + tfPrivateTelefonnummer.getText() + "," + tfGeburtsdatum.getText() + ","
-                        + nationalityPickList.getSelectedItem().toString() + "," + nationalityPickList2.getSelectedItem().toString() + "," + tfPersonalnummer.getText() + ","
-                        + tfTuid.getText() + "," + tfVertragMit.getText() + "," + statusPicklist.getSelectedItem().toString() + ","
-                        + tfGehaltEingeplanntBis.getText() + "," + tfTranspondernummer.getText() + "," + tfBueronummer.getText() + ","
-                        + tfTelefonnummerTUDA.getText() + "," + tfInventarList.getText() + "\n"
-                );
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-
-            try {
-                br.close();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            try {
-                fr.close();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            model.addElement("Eintrag eingefügt!");
-            centerPanel.removeAll();
-            centerPanel.revalidate();
-            centerPanel.repaint();
-        }
-    }
-
-    /**
-     *
-     */
-    private void doDeleteItem() {
-        System.out.println("DELETING ITEMS");
-    }
-
-    /**
-     *
-     */
-    private void doUpdateItem() {
-        System.out.println("UPDATING ITEMS");
-        centerPanel.removeAll();
-        centerPanel.repaint();
-    }
-
-    /**
-     * @throws IOException
-     */
-    private void doSeeItem() throws IOException {
-        centerPanel.removeAll();
-        centerPanel.setLayout(new BorderLayout());
-        System.out.println("SEEING ITEMS");
-
-        String column[] = {"NAME", "VORNAME", "WOHNADRESSE", "PRIVAT E-MAIL", "PRIVAT TELEFONNR",
-                "GEBURTSDATUM", "STAATANGEHOERIGKEIT 1", "STAATANGEHOERIGKEIT 2", "PERSONAL NR", "TUID", "VERTRAG MIT",
-                "STATUS", "GEHALT EINGEPLANNT BIS", "TRANSPONDERNR", "BUERONUMMER", "TELEFONNR TUDA", "INVENTAR LIST"
-        };
-        File f = new File("D:\\INTELLIJ BP CHAOS\\BPchaos\\src\\main\\java\\bp\\view\\data.txt");
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(f));
-            int lines = 0;
-            while (br.readLine() != null) lines++;
-            br.close();
-            String resultData[][] = new String[lines][];
-
-
-            BufferedReader reader = new BufferedReader(new FileReader(f));
-            String line = null;
-            int currentIndex = 0;
-            while ((line = reader.readLine()) != null) {
-                String[] values = line.split(",");
-                resultData[currentIndex] = values;
-                currentIndex++;
-            }
-            JTable jt = new JTable(resultData, column);
-
-            jt.setBounds(30, 40, 200, 300);
-            JScrollPane sp = new JScrollPane(jt);
-
-            centerPanel.add(sp);
-            centerPanel.revalidate();
-            centerPanel.repaint();
-            model.addElement("SEEING ENTRY");
-            list.revalidate();
-            list.repaint();
-            eastPanel.revalidate();
-            eastPanel.repaint();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
-
-    /**
-     *
-     */
-    private void doInsertItem() {
-        System.out.println("INSERTING ITEMS");
-        centerPanel.removeAll();
-        centerPanel.setLayout(new BorderLayout());
+    public void init(){
+        setLayout(new BorderLayout());
         centerUp = new JPanel();
         centerDown = new JPanel();
 
         centerUp.setLayout(null);
         centerDown.setLayout(new GridLayout());
-        centerPanel.add(centerUp, BorderLayout.CENTER);
-        centerPanel.add(centerDown, BorderLayout.SOUTH);
+        add(centerUp, BorderLayout.CENTER);
+        add(centerDown, BorderLayout.SOUTH);
 
-        model.addElement("INSERTING ENTRY");
+        SideMenuPanelActionLogView.model.addElement("INSERTING ENTRY");
 
         name = new JLabel("Nachname");
         centerUp.add(name);
@@ -377,7 +147,6 @@ public class Frame extends JFrame implements ActionListener {
         nationalityCheckBox = new JCheckBox("zweite Staatsangehörigkeit?", false);
         nationalityCheckBox.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
         centerUp.add(nationalityCheckBox);
-        nationalityCheckBox.addActionListener(this);
         factor++;
 
         // Sichtbarkeit von dem Label mit dem dazugehörigen Textfeld für die Eintragung
@@ -472,15 +241,97 @@ public class Frame extends JFrame implements ActionListener {
         factor = 0;
 
         submit = new JButton("Person speichern");
-        submit.addActionListener(this);
         centerDown.add(submit);
         reset = new JButton("Felder zurücksetzen");
         centerDown.add(reset);
 
-        centerPanel.revalidate();
-        centerPanel.repaint();
+        revalidate();
+        repaint();
+    }
+    public void setActionListener(ActionListener l){
+        nationalityCheckBox.addActionListener(l);
+        submit.addActionListener(l);
+    }
+    public JCheckBox getNationalityCheckBox(){
+        return nationalityCheckBox;
+    }
+    public JLabel getNationalitySecond(){
+        return nationalitySecond;
+    }
+    public JComboBox getNationalityPickList2(){
+        return nationalityPickList2;
+    }
+    public JButton getSubmit(){
+        return submit;
+    }
+    public JTextField getTfName(){
+        return tfName;
+    }
+    public JTextField getTfVorname(){
+        return tfVorname;
+    }
+    public JTextField getTfStrasse(){
+        return tfStrasse;
+    }
+    public JTextField getTfHausnummer(){
+        return tfHausnummer;
+    }
+    public JTextField getTfAdresszusatz(){
+        return tfAdresszusatz;
+    }
+    public JTextField getTfPLZ(){
+        return tfPLZ;
     }
 
+    public JTextField getTfStadt() {
+        return tfStadt;
+    }
+    public JTextField getTfPrivatEmail(){
+        return tfPrivatEmail;
+    }
+    public JTextField getTfPrivateTelefonnummer(){
+        return tfPrivateTelefonnummer;
+    }
 
+    public JTextField getTfGeburtsdatum() {
+        return tfGeburtsdatum;
+    }
+
+    public JTextField getTfPersonalnummer() {
+        return tfPersonalnummer;
+    }
+
+    public JTextField getTfTuid() {
+        return tfTuid;
+    }
+
+    public JTextField getTfVertragMit() {
+        return tfVertragMit;
+    }
+
+    public JTextField getTfGehaltEingeplanntBis() {
+        return tfGehaltEingeplanntBis;
+    }
+
+    public JTextField getTfTranspondernummer() {
+        return tfTranspondernummer;
+    }
+
+    public JTextField getTfBueronummer() {
+        return tfBueronummer;
+    }
+
+    public JTextField getTfTelefonnummerTUDA() {
+        return tfTelefonnummerTUDA;
+    }
+
+    public JTextField getTfInventarList() {
+        return tfInventarList;
+    }
+    public JComboBox getStatusPicklist(){
+        return statusPicklist;
+    }
+    public JComboBox getNationalityPickList(){
+        return nationalityPickList;
+    }
 }
-

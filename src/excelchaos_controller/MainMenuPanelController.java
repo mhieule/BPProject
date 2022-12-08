@@ -21,8 +21,7 @@ public class MainMenuPanelController implements ActionListener {
 
     public void actionPerformed(ActionEvent e){
         if (e.getSource() == mainMenu.getPersonenlisteButton()){
-            mainMenu.setBackground(Color.GREEN);
-            System.out.println("Test");
+
         }
     }
 
