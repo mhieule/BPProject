@@ -1,11 +1,12 @@
 package excelchaos;
 
 
-import excelchaos_view.Frame;
+import excelchaos_controller.MainFrameController;
+
 
 public class Main {
     public static void main(String[] args) {
-        new Frame();
+        new MainFrameController();
 
 
     }
