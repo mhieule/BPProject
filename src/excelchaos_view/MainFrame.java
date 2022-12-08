@@ -18,13 +18,13 @@ public class MainFrame extends JFrame {
     public void init(){
         menubar = new JMenuBar();
         menubar.setBackground(Color.WHITE);
-        actionMenu = new JMenu("Aktivitäten".toUpperCase());
+        actionMenu = new JMenu("Aktionen");
         actionMenu.setFont(f1);
         actionMenu.setMnemonic(KeyEvent.VK_A);
-        helpMenu = new JMenu("Hilfe".toUpperCase());
+        helpMenu = new JMenu("Hilfe");
         helpMenu.setFont(f1);
         helpMenu.setMnemonic(KeyEvent.VK_H);
-        docuMenu = new JMenu("Dokumentation".toUpperCase());
+        docuMenu = new JMenu("Dokumentation");
         docuMenu.setFont(f1);
         docuMenu.setMnemonic(KeyEvent.VK_D);
         tabs = new JTabbedPane(JTabbedPane.TOP,JTabbedPane.SCROLL_TAB_LAYOUT);

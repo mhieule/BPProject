@@ -8,9 +8,13 @@ public class SideMenuPanelTablesController {
     public SideMenuPanelTablesController(){
         sideMenu = new SideMenuPanelTables();
         sideMenu.init();
+
+
     }
 
     public SideMenuPanelTables getSideTable(){
         return sideMenu;
     }
+
+
 }

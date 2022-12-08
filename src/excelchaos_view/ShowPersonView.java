@@ -43,11 +43,6 @@ public class ShowPersonView extends JPanel {
             revalidate();
             repaint();
             SideMenuPanelActionLogView.model.addElement("SEEING ENTRY");
-            //list.revalidate();
-            //list.repaint();
-            //eastPanel.revalidate();
-            //eastPanel.repaint();
-            System.out.println("Here");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
