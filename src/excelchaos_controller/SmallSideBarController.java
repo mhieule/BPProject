@@ -5,7 +5,7 @@ import excelchaos_view.SmallSideBar;
 public class SmallSideBarController {
     private SmallSideBar smallSideBar;
 
-    public SmallSideBarController(){
+    public SmallSideBarController() {
         smallSideBar = new SmallSideBar();
         smallSideBar.init();
     }

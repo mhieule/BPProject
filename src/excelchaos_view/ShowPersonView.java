@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class ShowPersonView extends JPanel {
 
-    public void init(){
+    public void init() {
         setLayout(new BorderLayout());
         System.out.println("SEEING ITEMS");
 

@@ -22,16 +22,18 @@ public class MainMenuPanel extends JPanel {
         inventarliste.setText("Inventarliste");
         title.setText("Hauptmenü");
 
-        add(title,BorderLayout.PAGE_START);
-        add(personenliste,BorderLayout.CENTER);
-        add(gehaltsliste,BorderLayout.CENTER);
+        add(title, BorderLayout.PAGE_START);
+        add(personenliste, BorderLayout.CENTER);
+        add(gehaltsliste, BorderLayout.CENTER);
         add(inventarliste, BorderLayout.CENTER);
 
     }
-    public void setActionListener(ActionListener l){
+
+    public void setActionListener(ActionListener l) {
         personenliste.addActionListener(l);
     }
-    public JButton getPersonenlisteButton(){
+
+    public JButton getPersonenlisteButton() {
         return personenliste;
     }
 }

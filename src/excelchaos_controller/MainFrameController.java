@@ -52,7 +52,7 @@ public class MainFrameController implements ActionListener {
         }
         if (e.getSource() == smallSideBar.getSmallSideBar().getArrowButtonEast()) {
             window.remove(smallSideBar.getSmallSideBar());
-            window.add(sideMenuTables.getSideTable(),BorderLayout.WEST);
+            window.add(sideMenuTables.getSideTable(), BorderLayout.WEST);
             window.revalidate();
             window.repaint();
         }

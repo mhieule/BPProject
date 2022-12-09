@@ -11,7 +11,6 @@ public class SmallSideBar extends JPanel {
     private String s;
 
 
-
     public void init() {
         arrowButtonEast = new BasicArrowButton(BasicArrowButton.EAST);
 
@@ -23,7 +22,8 @@ public class SmallSideBar extends JPanel {
     public BasicArrowButton getArrowButtonEast() {
         return arrowButtonEast;
     }
-    public void setActionListener(ActionListener l){
+
+    public void setActionListener(ActionListener l) {
         arrowButtonEast.addActionListener(l);
     }
 }

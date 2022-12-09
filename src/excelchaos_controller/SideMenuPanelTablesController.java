@@ -5,14 +5,14 @@ import excelchaos_view.SideMenuPanelTables;
 public class SideMenuPanelTablesController {
     private SideMenuPanelTables sideMenu;
 
-    public SideMenuPanelTablesController(){
+    public SideMenuPanelTablesController() {
         sideMenu = new SideMenuPanelTables();
         sideMenu.init();
 
 
     }
 
-    public SideMenuPanelTables getSideTable(){
+    public SideMenuPanelTables getSideTable() {
         return sideMenu;
     }
 

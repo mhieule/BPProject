@@ -15,7 +15,7 @@ public class MainFrame extends JFrame {
     Font f1 = new Font(Font.SANS_SERIF, Font.PLAIN, 13);
     Font f2 = new Font(Font.SANS_SERIF, Font.PLAIN, 15);
 
-    public void init(){
+    public void init() {
         menubar = new JMenuBar();
         menubar.setBackground(Color.WHITE);
         actionMenu = new JMenu("Aktionen");
@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
         docuMenu = new JMenu("Dokumentation");
         docuMenu.setFont(f1);
         docuMenu.setMnemonic(KeyEvent.VK_D);
-        tabs = new JTabbedPane(JTabbedPane.TOP,JTabbedPane.SCROLL_TAB_LAYOUT);
+        tabs = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 
         menubar.add(actionMenu);
         menubar.add(helpMenu);
@@ -66,19 +66,21 @@ public class MainFrame extends JFrame {
         add(tabs);
 
 
-
     }
-    public JTabbedPane getTabs(){
+
+    public JTabbedPane getTabs() {
         return tabs;
     }
-    public JMenuItem getInsertItem(){
+
+    public JMenuItem getInsertItem() {
         return insertItem;
     }
-    public JMenuItem getSeeItem(){
+
+    public JMenuItem getSeeItem() {
         return seeItem;
     }
 
-    public void setActionListener(ActionListener l){
+    public void setActionListener(ActionListener l) {
         insertItem.addActionListener(l);
         seeItem.addActionListener(l);
     }

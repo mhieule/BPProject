@@ -11,25 +11,25 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class InsertPersonController implements ActionListener {
-   private InsertPersonView insertPersonView;
+    private InsertPersonView insertPersonView;
 
-   public InsertPersonController(){
-       insertPersonView = new InsertPersonView();
-       insertPersonView.init();
-       insertPersonView.setActionListener(this);
-   }
+    public InsertPersonController() {
+        insertPersonView = new InsertPersonView();
+        insertPersonView.init();
+        insertPersonView.setActionListener(this);
+    }
 
-   public InsertPersonView getInsertPersonView(){
-       return insertPersonView;
-   }
+    public InsertPersonView getInsertPersonView() {
+        return insertPersonView;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == insertPersonView.getNationalityCheckBox()){
+        if (e.getSource() == insertPersonView.getNationalityCheckBox()) {
             insertPersonView.getNationalitySecond().setVisible(true);
             insertPersonView.getNationalityPickList2().setVisible(true);
         }
-        if (e.getSource() == insertPersonView.getSubmit()){
+        if (e.getSource() == insertPersonView.getSubmit()) {
             System.out.println("submitting");
             File file = new File("src/data");
             FileWriter fr = null;

@@ -31,7 +31,7 @@ public class InsertPersonView extends JPanel {
     private final int FIELD_WIDTH = 400;
     private final int FIELD_HEIGHT = 25;
 
-    public void init(){
+    public void init() {
         setLayout(new BorderLayout());
         centerUp = new JPanel();
         centerDown = new JPanel();
@@ -248,48 +248,61 @@ public class InsertPersonView extends JPanel {
         revalidate();
         repaint();
     }
-    public void setActionListener(ActionListener l){
+
+    public void setActionListener(ActionListener l) {
         nationalityCheckBox.addActionListener(l);
         submit.addActionListener(l);
     }
-    public JCheckBox getNationalityCheckBox(){
+
+    public JCheckBox getNationalityCheckBox() {
         return nationalityCheckBox;
     }
-    public JLabel getNationalitySecond(){
+
+    public JLabel getNationalitySecond() {
         return nationalitySecond;
     }
-    public JComboBox getNationalityPickList2(){
+
+    public JComboBox getNationalityPickList2() {
         return nationalityPickList2;
     }
-    public JButton getSubmit(){
+
+    public JButton getSubmit() {
         return submit;
     }
-    public JTextField getTfName(){
+
+    public JTextField getTfName() {
         return tfName;
     }
-    public JTextField getTfVorname(){
+
+    public JTextField getTfVorname() {
         return tfVorname;
     }
-    public JTextField getTfStrasse(){
+
+    public JTextField getTfStrasse() {
         return tfStrasse;
     }
-    public JTextField getTfHausnummer(){
+
+    public JTextField getTfHausnummer() {
         return tfHausnummer;
     }
-    public JTextField getTfAdresszusatz(){
+
+    public JTextField getTfAdresszusatz() {
         return tfAdresszusatz;
     }
-    public JTextField getTfPLZ(){
+
+    public JTextField getTfPLZ() {
         return tfPLZ;
     }
 
     public JTextField getTfStadt() {
         return tfStadt;
     }
-    public JTextField getTfPrivatEmail(){
+
+    public JTextField getTfPrivatEmail() {
         return tfPrivatEmail;
     }
-    public JTextField getTfPrivateTelefonnummer(){
+
+    public JTextField getTfPrivateTelefonnummer() {
         return tfPrivateTelefonnummer;
     }
 
@@ -328,10 +341,12 @@ public class InsertPersonView extends JPanel {
     public JTextField getTfInventarList() {
         return tfInventarList;
     }
-    public JComboBox getStatusPicklist(){
+
+    public JComboBox getStatusPicklist() {
         return statusPicklist;
     }
-    public JComboBox getNationalityPickList(){
+
+    public JComboBox getNationalityPickList() {
         return nationalityPickList;
     }
 }

@@ -5,11 +5,12 @@ import excelchaos_view.SideMenuPanelActionLogView;
 public class SideMenuPanelActionLogController {
     SideMenuPanelActionLogView actionLogView;
 
-    public SideMenuPanelActionLogController(){
-        actionLogView =new SideMenuPanelActionLogView();
+    public SideMenuPanelActionLogController() {
+        actionLogView = new SideMenuPanelActionLogView();
         actionLogView.init();
     }
-    public SideMenuPanelActionLogView getActionLogView(){
+
+    public SideMenuPanelActionLogView getActionLogView() {
         return actionLogView;
     }
 }

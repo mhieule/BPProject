@@ -18,9 +18,9 @@ public class SideMenuPanelTables extends JPanel {
         personenliste = new JButton("Personenliste");
         gehaltsliste = new JButton("Gehaltsliste");
         inventarliste = new JButton("Inventarliste");
-        personenliste.setPreferredSize(new Dimension(115,25));
-        inventarliste.setPreferredSize(new Dimension(115,25));
-        gehaltsliste.setPreferredSize(new Dimension(115,25));
+        personenliste.setPreferredSize(new Dimension(115, 25));
+        inventarliste.setPreferredSize(new Dimension(115, 25));
+        gehaltsliste.setPreferredSize(new Dimension(115, 25));
 
         arrowButtonWest = new BasicArrowButton(BasicArrowButton.WEST);
         topPanel = new JPanel();

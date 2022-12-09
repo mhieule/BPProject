@@ -9,18 +9,18 @@ import java.awt.event.ActionListener;
 public class MainMenuPanelController implements ActionListener {
     private MainMenuPanel mainMenu;
 
-    public MainMenuPanelController(){
+    public MainMenuPanelController() {
         mainMenu = new MainMenuPanel();
         mainMenu.init();
         mainMenu.setActionListener(this);
     }
 
-    public MainMenuPanel getMainMenu(){
+    public MainMenuPanel getMainMenu() {
         return mainMenu;
     }
 
-    public void actionPerformed(ActionEvent e){
-        if (e.getSource() == mainMenu.getPersonenlisteButton()){
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == mainMenu.getPersonenlisteButton()) {
 
         }
     }

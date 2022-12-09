@@ -10,7 +10,7 @@ public class ShowPersonController {
         personView.init();
     }
 
-    public ShowPersonView getPersonView(){
+    public ShowPersonView getPersonView() {
         return personView;
     }
 }
