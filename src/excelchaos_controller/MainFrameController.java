@@ -36,21 +36,18 @@ public class MainFrameController implements ActionListener {
             window.getTabs().addTab("Person hinzufügen", insertPersonController.getInsertPersonView());
             window.getTabs().setSelectedIndex(window.getTabs().indexOfTab("Person hinzufügen"));
 
-        }
-        if (e.getSource() == window.getSeeItem()) {
+        } else if (e.getSource() == window.getSeeItem() || e.getSource() == sideMenuTables.getSideTable().getPersonenliste()) {
             personalData = new ShowPersonController();
             window.getTabs().addTab("Personstammdaten", personalData.getPersonView());
             window.getTabs().setSelectedIndex(window.getTabs().indexOfTab("Personstammdaten"));
-        }
-        if (e.getSource() == sideMenuTables.getSideTable().getArrowButtonWest()) {
+        } else if (e.getSource() == sideMenuTables.getSideTable().getArrowButtonWest()) {
             smallSideBar = new SmallSideBarController();
             window.remove(sideMenuTables.getSideTable());
             window.add(smallSideBar.getSmallSideBar(), BorderLayout.WEST);
             smallSideBar.getSmallSideBar().setActionListener(this);
             window.revalidate();
             window.repaint();
-        }
-        if (e.getSource() == smallSideBar.getSmallSideBar().getArrowButtonEast()) {
+        } else if (e.getSource() == smallSideBar.getSmallSideBar().getArrowButtonEast()) {
             window.remove(smallSideBar.getSmallSideBar());
             window.add(sideMenuTables.getSideTable(), BorderLayout.WEST);
             window.revalidate();

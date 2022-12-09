@@ -42,7 +42,7 @@ public class ShowPersonView extends JPanel {
             add(sp);
             revalidate();
             repaint();
-            SideMenuPanelActionLogView.model.addElement("SEEING ENTRY");
+            SideMenuPanelActionLogView.model.addElement("Einträge anzeigen");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,6 +1,7 @@
 package excelchaos_view;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -10,6 +11,8 @@ public class MainFrame extends JFrame {
     private JMenu actionMenu, helpMenu, docuMenu;
     private JMenuItem insertItem, updateItem, deleteItem, seeItem, aboutUsItem, docuItem;
     private JTabbedPane tabs;
+    private JPanel workingArea;
+    private Border blackline;
 
 
     Font f1 = new Font(Font.SANS_SERIF, Font.PLAIN, 13);
@@ -28,6 +31,10 @@ public class MainFrame extends JFrame {
         docuMenu.setFont(f1);
         docuMenu.setMnemonic(KeyEvent.VK_D);
         tabs = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+        //workingArea = new JPanel();
+        //workingArea.setPreferredSize(new Dimension(100,50));
+        //workingArea.setBorder(blackline = BorderFactory.createLineBorder(Color.BLACK));
+        //workingArea.setBackground(Color.WHITE);
 
         menubar.add(actionMenu);
         menubar.add(helpMenu);
@@ -64,6 +71,7 @@ public class MainFrame extends JFrame {
         setSize(750, 750);
         setJMenuBar(menubar);
         add(tabs);
+        //add(workingArea,BorderLayout.PAGE_START);
 
 
     }

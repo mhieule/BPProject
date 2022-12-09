@@ -38,10 +38,6 @@ public class SideMenuPanelTables extends JPanel {
         add(centerpanel, BorderLayout.CENTER);
         setBackground(Color.white);
 
-
-        //add(personenliste);
-        //add(gehaltsliste);
-        //add(inventarliste);
         setPreferredSize(new Dimension(130, 100));
 
     }
@@ -50,8 +46,14 @@ public class SideMenuPanelTables extends JPanel {
         return arrowButtonWest;
     }
 
+    public JButton getPersonenliste(){
+        return personenliste;
+    }
+
     public void setActionListener(ActionListener l) {
+        personenliste.addActionListener(l);
         arrowButtonWest.addActionListener(l);
+
     }
 
 }
