@@ -10,7 +10,7 @@ public class MainFrame extends JFrame {
     private JMenuBar menubar;
     private JMenu actionMenu, helpMenu, docuMenu;
     private JMenuItem insertItem, updateItem, deleteItem, seeItem, aboutUsItem, docuItem;
-    private JTabbedPane tabs;
+    private TabWithCloseButton tabs;
     private JPanel workingArea;
     private Border blackline;
 
@@ -30,7 +30,7 @@ public class MainFrame extends JFrame {
         docuMenu = new JMenu("Dokumentation");
         docuMenu.setFont(f1);
         docuMenu.setMnemonic(KeyEvent.VK_D);
-        tabs = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+        tabs = new TabWithCloseButton(TabWithCloseButton.TOP, TabWithCloseButton.SCROLL_TAB_LAYOUT);
         //workingArea = new JPanel();
         //workingArea.setPreferredSize(new Dimension(100,50));
         //workingArea.setBorder(blackline = BorderFactory.createLineBorder(Color.BLACK));
@@ -76,7 +76,7 @@ public class MainFrame extends JFrame {
 
     }
 
-    public JTabbedPane getTabs() {
+    public TabWithCloseButton getTabs() {
         return tabs;
     }
 

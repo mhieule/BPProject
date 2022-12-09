@@ -1,5 +1,7 @@
 package excelchaos_view;
 
+import excelchaos_model.CountryModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -21,7 +23,7 @@ public class InsertPersonView extends JPanel {
 
     private JPanel centerUp, centerDown;
 
-    private int beginYPos = 50;
+    private int beginYPos = 25;
     private int factor = 0;
     private final int Y_INCREASE = 30;
     private final int LABEL_X_POS = 20;
@@ -135,8 +137,9 @@ public class InsertPersonView extends JPanel {
         centerUp.add(nationalityFirst);
         nationalityFirst.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
 
-        String[] nationalityArray = {"Afghanistan", "Ägypten", "Australien", "Belgien", "Chile",
-                "China", "Deutschland", "Finnland", "Indien", "Italien", "Kanada"}; // Ist nur ein Beispiel an Auswahl
+        /*String[] nationalityArray = {"Afghanistan", "Ägypten", "Australien", "Belgien", "Chile",
+                "China", "Deutschland", "Finnland", "Indien", "Italien", "Kanada"}; // Ist nur ein Beispiel an Auswahl*/
+        String[] nationalityArray= CountryModel.getCountries();
         nationalityPickList = new JComboBox(nationalityArray);
         nationalityPickList.setMaximumRowCount(5); // die Anzahl der Reihen in der Auswahlliste, die bei der Wahl angezeigt werden
         nationalityPickList.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
@@ -154,8 +157,9 @@ public class InsertPersonView extends JPanel {
         centerUp.add(nationalitySecond);
         nationalitySecond.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
         nationalitySecond.setVisible(false);
-        String[] nationalityArray2 = {"Keine", "Deutschland", "Afghanistan", "Ägypten", "Australien", "Belgien", "Chile",
-                "China", "Finnland", "Indien", "Italien", "Kanada"}; // Ist nur ein Beispiel an Auswahl
+        /*String[] nationalityArray2 = {"Keine", "Deutschland", "Afghanistan", "Ägypten", "Australien", "Belgien", "Chile",
+                "China", "Finnland", "Indien", "Italien", "Kanada"}; // Ist nur ein Beispiel an Auswahl*/
+        String[] nationalityArray2=CountryModel.getCountriesWithKeine();
         nationalityPickList2 = new JComboBox(nationalityArray2);
         nationalityPickList2.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(nationalityPickList2);

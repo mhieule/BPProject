@@ -1,5 +1,6 @@
 package excelchaos_controller;
 
+import excelchaos_view.ButtonTabComponent;
 import excelchaos_view.MainFrame;
 
 import java.awt.*;
@@ -32,14 +33,22 @@ public class MainFrameController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == window.getInsertItem()) {
-            insertPersonController = new InsertPersonController();
-            window.getTabs().addTab("Person hinzufügen", insertPersonController.getInsertPersonView());
-            window.getTabs().setSelectedIndex(window.getTabs().indexOfTab("Person hinzufügen"));
+            if(window.getTabs().indexOfTab("Person hinzufügen")==-1) {
+                insertPersonController = new InsertPersonController();
+                window.getTabs().addTab("Person hinzufügen", insertPersonController.getInsertPersonView());
+                //window.getTabs().setTabComponentAt(window.getTabs().indexOfTab("Person hinzufügen"), new ButtonTabComponent(window.getTabs()));
+                window.getTabs().addCloseButton(window.getTabs().indexOfTab("Person hinzufügen"));
+                window.getTabs().setSelectedIndex(window.getTabs().indexOfTab("Person hinzufügen"));
+            } else window.getTabs().setSelectedIndex(window.getTabs().indexOfTab("Person hinzufügen"));
 
         } else if (e.getSource() == window.getSeeItem() || e.getSource() == sideMenuTables.getSideTable().getPersonenliste()) {
-            personalData = new ShowPersonController();
-            window.getTabs().addTab("Personstammdaten", personalData.getPersonView());
-            window.getTabs().setSelectedIndex(window.getTabs().indexOfTab("Personstammdaten"));
+            if(window.getTabs().indexOfTab("Personstammdaten")==-1) {
+                personalData = new ShowPersonController();
+                window.getTabs().addTab("Personstammdaten", personalData.getPersonView());
+                //window.getTabs().setTabComponentAt(window.getTabs().indexOfTab("Personstammdaten"), new ButtonTabComponent(window.getTabs()));
+                window.getTabs().addCloseButton(window.getTabs().indexOfTab("Personstammdaten"));
+                window.getTabs().setSelectedIndex(window.getTabs().indexOfTab("Personstammdaten"));
+            } else window.getTabs().setSelectedIndex(window.getTabs().indexOfTab("Personstammdaten"));
         } else if (e.getSource() == sideMenuTables.getSideTable().getArrowButtonWest()) {
             smallSideBar = new SmallSideBarController();
             window.remove(sideMenuTables.getSideTable());
