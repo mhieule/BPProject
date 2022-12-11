@@ -1,28 +1,29 @@
 package excelchaos_controller;
 
 import excelchaos_view.MainFrame;
+import excelchaos_view.NewTabView;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainFrameController implements ActionListener {
-    private MainFrame window;
+public class NewTabController implements ActionListener {
+    private NewTabView window;
     private MainMenuPanelController mainMenu;
     private SideMenuPanelTablesController sideMenuTables;
     private SmallSideBarController smallSideBar;
-    private SideMenuPanelActionLogController sideMenuActionLog;
+    //private SideMenuPanelActionLogController sideMenuActionLog;
     private ShowPersonController personalData;
     private InsertPersonController insertPersonController;
 
-    public MainFrameController() {
-        window = new MainFrame();
+    public NewTabController() {
+        window = new NewTabView();
         sideMenuTables = new SideMenuPanelTablesController();
-        sideMenuActionLog = new SideMenuPanelActionLogController();
+        //sideMenuActionLog = new SideMenuPanelActionLogController();
         window.init();
         window.setActionListener(this);
         sideMenuTables.getSideTable().setActionListener(this);
-        window.add(sideMenuActionLog.getActionLogView(), BorderLayout.EAST);
+        //window.add(sideMenuActionLog.getActionLogView(), BorderLayout.EAST);
         window.add(sideMenuTables.getSideTable(), BorderLayout.WEST);
 
         window.setVisible(true);
@@ -63,7 +64,8 @@ public class MainFrameController implements ActionListener {
         }
     }
 
-    public MainFrame getWindow() {
+    public NewTabView getWindow() {
         return window;
     }
 }
+

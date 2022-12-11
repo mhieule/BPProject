@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-public class MainFrame extends JFrame {
+public class NewTabView extends JFrame {
     private JMenuBar menubar;
     private JMenu actionMenu, helpMenu, docuMenu;
     private JMenuItem insertItem, updateItem, deleteItem, seeItem, aboutUsItem, docuItem;
@@ -67,14 +67,10 @@ public class MainFrame extends JFrame {
 
 
         setTitle("Excelchaos");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(true);
         setSize(750, 750);
         setJMenuBar(menubar);
         add(tabs);
-        //add(workingArea,BorderLayout.PAGE_START);
-
-
     }
 
     public DnDCloseButtonTabbedPane getTabs() {
