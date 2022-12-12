@@ -3,14 +3,17 @@ package excelchaos_controller;
 import excelchaos_view.DnDCloseButtonTabbedPane;
 import excelchaos_view.MainFrame;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class TabsController {
+
+public class TabsController implements ActionListener {
     private DnDCloseButtonTabbedPane tabs;
-    private MainFrame frame;
+    private MainFrameController frameController;
 
-    public TabsController(MainFrame window){
-        frame = window;
-        tabs = new DnDCloseButtonTabbedPane(frame);
+    public TabsController(MainFrameController mainFrameController) {
+        frameController = mainFrameController;
+        tabs = new DnDCloseButtonTabbedPane(frameController.getWindow(),frameController);
 
     }
 
@@ -19,4 +22,15 @@ public class TabsController {
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int index = tabs.indexOfTab("Personstammdaten");
+        if (index >= 0) {
+            frameController.getWindow().remove(frameController.getShowPersonalData().getToolbarShowPerson().getToolbar());
+            frameController.getWindow().revalidate();
+            frameController.getWindow().repaint();
+        }
+
+
+    }
 }

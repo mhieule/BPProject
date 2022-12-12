@@ -43,7 +43,7 @@ public class InsertPersonView extends JPanel {
         add(centerUp, BorderLayout.CENTER);
         add(centerDown, BorderLayout.SOUTH);
 
-        SideMenuPanelActionLogView.model.addElement("Eintrag einfügen");
+
 
         name = new JLabel("Nachname");
         centerUp.add(name);

@@ -9,11 +9,11 @@ import java.awt.event.ActionListener;
 
 public class SmallSideBarController implements ActionListener {
     private SmallSideBar smallSideBar;
-    private MainFrame frame;
+    private MainFrameController frameController;
     private SideMenuPanelTablesController sideMenuTables;
 
-    public SmallSideBarController(MainFrame window) {
-        frame = window;
+    public SmallSideBarController(MainFrameController mainFrameController) {
+        frameController = mainFrameController;
         smallSideBar = new SmallSideBar();
         smallSideBar.init();
         smallSideBar.setActionListener(this);
@@ -27,15 +27,15 @@ public class SmallSideBarController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == smallSideBar.getArrowButtonEast()) {
-            eastArrowButtonPressed(frame);
+            eastArrowButtonPressed(frameController);
         }
 
     }
-    private void eastArrowButtonPressed(MainFrame window){
-        window.remove(smallSideBar);
-        sideMenuTables = new SideMenuPanelTablesController(window);
-        window.add(sideMenuTables.getSideTable(), BorderLayout.WEST);
-        window.revalidate();
-        window.repaint();
+    private void eastArrowButtonPressed(MainFrameController mainFrameController){
+        mainFrameController.getWindow().remove(smallSideBar);
+        sideMenuTables = new SideMenuPanelTablesController(mainFrameController);
+        mainFrameController.getWindow().add(sideMenuTables.getSideTable(), BorderLayout.WEST);
+        mainFrameController.getWindow().revalidate();
+        mainFrameController.getWindow().repaint();
     }
 }

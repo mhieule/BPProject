@@ -1,35 +1,35 @@
 package excelchaos_controller;
 
+import excelchaos_view.DnDCloseButtonTabbedPane;
 import excelchaos_view.MainFrame;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainFrameController implements ActionListener {
     private MainFrame window;
-
-    private MainMenuPanelController mainMenu;
+    private TabsController tabsController;
     private SideMenuPanelTablesController sideMenuTables;
-    private SmallSideBarController smallSideBar;
     private SideMenuPanelActionLogController sideMenuActionLog;
-    private ShowPersonController personalData;
+    private ShowPersonController showPersonalData;
     private InsertPersonController insertPersonController;
-    private ToolbarShowPersonController toolbarShowPerson;
+
+
+
 
 
     public MainFrameController() {
         window = new MainFrame();
-        sideMenuTables = new SideMenuPanelTablesController(window);
-        sideMenuActionLog = new SideMenuPanelActionLogController();
-        smallSideBar = new SmallSideBarController(window);
         window.init();
         window.setActionListener(this);
-        sideMenuTables.getSideTable().setActionListener(this);
-        window.add(sideMenuActionLog.getActionLogView(), BorderLayout.EAST);
-        window.add(smallSideBar.getSmallSideBar(),BorderLayout.WEST);
-        window.add(sideMenuTables.getSideTable(), BorderLayout.WEST);
+        tabsController = new TabsController(this);
+        window.add(tabsController.getTabs());
+        sideMenuTables = new SideMenuPanelTablesController(this);
+        sideMenuActionLog = new SideMenuPanelActionLogController(this);
+        insertPersonController = new InsertPersonController(this);
+        showPersonalData = new ShowPersonController(this);
+
 
         window.setVisible(true);
 
@@ -38,33 +38,10 @@ public class MainFrameController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == window.getInsertItem()) {
-            if (window.getTabs().indexOfTab("Person hinzufügen") == -1) {
-                insertPersonController = new InsertPersonController();
-                window.getTabs().addTab("Person hinzufügen", insertPersonController.getInsertPersonView());
-                window.getTabs().setActionListener(this);
-                //window.getTabs().setTabComponentAt(window.getTabs().indexOfTab("Person hinzufügen"), new ButtonTabComponent(window.getTabs()));
-                //window.getTabs().addCloseButton(window.getTabs().indexOfTab("Person hinzufügen"));
-                window.getTabs().setSelectedIndex(window.getTabs().indexOfTab("Person hinzufügen"));
-            } else window.getTabs().setSelectedIndex(window.getTabs().indexOfTab("Person hinzufügen"));
+            insertPersonController.showInsertPersonView(this);
 
         } else if (e.getSource() == window.getSeeItem()) {
-            if (window.getTabs().indexOfTab("Personstammdaten") == -1) {
-                personalData = new ShowPersonController();
-                toolbarShowPerson = new ToolbarShowPersonController(window);
-                toolbarShowPerson.getToolbar().setActionListener(this);
-                window.add(toolbarShowPerson.getToolbar(), BorderLayout.NORTH);
-                window.getTabs().addTab("Personstammdaten", personalData.getPersonView());
-                window.getTabs().setActionListener(this);
-                //window.getTabs().setTabComponentAt(window.getTabs().indexOfTab("Personstammdaten"), new ButtonTabComponent(window.getTabs()));
-                //window.getTabs().addCloseButton(window.getTabs().indexOfTab("Personstammdaten"));
-                window.getTabs().setSelectedIndex(window.getTabs().indexOfTab("Personstammdaten"));
-            } else window.getTabs().setSelectedIndex(window.getTabs().indexOfTab("Personstammdaten"));
-
-        } else if (e.getSource() == window.getTabs().getButton()) {
-
-            window.remove(toolbarShowPerson.getToolbar());
-            window.revalidate();
-            window.repaint();
+            showPersonalData.showPersonView(this);
 
         }
 
@@ -72,5 +49,20 @@ public class MainFrameController implements ActionListener {
 
     public MainFrame getWindow() {
         return window;
+    }
+
+    public ShowPersonController getShowPersonalData() {
+        return showPersonalData;
+    }
+    public void setChangeListener (ChangeListener l){
+        tabsController.getTabs().addChangeListener(l);
+    }
+
+    public TabsController getTabsController() {
+        return tabsController;
+    }
+
+    public DnDCloseButtonTabbedPane getTabs() {
+        return tabsController.getTabs();
     }
 }
