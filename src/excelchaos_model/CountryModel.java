@@ -1,8 +1,11 @@
 package excelchaos_model;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 public class CountryModel {
+
+
     public static String[] getCountries(){
         String[] countryCodes = Locale.getISOCountries();
         String[] countries=new String[countryCodes.length];
@@ -10,6 +13,8 @@ public class CountryModel {
             Locale obj = new Locale("", countryCodes[i]);
             countries[i]= obj.getDisplayCountry();
         }
+        //sort array alphabetically
+        Arrays.sort(countries);
         return countries;
     }
 
@@ -21,6 +26,7 @@ public class CountryModel {
             Locale obj = new Locale("", countryCodes[i]);
             countries[i+1]= obj.getDisplayCountry();
         }
+        Arrays.sort(countries);
         return countries;
     }
 }
