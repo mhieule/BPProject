@@ -1,6 +1,7 @@
 package excelchaos_view;
 
-import excelchaos_controller.NewTabController;
+import excelchaos.Main;
+import excelchaos_controller.MainFrameController;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -12,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.Objects;
 
 public class DnDCloseButtonTabbedPane extends JTabbedPane {
 
@@ -35,9 +35,12 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
     private final ImageIcon icon;
     private final Dimension buttonSize;
 
+    private MainFrameController frameController;
 
-    public DnDCloseButtonTabbedPane(final Component parent) {
+
+    public DnDCloseButtonTabbedPane(final Component parent, MainFrameController mainFrameController) {
         super();
+        frameController = mainFrameController;
         final DragSourceListener dsl = new DragSourceListener() {
             @Override
             public void dragEnter(DragSourceDragEvent e) {
@@ -110,18 +113,18 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
                 // if drop failed, create new JFrame with JTabbedPane included with public access
                 if (!e.getDropSuccess()) {
                     // MenuLight class Extends JFrame and Included 1 component JTabbedPane called superPane
-                    NewTabController m = new NewTabController();
+                    MainFrameController m = new MainFrameController();
                     m.getWindow().setLocation(e.getLocation());
                     m.getWindow().setVisible(true);
 
                     // after create Frame, transfer the tab to other jtabbedpane
-                    ((DnDCloseButtonTabbedPane) m.getWindow().getTabs()).convertTab(getTabTransferData(e), getTargetTabIndex(e.getLocation()));
+                    ((DnDCloseButtonTabbedPane) m.getTabs()).convertTab(getTabTransferData(e), getTargetTabIndex(e.getLocation()));
                 }
 
                 // if current JTabbedPane Tab is empty dispose it.
                 if (getTabCount() < 1) {
                     // unfortunly i didnt want to close my Original menu, so check the class of parent of DnD is create from MenuLight and dispose it
-                    if (parent.getClass().equals(NewTabController.class)) {
+                    if (parent.getClass().equals(MainFrameController.class)) {
                         ((javax.swing.JFrame) parent).dispose();
                     }
                 }

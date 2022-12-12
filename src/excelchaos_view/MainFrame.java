@@ -4,6 +4,7 @@ import excelchaos_controller.TabsController;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -12,7 +13,7 @@ public class MainFrame extends JFrame {
     private JMenuBar menubar;
     private JMenu actionMenu, helpMenu, docuMenu;
     private JMenuItem insertItem, updateItem, deleteItem, seeItem, aboutUsItem, docuItem;
-    private TabsController tabs;
+
 
 
 
@@ -61,7 +62,6 @@ public class MainFrame extends JFrame {
         actionMenu.add(deleteItem);
         docuMenu.add(aboutUsItem);
         docuMenu.add(docuItem);
-        tabs = new TabsController(this);
 
 
         setTitle("Excelchaos");
@@ -69,16 +69,13 @@ public class MainFrame extends JFrame {
         setResizable(true);
         setSize(750, 750);
         setJMenuBar(menubar);
-        add(tabs.getTabs());
 
 
 
 
     }
 
-    public DnDCloseButtonTabbedPane getTabs() {
-        return tabs.getTabs();
-    }
+
 
     public JMenuItem getInsertItem() {
         return insertItem;
@@ -92,4 +89,5 @@ public class MainFrame extends JFrame {
         insertItem.addActionListener(l);
         seeItem.addActionListener(l);
     }
+
 }

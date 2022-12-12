@@ -6,15 +6,14 @@ import excelchaos_view.ToolbarShowPersonView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ToolbarShowPersonController implements ActionListener {
+public class ToolbarShowPersonController {
     private ToolbarShowPersonView toolbar;
-    private MainFrame frame;
 
-    public ToolbarShowPersonController(MainFrame window){
-        frame = window;
+    public ToolbarShowPersonController(){
+
         toolbar = new ToolbarShowPersonView();
         toolbar.init();
-        toolbar.setActionListener(this);
+
 
     }
 
@@ -22,9 +21,6 @@ public class ToolbarShowPersonController implements ActionListener {
         return toolbar;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
-    }
 
 }
