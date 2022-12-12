@@ -12,7 +12,7 @@ public class SideMenuPanelTables extends JPanel {
 
     private JPanel topPanel, centerpanel;
     private JLabel navi;
-    BasicArrowButton arrowButtonWest;
+    private BasicArrowButton arrowButtonWest;
 
     public void init() {
         personenliste = new JButton("Personenliste");

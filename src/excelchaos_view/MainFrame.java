@@ -1,5 +1,7 @@
 package excelchaos_view;
 
+import excelchaos_controller.TabsController;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -10,9 +12,7 @@ public class MainFrame extends JFrame {
     private JMenuBar menubar;
     private JMenu actionMenu, helpMenu, docuMenu;
     private JMenuItem insertItem, updateItem, deleteItem, seeItem, aboutUsItem, docuItem;
-    private DnDCloseButtonTabbedPane tabs;
-    private JPanel workingArea;
-    private Border blackline;
+    private TabsController tabs;
 
 
 
@@ -31,11 +31,8 @@ public class MainFrame extends JFrame {
         docuMenu = new JMenu("Dokumentation");
         docuMenu.setFont(f1);
         docuMenu.setMnemonic(KeyEvent.VK_D);
-        tabs = new DnDCloseButtonTabbedPane(this);
-        //workingArea = new JPanel();
-        //workingArea.setPreferredSize(new Dimension(100,50));
-        //workingArea.setBorder(blackline = BorderFactory.createLineBorder(Color.BLACK));
-        //workingArea.setBackground(Color.WHITE);
+
+
 
         menubar.add(actionMenu);
         menubar.add(helpMenu);
@@ -64,6 +61,7 @@ public class MainFrame extends JFrame {
         actionMenu.add(deleteItem);
         docuMenu.add(aboutUsItem);
         docuMenu.add(docuItem);
+        tabs = new TabsController(this);
 
 
         setTitle("Excelchaos");
@@ -71,14 +69,15 @@ public class MainFrame extends JFrame {
         setResizable(true);
         setSize(750, 750);
         setJMenuBar(menubar);
-        add(tabs);
-        //add(workingArea,BorderLayout.PAGE_START);
+        add(tabs.getTabs());
+
+
 
 
     }
 
     public DnDCloseButtonTabbedPane getTabs() {
-        return tabs;
+        return tabs.getTabs();
     }
 
     public JMenuItem getInsertItem() {

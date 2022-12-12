@@ -30,6 +30,8 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
     private TabAcceptor m_acceptor = null;
 
     private final DropTarget dropTarget;
+
+    private JButton button;
     private final ImageIcon icon;
     private final Dimension buttonSize;
 
@@ -176,7 +178,7 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         tab.setOpaque(false);
         JLabel label = new JLabel(title);
         label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 4));
-        JButton button = new JButton(icon);
+        button = new JButton(icon);
         button.setPreferredSize(buttonSize);
         button.setOpaque(false);
 
@@ -186,6 +188,7 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ((DnDCloseButtonTabbedPane) component.getParent()).remove(component);
+
             }
         });
         tab.add(label, BorderLayout.WEST);
@@ -193,6 +196,14 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         tab.setBorder(BorderFactory.createEmptyBorder(2, 1, 1, 1));
         super.addTab(title, component);
         setTabComponentAt(indexOfComponent(component), tab);
+    }
+
+    public void setActionListener(ActionListener l) {
+        button.addActionListener(l);
+    }
+
+    public JButton getButton() {
+        return button;
     }
 
     public TabAcceptor getAcceptor() {
