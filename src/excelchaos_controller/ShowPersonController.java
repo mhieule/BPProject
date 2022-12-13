@@ -1,6 +1,7 @@
 package excelchaos_controller;
 
 import excelchaos_view.ShowPersonView;
+import excelchaos_view.SideMenuPanelActionLogView;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -12,13 +13,13 @@ public class ShowPersonController implements ActionListener, ChangeListener {
     private ShowPersonView personView;
     private MainFrameController frameController;
     private ToolbarShowPersonController toolbarShowPerson;
+    private String title = "Personalstammdaten";
 
     public ShowPersonController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         personView = new ShowPersonView();
-        toolbarShowPerson = new ToolbarShowPersonController();
+        toolbarShowPerson = new ToolbarShowPersonController(frameController);
         personView.init();
-        toolbarShowPerson.getToolbar().setActionListener(this);
     }
 
     public ShowPersonView getPersonView() {
@@ -26,14 +27,17 @@ public class ShowPersonController implements ActionListener, ChangeListener {
     }
 
     public void showPersonView(MainFrameController mainFrameController){
-        if (mainFrameController.getTabs().indexOfTab("Personstammdaten") == -1) {
-            mainFrameController.getWindow().add(toolbarShowPerson.getToolbar(), BorderLayout.NORTH);
-            mainFrameController.getTabs().addTab("Personstammdaten", personView);
-            mainFrameController.getTabs().setActionListener(frameController.getTabsController());
-            mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab("Personstammdaten"));
+        if (mainFrameController.getTabs().indexOfTab(title) == -1) {
+            SideMenuPanelActionLogView.model.addElement("Einträge anzeigen");
+            //mainFrameController.getWindow().add(toolbarShowPerson.getToolbar(), BorderLayout.NORTH);
+            //mainFrameController.getTabs().addTab("Personstammdaten", personView);
+            //mainFrameController.getTabs().setActionListener(frameController.getTabsController());
+            //mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab("Personstammdaten"));
+            mainFrameController.addTab(title,toolbarShowPerson.getToolbar(),personView);
             mainFrameController.setChangeListener(this);
         } else {
-            mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab("Personstammdaten"));
+            mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(title));
+            SideMenuPanelActionLogView.model.addElement("Einträge anzeigen");
             mainFrameController.setChangeListener(this);
         }
     }
@@ -45,12 +49,8 @@ public class ShowPersonController implements ActionListener, ChangeListener {
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        if (frameController.getTabs().indexOfTab("Personstammdaten") != -1){
-            if(frameController.getTabs().getSelectedIndex() == frameController.getTabs().indexOfTab("Personstammdaten")){
-                frameController.getWindow().add(toolbarShowPerson.getToolbar(), BorderLayout.NORTH);
-            } else {
-                frameController.getWindow().remove(toolbarShowPerson.getToolbar());
-            }
+        if (frameController.getTabs().indexOfTab(title) != -1){
+            frameController.tabSwitch(title,getToolbarShowPerson().getToolbar());
         }
 
 

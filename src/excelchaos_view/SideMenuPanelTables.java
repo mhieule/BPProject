@@ -50,8 +50,13 @@ public class SideMenuPanelTables extends JPanel {
         return personenliste;
     }
 
+    public JButton getGehaltsliste() {
+        return gehaltsliste;
+    }
+
     public void setActionListener(ActionListener l) {
         personenliste.addActionListener(l);
+        gehaltsliste.addActionListener(l);
         arrowButtonWest.addActionListener(l);
 
     }

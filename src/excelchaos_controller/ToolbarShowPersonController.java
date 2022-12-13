@@ -1,18 +1,18 @@
 package excelchaos_controller;
-
-import excelchaos_view.MainFrame;
 import excelchaos_view.ToolbarShowPersonView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ToolbarShowPersonController {
+public class ToolbarShowPersonController implements ActionListener {
     private ToolbarShowPersonView toolbar;
+    private MainFrameController frameController;
 
-    public ToolbarShowPersonController(){
-
+    public ToolbarShowPersonController(MainFrameController mainFrameController){
+        frameController = mainFrameController;
         toolbar = new ToolbarShowPersonView();
         toolbar.init();
+        toolbar.setActionListener(this);
 
 
     }
@@ -22,5 +22,10 @@ public class ToolbarShowPersonController {
     }
 
 
-
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == toolbar.getInsertPerson()){
+            frameController.getInsertPersonController().showInsertPersonView(frameController);
+        }
+    }
 }

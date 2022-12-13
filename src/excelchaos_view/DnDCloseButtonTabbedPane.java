@@ -31,7 +31,7 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
 
     private final DropTarget dropTarget;
 
-    private JButton button;
+    private TabCloseButton button;
     private final ImageIcon icon;
     private final Dimension buttonSize;
 
@@ -181,9 +181,10 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         tab.setOpaque(false);
         JLabel label = new JLabel(title);
         label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 4));
-        button = new JButton(icon);
+        button = new TabCloseButton(icon);
         button.setPreferredSize(buttonSize);
         button.setOpaque(false);
+        button.setTabName(title);
 
         button.setUI(new BasicButtonUI());
         button.setContentAreaFilled(false);
@@ -205,7 +206,7 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         button.addActionListener(l);
     }
 
-    public JButton getButton() {
+    public TabCloseButton getButton() {
         return button;
     }
 

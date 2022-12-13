@@ -11,6 +11,9 @@ public class TabsController implements ActionListener {
     private DnDCloseButtonTabbedPane tabs;
     private MainFrameController frameController;
 
+    private String showPersonTab = "Personalstammdaten";
+    private String salaryTab = "Gehaltsliste";
+
     public TabsController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         tabs = new DnDCloseButtonTabbedPane(frameController.getWindow(),frameController);
@@ -24,12 +27,17 @@ public class TabsController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int index = tabs.indexOfTab("Personstammdaten");
-        if (index >= 0) {
+        System.out.println(tabs.getButton().getTabName());
+        if(tabs.getButton().getTabName()==showPersonTab){
             frameController.getWindow().remove(frameController.getShowPersonalData().getToolbarShowPerson().getToolbar());
             frameController.getWindow().revalidate();
             frameController.getWindow().repaint();
+        } else if (tabs.getButton().getTabName() == salaryTab){
+            frameController.getWindow().remove(frameController.getSalaryListController().getToolbarSalary().getToolbar());
+            frameController.getWindow().revalidate();
+            frameController.getWindow().repaint();
         }
+
 
 
     }

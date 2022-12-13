@@ -14,6 +14,8 @@ public class InsertPersonController implements ActionListener {
     private InsertPersonView insertPersonView;
     private MainFrameController frameController;
 
+    private String addPersonTab = "Person hinzufügen";
+
     public InsertPersonController(MainFrameController mainFrameController) {
         insertPersonView = new InsertPersonView();
         insertPersonView.init();
@@ -28,12 +30,11 @@ public class InsertPersonController implements ActionListener {
 
     public void showInsertPersonView(MainFrameController mainFrameController) {
         SideMenuPanelActionLogView.model.addElement("Eintrag einfügen");
-        if (mainFrameController.getTabs().indexOfTab("Person hinzufügen") == -1) {
-            mainFrameController.getTabs().addTab("Person hinzufügen", insertPersonView);
-            mainFrameController.getTabs().setActionListener(this);
-            mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab("Person hinzufügen"));
+        if (mainFrameController.getTabs().indexOfTab(addPersonTab) == -1) {
+            mainFrameController.getTabs().addTab(addPersonTab, insertPersonView);
+            mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addPersonTab));
         } else
-            mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab("Person hinzufügen"));
+            mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addPersonTab));
     }
 
     @Override

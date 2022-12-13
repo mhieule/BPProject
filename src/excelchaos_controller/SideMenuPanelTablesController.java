@@ -35,6 +35,8 @@ public class SideMenuPanelTablesController implements ActionListener {
             westArrowButtonPressed(frameController);
         } else if (e.getSource() == sideMenu.getPersonenliste()) {
             frameController.getShowPersonalData().showPersonView(frameController);
+        } else if (e.getSource()==sideMenu.getGehaltsliste()){
+            frameController.getSalaryListController().showSalaryView(frameController);
         }
     }
 

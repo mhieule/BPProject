@@ -1,23 +1,21 @@
 package excelchaos_view;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class ShowPersonView extends JPanel {
+public class SalaryListView extends JPanel {
 
-    public void init() {
+    public void init(){
         setLayout(new BorderLayout());
-        System.out.println("SEEING ITEMS");
-
-        String column[] = {"Name", "Vorname", "Wohnadresse", "E-Mail Privat", "Telefon Privat",
-                "Geburtsdatum", "Staatsangehörigkeit 1", "Staatsangehörigkeit 2", "Personal.Nr", "TUID", "Vertrag mit",
-                "Status", "Gehalt Eingeplant bis", "Transponder.Nr", "Büro.Nr", "Telefon TUDA", "Inventarliste"
+        String column[] = {
+                "Name", "Vorname", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
         };
-        File f = new File("src/data");
+        File f = new File("src/salaryData");
         try {
             BufferedReader br = new BufferedReader(new FileReader(f));
             int lines = 0;
@@ -47,5 +45,4 @@ public class ShowPersonView extends JPanel {
             throw new RuntimeException(e);
         }
     }
-
 }
