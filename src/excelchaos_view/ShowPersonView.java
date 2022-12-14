@@ -9,6 +9,8 @@ import java.io.IOException;
 
 public class ShowPersonView extends JPanel {
 
+    private boolean hasAToolbar;
+
     public void init() {
         setLayout(new BorderLayout());
         System.out.println("SEEING ITEMS");
@@ -48,4 +50,10 @@ public class ShowPersonView extends JPanel {
         }
     }
 
+    public void setHasToolbar(boolean hasToolbar) {
+        this.hasAToolbar = hasToolbar;
+    }
+    public boolean hasToolbar(){
+        return hasAToolbar;
+    }
 }

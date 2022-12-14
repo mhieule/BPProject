@@ -17,6 +17,7 @@ public class SalaryListController implements ChangeListener {
         frameController = mainFrameController;
         salaryListView = new SalaryListView();
         toolbarSalaryList = new ToolbarSalaryListController(frameController);
+        salaryListView.setHasToolbar(true);
         salaryListView.init();
     }
 

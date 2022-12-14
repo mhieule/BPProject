@@ -2,6 +2,8 @@ package excelchaos_controller;
 
 import excelchaos_view.DnDCloseButtonTabbedPane;
 import excelchaos_view.MainFrame;
+import excelchaos_view.SalaryListView;
+import excelchaos_view.ShowPersonView;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
@@ -94,4 +96,38 @@ public class MainFrameController implements ActionListener {
             getWindow().remove(toolBar);
         }
     }
+    public void removeAllToolbars(){
+        getWindow().remove(getShowPersonalData().getToolbarShowPerson().getToolbar());
+        getWindow().remove(getSalaryListController().getToolbarSalary().getToolbar());
+        getWindow().revalidate();
+        getWindow().repaint();
+    }
+    public void addToolbarsNewWindow(Component component){
+        if (component.getClass() == ShowPersonView.class){
+            if (((ShowPersonView) component).hasToolbar()){
+                getWindow().add(showPersonalData.getToolbarShowPerson().getToolbar(),BorderLayout.NORTH);
+            }
+        } else if (component.getClass() == SalaryListView.class){
+            if (((SalaryListView) component).hasToolbar()){
+                getWindow().add(salaryListController.getToolbarSalary().getToolbar(),BorderLayout.NORTH);
+            }
+        }
+        getWindow().revalidate();
+        getWindow().repaint();
+    }
+    public void removeToolbarsNewWindow(Component component){
+        if (component.getClass() == ShowPersonView.class){
+            if (((ShowPersonView) component).hasToolbar()){
+                getWindow().remove(showPersonalData.getToolbarShowPerson().getToolbar());
+
+            }
+        } else if (component.getClass() == SalaryListView.class){
+            if (((SalaryListView) component).hasToolbar()){
+                getWindow().remove(salaryListController.getToolbarSalary().getToolbar());
+            }
+        }
+        getWindow().revalidate();
+        getWindow().repaint();
+    }
+
 }
