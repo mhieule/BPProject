@@ -16,7 +16,7 @@ public class ShowPersonView extends JPanel {
         System.out.println("SEEING ITEMS");
 
         String column[] = {"Name", "Vorname", "Wohnadresse", "E-Mail Privat", "Telefon Privat",
-                "Geburtsdatum", "Staatsangehörigkeit 1", "Staatsangehörigkeit 2", "Personal.Nr", "TUID", "Vertrag mit",
+                "Geburtsdatum", "Staatsangehörigkeit 1", "Staatsangehörigkeit 2", "Personal.Nr", "TU-ID", "Vertrag mit",
                 "Status", "Gehalt Eingeplant bis", "Transponder.Nr", "Büro.Nr", "Telefon TUDA", "Inventarliste"
         };
         File f = new File("src/data");

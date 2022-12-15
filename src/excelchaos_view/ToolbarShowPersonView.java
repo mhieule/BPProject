@@ -15,7 +15,7 @@ public class ToolbarShowPersonView extends JToolBar {
     public void init(){
         setFloatable(false);
         setBackground(Color.WHITE);
-        insertPerson = new JButton("Person Hinzufügen");
+        insertPerson = new JButton("Person hinzufügen");
         updateView = new JButton("Aktualisieren");
         deletePerson = new JButton("Eintrag löschen");
         searchField = new JTextField("Suchen");
