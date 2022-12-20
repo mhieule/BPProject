@@ -1,7 +1,9 @@
 package excelchaos_controller;
 
+import excelchaos_model.Employee;
 import excelchaos_view.InsertPersonView;
 import excelchaos_view.SideMenuPanelActionLogView;
+import excelchaos_model.EmployeeDataManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,36 +47,32 @@ public class InsertPersonController implements ActionListener {
         }
         if (e.getSource() == insertPersonView.getSubmit()) {
             System.out.println("submitting");
-            File file = new File("src/data");
-            FileWriter fr = null;
-            try {
-                fr = new FileWriter(file, true);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            BufferedWriter br = new BufferedWriter(fr);
-            try {
-                br.write(insertPersonView.getTfName().getText() + "," + insertPersonView.getTfVorname().getText() + "," + insertPersonView.getTfStrasse().getText() + ","
-                        + insertPersonView.getTfPrivatEmail().getText() + "," + insertPersonView.getTfPrivateTelefonnummer().getText() + "," + insertPersonView.getTfGeburtsdatum().getText() + ","
-                        + insertPersonView.getNationalityPickList().getSelectedItem().toString() + "," + insertPersonView.getNationalityPickList2().getSelectedItem().toString() + "," + insertPersonView.getTfPersonalnummer().getText() + ","
-                        + insertPersonView.getTfTuid().getText() + "," + insertPersonView.getTfVertragMit().getText() + "," + insertPersonView.getStatusPicklist().getSelectedItem().toString() + ","
-                        + insertPersonView.getTfGehaltEingeplanntBis().getText() + "," + insertPersonView.getTfTranspondernummer().getText() + "," + insertPersonView.getTfBueronummer().getText() + ","
-                        + insertPersonView.getTfTelefonnummerTUDA().getText() + "," + insertPersonView.getTfInventarList().getText() + "\n"
-                );
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-
-            try {
-                br.close();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            try {
-                fr.close();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+            int id = employeeDataManager.getNextID();
+            String surname = insertPersonView.getTfName().getText();
+            String name  = insertPersonView.getTfVorname().getText();
+            String email_private = insertPersonView.getTfPrivatEmail().getText();
+            String phone_private = insertPersonView.getTfPrivateTelefonnummer().getText();
+            String citizenship_1 = insertPersonView.getNationalityPickList().getSelectedItem().toString();
+            String citizenship_2 = insertPersonView.getNationalityPickList2().getSelectedItem().toString();
+            String employeeNumber = insertPersonView.getTfPersonalnummer().getText();
+            String tu_id = insertPersonView.getTfTuid().getText();
+            boolean visa_required = false;
+            String status = insertPersonView.getStatusPicklist().toString();
+            String transponder_number = insertPersonView.getTfTranspondernummer().getText();
+            String office_number = insertPersonView.getTfBueronummer().getText();
+            String salaryPlannedUntil = insertPersonView.getTfGehaltEingeplanntBis().getText();
+            String visaExpiration = "01.01.2222";
+            String phone_tuda = "1234556";
+            String dateOfBirth = insertPersonView.getTfGeburtsdatum().getText();
+            String houseNumber = insertPersonView.getTfHausnummer().getText();
+            String zip_code = insertPersonView.getTfPersonalnummer().getText();
+            String additional_address = insertPersonView.getTfAdresszusatz().getText();
+            String city = insertPersonView.getTfStadt().getText();
+            Employee newEmployee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
+                    citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
+                    salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+            employeeDataManager.addEmployee(newEmployee);
             insertPersonView.removeAll();
             insertPersonView.revalidate();
             insertPersonView.repaint();

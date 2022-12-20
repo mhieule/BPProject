@@ -39,13 +39,21 @@ public class Employee {
     private String visa_expiration;
     @DatabaseField()
     private String date_of_birth;
-
+    @DatabaseField()
+    private String house_number;
+    @DatabaseField()
+    private String zip_code;
+    @DatabaseField()
+    private String additional_address;
+    @DatabaseField()
+    private String city;
 
     public Employee(){}
     public Employee(int id, String name, String surname, String email_private, String phone_private,
                     String citizenship_1, String citizenship_2, String employee_number, String tu_id, boolean visa_required,
                     String status, String transponder_number, String office_number, String phone_tuda,
-                    String salary_planned_until, String visa_expiration, String date_of_birth){
+                    String salary_planned_until, String visa_expiration, String date_of_birth, String house_number,
+                    String zip_code, String additional_address, String city){
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -63,6 +71,10 @@ public class Employee {
         this.salary_planned_until = salary_planned_until;
         this.visa_expiration = visa_expiration;
         this.date_of_birth = date_of_birth;
+        this.house_number = house_number;
+        this.zip_code = zip_code;
+        this.additional_address = additional_address;
+        this.city = city;
     }
 
     public int getId(){
@@ -187,5 +199,45 @@ public class Employee {
 
     public void setVisa_expiration(String visa_expiration){
         this.visa_expiration = visa_expiration;
+    }
+
+    public void setDate_of_birth(String date_of_birth){
+        this.date_of_birth = date_of_birth;
+    }
+
+    public String getDate_of_birth(){
+        return this.date_of_birth;
+    }
+
+    public void setHouse_number(String house_number){
+        this.house_number = house_number;
+    }
+
+    public String getHouse_number(){
+        return this.house_number;
+    }
+
+    public String getZip_code(){
+        return this.zip_code;
+    }
+
+    public void setZip_code(String zip_code){
+        this.zip_code = zip_code;
+    }
+
+    public void setAdditional_address(String additional_address){
+        this.additional_address = additional_address;
+    }
+
+    public String getAdditional_address(){
+        return this.additional_address;
+    }
+
+    public void setCity(String city){
+        this.city = city;
+    }
+
+    public String getCity(){
+        return this.city;
     }
 }

@@ -3,21 +3,21 @@ package excelchaos_model;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDataManager {
     private ConnectionSource connectionSource;
-    private Dao<Employee, Integer> contractsDao;
+    private Dao<Employee, Integer> employeesDao;
     public EmployeeDataManager(){
         try{
             String databaseUrl = "jdbc:sqlite:Excelchaos.db";
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
-            this.contractsDao = DaoManager.createDao(connectionSource, Employee.class);
+            this.employeesDao = DaoManager.createDao(connectionSource, Employee.class);
         }catch (Exception e){
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
@@ -35,7 +35,7 @@ public class EmployeeDataManager {
 
     public void addEmployee(Employee employee){
         try {
-            contractsDao.create(employee);
+            employeesDao.create(employee);
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
@@ -45,7 +45,7 @@ public class EmployeeDataManager {
     public Employee getEmployee(int id){
         Employee employee = null;
         try {
-            employee = contractsDao.queryForId(id);
+            employee = employeesDao.queryForId(id);
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
@@ -56,11 +56,41 @@ public class EmployeeDataManager {
     public List<Employee> getAllEmployees(){
         List<Employee> employees = null;
         try {
-            employees = contractsDao.queryForAll();
+            employees = employeesDao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
         return employees;
+    }
+
+    public int getNextID(){
+        int id = 0;
+        try {
+            QueryBuilder<Employee, Integer> builder = employeesDao.queryBuilder();
+            builder.orderBy("id", false);
+            Employee highest = employeesDao.queryForFirst(builder.prepare());
+            if (highest == null){
+                id = 1;
+            }else{
+                id = highest.getId()+1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return id;
+    }
+
+    public int getRowCount(){
+        long count = 0;
+        try {
+            QueryBuilder<Employee, Integer> builder = employeesDao.queryBuilder();
+            count = builder.countOf();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return (int)count;
     }
 }
