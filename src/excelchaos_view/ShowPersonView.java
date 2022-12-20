@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ShowPersonView extends JPanel {
-
+    private boolean hasAToolbar;
     public void init() {
         setLayout(new BorderLayout());
         System.out.println("SEEING ITEMS");
@@ -22,6 +22,7 @@ public class ShowPersonView extends JPanel {
                 "Geburtsdatum", "Staatsangehörigkeit 1", "Staatsangehörigkeit 2", "Personal.Nr", "TUID",
                 "Status", "Gehalt Eingeplant bis", "Transponder.Nr", "Büro.Nr", "Telefon TUDA"
         };
+
         /*File f = new File("src/data");
         try {
             BufferedReader br = new BufferedReader(new FileReader(f));
@@ -91,6 +92,12 @@ public class ShowPersonView extends JPanel {
         add(sp);
         revalidate();
         repaint();
+    }
+    public void setHasToolbar(boolean hasToolbar) {
+        this.hasAToolbar = hasToolbar;
+    }
+    public boolean hasToolbar(){
+        return hasAToolbar;
     }
 
 }
