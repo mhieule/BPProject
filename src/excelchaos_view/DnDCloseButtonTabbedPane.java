@@ -1,6 +1,5 @@
 package excelchaos_view;
 
-import excelchaos.Main;
 import excelchaos_controller.MainFrameController;
 
 import javax.swing.*;
@@ -41,6 +40,7 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
     public DnDCloseButtonTabbedPane(final Component parent, MainFrameController mainFrameController) {
         super();
         frameController = mainFrameController;
+
         final DragSourceListener dsl = new DragSourceListener() {
             @Override
             public void dragEnter(DragSourceDragEvent e) {
@@ -121,13 +121,17 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
                     ((DnDCloseButtonTabbedPane) m.getTabs()).convertTab(getTabTransferData(e), getTargetTabIndex(e.getLocation()));
                 }
 
+
+
                 // if current JTabbedPane Tab is empty dispose it.
                 if (getTabCount() < 1) {
                     // unfortunly i didnt want to close my Original menu, so check the class of parent of DnD is create from MenuLight and dispose it
-                    if (parent.getClass().equals(MainFrameController.class)) {
+                    if (parent.getClass().equals(MainFrame.class)) {
                         ((javax.swing.JFrame) parent).dispose();
+                        return;
                     }
                 }
+
             }
 
             @Override
@@ -175,6 +179,10 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
 
     }
 
+    public MainFrameController getFrameController() {
+        return frameController;
+    }
+
     @Override
     public void addTab(String title, final Component component) {
         JPanel tab = new JPanel(new BorderLayout());
@@ -209,6 +217,7 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
     public TabCloseButton getButton() {
         return button;
     }
+
 
     public TabAcceptor getAcceptor() {
         return m_acceptor;
@@ -396,6 +405,7 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
                 convertTab(getTabTransferData(a_event),
                         getTargetTabIndex(a_event.getLocation()));
                 a_event.dropComplete(true);
+
             } else {
                 a_event.dropComplete(false);
             } // if-else
@@ -542,7 +552,6 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
                 if (a_targetIndex < 0) {
                     a_targetIndex = 0;
                 } // if
-
                 insertTab(str, null, cmp, null, a_targetIndex);
                 setTabComponentAt(a_targetIndex, tcmp);
             } // if
@@ -558,11 +567,13 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
             addTab(str, cmp);
             setTabComponentAt(getTabCount() - 1, tcmp);
             setSelectedIndex(getTabCount() - 1);
+
         } else if (sourceIndex > a_targetIndex) {
             source.remove(sourceIndex);
             insertTab(str, null, cmp, null, a_targetIndex);
             setTabComponentAt(a_targetIndex, tcmp);
             setSelectedIndex(a_targetIndex);
+
         } else {
             source.remove(sourceIndex);
             insertTab(str, null, cmp, null, a_targetIndex - 1);

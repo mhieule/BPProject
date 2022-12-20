@@ -19,6 +19,7 @@ public class ShowPersonController implements ActionListener, ChangeListener {
         frameController = mainFrameController;
         personView = new ShowPersonView();
         toolbarShowPerson = new ToolbarShowPersonController(frameController);
+        personView.setHasToolbar(true);
         personView.init();
     }
 
@@ -29,10 +30,6 @@ public class ShowPersonController implements ActionListener, ChangeListener {
     public void showPersonView(MainFrameController mainFrameController){
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
             SideMenuPanelActionLogView.model.addElement("Einträge anzeigen");
-            //mainFrameController.getWindow().add(toolbarShowPerson.getToolbar(), BorderLayout.NORTH);
-            //mainFrameController.getTabs().addTab("Personstammdaten", personView);
-            //mainFrameController.getTabs().setActionListener(frameController.getTabsController());
-            //mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab("Personstammdaten"));
             mainFrameController.addTab(title,toolbarShowPerson.getToolbar(),personView);
             mainFrameController.setChangeListener(this);
         } else {

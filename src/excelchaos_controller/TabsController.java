@@ -2,6 +2,7 @@ package excelchaos_controller;
 
 import excelchaos_view.DnDCloseButtonTabbedPane;
 import excelchaos_view.MainFrame;
+import excelchaos_view.TabCloseButton;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,16 +28,17 @@ public class TabsController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(tabs.getButton().getTabName());
-        if(tabs.getButton().getTabName()==showPersonTab){
+        TabCloseButton buttonInQuestion = (TabCloseButton) e.getSource();
+        if(buttonInQuestion.getTabName().equals(showPersonTab)){
             frameController.getWindow().remove(frameController.getShowPersonalData().getToolbarShowPerson().getToolbar());
             frameController.getWindow().revalidate();
             frameController.getWindow().repaint();
-        } else if (tabs.getButton().getTabName() == salaryTab){
+        } else if(buttonInQuestion.getTabName().equals(salaryTab)){
             frameController.getWindow().remove(frameController.getSalaryListController().getToolbarSalary().getToolbar());
             frameController.getWindow().revalidate();
             frameController.getWindow().repaint();
         }
+
 
 
 

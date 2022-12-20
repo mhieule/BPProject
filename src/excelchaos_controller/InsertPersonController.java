@@ -21,6 +21,7 @@ public class InsertPersonController implements ActionListener {
     public InsertPersonController(MainFrameController mainFrameController) {
         insertPersonView = new InsertPersonView();
         insertPersonView.init();
+        insertPersonView.setHasToolbar(false);
         insertPersonView.setActionListener(this);
         frameController = mainFrameController;
 
