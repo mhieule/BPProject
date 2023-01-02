@@ -20,7 +20,7 @@ public class InsertPersonView extends JPanel {
     private JComboBox nationalityPickList, nationalityPickList2, statusPicklist;
     private JCheckBox nationalityCheckBox;
 
-    private JButton submit, reset;
+    private JButton submit, reset, salary;
 
     private JPanel centerUp, centerDown;
 
@@ -63,13 +63,6 @@ public class InsertPersonView extends JPanel {
         factor++;
 
         // An dieser Stelle müssen folgende 6 Felder hinzugefügt werden: Straße, Hausnummer, Adresszusatz, PLZ, Stadt, Land
-        strasse = new JLabel("Straße");
-        centerUp.add(strasse);
-        strasse.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
-        tfStrasse = new JTextField();
-        tfStrasse.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
-        centerUp.add(tfStrasse);
-        factor++;
 
         // Hausnummer
         hausnummer = new JLabel("Hausnummer");
@@ -247,6 +240,8 @@ public class InsertPersonView extends JPanel {
 
         submit = new JButton("Person speichern");
         centerDown.add(submit);
+        salary = new JButton("Person speichern und zur Gehaltseingabe");
+        centerDown.add(salary);
         reset = new JButton("Felder zurücksetzen");
         centerDown.add(reset);
 
@@ -257,6 +252,7 @@ public class InsertPersonView extends JPanel {
     public void setActionListener(ActionListener l) {
         nationalityCheckBox.addActionListener(l);
         submit.addActionListener(l);
+        salary.addActionListener(l);
     }
 
     public JCheckBox getNationalityCheckBox() {
@@ -275,16 +271,16 @@ public class InsertPersonView extends JPanel {
         return submit;
     }
 
+    public JButton getSalaryEntry(){
+        return salary;
+    }
+
     public JTextField getTfName() {
         return tfName;
     }
 
     public JTextField getTfVorname() {
         return tfVorname;
-    }
-
-    public JTextField getTfStrasse() {
-        return tfStrasse;
     }
 
     public JTextField getTfHausnummer() {

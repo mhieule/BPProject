@@ -9,6 +9,7 @@ public class SideMenuPanelTables extends JPanel {
     private JButton personenliste;
     private JButton gehaltsliste;
     private JButton inventarliste;
+    private JButton gehaltshistorie;
 
     private JPanel topPanel, centerpanel;
     private JLabel navi;
@@ -18,9 +19,11 @@ public class SideMenuPanelTables extends JPanel {
         personenliste = new JButton("Personenliste");
         gehaltsliste = new JButton("Gehaltsliste");
         inventarliste = new JButton("Inventarliste");
-        personenliste.setPreferredSize(new Dimension(115, 25));
-        inventarliste.setPreferredSize(new Dimension(115, 25));
-        gehaltsliste.setPreferredSize(new Dimension(115, 25));
+        gehaltshistorie = new JButton("Gehaltshistorie");
+        personenliste.setPreferredSize(new Dimension(120, 25));
+        inventarliste.setPreferredSize(new Dimension(120, 25));
+        gehaltsliste.setPreferredSize(new Dimension(120, 25));
+        gehaltshistorie.setPreferredSize(new Dimension(120, 25));
 
         arrowButtonWest = new BasicArrowButton(BasicArrowButton.WEST);
         topPanel = new JPanel();
@@ -31,9 +34,10 @@ public class SideMenuPanelTables extends JPanel {
         topPanel.add(navi);
         topPanel.add(arrowButtonWest);
         add(topPanel, BorderLayout.PAGE_START);
-        centerpanel.setPreferredSize(new Dimension(130, 100));
+        centerpanel.setPreferredSize(new Dimension(130, 130));
         centerpanel.add(personenliste);
         centerpanel.add(gehaltsliste);
+        centerpanel.add(gehaltshistorie);
         centerpanel.add(inventarliste);
         add(centerpanel, BorderLayout.CENTER);
         setBackground(Color.white);
@@ -54,9 +58,14 @@ public class SideMenuPanelTables extends JPanel {
         return gehaltsliste;
     }
 
+    public JButton getGehaltshistorie() {
+        return gehaltshistorie;
+    }
+
     public void setActionListener(ActionListener l) {
         personenliste.addActionListener(l);
         gehaltsliste.addActionListener(l);
+        gehaltshistorie.addActionListener(l);
         arrowButtonWest.addActionListener(l);
 
     }

@@ -17,7 +17,7 @@ public class ShowPersonView extends JPanel {
         setLayout(new BorderLayout());
         System.out.println("SEEING ITEMS");
 
-        String column[] = {"Name", "Vorname","Haunsummer", "Plz","Stadt","Addresszusatz",
+        String column[] = {"Name", "Vorname","Haunsummer", "PLZ","Stadt","Addresszusatz",
                 "E-Mail Privat", "Telefon Privat",
                 "Geburtsdatum", "Staatsangehörigkeit 1", "Staatsangehörigkeit 2", "Personal.Nr", "TUID",
                 "Status", "Gehalt Eingeplant bis", "Transponder.Nr", "Büro.Nr", "Telefon TUDA"

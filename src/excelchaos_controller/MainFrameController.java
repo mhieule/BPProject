@@ -1,9 +1,6 @@
 package excelchaos_controller;
 
-import excelchaos_view.DnDCloseButtonTabbedPane;
-import excelchaos_view.MainFrame;
-import excelchaos_view.SalaryListView;
-import excelchaos_view.ShowPersonView;
+import excelchaos_view.*;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
@@ -19,6 +16,7 @@ public class MainFrameController implements ActionListener {
     private ShowPersonController showPersonalData;
     private InsertPersonController insertPersonController;
     private SalaryListController salaryListController;
+    private SalaryHistoryController salaryHistoryController;
 
 
 
@@ -35,7 +33,7 @@ public class MainFrameController implements ActionListener {
         insertPersonController = new InsertPersonController(this);
         showPersonalData = new ShowPersonController(this);
         salaryListController = new SalaryListController(this);
-
+        salaryHistoryController = new SalaryHistoryController(this);
 
         window.setVisible(true);
 
@@ -48,7 +46,6 @@ public class MainFrameController implements ActionListener {
 
         } else if (e.getSource() == window.getSeeItem()) {
             showPersonalData.showPersonView(this);
-
         }
 
     }
@@ -68,6 +65,8 @@ public class MainFrameController implements ActionListener {
     public SalaryListController getSalaryListController() {
         return salaryListController;
     }
+
+    public SalaryHistoryController getSalaryHistoryController(){return salaryHistoryController;}
 
     public void setChangeListener (ChangeListener l){
         tabsController.getTabs().addChangeListener(l);
@@ -99,6 +98,7 @@ public class MainFrameController implements ActionListener {
     public void removeAllToolbars(){
         getWindow().remove(getShowPersonalData().getToolbarShowPerson().getToolbar());
         getWindow().remove(getSalaryListController().getToolbarSalary().getToolbar());
+        getWindow().remove(getSalaryHistoryController().getToolbarSalary().getToolbar());
         getWindow().revalidate();
         getWindow().repaint();
     }
@@ -125,7 +125,12 @@ public class MainFrameController implements ActionListener {
             if (((SalaryListView) component).hasToolbar()){
                 getWindow().remove(salaryListController.getToolbarSalary().getToolbar());
             }
+        } else if (component.getClass() == SalaryHistoryView.class){
+            if (((SalaryHistoryView) component).hasToolbar()){
+                getWindow().remove(salaryHistoryController.getToolbarSalary().getToolbar());
+            }
         }
+
         getWindow().revalidate();
         getWindow().repaint();
     }

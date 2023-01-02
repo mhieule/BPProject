@@ -14,6 +14,7 @@ public class TabsController implements ActionListener {
 
     private String showPersonTab = "Personalstammdaten";
     private String salaryTab = "Gehaltsliste";
+    private String salaryHistoryTab = "Gehaltshistorie";
 
     public TabsController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
@@ -37,8 +38,11 @@ public class TabsController implements ActionListener {
             frameController.getWindow().remove(frameController.getSalaryListController().getToolbarSalary().getToolbar());
             frameController.getWindow().revalidate();
             frameController.getWindow().repaint();
-        }
-
+        } else if(buttonInQuestion.getTabName().equals(salaryHistoryTab)){
+            frameController.getWindow().remove(frameController.getSalaryHistoryController().getToolbarSalary().getToolbar());
+            frameController.getWindow().revalidate();
+            frameController.getWindow().repaint();
+    }
 
 
 
