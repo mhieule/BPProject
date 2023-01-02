@@ -39,7 +39,7 @@ public class TabsController implements ActionListener {
             frameController.getWindow().revalidate();
             frameController.getWindow().repaint();
         } else if(buttonInQuestion.getTabName().equals(salaryHistoryTab)){
-            frameController.getWindow().remove(frameController.getSalaryHistoryController().getToolbarSalary().getToolbar());
+            frameController.getWindow().remove(frameController.getSalaryHistoryController().getToolbarSalaryHistory().getToolbar());
             frameController.getWindow().revalidate();
             frameController.getWindow().repaint();
     }

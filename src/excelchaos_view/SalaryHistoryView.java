@@ -13,9 +13,9 @@ public class SalaryHistoryView extends JPanel{
     public void init(){
         setLayout(new BorderLayout());
         String column[] = {
-                "Name", "Vorname", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
+                "Name", "Datum", "Betrag", "Kommentar"
         };
-        File f = new File("src/salaryData");
+        File f = new File("src/salaryHistoryData");
         try {
             BufferedReader br = new BufferedReader(new FileReader(f));
             int lines = 0;

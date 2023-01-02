@@ -98,7 +98,7 @@ public class MainFrameController implements ActionListener {
     public void removeAllToolbars(){
         getWindow().remove(getShowPersonalData().getToolbarShowPerson().getToolbar());
         getWindow().remove(getSalaryListController().getToolbarSalary().getToolbar());
-        getWindow().remove(getSalaryHistoryController().getToolbarSalary().getToolbar());
+        getWindow().remove(getSalaryHistoryController().getToolbarSalaryHistory().getToolbar());
         getWindow().revalidate();
         getWindow().repaint();
     }
@@ -127,7 +127,7 @@ public class MainFrameController implements ActionListener {
             }
         } else if (component.getClass() == SalaryHistoryView.class){
             if (((SalaryHistoryView) component).hasToolbar()){
-                getWindow().remove(salaryHistoryController.getToolbarSalary().getToolbar());
+                getWindow().remove(salaryHistoryController.getToolbarSalaryHistory().getToolbar());
             }
         }
 
