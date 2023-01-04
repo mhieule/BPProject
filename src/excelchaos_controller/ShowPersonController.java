@@ -9,33 +9,33 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ShowPersonController implements ActionListener, ChangeListener {
-    private ShowPersonView personView;
+public class ShowPersonController implements ActionListener {
+    private ShowPersonView showPersonView;
     private MainFrameController frameController;
     private ToolbarShowPersonController toolbarShowPerson;
     private String title = "Personalstammdaten";
 
     public ShowPersonController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
-        personView = new ShowPersonView();
+        showPersonView = new ShowPersonView();
         toolbarShowPerson = new ToolbarShowPersonController(frameController);
-        personView.setHasToolbar(true);
-        personView.init();
+        showPersonView.init();
+        showPersonView.add(toolbarShowPerson.getToolbar(),BorderLayout.NORTH);
     }
 
     public ShowPersonView getPersonView() {
-        return personView;
+        return showPersonView;
     }
 
     public void showPersonView(MainFrameController mainFrameController){
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
             SideMenuPanelActionLogView.model.addElement("Einträge anzeigen");
-            mainFrameController.addTab(title,toolbarShowPerson.getToolbar(),personView);
-            mainFrameController.setChangeListener(this);
+            mainFrameController.addTab(title,showPersonView);
+            //mainFrameController.setChangeListener(this);
         } else {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(title));
             SideMenuPanelActionLogView.model.addElement("Einträge anzeigen");
-            mainFrameController.setChangeListener(this);
+            //mainFrameController.setChangeListener(this);
         }
     }
 
@@ -44,14 +44,14 @@ public class ShowPersonController implements ActionListener, ChangeListener {
 
     }
 
-    @Override
+    /*@Override
     public void stateChanged(ChangeEvent e) {
         if (frameController.getTabs().indexOfTab(title) != -1){
             frameController.tabSwitch(title,getToolbarShowPerson().getToolbar());
         }
 
 
-    }
+    }*/
 
     public ToolbarShowPersonController getToolbarShowPerson() {
         return toolbarShowPerson;

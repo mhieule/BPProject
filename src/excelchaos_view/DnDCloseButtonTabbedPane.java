@@ -1,6 +1,7 @@
 package excelchaos_view;
 
 import excelchaos_controller.MainFrameController;
+import excelchaos_controller.NewFrameController;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -34,12 +35,9 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
     private final ImageIcon icon;
     private final Dimension buttonSize;
 
-    private MainFrameController frameController;
 
-
-    public DnDCloseButtonTabbedPane(final Component parent, MainFrameController mainFrameController) {
+    public DnDCloseButtonTabbedPane(final Component parent) {
         super();
-        frameController = mainFrameController;
 
         final DragSourceListener dsl = new DragSourceListener() {
             @Override
@@ -113,7 +111,7 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
                 // if drop failed, create new JFrame with JTabbedPane included with public access
                 if (!e.getDropSuccess()) {
                     // MenuLight class Extends JFrame and Included 1 component JTabbedPane called superPane
-                    MainFrameController m = new MainFrameController();
+                    NewFrameController m = new NewFrameController();
                     m.getWindow().setLocation(e.getLocation());
                     m.getWindow().setVisible(true);
 
@@ -122,11 +120,10 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
                 }
 
 
-
                 // if current JTabbedPane Tab is empty dispose it.
                 if (getTabCount() < 1) {
                     // unfortunly i didnt want to close my Original menu, so check the class of parent of DnD is create from MenuLight and dispose it
-                    if (parent.getClass().equals(MainFrame.class)) {
+                    if (parent.getClass().equals(NewFrame.class)) {
                         ((javax.swing.JFrame) parent).dispose();
                         return;
                     }
@@ -175,12 +172,7 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
 
         icon = new ImageIcon("resources/images/xsymbol.png");
         buttonSize = new Dimension(icon.getIconWidth(), icon.getIconHeight());
-        //buttonSize = new Dimension(24,24);
 
-    }
-
-    public MainFrameController getFrameController() {
-        return frameController;
     }
 
     @Override
@@ -199,7 +191,17 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ((DnDCloseButtonTabbedPane) component.getParent()).remove(component);
+                if(component.getParent().getParent().getParent().getParent().getParent().getClass() == NewFrame.class){
+                    if(((DnDCloseButtonTabbedPane)component.getParent()).getTabCount() <= 1){
+                        ((javax.swing.JFrame) component.getParent().getParent().getParent().getParent().getParent()).dispose();
+                    } else if (((DnDCloseButtonTabbedPane)component.getParent()).getTabCount() > 1){
+                        ((DnDCloseButtonTabbedPane) component.getParent()).remove(component);
+                    }
+                } else {
+                    ((DnDCloseButtonTabbedPane) component.getParent()).remove(component);
+                }
+
+
 
             }
         });

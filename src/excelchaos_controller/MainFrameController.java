@@ -80,13 +80,11 @@ public class MainFrameController implements ActionListener {
         return tabsController.getTabs();
     }
 
-    public void addTab(String name,JToolBar toolBar, JPanel panel){
-        getWindow().add(toolBar, BorderLayout.NORTH);
+    public void addTab(String name, JPanel panel){
         getTabs().addTab(name,panel);
-        getTabs().setActionListener(getTabsController());
         getTabs().setSelectedIndex(getTabs().indexOfTab(name));
     }
-    public void tabSwitch(String name,JToolBar toolBar){
+    /*public void tabSwitch(String name,JToolBar toolBar){
         if(getTabs().getSelectedIndex() == getTabs().indexOfTab(name)){
             getWindow().add(toolBar,BorderLayout.NORTH);
             getWindow().revalidate();
@@ -94,15 +92,15 @@ public class MainFrameController implements ActionListener {
         } else {
             getWindow().remove(toolBar);
         }
-    }
-    public void removeAllToolbars(){
+    }*/
+    /*public void removeAllToolbars(){
         getWindow().remove(getShowPersonalData().getToolbarShowPerson().getToolbar());
         getWindow().remove(getSalaryListController().getToolbarSalary().getToolbar());
         getWindow().remove(getSalaryHistoryController().getToolbarSalaryHistory().getToolbar());
         getWindow().revalidate();
         getWindow().repaint();
-    }
-    public void addToolbarsNewWindow(Component component){
+    }*/
+    /*public void addToolbarsNewWindow(Component component){
         if (component.getClass() == ShowPersonView.class){
             if (((ShowPersonView) component).hasToolbar()){
                 getWindow().add(showPersonalData.getToolbarShowPerson().getToolbar(),BorderLayout.NORTH);
@@ -114,8 +112,8 @@ public class MainFrameController implements ActionListener {
         }
         getWindow().revalidate();
         getWindow().repaint();
-    }
-    public void removeToolbarsNewWindow(Component component){
+    }*/
+   /* public void removeToolbarsNewWindow(Component component){
         if (component.getClass() == ShowPersonView.class){
             if (((ShowPersonView) component).hasToolbar()){
                 getWindow().remove(showPersonalData.getToolbarShowPerson().getToolbar());
@@ -133,6 +131,6 @@ public class MainFrameController implements ActionListener {
 
         getWindow().revalidate();
         getWindow().repaint();
-    }
+    }*/
 
 }

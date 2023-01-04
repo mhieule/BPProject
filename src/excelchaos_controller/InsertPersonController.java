@@ -7,10 +7,6 @@ import excelchaos_model.EmployeeDataManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class InsertPersonController implements ActionListener {
     private InsertPersonView insertPersonView;
@@ -21,7 +17,6 @@ public class InsertPersonController implements ActionListener {
     public InsertPersonController(MainFrameController mainFrameController) {
         insertPersonView = new InsertPersonView();
         insertPersonView.init();
-        insertPersonView.setHasToolbar(false);
         insertPersonView.setActionListener(this);
         frameController = mainFrameController;
 

@@ -7,7 +7,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 
-public class SalaryHistoryController implements ChangeListener {
+public class SalaryHistoryController  {
     private SalaryHistoryView salaryHistoryView;
     private ToolbarSalaryHistoryController toolbarSalaryHistory;
     private MainFrameController frameController;
@@ -18,31 +18,28 @@ public class SalaryHistoryController implements ChangeListener {
         frameController = mainFrameController;
         salaryHistoryView = new SalaryHistoryView();
         toolbarSalaryHistory = new ToolbarSalaryHistoryController(frameController);
-        salaryHistoryView.setHasToolbar(true);
         salaryHistoryView.init();
+        salaryHistoryView.add(toolbarSalaryHistory.getToolbar(),BorderLayout.NORTH);
     }
 
     public void showSalaryHistoryView(MainFrameController mainFrameController){
         if (mainFrameController.getTabs().indexOfTab(title) == -1){
             //ActionLogEintrag
-            //mainFrameController.getTabs().addTab("Gehaltsliste",salaryListView);
-            //mainFrameController.getTabs().setActionListener(frameController.getTabsController());
-            //mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab("Gehaltsliste"));
-            mainFrameController.addTab(title,toolbarSalaryHistory.getToolbar(),salaryHistoryView);
-            mainFrameController.setChangeListener(this);
+            mainFrameController.addTab(title,salaryHistoryView);
+            //mainFrameController.setChangeListener(this);
         } else {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(title));
             //ActionLogEintrag
-            mainFrameController.setChangeListener(this);
+            //mainFrameController.setChangeListener(this);
         }
     }
 
-    @Override
+    /*@Override
     public void stateChanged(ChangeEvent e) {
         if (frameController.getTabs().indexOfTab(title) != -1){
             frameController.tabSwitch(title,toolbarSalaryHistory.getToolbar());
         }
-    }
+    }*/
 
     public ToolbarSalaryHistoryController getToolbarSalaryHistory() {
         return toolbarSalaryHistory;

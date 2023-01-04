@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class ShowPersonView extends JPanel {
-    private boolean hasAToolbar;
     public void init() {
         setLayout(new BorderLayout());
         System.out.println("SEEING ITEMS");
@@ -93,11 +92,6 @@ public class ShowPersonView extends JPanel {
         revalidate();
         repaint();
     }
-    public void setHasToolbar(boolean hasToolbar) {
-        this.hasAToolbar = hasToolbar;
-    }
-    public boolean hasToolbar(){
-        return hasAToolbar;
-    }
+
 
 }

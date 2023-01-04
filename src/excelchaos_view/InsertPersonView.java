@@ -7,7 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class InsertPersonView extends JPanel {
-    private boolean hasAToolbar;
     private JLabel name, vorname, strasse, hausnummer, adresszusatz, plz, stadt, privatEmail, privateTelefonnummer, geburtsdatum,
             nationalityFirst, nationalitySecond, personalnummer, tuid, vertragMit, status,
             gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, inventarList;
@@ -351,11 +350,5 @@ public class InsertPersonView extends JPanel {
         return nationalityPickList;
     }
 
-    public void setHasToolbar(boolean hasAToolbar) {
-        this.hasAToolbar = hasAToolbar;
-    }
 
-    public boolean hasToolbar() {
-        return hasAToolbar;
-    }
 }

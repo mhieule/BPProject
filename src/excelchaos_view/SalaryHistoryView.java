@@ -8,7 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class SalaryHistoryView extends JPanel{
-    private boolean hasAToolbar;
+
 
     public void init(){
         setLayout(new BorderLayout());
@@ -46,11 +46,5 @@ public class SalaryHistoryView extends JPanel{
         }
     }
 
-    public void setHasToolbar(boolean hasToolbar) {
-        this.hasAToolbar = hasToolbar;
-    }
 
-    public boolean hasToolbar() {
-        return hasAToolbar;
-    }
 }

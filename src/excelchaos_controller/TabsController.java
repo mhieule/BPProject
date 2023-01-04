@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class TabsController implements ActionListener {
+public class TabsController  {
     private DnDCloseButtonTabbedPane tabs;
     private MainFrameController frameController;
 
@@ -18,7 +18,7 @@ public class TabsController implements ActionListener {
 
     public TabsController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
-        tabs = new DnDCloseButtonTabbedPane(frameController.getWindow(),frameController);
+        tabs = new DnDCloseButtonTabbedPane(frameController.getWindow());
 
     }
 
@@ -27,7 +27,7 @@ public class TabsController implements ActionListener {
     }
 
 
-    @Override
+    /*@Override
     public void actionPerformed(ActionEvent e) {
         TabCloseButton buttonInQuestion = (TabCloseButton) e.getSource();
         if(buttonInQuestion.getTabName().equals(showPersonTab)){
@@ -46,5 +46,5 @@ public class TabsController implements ActionListener {
 
 
 
-    }
+    }*/
 }

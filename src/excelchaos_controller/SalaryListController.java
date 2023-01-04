@@ -6,7 +6,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 
-public class SalaryListController implements ChangeListener {
+public class SalaryListController {
     private SalaryListView salaryListView;
     private ToolbarSalaryListController toolbarSalaryList;
     private MainFrameController frameController;
@@ -17,31 +17,28 @@ public class SalaryListController implements ChangeListener {
         frameController = mainFrameController;
         salaryListView = new SalaryListView();
         toolbarSalaryList = new ToolbarSalaryListController(frameController);
-        salaryListView.setHasToolbar(true);
         salaryListView.init();
+        salaryListView.add(toolbarSalaryList.getToolbar(),BorderLayout.NORTH);
     }
 
     public void showSalaryView(MainFrameController mainFrameController){
         if (mainFrameController.getTabs().indexOfTab(title) == -1){
             //ActionLogEintrag
-            //mainFrameController.getTabs().addTab("Gehaltsliste",salaryListView);
-            //mainFrameController.getTabs().setActionListener(frameController.getTabsController());
-            //mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab("Gehaltsliste"));
-            mainFrameController.addTab(title,toolbarSalaryList.getToolbar(),salaryListView);
-            mainFrameController.setChangeListener(this);
+            mainFrameController.addTab(title,salaryListView);
+            //mainFrameController.setChangeListener(this);
         } else {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(title));
             //ActionLogEintrag
-            mainFrameController.setChangeListener(this);
+            //mainFrameController.setChangeListener(this);
         }
     }
 
-    @Override
+    /*@Override
     public void stateChanged(ChangeEvent e) {
         if (frameController.getTabs().indexOfTab(title) != -1){
             frameController.tabSwitch(title,toolbarSalaryList.getToolbar());
         }
-    }
+    }*/
 
     public ToolbarSalaryListController getToolbarSalary() {
         return toolbarSalaryList;
