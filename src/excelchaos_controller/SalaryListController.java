@@ -16,8 +16,8 @@ public class SalaryListController {
     public SalaryListController(MainFrameController mainFrameController){
         frameController = mainFrameController;
         salaryListView = new SalaryListView();
-        toolbarSalaryList = new ToolbarSalaryListController(frameController);
         salaryListView.init();
+        toolbarSalaryList = new ToolbarSalaryListController(salaryListView,this);
         salaryListView.add(toolbarSalaryList.getToolbar(),BorderLayout.NORTH);
     }
 

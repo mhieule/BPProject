@@ -3,14 +3,17 @@ package excelchaos_view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 public class ToolbarSalaryListView extends JToolBar {
     private JButton insertEntry;
     private JButton deleteEntry;
     private JButton updateView;
     private JButton increaseSalary;
-    private JButton getFutureSalaryStage;
+    //private JButton getFutureSalaryStage;
     private JButton changeSalaryGroup;
+
+    private JToggleButton showNextPayGrade;
 
     private JTextField searchField;
 
@@ -21,8 +24,9 @@ public class ToolbarSalaryListView extends JToolBar {
         deleteEntry = new JButton(("Gehaltseintrag löschen"));
         updateView = new JButton("Aktualisieren");
         increaseSalary = new JButton("Gehaltserhöhung");
-        getFutureSalaryStage = new JButton("Zukünftige Gehaltsstufe");
+        //getFutureSalaryStage = new JButton("Zukünftige Gehaltsstufe");
         changeSalaryGroup = new JButton("Gehaltsgruppe ändern");
+        showNextPayGrade = new JToggleButton("Gehaltsstufenerhöhungen anzeigen");
         searchField = new JTextField("Suchen");
         addSeparator(new Dimension(130,30));
         add(updateView);
@@ -35,7 +39,7 @@ public class ToolbarSalaryListView extends JToolBar {
         addSeparator(new Dimension(20,30));
         add(increaseSalary);
         addSeparator(new Dimension(20,30));
-        add(getFutureSalaryStage);
+        add(showNextPayGrade);
         addSeparator(new Dimension(20,30));
         add(searchField);
         addSeparator(new Dimension(20,30));
@@ -47,8 +51,13 @@ public class ToolbarSalaryListView extends JToolBar {
         deleteEntry.addActionListener(l);
         updateView.addActionListener(l);
         increaseSalary.addActionListener(l);
-        getFutureSalaryStage.addActionListener(l);
         changeSalaryGroup.addActionListener(l);
     }
+    public void setItemListener(ItemListener l){
+        showNextPayGrade.addItemListener(l);
+    }
 
+    public JToggleButton getShowNextPayGrade() {
+        return showNextPayGrade;
+    }
 }
