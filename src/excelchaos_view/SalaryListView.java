@@ -79,7 +79,6 @@ public class SalaryListView extends JPanel {
             add(sp);
             revalidate();
             repaint();
-            System.out.println("Testing in View");
 
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -14,7 +14,9 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
     private SalaryListController salaryListController;
     private SalaryListView salaryListView;
 
-    public ToolbarSalaryListController(SalaryListView salaryView,SalaryListController salaryController){
+    private ShowSalaryStageDialogController showSalaryStageDialogController;
+
+    public ToolbarSalaryListController(SalaryListView salaryView, SalaryListController salaryController) {
         salaryListController = salaryController;
         salaryListView = salaryView;
         toolbar = new ToolbarSalaryListView();
@@ -22,25 +24,30 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
         toolbar.setActionListener(this);
         toolbar.setItemListener(this);
     }
+
     public ToolbarSalaryListView getToolbar() {
         return toolbar;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() == toolbar.getSalaryStageOn()) {
+            showSalaryStageDialogController = new ShowSalaryStageDialogController();
+            toolbar.getRemoveAdditionalSalaryStage().setVisible(true);
+        } else if (e.getSource() == toolbar.getRemoveAdditionalSalaryStage()) {
+            toolbar.getRemoveAdditionalSalaryStage().setVisible(false);
+        }
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
 
-        if(e.getStateChange() == ItemEvent.SELECTED){
-            System.out.println("Here");
+        if (e.getStateChange() == ItemEvent.SELECTED) {
             salaryListView.showPayGradeIncrease();
             salaryListView.add(toolbar, BorderLayout.NORTH);
         } else {
             salaryListView.init();
-            salaryListView.add(toolbar,BorderLayout.NORTH);
+            salaryListView.add(toolbar, BorderLayout.NORTH);
         }
     }
 }

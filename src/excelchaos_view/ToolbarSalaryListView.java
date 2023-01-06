@@ -10,7 +10,10 @@ public class ToolbarSalaryListView extends JToolBar {
     private JButton deleteEntry;
     private JButton updateView;
     private JButton increaseSalary;
-    //private JButton getFutureSalaryStage;
+
+    private JButton salaryStageOn;
+
+    private JButton removeAdditionalSalaryStage;
     private JButton changeSalaryGroup;
 
     private JToggleButton showNextPayGrade;
@@ -24,11 +27,12 @@ public class ToolbarSalaryListView extends JToolBar {
         deleteEntry = new JButton(("Gehaltseintrag löschen"));
         updateView = new JButton("Aktualisieren");
         increaseSalary = new JButton("Gehaltserhöhung");
-        //getFutureSalaryStage = new JButton("Zukünftige Gehaltsstufe");
+        salaryStageOn = new JButton("Gehaltsstufenprojektion am...");
+        removeAdditionalSalaryStage = new JButton("Gehaltsstufenprojektion ausblenden");
         changeSalaryGroup = new JButton("Gehaltsgruppe ändern");
         showNextPayGrade = new JToggleButton("Gehaltsstufenerhöhungen anzeigen");
         searchField = new JTextField("Suchen");
-        addSeparator(new Dimension(130,30));
+        addSeparator(new Dimension(30,30));
         add(updateView);
         addSeparator(new Dimension(20,30));
         add(insertEntry);
@@ -41,6 +45,11 @@ public class ToolbarSalaryListView extends JToolBar {
         addSeparator(new Dimension(20,30));
         add(showNextPayGrade);
         addSeparator(new Dimension(20,30));
+        add(salaryStageOn);
+        addSeparator(new Dimension(20,30));
+        add(removeAdditionalSalaryStage);
+        removeAdditionalSalaryStage.setVisible(false);
+        addSeparator(new Dimension(20,30));
         add(searchField);
         addSeparator(new Dimension(20,30));
 
@@ -52,6 +61,8 @@ public class ToolbarSalaryListView extends JToolBar {
         updateView.addActionListener(l);
         increaseSalary.addActionListener(l);
         changeSalaryGroup.addActionListener(l);
+        salaryStageOn.addActionListener(l);
+        removeAdditionalSalaryStage.addActionListener(l);
     }
     public void setItemListener(ItemListener l){
         showNextPayGrade.addItemListener(l);
@@ -59,5 +70,13 @@ public class ToolbarSalaryListView extends JToolBar {
 
     public JToggleButton getShowNextPayGrade() {
         return showNextPayGrade;
+    }
+
+    public JButton getSalaryStageOn() {
+        return salaryStageOn;
+    }
+
+    public JButton getRemoveAdditionalSalaryStage() {
+        return removeAdditionalSalaryStage;
     }
 }
