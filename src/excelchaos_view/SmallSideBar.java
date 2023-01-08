@@ -4,11 +4,11 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
 
 public class SmallSideBar extends JPanel {
 
     private BasicArrowButton arrowButtonEast;
-    private String s;
 
 
     public void init() {
@@ -25,5 +25,23 @@ public class SmallSideBar extends JPanel {
 
     public void setActionListener(ActionListener l) {
         arrowButtonEast.addActionListener(l);
+    }
+
+    public void paint(Graphics g){
+
+
+        super.paint(g);
+        System.out.println("Here");
+        g.setFont(new Font("Arial",Font.BOLD,18));
+        g.setColor(Color.BLACK);
+
+        Graphics2D g2d = (Graphics2D) g;
+
+        AffineTransform at = new AffineTransform();
+        at.rotate(Math.PI/2);
+        g2d.setTransform(at);
+        g2d.drawString("Navigationsleiste",75,-5);
+
+
     }
 }
