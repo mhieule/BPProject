@@ -3,6 +3,7 @@ package excelchaos_model;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -92,5 +93,25 @@ public class EmployeeDataManager {
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
         return (int)count;
+    }
+
+    public void removeEmployee(int id){
+        try {
+            DeleteBuilder<Employee, Integer> builder = employeesDao.deleteBuilder();
+            builder.where().eq("id", id);
+            builder.delete();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
+    public void removeAllEmployees(){
+        try {
+            TableUtils.clearTable(connectionSource, Employee.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
     }
 }
