@@ -15,13 +15,20 @@ public class Contract {
     private String start_date;
     @DatabaseField()
     private String end_date;
+    @DatabaseField()
+    private double regular_cost;
+    @DatabaseField()
+    private double bonus_cost;
 
-    public Contract(int id, String paygrade, String paylevel, String start_date, String end_date){
+    public Contract(int id, String paygrade, String paylevel, String start_date, String end_date, double regular_cost,
+                    double bonus_cost){
         this.id = id;
         this.paygrade = paygrade;
         this.paylevel = paylevel;
         this.start_date = start_date;
         this.end_date = end_date;
+        this.regular_cost = regular_cost;
+        this.bonus_cost = bonus_cost;
     }
 
     public Contract(){
@@ -62,5 +69,21 @@ public class Contract {
 
     public void setEnd_date(String end_date){
         this.end_date = end_date;
+    }
+
+    public double getRegular_cost(){
+        return this.regular_cost;
+    }
+
+    public void setRegular_cost(double regular_cost){
+        this.regular_cost = regular_cost;
+    }
+
+    public double getBonus_cost(){
+        return this.bonus_cost;
+    }
+
+    public void setBonus_cost(double bonus_cost){
+        this.bonus_cost = bonus_cost;
     }
 }
