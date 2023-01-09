@@ -2,8 +2,10 @@ package excelchaos_view;
 
 import excelchaos_model.Employee;
 import excelchaos_model.EmployeeDataManager;
+import excelchaos_model.TableColumnAdjuster;
 
 import javax.swing.*;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -85,8 +87,11 @@ public class ShowPersonView extends JPanel {
         }
         JTable jt = new JTable(resultData, column);
 
-        jt.setBounds(30, 40, 200, 300);
+        jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        TableColumnAdjuster tca = new TableColumnAdjuster(jt);
+        tca.adjustColumns();
         JScrollPane sp = new JScrollPane(jt);
+        sp.setVisible(true);
 
         add(sp);
         revalidate();
