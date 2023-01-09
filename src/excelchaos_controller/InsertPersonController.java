@@ -123,5 +123,25 @@ public class InsertPersonController implements ActionListener {
             SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
             frameController.getSalaryListController().showSalaryView(frameController);
         }
+        if (e.getSource() == insertPersonView.getTypeOfJobPicklist()){
+            if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("WiMi") || insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("ATM")){
+                insertPersonView.getPayClassOnHiring().setVisible(true);
+                insertPersonView.getTfPayClassOnHiring().setVisible(true);
+                insertPersonView.getPayGradeOnHiring().setVisible(true);
+                insertPersonView.getTfPayGradeOnHiring().setVisible(true);
+            } else {
+                insertPersonView.getPayClassOnHiring().setVisible(false);
+                insertPersonView.getTfPayClassOnHiring().setVisible(false);
+                insertPersonView.getPayGradeOnHiring().setVisible(false);
+                insertPersonView.getTfPayGradeOnHiring().setVisible(false);
+            }
+            if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("SHK")){
+                insertPersonView.getHiwiTypeOfPayment().setVisible(true);
+                insertPersonView.getHiwiTypeOfPaymentList().setVisible(true);
+            } else {
+                insertPersonView.getHiwiTypeOfPayment().setVisible(false);
+                insertPersonView.getHiwiTypeOfPaymentList().setVisible(false);
+            }
+        }
     }
 }

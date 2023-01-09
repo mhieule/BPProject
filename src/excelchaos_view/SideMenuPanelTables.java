@@ -30,7 +30,7 @@ public class SideMenuPanelTables extends JPanel {
         centerpanel = new JPanel();
         navi = new JLabel("Navigationsleiste");
 
-        topPanel.setPreferredSize(new Dimension(130, 30));
+        topPanel.setPreferredSize(new Dimension(140, 30));
         topPanel.add(navi);
         topPanel.add(arrowButtonWest);
         add(topPanel, BorderLayout.PAGE_START);
