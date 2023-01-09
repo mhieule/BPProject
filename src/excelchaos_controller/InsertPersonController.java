@@ -38,8 +38,22 @@ public class InsertPersonController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == insertPersonView.getNationalityCheckBox()) {
-            insertPersonView.getNationalitySecond().setVisible(true);
-            insertPersonView.getNationalityPickList2().setVisible(true);
+            if (insertPersonView.getNationalityCheckBox().isSelected()){
+                insertPersonView.getNationalitySecond().setVisible(true);
+                insertPersonView.getNationalityPickList2().setVisible(true);
+            }else{
+                insertPersonView.getNationalitySecond().setVisible(false);
+                insertPersonView.getNationalityPickList2().setVisible(false);
+            }
+        }
+        if (e.getSource() == insertPersonView.getVisaRequiredCheckBox()){
+            if (insertPersonView.getVisaRequiredCheckBox().isSelected()){
+                insertPersonView.getVisaValidUntil().setVisible(true);
+                insertPersonView.getTfVisaValidUntil().setVisible(true);
+            }else {
+                insertPersonView.getVisaValidUntil().setVisible(false);
+                insertPersonView.getTfVisaValidUntil().setVisible(false);
+            }
         }
         if (e.getSource() == insertPersonView.getSubmit()) {
             System.out.println("submitting");

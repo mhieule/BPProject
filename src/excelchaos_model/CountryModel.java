@@ -27,6 +27,22 @@ public class CountryModel {
             countries[i+1]= obj.getDisplayCountry();
         }
         Arrays.sort(countries);
+        // "Keine" steht an erster Stelle als Vorauswahl
+        if (countries[0]!= "Keine"){
+            int j =0;
+            for (String s:countries){
+
+                if (s=="Keine"){
+                    for (int i=j; i<1;i--){
+                        countries[i] = countries[i-1];
+                    }
+                    countries[0]=s;
+                    break;
+                }
+                j++;
+            }
+        }
+
         return countries;
     }
 }

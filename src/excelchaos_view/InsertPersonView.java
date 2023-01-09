@@ -6,18 +6,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+
 public class InsertPersonView extends JPanel {
+    private boolean hasAToolbar;
     private JLabel name, vorname, strasse, hausnummer, adresszusatz, plz, stadt, privatEmail, privateTelefonnummer, geburtsdatum,
-            nationalityFirst, nationalitySecond, personalnummer, tuid, vertragMit, status,
-            gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, inventarList;
+            nationalityFirst, nationalitySecond, personalnummer, tuid, vertragMit, status, visaValidUntil,
+            gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA;
 
     private JTextField tfName, tfVorname, tfStrasse, tfHausnummer, tfAdresszusatz, tfPLZ, tfStadt, tfPrivatEmail, tfPrivateTelefonnummer, tfGeburtsdatum,
             tfPersonalnummer, tfTuid, tfVertragMit, tfGehaltEingeplanntBis, tfTranspondernummer, tfBueronummer,
-            tfTelefonnummerTUDA, tfInventarList;
+            tfTelefonnummerTUDA, tfVisaValidUntil;
 
 
     private JComboBox nationalityPickList, nationalityPickList2, statusPicklist;
-    private JCheckBox nationalityCheckBox;
+    private JCheckBox nationalityCheckBox, visaRequiredCheckBox;
 
     private JButton submit, reset, salary;
 
@@ -43,8 +45,6 @@ public class InsertPersonView extends JPanel {
         add(centerUp, BorderLayout.CENTER);
         add(centerDown, BorderLayout.SOUTH);
 
-
-
         name = new JLabel("Nachname");
         centerUp.add(name);
         name.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
@@ -62,6 +62,14 @@ public class InsertPersonView extends JPanel {
         factor++;
 
         // An dieser Stelle müssen folgende 6 Felder hinzugefügt werden: Straße, Hausnummer, Adresszusatz, PLZ, Stadt, Land
+        strasse = new JLabel("Straße");
+        centerUp.add(strasse);
+        strasse.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        tfStrasse = new JTextField();
+        tfStrasse.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
+        centerUp.add(tfStrasse);
+        factor++;
+
 
         // Hausnummer
         hausnummer = new JLabel("Hausnummer");
@@ -141,7 +149,7 @@ public class InsertPersonView extends JPanel {
 
         // Checkbox, die abfragt, ob eine zweite Staatsangehoerigkeit vorhanden ist. Wenn diese TRUE ist, erst dann sollte "STAATANGEHOERIGKEIT 2?" sichtbar und der Eintrag auch möglich sein!
         nationalityCheckBox = new JCheckBox("zweite Staatsangehörigkeit?", false);
-        nationalityCheckBox.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        nationalityCheckBox.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
         centerUp.add(nationalityCheckBox);
         factor++;
 
@@ -150,14 +158,29 @@ public class InsertPersonView extends JPanel {
         centerUp.add(nationalitySecond);
         nationalitySecond.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
         nationalitySecond.setVisible(false);
-        /*String[] nationalityArray2 = {"Keine", "Deutschland", "Afghanistan", "Ägypten", "Australien", "Belgien", "Chile",
-                "China", "Finnland", "Indien", "Italien", "Kanada"}; // Ist nur ein Beispiel an Auswahl*/
+
         String[] nationalityArray2=CountryModel.getCountriesWithKeine();
         nationalityPickList2 = new JComboBox(nationalityArray2);
         nationalityPickList2.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
         centerUp.add(nationalityPickList2);
         nationalityPickList2.setVisible(false);
         factor++;
+
+
+        visaRequiredCheckBox = new JCheckBox("Visum notwendig?", false);
+        centerUp.add(visaRequiredCheckBox);
+        visaRequiredCheckBox.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        factor++;
+        visaValidUntil = new JLabel("Visum gültig bis");
+        centerUp.add(visaValidUntil);
+        visaValidUntil.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
+        visaValidUntil.setVisible(false);
+        tfVisaValidUntil = new JTextField();
+        tfVisaValidUntil.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
+        centerUp.add(tfVisaValidUntil);
+        tfVisaValidUntil.setVisible(false);
+        factor++;
+
 
         personalnummer = new JLabel("Personalnummer");
         centerUp.add(personalnummer);
@@ -227,12 +250,12 @@ public class InsertPersonView extends JPanel {
         centerUp.add(tfTelefonnummerTUDA);
         factor++;
 
-        inventarList = new JLabel("INVENTAR?");
+      /*  inventarList = new JLabel("INVENTAR?");
         centerUp.add(inventarList);
         inventarList.setBounds(LABEL_X_POS, beginYPos + factor * Y_INCREASE, LABEL_WIDTH, LABEL_HEIGHT);
         tfInventarList = new JTextField();
         tfInventarList.setBounds(FIELD_X_POS, beginYPos + factor * Y_INCREASE, FIELD_WIDTH, FIELD_HEIGHT);
-        centerUp.add(tfInventarList);
+        centerUp.add(tfInventarList);*/
 
         beginYPos = 50;
         factor = 0;
@@ -250,6 +273,7 @@ public class InsertPersonView extends JPanel {
 
     public void setActionListener(ActionListener l) {
         nationalityCheckBox.addActionListener(l);
+        visaRequiredCheckBox.addActionListener(l);
         submit.addActionListener(l);
         salary.addActionListener(l);
     }
@@ -265,6 +289,12 @@ public class InsertPersonView extends JPanel {
     public JComboBox getNationalityPickList2() {
         return nationalityPickList2;
     }
+
+    public JCheckBox getVisaRequiredCheckBox(){return visaRequiredCheckBox; }
+
+    public JLabel getVisaValidUntil(){return visaValidUntil;}
+
+    public JTextField getTfVisaValidUntil() {return tfVisaValidUntil;}
 
     public JButton getSubmit() {
         return submit;
@@ -338,9 +368,9 @@ public class InsertPersonView extends JPanel {
         return tfTelefonnummerTUDA;
     }
 
-    public JTextField getTfInventarList() {
-        return tfInventarList;
-    }
+    // public JTextField getTfInventarList() {
+    //return tfInventarList;
+    //  }
 
     public JComboBox getStatusPicklist() {
         return statusPicklist;
@@ -350,5 +380,12 @@ public class InsertPersonView extends JPanel {
         return nationalityPickList;
     }
 
+    public void setHasToolbar(boolean hasAToolbar) {
+        this.hasAToolbar = hasAToolbar;
+    }
 
+    public boolean hasToolbar() {
+        return hasAToolbar;
+    }
 }
+
