@@ -128,12 +128,12 @@ public class InsertPersonController implements ActionListener {
                 insertPersonView.getPayClassOnHiring().setVisible(true);
                 insertPersonView.getTfPayClassOnHiring().setVisible(true);
                 insertPersonView.getPayGradeOnHiring().setVisible(true);
-                insertPersonView.getTfPayGradeOnHiring().setVisible(true);
+                insertPersonView.getPayGradeList().setVisible(true);
             } else {
                 insertPersonView.getPayClassOnHiring().setVisible(false);
                 insertPersonView.getTfPayClassOnHiring().setVisible(false);
                 insertPersonView.getPayGradeOnHiring().setVisible(false);
-                insertPersonView.getTfPayGradeOnHiring().setVisible(false);
+                insertPersonView.getPayGradeList().setVisible(false);
             }
             if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("SHK")){
                 insertPersonView.getHiwiTypeOfPayment().setVisible(true);

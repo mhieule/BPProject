@@ -1,5 +1,7 @@
 package excelchaos_view;
 
+import excelchaos_model.TableColumnAdjuster;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -14,7 +16,7 @@ public class SalaryListView extends JPanel {
         removeAll();
         setLayout(new BorderLayout());
         String column[] = {
-                "Name", "Vorname", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
+                "Name", "Vorname", "Geburtsdatum", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
         };
         File f = new File("src/salaryData");
         try {
@@ -34,9 +36,11 @@ public class SalaryListView extends JPanel {
                 currentIndex++;
             }
             JTable jt = new JTable(resultData, column);
-
-            jt.setBounds(30, 40, 200, 300);
+            //jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            //TableColumnAdjuster tca = new TableColumnAdjuster(jt);
+            //tca.adjustColumns();
             JScrollPane sp = new JScrollPane(jt);
+            sp.setVisible(true);
 
             add(sp);
             revalidate();
@@ -72,9 +76,11 @@ public class SalaryListView extends JPanel {
                 currentIndex++;
             }
             JTable jt = new JTable(resultData, column);
-
-            jt.setBounds(30, 40, 200, 300);
+            jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            TableColumnAdjuster tca = new TableColumnAdjuster(jt);
+            tca.adjustColumns();
             JScrollPane sp = new JScrollPane(jt);
+            sp.setVisible(true);
 
             add(sp);
             revalidate();
