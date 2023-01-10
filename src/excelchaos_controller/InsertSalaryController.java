@@ -49,7 +49,7 @@ public class InsertSalaryController implements ActionListener {
             String gehalt = insertSalaryView.getGehalt().getText();
             String Sonderzahlung = insertSalaryView.getSonderzahlung().getText();
 
-            Contract newContract = new Contract(id, "paygrade", "paylevel", "startdate", "enddate", 1, 5);
+            Contract newContract = new Contract(id, status, stufe, "startdate", "enddate", Double.parseDouble(gehalt), Double.parseDouble(Sonderzahlung));
             contractDataManager.addContract(newContract);
             insertSalaryView.removeAll();
             insertSalaryView.revalidate();
