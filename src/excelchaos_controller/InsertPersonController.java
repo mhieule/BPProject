@@ -134,7 +134,7 @@ public class InsertPersonController implements ActionListener {
             insertPersonView.revalidate();
             insertPersonView.repaint();
             SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
-            frameController.getSalaryListController().showSalaryView(frameController);
+            frameController.getInsertSalaryController().showInsertSalaryView(frameController);
         }
         if (e.getSource() == insertPersonView.getTypeOfJobPicklist()){
             if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("WiMi") || insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("ATM")){
