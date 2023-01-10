@@ -7,6 +7,9 @@ import excelchaos_model.EmployeeDataManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 
 public class InsertPersonController implements ActionListener {
     private InsertPersonView insertPersonView;
@@ -68,13 +71,18 @@ public class InsertPersonController implements ActionListener {
             String employeeNumber = insertPersonView.getTfPersonalnummer().getText();
             String tu_id = insertPersonView.getTfTuid().getText();
             boolean visa_required = false;
-            String status = insertPersonView.getStatusPicklist().toString();
+            String status = insertPersonView.getStatusPicklist().getSelectedItem().toString();
             String transponder_number = insertPersonView.getTfTranspondernummer().getText();
             String office_number = insertPersonView.getTfBueronummer().getText();
             String salaryPlannedUntil = insertPersonView.getTfGehaltEingeplanntBis().getText();
-            String visaExpiration = "01.01.2222";
-            String phone_tuda = "1234556";
-            String dateOfBirth = insertPersonView.getTfGeburtsdatum().getText();
+            Calendar calendar = Calendar.getInstance();
+            LocalDate visaExpirationDate = insertPersonView.getTfVisaValidUntil().getDate();
+            calendar.set(visaExpirationDate.getYear(), visaExpirationDate.getMonth().getValue(),visaExpirationDate.getDayOfMonth());
+            Date visaExpiration = calendar.getTime();
+            String phone_tuda = insertPersonView.getTfTelefonnummerTUDA().getText();
+            LocalDate dateOfBirthDate = insertPersonView.getTfGeburtsdatum().getDate();
+            calendar.set(dateOfBirthDate.getYear(), dateOfBirthDate.getMonth().getValue(), dateOfBirthDate.getDayOfMonth());
+            Date dateOfBirth = calendar.getTime();
             String houseNumber = insertPersonView.getTfHausnummer().getText();
             String zip_code = insertPersonView.getTfPLZ().getText();
             String additional_address = insertPersonView.getTfAdresszusatz().getText();
@@ -102,13 +110,18 @@ public class InsertPersonController implements ActionListener {
             String employeeNumber = insertPersonView.getTfPersonalnummer().getText();
             String tu_id = insertPersonView.getTfTuid().getText();
             boolean visa_required = false;
-            String status = insertPersonView.getStatusPicklist().toString();
+            String status = insertPersonView.getStatusPicklist().getSelectedItem().toString();
             String transponder_number = insertPersonView.getTfTranspondernummer().getText();
             String office_number = insertPersonView.getTfBueronummer().getText();
             String salaryPlannedUntil = insertPersonView.getTfGehaltEingeplanntBis().getText();
-            String visaExpiration = "01.01.2222";
-            String phone_tuda = "1234556";
-            String dateOfBirth = insertPersonView.getTfGeburtsdatum().getText();
+            Calendar calendar = Calendar.getInstance();
+            LocalDate visaExpirationDate = insertPersonView.getTfVisaValidUntil().getDate();
+            calendar.set(visaExpirationDate.getYear(), visaExpirationDate.getMonth().getValue(),visaExpirationDate.getDayOfMonth());
+            Date visaExpiration = calendar.getTime();
+            String phone_tuda = insertPersonView.getTfTelefonnummerTUDA().getText();
+            LocalDate dateOfBirthDate = insertPersonView.getTfGeburtsdatum().getDate();
+            calendar.set(dateOfBirthDate.getYear(), dateOfBirthDate.getMonth().getValue(), dateOfBirthDate.getDayOfMonth());
+            Date dateOfBirth = calendar.getTime();
             String houseNumber = insertPersonView.getTfHausnummer().getText();
             String zip_code = insertPersonView.getTfPLZ().getText();
             String additional_address = insertPersonView.getTfAdresszusatz().getText();

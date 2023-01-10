@@ -11,6 +11,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ShowPersonView extends JPanel {
@@ -59,6 +63,7 @@ public class ShowPersonView extends JPanel {
         String resultData[][] = new String[lines][];
         int currentIndex = 0;
         List<Employee> employees = employeeDataManager.getAllEmployees();
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         for (Employee employee : employees){
             String name = employee.getName();
             String surname = employee.getSurname();
@@ -73,13 +78,14 @@ public class ShowPersonView extends JPanel {
             String transponder_number = employee.getTransponder_number();
             String office_number = employee.getOffice_number();
             String salaryPlannedUntil = employee.getSalary_planned_until();
-            String visaExpiration = employee.getVisa_expiration();
+            Date visaExpiration = employee.getVisa_expiration();
             String phone_tuda = employee.getPhone_tuda();
-            String dateOfBirth = employee.getDate_of_birth();
+            String dateOfBirth = dateFormat.format(employee.getDate_of_birth());
             String house_number = employee.getHouse_number();
             String zipCode = employee.getZip_code();
             String additionalAddress = employee.getAdditional_address();
             String city = employee.getCity();
+
             String[] values = {surname, name, house_number, zipCode, city, additionalAddress, email_private, phone_private,
             dateOfBirth, citizenship_1, citizenship_2, employeeNumber, tu_id, status, salaryPlannedUntil, transponder_number,
             office_number, phone_tuda};

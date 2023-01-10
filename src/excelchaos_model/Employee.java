@@ -1,7 +1,10 @@
 package excelchaos_model;
 
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import java.util.Date;
 
 @DatabaseTable(tableName = "Employees")
 public class Employee {
@@ -35,10 +38,10 @@ public class Employee {
     private String phone_tuda;
     @DatabaseField()
     private String salary_planned_until;
-    @DatabaseField()
-    private String visa_expiration;
-    @DatabaseField()
-    private String date_of_birth;
+    @DatabaseField(dataType = DataType.DATE_STRING, format = "yyyy-MM-dd")
+    private Date visa_expiration;
+    @DatabaseField(dataType = DataType.DATE_STRING, format = "yyyy-MM-dd")
+    private Date date_of_birth;
     @DatabaseField()
     private String house_number;
     @DatabaseField()
@@ -52,7 +55,7 @@ public class Employee {
     public Employee(int id, String name, String surname, String email_private, String phone_private,
                     String citizenship_1, String citizenship_2, String employee_number, String tu_id, boolean visa_required,
                     String status, String transponder_number, String office_number, String phone_tuda,
-                    String salary_planned_until, String visa_expiration, String date_of_birth, String house_number,
+                    String salary_planned_until, Date visa_expiration, Date date_of_birth, String house_number,
                     String zip_code, String additional_address, String city){
         this.id = id;
         this.name = name;
@@ -193,19 +196,19 @@ public class Employee {
         this.salary_planned_until = salary_planned_until;
     }
 
-    public String getVisa_expiration(){
+    public Date getVisa_expiration(){
         return this.visa_expiration;
     }
 
-    public void setVisa_expiration(String visa_expiration){
+    public void setVisa_expiration(Date visa_expiration){
         this.visa_expiration = visa_expiration;
     }
 
-    public void setDate_of_birth(String date_of_birth){
+    public void setDate_of_birth(Date date_of_birth){
         this.date_of_birth = date_of_birth;
     }
 
-    public String getDate_of_birth(){
+    public Date getDate_of_birth(){
         return this.date_of_birth;
     }
 
