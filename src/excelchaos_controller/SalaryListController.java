@@ -1,5 +1,6 @@
 package excelchaos_controller;
 
+import excelchaos_model.SearchAndFilterModel;
 import excelchaos_view.SalaryListView;
 
 import javax.swing.event.ChangeEvent;
@@ -13,12 +14,14 @@ public class SalaryListController {
 
     private String title = "Gehaltsliste";
 
+    private SearchAndFilterModel searchAndFilterModel;
     public SalaryListController(MainFrameController mainFrameController){
         frameController = mainFrameController;
         salaryListView = new SalaryListView();
         salaryListView.init();
         toolbarSalaryList = new ToolbarSalaryListController(salaryListView,this);
         salaryListView.add(toolbarSalaryList.getToolbar(),BorderLayout.NORTH);
+        searchAndFilterModel = new SearchAndFilterModel(salaryListView.getTable(),toolbarSalaryList.getToolbar().getSearchField());
     }
 
     public void showSalaryView(MainFrameController mainFrameController){

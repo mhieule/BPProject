@@ -31,7 +31,7 @@ public class ToolbarSalaryListView extends JToolBar {
         removeAdditionalSalaryStage = new JButton("Gehaltsstufenprojektion ausblenden");
         changeSalaryGroup = new JButton("Gehaltsgruppe ändern");
         showNextPayGrade = new JToggleButton("Gehaltsstufenerhöhungen anzeigen");
-        searchField = new JTextField("Suchen");
+        searchField = new JTextField();
         addSeparator(new Dimension(30,30));
         add(updateView);
         addSeparator(new Dimension(20,30));
@@ -78,5 +78,9 @@ public class ToolbarSalaryListView extends JToolBar {
 
     public JButton getRemoveAdditionalSalaryStage() {
         return removeAdditionalSalaryStage;
+    }
+
+    public JTextField getSearchField() {
+        return searchField;
     }
 }

@@ -11,7 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class SalaryListView extends JPanel {
-
+    private JTable jt;
     public void init(){
         removeAll();
         setLayout(new BorderLayout());
@@ -35,7 +35,7 @@ public class SalaryListView extends JPanel {
                 resultData[currentIndex] = values;
                 currentIndex++;
             }
-            JTable jt = new JTable(resultData, column);
+            jt = new JTable(resultData, column);
             //jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             //TableColumnAdjuster tca = new TableColumnAdjuster(jt);
             //tca.adjustColumns();
@@ -75,7 +75,7 @@ public class SalaryListView extends JPanel {
                 resultData[currentIndex] = values;
                 currentIndex++;
             }
-            JTable jt = new JTable(resultData, column);
+            jt = new JTable(resultData, column);
             jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             TableColumnAdjuster tca = new TableColumnAdjuster(jt);
             tca.adjustColumns();
@@ -91,5 +91,7 @@ public class SalaryListView extends JPanel {
         }
     }
 
-
+    public JTable getTable() {
+        return jt;
+    }
 }

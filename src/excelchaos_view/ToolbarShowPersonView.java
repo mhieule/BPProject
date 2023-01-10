@@ -18,7 +18,7 @@ public class ToolbarShowPersonView extends JToolBar {
         insertPerson = new JButton("Person hinzufügen");
         updateView = new JButton("Aktualisieren");
         deletePerson = new JButton("Eintrag löschen");
-        searchField = new JTextField("Suchen");
+        searchField = new JTextField();
         searchField.setPreferredSize(new Dimension(130,30));
         addSeparator(new Dimension(130,30));
         add(updateView);
@@ -38,5 +38,9 @@ public class ToolbarShowPersonView extends JToolBar {
 
     public JButton getInsertPerson() {
         return insertPerson;
+    }
+
+    public JTextField getSearchField() {
+        return searchField;
     }
 }

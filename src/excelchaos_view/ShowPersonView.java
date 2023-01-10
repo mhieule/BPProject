@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ShowPersonView extends JPanel {
+    private JTable jt;
     public void init() {
         setLayout(new BorderLayout());
         System.out.println("SEEING ITEMS");
@@ -85,7 +86,7 @@ public class ShowPersonView extends JPanel {
             resultData[currentIndex] = values;
             currentIndex++;
         }
-        JTable jt = new JTable(resultData, column);
+        jt = new JTable(resultData, column);
 
         jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         TableColumnAdjuster tca = new TableColumnAdjuster(jt);
@@ -98,5 +99,7 @@ public class ShowPersonView extends JPanel {
         repaint();
     }
 
-
+    public JTable getTable() {
+        return jt;
+    }
 }
