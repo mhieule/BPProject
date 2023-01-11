@@ -184,7 +184,7 @@ public class InsertPersonView extends JPanel {
         setConstraintsLabel(payGradeOnHiring, 22);
         payGradeOnHiring.setVisible(false);
         String[] payGrades = {"Nicht ausgewählt", "1A","1B","1","2","3","4","5","6"};
-        payGradeList = new JComboBox();
+        payGradeList = new JComboBox(payGrades);
         setConstraintsJComboBox(payGradeList,22);
         payGradeList.setVisible(false);
 

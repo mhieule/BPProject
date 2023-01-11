@@ -18,11 +18,13 @@ public class ToolbarSalaryListView extends JToolBar {
 
     private JToggleButton showNextPayGrade;
 
+    private JLabel searchLabel;
     private JTextField searchField;
 
     public void init(){
         setFloatable(false);
         setBackground(Color.WHITE);
+        setLayout(new FlowLayout(FlowLayout.LEFT));
         insertEntry = new JButton("Gehaltseintrag hinzufügen");
         deleteEntry = new JButton(("Gehaltseintrag löschen"));
         updateView = new JButton("Aktualisieren");
@@ -31,7 +33,9 @@ public class ToolbarSalaryListView extends JToolBar {
         removeAdditionalSalaryStage = new JButton("Gehaltsstufenprojektion ausblenden");
         changeSalaryGroup = new JButton("Gehaltsgruppe ändern");
         showNextPayGrade = new JToggleButton("Gehaltsstufenerhöhungen anzeigen");
+        searchLabel = new JLabel("Suchen:");
         searchField = new JTextField();
+        searchField.setPreferredSize(new Dimension(salaryStageOn.getSize()));
         addSeparator(new Dimension(30,30));
         add(updateView);
         addSeparator(new Dimension(20,30));
@@ -50,6 +54,7 @@ public class ToolbarSalaryListView extends JToolBar {
         add(removeAdditionalSalaryStage);
         removeAdditionalSalaryStage.setVisible(false);
         addSeparator(new Dimension(20,30));
+        add(searchLabel);
         add(searchField);
         addSeparator(new Dimension(20,30));
 
