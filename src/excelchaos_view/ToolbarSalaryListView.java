@@ -8,7 +8,6 @@ import java.awt.event.ItemListener;
 public class ToolbarSalaryListView extends JToolBar {
     private JButton insertEntry;
     private JButton deleteEntry;
-    private JButton updateView;
     private JButton increaseSalary;
 
     private JButton salaryStageOn;
@@ -27,7 +26,6 @@ public class ToolbarSalaryListView extends JToolBar {
         setLayout(new FlowLayout(FlowLayout.LEFT));
         insertEntry = new JButton("Gehaltseintrag hinzufügen");
         deleteEntry = new JButton(("Gehaltseintrag löschen"));
-        updateView = new JButton("Aktualisieren");
         increaseSalary = new JButton("Gehaltserhöhung");
         salaryStageOn = new JButton("Gehaltsstufenprojektion am...");
         removeAdditionalSalaryStage = new JButton("Gehaltsstufenprojektion ausblenden");
@@ -35,10 +33,8 @@ public class ToolbarSalaryListView extends JToolBar {
         showNextPayGrade = new JToggleButton("Gehaltsstufenerhöhungen anzeigen");
         searchLabel = new JLabel("Suchen:");
         searchField = new JTextField();
-        searchField.setPreferredSize(new Dimension(salaryStageOn.getSize()));
+        searchField.setPreferredSize(new Dimension(130,30));
         addSeparator(new Dimension(30,30));
-        add(updateView);
-        addSeparator(new Dimension(20,30));
         add(insertEntry);
         addSeparator(new Dimension(20,30));
         add(deleteEntry);
@@ -56,14 +52,12 @@ public class ToolbarSalaryListView extends JToolBar {
         addSeparator(new Dimension(20,30));
         add(searchLabel);
         add(searchField);
-        addSeparator(new Dimension(20,30));
 
     }
 
     public void setActionListener(ActionListener l){
         insertEntry.addActionListener(l);
         deleteEntry.addActionListener(l);
-        updateView.addActionListener(l);
         increaseSalary.addActionListener(l);
         changeSalaryGroup.addActionListener(l);
         salaryStageOn.addActionListener(l);

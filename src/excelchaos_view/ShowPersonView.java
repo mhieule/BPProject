@@ -98,7 +98,6 @@ public class ShowPersonView extends JPanel {
             currentIndex++;
         }
         jt = new JTable(resultData, column);
-
         jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         TableColumnAdjuster tca = new TableColumnAdjuster(jt);
         tca.adjustColumns();

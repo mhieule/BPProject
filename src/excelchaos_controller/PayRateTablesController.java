@@ -34,4 +34,8 @@ public class PayRateTablesController {
     public void setTitle(String name){
         title = name;
     }
+
+    public String getTitle() {
+        return title;
+    }
 }

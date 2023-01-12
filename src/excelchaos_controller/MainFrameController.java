@@ -24,6 +24,7 @@ public class MainFrameController implements ActionListener {
 
 
 
+
     public MainFrameController() {
         window = new MainFrame();
         window.init();
@@ -80,6 +81,8 @@ public class MainFrameController implements ActionListener {
     public PayRateTablesController getPayRateTablesController() {
         return payRateTablesController;
     }
+
+
 
     public void setChangeListener (ChangeListener l){
         tabsController.getTabs().addChangeListener(l);

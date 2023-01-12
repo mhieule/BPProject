@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 public class ToolbarPayRateTablesController implements ActionListener {
     private ToolbarPayRateTablesView toolbar;
+    private InsertPayRateTableController insertPayRateTableController;
 
     private MainFrameController frameController;
 
@@ -19,7 +20,10 @@ public class ToolbarPayRateTablesController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() == toolbar.getInsertNewPayRateTable()){
+            insertPayRateTableController = new InsertPayRateTableController(frameController, frameController.getPayRateTablesController().getTitle());
+            insertPayRateTableController.showInsertPayRateTableView(frameController);
+        }
     }
 
     public ToolbarPayRateTablesView getToolbar() {
