@@ -1,5 +1,6 @@
 package excelchaos_view;
 
+import excelchaos_model.MultiLineTableCellRenderer;
 import excelchaos_model.TableColumnAdjuster;
 
 import javax.swing.*;
@@ -30,6 +31,12 @@ public class InsertPayRateTableView extends JPanel {
     private JTable table;
     private JScrollPane scrollPane;
 
+    private JButton cancelButton;
+
+    private JButton calculateCells;
+
+    private JButton saveAndExit;
+
     private GridBagConstraints constraints;
 
     private final int TEXT_FIELD_WIDTH = 100;
@@ -37,35 +44,63 @@ public class InsertPayRateTableView extends JPanel {
 
     public void init() {
         setLayout(new BorderLayout());
-        topPanel = new JPanel();
-        centerPanel = new JPanel();
-        bottomPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 15));
-        centerPanel.setLayout(new BorderLayout());
-
-
         topPanelInit();
-        initJLables();
-        initTable();
-        centerPanel.add(scrollPane);
-
-
-        add(topPanel, BorderLayout.NORTH);
-        add(centerPanel, BorderLayout.CENTER);
-        add(bottomPanel, BorderLayout.SOUTH);
+        centerPanelInit();
+        bottomPanelInit();
     }
 
     private void topPanelInit() {
+        topPanel = new JPanel();
+        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 15));
         nameOfTable = new JLabel("Name der Tabelle");
         tfNameOfTable = new JTextField();
         tfNameOfTable.setPreferredSize(new Dimension(150, 30));
         topPanel.add(nameOfTable);
         topPanel.add(tfNameOfTable);
+        add(topPanel, BorderLayout.NORTH);
     }
-    private void initJLables(){
-        wageTypeLongtext = new JLabel("Lohnart-Langtext");
+    private void bottomPanelInit(){
+        bottomPanel = new JPanel();
+        bottomPanel.setLayout(new FlowLayout());
+        cancelButton = new JButton("Abbrechen");
+        calculateCells = new JButton("Zellen berechnen");
+        saveAndExit = new JButton("Entgelttabelle speichern und Verlassen");
+        bottomPanel.add(cancelButton);
+        bottomPanel.add(calculateCells);
+        bottomPanel.add(saveAndExit);
+        constraints.gridy = 4;
+        constraints.insets.bottom = 20;
+        constraints.weighty = 0.2;
+        constraints.weightx = 0.2;
+        centerPanel.add(bottomPanel,constraints);
+
+
+    }
+
+    private void centerPanelInit(){
+        centerPanel = new JPanel();
+        GridBagLayout layout = new GridBagLayout();
+        centerPanel.setLayout(layout);
+        constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        initJLables();
+        initTable();
+        constraints.insets.top = 10;
+        constraints.weightx = 0.0;
+        constraints.weighty = 0.0;
+        centerPanel.add(wageTypeLongtext, constraints);
+        constraints.ipadx=2000;
+        constraints.ipady=462;
+        centerPanel.add(scrollPane,constraints);
+        add(centerPanel, BorderLayout.CENTER);
+    }
+
+    private void initJLables() {
+        wageTypeLongtext = new JLabel("             Lohnart-Langtext");
         //init Column JLabels
-        percentage = new JLabel("%-Satz");
+        /*percentage = new JLabel("%-Satz");
         e13St1VBLbefreit = new JLabel("E13 St. 1 VBL-befreit");
         e13St1VBLpflichtig = new JLabel("E13 St. 1 VBL-pflichtig");
         e13St2VBLbefreit = new JLabel("E13 St. 2 VBL-befreit");
@@ -93,16 +128,17 @@ public class InsertPayRateTableView extends JPanel {
         mtl_Kosten_ohne_JSZ = new JLabel("mtl. Kosten ohne JSZ");
         JSZ_als_monatliche_Zulage = new JLabel("JSZ als monatliche Zulage");
         mtl_Kosten_mit_JSZ = new JLabel("mtl. Kosten mit JSZ");
-        Jaehrliche_Arbeitgeberbelastung_inklusive_Jahressonderzahlung = new JLabel("Jährliche Arbeitgeberbelastung \n" +
-                "inklusive Jahressonderzahlung");
-
+        Jaehrliche_Arbeitgeberbelastung_inklusive_Jahressonderzahlung = new JLabel("<html>Jährliche Arbeitgeberbelastung <br>" +
+                "inklusive Jahressonderzahlung</html>");
+*/
     }
-    public void initTable(){
+
+    public void initTable() {
         String[] columns = {
-                "%-Satz","E13 St. 1 VBL-befreit","E13 St. 1 VBL-pflichtig","E13 St. 2 VBL-befreit","E13 St. 2 VBL-pflichtig","E13 St. 3 VBL-befreit","E13 St. 3 VBL-pflichtig",
-                "E13 St. 4 VBL-befreit","E13 St. 4 VBL-pflichtig","E13 St. 5 VBL-befreit","E13 St. 5 VBL-pflichtig","E13 St. 6 VBL-befreit","E13 St. 6 VBL-pflichtig"
+                "%-Satz", "E13 St. 1 VBL-befreit", "E13 St. 1 VBL-pflichtig", "E13 St. 2 VBL-befreit", "E13 St. 2 VBL-pflichtig", "E13 St. 3 VBL-befreit", "E13 St. 3 VBL-pflichtig",
+                "E13 St. 4 VBL-befreit", "E13 St. 4 VBL-pflichtig", "E13 St. 5 VBL-befreit", "E13 St. 5 VBL-pflichtig", "E13 St. 6 VBL-befreit", "E13 St. 6 VBL-pflichtig"
         };
-        DefaultTableModel test = new DefaultTableModel(columns,14);
+        DefaultTableModel test = new DefaultTableModel(columns, 15);
         table = new JTable(test);
         DefaultTableModel model = new DefaultTableModel() {
 
@@ -132,40 +168,28 @@ public class InsertPayRateTableView extends JPanel {
             }
         };
         JTable headerTable = new JTable(model);
-        headerTable.setValueAt(grundentgelt.getText(),0,0);
-        headerTable.setValueAt(AV_AG_Anteil_lfd_Entgelt.getText(),1,0);
-        headerTable.setValueAt(KV_AG_Anteil_lfd_Entgelt.getText(),2,0);
-        headerTable.setValueAt(ZusBei_AG_lfd_Entgelt.getText(),3,0);
-        headerTable.setValueAt(PV_AG_Anteil_lfd_Entgelt.getText(),4,0);
-        headerTable.setValueAt(RV_AG_Anteil_lfd_Entgelt.getText(),5,0);
-        headerTable.setValueAt(SV_Umlage_U2.getText(),6,0);
-        headerTable.setValueAt(Steuern_AG.getText(),7,0);
-        headerTable.setValueAt(ZV_Sanierungsbeitrag.getText(),8,0);
-        headerTable.setValueAt(ZV_Umlage_allgemein.getText(),9,0);
-        headerTable.setValueAt(VBL_Wiss_4_AG_Buchung.getText(),10,0);
-        headerTable.setValueAt(mtl_Kosten_ohne_JSZ.getText(),11,0);
-        headerTable.setValueAt(JSZ_als_monatliche_Zulage.getText(),12,0);
-        headerTable.setValueAt(mtl_Kosten_mit_JSZ.getText(),13,0);
+        headerTable.setValueAt("Grundentgelt", 0, 0);
+        headerTable.setValueAt("AV-AG-Anteil, lfd. Entgelt", 1, 0);
+        headerTable.setValueAt("KV-AG-Anteil, lfd. Entgelt", 2, 0);
+        headerTable.setValueAt("ZusBei AG lfd. Entgelt", 3, 0);
+        headerTable.setValueAt("PV-AG-Anteil, lfd. Entgelt", 4, 0);
+        headerTable.setValueAt("RV-AG-Anteil, lfd. Entgelt", 5, 0);
+        headerTable.setValueAt("SV-Umlage U2", 6, 0);
+        headerTable.setValueAt("Steuern AG", 7, 0);
+        headerTable.setValueAt("ZV-Sanierungsbeitrag", 8, 0);
+        headerTable.setValueAt("ZV-Umlage, allgemein", 9, 0);
+        headerTable.setValueAt("VBL Wiss 4% AG Buchung", 10, 0);
+        headerTable.setValueAt("mtl. Kosten ohne JSZ", 11, 0);
+        headerTable.setValueAt("JSZ als monatliche Zulage", 12, 0);
+        headerTable.setValueAt("mtl. Kosten mit JSZ", 13, 0);
+        headerTable.setValueAt("<html>Jährliche Arbeitgeberbelastung <br>" +
+                "inklusive Jahressonderzahlung</html>",14,0);
         headerTable.setShowGrid(false);
-        //headerTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         headerTable.setPreferredScrollableViewportSize(new Dimension(180, 0));
         headerTable.getColumnModel().getColumn(0).setPreferredWidth(180);
         headerTable.setRowHeight(30);
-        headerTable.getColumnModel().getColumn(0).setCellRenderer(new TableCellRenderer() {
+        headerTable.getColumnModel().getColumn(0).setCellRenderer(new MultiLineTableCellRenderer());
 
-            @Override
-            public Component getTableCellRendererComponent(JTable x, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-
-                boolean selected = table.getSelectionModel().isSelectedIndex(row);
-                Component component = table.getTableHeader().getDefaultRenderer().getTableCellRendererComponent(table, value, false, false, -1, -2);
-                ((JLabel) component).setHorizontalAlignment(SwingConstants.LEFT);
-                if (selected) {
-                } else {
-                    component.setFont(component.getFont().deriveFont(Font.PLAIN));
-                }
-                return component;
-            }
-        });
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setRowHeight(30);
         TableColumnAdjuster tca = new TableColumnAdjuster(table);
