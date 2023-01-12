@@ -19,7 +19,7 @@ public class SalaryListController {
         frameController = mainFrameController;
         salaryListView = new SalaryListView();
         salaryListView.init();
-        toolbarSalaryList = new ToolbarSalaryListController(salaryListView,this);
+        toolbarSalaryList = new ToolbarSalaryListController(frameController, salaryListView,this);
         salaryListView.add(toolbarSalaryList.getToolbar(),BorderLayout.NORTH);
         searchAndFilterModel = new SearchAndFilterModel(salaryListView.getTable(),toolbarSalaryList.getToolbar().getSearchField());
     }

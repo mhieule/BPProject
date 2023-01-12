@@ -13,10 +13,12 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
     private ToolbarSalaryListView toolbar;
     private SalaryListController salaryListController;
     private SalaryListView salaryListView;
+    private MainFrameController frameController;
 
     private ShowSalaryStageDialogController showSalaryStageDialogController;
 
-    public ToolbarSalaryListController(SalaryListView salaryView, SalaryListController salaryController) {
+    public ToolbarSalaryListController(MainFrameController mainFrameController, SalaryListView salaryView, SalaryListController salaryController) {
+        frameController = mainFrameController;
         salaryListController = salaryController;
         salaryListView = salaryView;
         toolbar = new ToolbarSalaryListView();
@@ -36,6 +38,9 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
             toolbar.getRemoveAdditionalSalaryStage().setVisible(true);
         } else if (e.getSource() == toolbar.getRemoveAdditionalSalaryStage()) {
             toolbar.getRemoveAdditionalSalaryStage().setVisible(false);
+        }
+        else if (e.getSource() == toolbar.getInsertEntry()){
+            frameController.getInsertSalaryController().showInsertSalaryView(frameController);
         }
     }
 

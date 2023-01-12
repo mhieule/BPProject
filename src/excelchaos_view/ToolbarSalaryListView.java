@@ -85,6 +85,10 @@ public class ToolbarSalaryListView extends JToolBar {
         return removeAdditionalSalaryStage;
     }
 
+    public JButton getInsertEntry() {
+        return insertEntry;
+    }
+
     public JTextField getSearchField() {
         return searchField;
     }
