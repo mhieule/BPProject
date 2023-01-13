@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class ToolbarPayRateTablesController implements ActionListener {
     private ToolbarPayRateTablesView toolbar;
-    private InsertPayRateTableController insertPayRateTableController;
+    private InsertSHKPayRateTableController insertSHKPayRateTableController;
     private PayRateStageTypeDialogController payRateStageTypeDialogController;
 
     private MainFrameController frameController;
@@ -31,7 +31,8 @@ public class ToolbarPayRateTablesController implements ActionListener {
                 //insertPayRateTableController.showInsertPayRateTableView(frameController);
                 payRateStageTypeDialogController = new PayRateStageTypeDialogController(frameController);
             } else if (frameController.getPayRateTablesController().getTitle() == "SHK Entgelttabellen") {
-
+                insertSHKPayRateTableController = new InsertSHKPayRateTableController(frameController);
+                insertSHKPayRateTableController.showInsertSHKPayRateTableView(frameController);
             }
 
         }
