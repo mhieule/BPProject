@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.jar.JarEntry;
 
 public class InsertPayRateTableView extends JPanel {
@@ -39,13 +40,11 @@ public class InsertPayRateTableView extends JPanel {
 
     private GridBagConstraints constraints;
 
-    private final int TEXT_FIELD_WIDTH = 100;
-    private final int TEXT_FIELD_HEIGHT = 25;
 
-    public void init() {
+    public void init(String [] columns) {
         setLayout(new BorderLayout());
         topPanelInit();
-        centerPanelInit();
+        centerPanelInit(columns);
         bottomPanelInit();
     }
 
@@ -77,7 +76,29 @@ public class InsertPayRateTableView extends JPanel {
 
     }
 
-    private void centerPanelInit(){
+    public JButton getCalculateCells() {
+        return calculateCells;
+    }
+
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
+
+    public JButton getSaveAndExit() {
+        return saveAndExit;
+    }
+
+    public JTable getTable() {
+        return table;
+    }
+
+    public void setActionListener(ActionListener l){
+        cancelButton.addActionListener(l);
+        calculateCells.addActionListener(l);
+        saveAndExit.addActionListener(l);
+    }
+
+    private void centerPanelInit(String[] columns){
         centerPanel = new JPanel();
         GridBagLayout layout = new GridBagLayout();
         centerPanel.setLayout(layout);
@@ -86,7 +107,7 @@ public class InsertPayRateTableView extends JPanel {
         constraints.gridx = 0;
         constraints.gridy = 0;
         initJLables();
-        initTable();
+        initTable(columns);
         constraints.insets.top = 10;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;
@@ -133,11 +154,8 @@ public class InsertPayRateTableView extends JPanel {
 */
     }
 
-    public void initTable() {
-        String[] columns = {
-                "%-Satz", "E13 St. 1 VBL-befreit", "E13 St. 1 VBL-pflichtig", "E13 St. 2 VBL-befreit", "E13 St. 2 VBL-pflichtig", "E13 St. 3 VBL-befreit", "E13 St. 3 VBL-pflichtig",
-                "E13 St. 4 VBL-befreit", "E13 St. 4 VBL-pflichtig", "E13 St. 5 VBL-befreit", "E13 St. 5 VBL-pflichtig", "E13 St. 6 VBL-befreit", "E13 St. 6 VBL-pflichtig"
-        };
+    public void initTable(String[] columns) {
+
         DefaultTableModel test = new DefaultTableModel(columns, 15);
         table = new JTable(test);
         DefaultTableModel model = new DefaultTableModel() {
@@ -197,5 +215,7 @@ public class InsertPayRateTableView extends JPanel {
         scrollPane = new JScrollPane(table);
         scrollPane.setRowHeaderView(headerTable);
     }
+
+
 
 }

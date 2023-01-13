@@ -12,7 +12,6 @@ public class MultiLineTableCellRenderer extends JList<String> implements TableCe
         boolean selected = table.getSelectionModel().isSelectedIndex(row);
         Component component = table.getTableHeader().getDefaultRenderer().getTableCellRendererComponent(table, value, false, false, -1, -2);
         ((JLabel) component).setHorizontalAlignment(SwingConstants.LEFT);
-        System.out.println(value);
         if (selected) {
         } else {
             component.setFont(component.getFont().deriveFont(Font.PLAIN));
