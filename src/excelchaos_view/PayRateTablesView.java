@@ -9,7 +9,6 @@ public class PayRateTablesView extends JPanel {
     public void init(){
         setLayout(new BorderLayout());
         centerPanel = new JPanel();
-        centerPanel.setBackground(Color.BLUE);
 
 
 
