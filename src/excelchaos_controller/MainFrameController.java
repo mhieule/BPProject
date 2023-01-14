@@ -32,7 +32,7 @@ public class MainFrameController implements ActionListener {
         tabsController = new TabsController(this);
         window.add(tabsController.getTabs());
         sideMenuTables = new SideMenuPanelTablesController(this);
-        sideMenuActionLog = new SideMenuPanelActionLogController(this);
+        //sideMenuActionLog = new SideMenuPanelActionLogController(this);
         insertPersonController = new InsertPersonController(this);
         showPersonalData = new ShowPersonController(this);
         salaryListController = new SalaryListController(this);
