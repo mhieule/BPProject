@@ -26,7 +26,7 @@ public class InsertPersonView extends JPanel {
 
     private JButton submit, reset, salary;
 
-    private JPanel centerUp, centerDown;
+    private JPanel centerUp, centerDown, leftButtons, rightButtons;
 
     private GridBagConstraints constraints;
 
@@ -44,7 +44,7 @@ public class InsertPersonView extends JPanel {
         constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 
 
-        centerDown.setLayout(new GridLayout());
+        centerDown.setLayout(new BoxLayout(centerDown,BoxLayout.X_AXIS));
         add(centerUp, BorderLayout.CENTER);
         add(centerDown, BorderLayout.SOUTH);
 
@@ -94,7 +94,7 @@ public class InsertPersonView extends JPanel {
 
         // Land -> soll Land als Feld eingefügt werden????
 
-        privatEmail = new JLabel("Private E-Mail Adresse");
+        privatEmail = new JLabel("Private E-Mail-Adresse");
         setConstraintsLabel(privatEmail, 7);
         tfPrivatEmail = new JTextField();
         setConstraintsTextField(tfPrivatEmail, 7);
@@ -216,13 +216,17 @@ public class InsertPersonView extends JPanel {
         tfTelefonnummerTUDA = new JTextField();
         setConstraintsTextField(tfTelefonnummerTUDA, 26);
 
-
+        leftButtons = new JPanel(new FlowLayout());
+        rightButtons = new JPanel(new FlowLayout());
         submit = new JButton("Person speichern");
-        centerDown.add(submit);
+        leftButtons.add(submit);
         salary = new JButton("Person speichern und zur Gehaltseingabe");
-        centerDown.add(salary);
+        leftButtons.add(salary);
+        centerDown.add(leftButtons);
         reset = new JButton("Felder zurücksetzen");
-        centerDown.add(reset);
+        centerDown.add(Box.createHorizontalGlue());
+        rightButtons.add(reset);
+        centerDown.add(rightButtons);
 
         JScrollPane scrollPane = new JScrollPane(centerUp, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         add(scrollPane);

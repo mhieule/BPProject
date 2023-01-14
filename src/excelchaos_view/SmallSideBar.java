@@ -31,7 +31,7 @@ public class SmallSideBar extends JPanel {
 
 
         super.paint(g);
-        g.setFont(new Font("Arial",Font.PLAIN,18));
+        g.setFont(new Font("Arial",Font.PLAIN,12));
         g.setColor(Color.BLACK);
 
         Graphics2D g2d = (Graphics2D) g;
