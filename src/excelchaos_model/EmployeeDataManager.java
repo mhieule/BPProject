@@ -9,6 +9,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.*;
+import java.util.Arrays;
 import java.util.List;
 
 public class EmployeeDataManager {
@@ -113,5 +114,15 @@ public class EmployeeDataManager {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
+    }
+
+    public String[] getAllEmployeesNameList(){
+        List<Employee> employeeList = getAllEmployees();
+        String[] names = new String[getRowCount()];
+        for (int i = 0; i < names.length; i++) {
+            names[i] = employeeList.get(i).getName() + " " + employeeList.get(i).getSurname();
+        }
+        Arrays.sort(names);
+        return names;
     }
 }
