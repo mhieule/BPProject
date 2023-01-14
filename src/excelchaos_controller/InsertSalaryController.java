@@ -39,10 +39,16 @@ public class InsertSalaryController implements ActionListener {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addSalaryTab));
     }
 
-    public void getEmployeeNameList(){
+    public void getEmployeeNameList(boolean fixedName, String currentName){
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         String[] names = employeeDataManager.getAllEmployeesNameList();
         insertSalaryView.getNamePickList().setModel(new DefaultComboBoxModel<>(names));
+
+        if(fixedName){
+            insertSalaryView.getNamePickList().setEditable(true);
+            insertSalaryView.getNamePickList().setSelectedItem(currentName);
+            insertSalaryView.getNamePickList().setEnabled(false);
+        }
     }
 
     @Override

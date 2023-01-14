@@ -120,7 +120,7 @@ public class EmployeeDataManager {
         List<Employee> employeeList = getAllEmployees();
         String[] names = new String[getRowCount()];
         for (int i = 0; i < names.length; i++) {
-            names[i] = employeeList.get(i).getName() + " " + employeeList.get(i).getSurname();
+            names[i] = employeeList.get(i).getSurname() + " " + employeeList.get(i).getName();
         }
         Arrays.sort(names);
         return names;

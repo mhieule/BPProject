@@ -127,7 +127,7 @@ public class InsertSalaryView extends JPanel {
         textField.setPreferredSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
         constraints.gridx = 1;
         constraints.gridy = rowNumber;
-//        constraints.gridwidth = GridBagConstraints.REMAINDER;
+        constraints.gridwidth = GridBagConstraints.REMAINDER;
         constraints.weightx = 1.0;
         centerUp.add(textField, constraints);
     }
@@ -136,7 +136,7 @@ public class InsertSalaryView extends JPanel {
         jComboBox.setPreferredSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
         constraints.gridx = 1;
         constraints.gridy = rowNumber;
-//        constraints.gridwidth = GridBagConstraints.REMAINDER;
+        constraints.gridwidth = GridBagConstraints.REMAINDER;
         constraints.weightx = 1.0;
         centerUp.add(jComboBox, constraints);
     }

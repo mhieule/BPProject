@@ -95,7 +95,7 @@ public class InsertPersonController implements ActionListener {
             insertPersonView.revalidate();
             insertPersonView.repaint();
             frameController.getShowPersonalData().updateData();
-            frameController.getInsertSalaryController().getEmployeeNameList();
+            frameController.getInsertSalaryController().getEmployeeNameList(false, null);
             SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
         }
         //speichert derzeit nur die Daten. Wenn Gehaltseingabe existiert muss diese danach angezeigt werden
@@ -137,7 +137,7 @@ public class InsertPersonController implements ActionListener {
             insertPersonView.repaint();
             frameController.getShowPersonalData().updateData();
             SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
-            frameController.getInsertSalaryController().getEmployeeNameList();
+            frameController.getInsertSalaryController().getEmployeeNameList(true, surname + " " + name);
             frameController.getInsertSalaryController().showInsertSalaryView(frameController);
         }
         if (e.getSource() == insertPersonView.getTypeOfJobPicklist()){
