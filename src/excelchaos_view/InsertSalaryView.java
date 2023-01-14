@@ -17,7 +17,7 @@ public class InsertSalaryView extends JPanel {
 
     private JButton submit, reset;
 
-    private JPanel centerUp, centerDown;
+    private JPanel centerUp, centerDown, leftButtons, rightButtons;
 
     private GridBagConstraints constraints;
 
@@ -63,17 +63,21 @@ public class InsertSalaryView extends JPanel {
         tfGehalt = new JTextField();
         setConstraintsTextField(tfGehalt, 3);
 
-
         sonderzahlung = new JLabel("Sonderzahlung");
         setConstraintsLabel(sonderzahlung, 4);
         tfSonderzahlung = new JTextField();
         setConstraintsTextField(tfSonderzahlung, 4);
 
 
+        leftButtons = new JPanel(new FlowLayout());
+        rightButtons = new JPanel(new FlowLayout());
         submit = new JButton("Gehaltseintrag speichern");
-        centerDown.add(submit);
+        leftButtons.add(submit);
+        centerDown.add(leftButtons);
         reset = new JButton("Felder zurücksetzen");
-        centerDown.add(reset);
+        centerDown.add(Box.createHorizontalGlue());
+        rightButtons.add(reset);
+        centerDown.add(rightButtons);
 
         JScrollPane scrollPane = new JScrollPane(centerUp, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         add(scrollPane);
