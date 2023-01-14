@@ -109,7 +109,6 @@ public class InsertPersonView extends JPanel {
         tfGeburtsdatum = new DatePicker();
         setConstraintsDatePicker(tfGeburtsdatum, 9);
 
-        // Das Feld sollte als Auswahlliste angelegt sein!
         nationalityFirst = new JLabel("Staatsangehörigkeit");
         setConstraintsLabel(nationalityFirst, 10);
         String[] nationalityArray = CountryModel.getCountries();
@@ -130,7 +129,6 @@ public class InsertPersonView extends JPanel {
         nationalityPickList2 = new JComboBox(nationalityArray2);
         setConstraintsJComboBox(nationalityPickList2, 12);
         nationalityPickList2.setVisible(false);
-
 
         visaRequiredCheckBox = new JCheckBox("Visum notwendig?", false);
         setConstraintsJCheckBox(visaRequiredCheckBox, 13);

@@ -8,6 +8,7 @@ import excelchaos_view.InsertSalaryView;
 import excelchaos_view.SideMenuPanelActionLogView;
 import excelchaos_model.EmployeeDataManager;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -36,6 +37,12 @@ public class InsertSalaryController implements ActionListener {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addSalaryTab));
         } else
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addSalaryTab));
+    }
+
+    public void getEmployeeNameList(){
+        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+        String[] names = employeeDataManager.getAllEmployeesNameList();
+        insertSalaryView.getNamePickList().setModel(new DefaultComboBoxModel<>(names));
     }
 
     @Override

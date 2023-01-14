@@ -1,6 +1,6 @@
 package excelchaos_view;
 
-import excelchaos_model.CountryModel;
+import excelchaos_model.EmployeeDataManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,11 +9,11 @@ import java.awt.event.ActionListener;
 
 public class InsertSalaryView extends JPanel {
 
-    private JLabel status, stufe, gehalt, sonderzahlung;
+    private JLabel name, status, stufe, gehalt, sonderzahlung;
 
     private JTextField tfStatus, tfStufe, tfGehalt, tfSonderzahlung;
 
-    // private JComboBox;
+    private JComboBox namePickList;
 
     private JButton submit, reset;
 
@@ -38,27 +38,36 @@ public class InsertSalaryView extends JPanel {
         add(centerUp, BorderLayout.CENTER);
         add(centerDown, BorderLayout.SOUTH);
 
-        status = new JLabel("Status");
-        setConstraintsLabel(status, 0);
-        tfStatus = new JTextField();
-        setConstraintsTextField(tfStatus, 0);
+        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+        String[] names = employeeDataManager.getAllEmployeesNameList();
+
+        name = new JLabel("Name");
+        setConstraintsLabel(name, 0);
+        namePickList = new JComboBox(names);
+        namePickList.setMaximumRowCount(10);
+        setConstraintsJComboBox(namePickList, 0);
         constraints.insets.top = 5;
 
+        status = new JLabel("Status");
+        setConstraintsLabel(status, 1);
+        tfStatus = new JTextField();
+        setConstraintsTextField(tfStatus, 1);
+
         stufe = new JLabel("Stufe");
-        setConstraintsLabel(stufe, 1);
+        setConstraintsLabel(stufe, 2);
         tfStufe = new JTextField();
-        setConstraintsTextField(tfStufe, 1);
+        setConstraintsTextField(tfStufe, 2);
 
         gehalt = new JLabel("Gehalt");
-        setConstraintsLabel(gehalt, 2);
+        setConstraintsLabel(gehalt, 3);
         tfGehalt = new JTextField();
-        setConstraintsTextField(tfGehalt, 2);
+        setConstraintsTextField(tfGehalt, 3);
 
 
         sonderzahlung = new JLabel("Sonderzahlung");
-        setConstraintsLabel(sonderzahlung, 3);
+        setConstraintsLabel(sonderzahlung, 4);
         tfSonderzahlung = new JTextField();
-        setConstraintsTextField(tfSonderzahlung, 3);
+        setConstraintsTextField(tfSonderzahlung, 4);
 
 
         submit = new JButton("Gehaltseintrag speichern");
@@ -75,6 +84,10 @@ public class InsertSalaryView extends JPanel {
 
     public void setActionListener(ActionListener l) {
         submit.addActionListener(l);
+    }
+
+    public JComboBox getNamePickList() {
+        return namePickList;
     }
 
     public JLabel getGehalt() {
@@ -114,10 +127,20 @@ public class InsertSalaryView extends JPanel {
         textField.setPreferredSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
         constraints.gridx = 1;
         constraints.gridy = rowNumber;
-        constraints.gridwidth = GridBagConstraints.REMAINDER;
+//        constraints.gridwidth = GridBagConstraints.REMAINDER;
         constraints.weightx = 1.0;
         centerUp.add(textField, constraints);
     }
+
+    private void setConstraintsJComboBox(JComboBox jComboBox, int rowNumber) {
+        jComboBox.setPreferredSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
+        constraints.gridx = 1;
+        constraints.gridy = rowNumber;
+//        constraints.gridwidth = GridBagConstraints.REMAINDER;
+        constraints.weightx = 1.0;
+        centerUp.add(jComboBox, constraints);
+    }
+
 }
 
 
