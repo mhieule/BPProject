@@ -3,6 +3,7 @@ package excelchaos_controller;
 import excelchaos_view.MainFrame;
 import excelchaos_view.SideMenuPanelTables;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -58,12 +59,13 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             sideMenu.getShowE13Tables().setVisible(true);
             sideMenu.getShowE14Tables().setVisible(true);
             sideMenu.getShowSHKTables().setVisible(true);
-
+            sideMenu.openArrowLabelVisible();
         } else {
             sideMenu.getCenterpanel().setPreferredSize(new Dimension(130,155));
             sideMenu.getShowE13Tables().setVisible(false);
             sideMenu.getShowE14Tables().setVisible(false);
             sideMenu.getShowSHKTables().setVisible(false);
+            sideMenu.closeArrowLabelVisible();
         }
 
     }
