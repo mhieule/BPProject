@@ -16,7 +16,7 @@ public class PayRateStageTypeDialogView extends JDialog {
     public void init() {
         setLayout(new BorderLayout());
         setTitle("Entgelttabelle Stufe 1 Variante auswählen");
-        okayButton = new JButton("Okay");
+        okayButton = new JButton("Ok");
         closeButton = new JButton("Abbrechen");
 
         pickPanel = new JPanel();
@@ -29,8 +29,9 @@ public class PayRateStageTypeDialogView extends JDialog {
         stageTypeSelecter = new JComboBox<>(choices);
         pickPanel.add(stageTypeSelecter);
 
-        buttonPanel.add(closeButton);
+
         buttonPanel.add(okayButton);
+        buttonPanel.add(closeButton);
 
         add(buttonPanel,BorderLayout.SOUTH);
         add(pickPanel,BorderLayout.CENTER);

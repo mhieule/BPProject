@@ -3,7 +3,6 @@ package excelchaos_view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.geom.FlatteningPathIterator;
 
 public class ToolbarShowPersonView extends JToolBar {
     private JButton insertPerson;
@@ -22,7 +21,7 @@ public class ToolbarShowPersonView extends JToolBar {
         searchLabel = new JLabel("Suchen:");
         searchField = new JTextField();
         searchField.setPreferredSize(new Dimension(130,30));
-        addSeparator(new Dimension(130,30));
+
         add(insertPerson);
         addSeparator(new Dimension(20,30));
         add(deletePerson);
