@@ -1,10 +1,14 @@
 package excelchaos_controller;
 
+import excelchaos_model.PayRateTableStringOperationModel;
 import excelchaos_view.InsertPayRateTableView;
 import excelchaos_view.SideMenuPanelActionLogView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class InsertPayRateTableController implements ActionListener {
 
@@ -13,8 +17,10 @@ public class InsertPayRateTableController implements ActionListener {
     private InsertBaseMoneyDialogController insertBaseMoneyDialogController;
     private String title;
 
+    private String[] moneyStringValues;
 
-    public InsertPayRateTableController(MainFrameController mainFrameController, String name,String[] columnNames,boolean typeOfTable) {
+
+    public InsertPayRateTableController(MainFrameController mainFrameController, String name, String[] columnNames, boolean typeOfTable) {
         frameController = mainFrameController;
         insertPayRateTableView = new InsertPayRateTableView();
         title = name;
@@ -41,36 +47,63 @@ public class InsertPayRateTableController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==insertPayRateTableView.getCancelButton()){
+        if (e.getSource() == insertPayRateTableView.getCancelButton()) {
             frameController.getTabs().removeTabNewWindow(insertPayRateTableView);
         } else if (e.getSource() == insertPayRateTableView.getCalculateCells()) {
-            for (int i = 1; i < insertPayRateTableView.getTable().getColumnCount();i++){
-                for (int j = 1; j < insertPayRateTableView.getTable().getRowCount();j++){
-                    if (insertPayRateTableView.getTable().getValueAt(j,0) == null){
-                        insertPayRateTableView.getTable().setValueAt(0,j,0);
-                    } else if (insertPayRateTableView.getTable().getValueAt(0,i) == null){
-                        insertPayRateTableView.getTable().setValueAt(0,0,j);
-                    }
-                    insertPayRateTableView.getTable().setValueAt(calculateValue(insertPayRateTableView.getTable().getValueAt(j,0).toString(),insertPayRateTableView.getTable().getValueAt(0,i).toString()),j,i);
+            String[] temporaryPercentages = getPercentageStringFromTable();
+            PayRateTableStringOperationModel model = new PayRateTableStringOperationModel();
+            temporaryPercentages =  model.modifyPercentageValuesForCalculation(temporaryPercentages);
+            BigDecimal[] percentages = model.convertPercentageStringsToBigDecimal(temporaryPercentages);
+            moneyStringValues = model.modifyMoneyValuesForCalculation(moneyStringValues);
+            BigDecimal[] moneyValues = model.convertStringToBigDecimal(moneyStringValues);
+            BigDecimal[][] results = new BigDecimal[percentages.length][moneyValues.length];
+            String[][] stringResults = new String[percentages.length][moneyValues.length];
+            for (int i = 0; i < percentages.length;i++){
+                for (int j = 0; j < moneyValues.length;j++){
+                    results[i][j] = moneyValues[j].multiply(percentages[i]);
+                    results[i][j] = results[i][j].setScale(2,RoundingMode.HALF_EVEN);
+                    stringResults[i][j]=results[i][j].toString();
+
+                }
+            }
+            for (int k = 0; k < insertPayRateTableView.getTable().getRowCount()-5;k++){
+                System.out.println(k);
+                for (int l = 0; l< insertPayRateTableView.getTable().getColumnCount()-1;l++){
+                    System.out.println(l);
+                    insertPayRateTableView.getTable().setValueAt(stringResults[k][l],k+1,l+1);
+
                 }
             }
 
 
-        } else if (e.getSource() == insertPayRateTableView.getInsertBaseMoney()){
-            insertBaseMoneyDialogController = new InsertBaseMoneyDialogController(frameController,this);
+        } else if (e.getSource() == insertPayRateTableView.getInsertBaseMoney()) {
+            insertBaseMoneyDialogController = new InsertBaseMoneyDialogController(frameController, this);
         }
     }
-    public double calculateValue(String percent,String baseValue){
+
+    public double calculateValue(String percent, String baseValue) {
         double result;
         double percentValue = Double.parseDouble(percent);
         double numberValue = Double.parseDouble(baseValue);
-        result = numberValue*(percentValue/100);
+        result = numberValue * (percentValue / 100);
 
         return result;
     }
-    public void insertValueInTable(String[] values){
-        for (int i = 0; i <values.length;i++){
-            insertPayRateTableView.getTable().setValueAt(values[i],0,i+1);
+
+    public String[] getPercentageStringFromTable() {
+        String[] result = new String[10];
+        for (int i = 0; i < insertPayRateTableView.getTable().getRowCount() - 5; i++) {
+            result[i] = insertPayRateTableView.getTable().getValueAt(i+1,0).toString();
+
+        }
+        return result;
+    }
+
+    public void insertValueInTable(String[] values) {
+        moneyStringValues = values;
+        for (int i = 0; i < values.length; i++) {
+            insertPayRateTableView.getTable().setValueAt(values[i], 0, i + 1);
+
         }
     }
 

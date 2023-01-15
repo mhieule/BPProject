@@ -14,7 +14,8 @@ public class InsertBaseMoneyDialogController implements ActionListener, MouseLis
     private InsertPayRateTableController insertPayRateTableController;
     private MainFrameController frameController;
 
-    public InsertBaseMoneyDialogController(MainFrameController mainFrameController, InsertPayRateTableController payRateTableController){
+
+    public InsertBaseMoneyDialogController(MainFrameController mainFrameController, InsertPayRateTableController payRateTableController) {
         frameController = mainFrameController;
         insertPayRateTableController = payRateTableController;
         insertBaseMoneyDialogView = new InsertBaseMoneyDialogView();
@@ -25,14 +26,14 @@ public class InsertBaseMoneyDialogController implements ActionListener, MouseLis
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == insertBaseMoneyDialogView.getCloseButton()){
+        if (e.getSource() == insertBaseMoneyDialogView.getCloseButton()) {
             insertBaseMoneyDialogView.dispose();
         }
-        if (e.getSource() == insertBaseMoneyDialogView.getOkayButton()){
+        if (e.getSource() == insertBaseMoneyDialogView.getOkayButton()) {
             String temporary = insertBaseMoneyDialogView.getInsertField().getText();
             PayRateTableStringOperationModel stringModel = new PayRateTableStringOperationModel();
             String[] moneyValues = stringModel.prepareString(temporary);
-            if(moneyValues.length != insertPayRateTableController.getInsertPayRateTableView().getTable().getColumnCount()-1){
+            if (moneyValues.length != insertPayRateTableController.getInsertPayRateTableView().getTable().getColumnCount() - 1) {
                 insertBaseMoneyDialogView.getLabel().setVisible(false);
                 insertBaseMoneyDialogView.getErrorLabel().setVisible(true);
                 insertBaseMoneyDialogView.getInsertField().removeAll();
@@ -43,6 +44,7 @@ public class InsertBaseMoneyDialogController implements ActionListener, MouseLis
 
         }
     }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
