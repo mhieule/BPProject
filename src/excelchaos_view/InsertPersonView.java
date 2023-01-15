@@ -242,6 +242,7 @@ public class InsertPersonView extends JPanel {
         submit.addActionListener(l);
         salary.addActionListener(l);
         typeOfJobPicklist.addActionListener(l);
+        reset.addActionListener(l);
     }
 
     public JLabel getPayGroupOnHiring() {
@@ -288,6 +289,10 @@ public class InsertPersonView extends JPanel {
         return salary;
     }
 
+    public JButton getReset() {
+        return reset;
+    }
+
     public JTextField getTfName() {
         return tfName;
     }
@@ -310,6 +315,10 @@ public class InsertPersonView extends JPanel {
 
     public JTextField getTfStadt() {
         return tfStadt;
+    }
+
+    public JTextField getTfStrasse(){
+        return tfStrasse;
     }
 
     public JTextField getTfPrivatEmail() {

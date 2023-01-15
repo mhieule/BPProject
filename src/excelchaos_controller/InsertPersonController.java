@@ -38,24 +38,41 @@ public class InsertPersonController implements ActionListener {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addPersonTab));
     }
 
+    private void setNationalityCheckboxVisible(){
+        insertPersonView.getNationalitySecond().setVisible(true);
+        insertPersonView.getNationalityPickList2().setVisible(true);
+    }
+
+    private void setNationalityCheckboxInVisible(){
+        insertPersonView.getNationalitySecond().setVisible(false);
+        insertPersonView.getNationalityPickList2().setVisible(false);
+    }
+
+    private void setVisRequiredCheckboxVisible(){
+        insertPersonView.getVisaValidUntil().setVisible(true);
+        insertPersonView.getTfVisaValidUntil().setVisible(true);
+    }
+
+    private void setVisRequiredCheckboxInVisible(){
+        insertPersonView.getVisaValidUntil().setVisible(false);
+        insertPersonView.getTfVisaValidUntil().setVisible(false);
+    }
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == insertPersonView.getNationalityCheckBox()) {
             if (insertPersonView.getNationalityCheckBox().isSelected()){
-                insertPersonView.getNationalitySecond().setVisible(true);
-                insertPersonView.getNationalityPickList2().setVisible(true);
+                setNationalityCheckboxVisible();
             }else{
-                insertPersonView.getNationalitySecond().setVisible(false);
-                insertPersonView.getNationalityPickList2().setVisible(false);
+                setNationalityCheckboxInVisible();
             }
         }
         if (e.getSource() == insertPersonView.getVisaRequiredCheckBox()){
             if (insertPersonView.getVisaRequiredCheckBox().isSelected()){
-                insertPersonView.getVisaValidUntil().setVisible(true);
-                insertPersonView.getTfVisaValidUntil().setVisible(true);
+                setVisRequiredCheckboxVisible();
             }else {
-                insertPersonView.getVisaValidUntil().setVisible(false);
-                insertPersonView.getTfVisaValidUntil().setVisible(false);
+                setVisRequiredCheckboxInVisible();
             }
         }
         if (e.getSource() == insertPersonView.getSubmit()) {
@@ -139,6 +156,48 @@ public class InsertPersonController implements ActionListener {
             SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
             frameController.getInsertSalaryController().getEmployeeNameList(true, surname + " " + name);
             frameController.getInsertSalaryController().showInsertSalaryView(frameController);
+        }
+        if(e.getSource() == insertPersonView.getReset()){
+            System.out.println("resetting");
+            insertPersonView.getTfName().setText(null);
+            insertPersonView.getTfVorname().setText(null);
+            insertPersonView.getTfStrasse().setText(null);
+            insertPersonView.getTfPrivatEmail().setText(null);
+            insertPersonView.getTfPrivateTelefonnummer().setText(null);
+            insertPersonView.getTfPersonalnummer().setText(null);
+            insertPersonView.getTfTuid().setText(null);
+            insertPersonView.getTfTranspondernummer().setText(null);
+            insertPersonView.getTfBueronummer().setText(null);
+            insertPersonView.getTfGehaltEingeplanntBis().setText(null);
+            insertPersonView.getTfTelefonnummerTUDA().setText(null);
+            insertPersonView.getTfHausnummer().setText(null);
+            insertPersonView.getTfPLZ().setText(null);
+            insertPersonView.getTfAdresszusatz().setText(null);
+            insertPersonView.getTfStadt().setText(null);
+            insertPersonView.getTfHausnummer().setText(null);
+            insertPersonView.getTfAdresszusatz().setText(null);
+            insertPersonView.getTfPLZ().setText(null);
+            insertPersonView.getTfStadt().setText(null);
+            insertPersonView.getTfWorkScope().setText(null);
+            insertPersonView.getTypeOfJobPicklist().setSelectedItem("Nicht ausgewählt");
+            insertPersonView.getNationalityPickList().setSelectedItem("Afghanistan");
+            insertPersonView.getNationalityPickList2().setSelectedItem(null);
+            insertPersonView.getNationalityCheckBox().setSelected(false);
+            insertPersonView.getVisaRequiredCheckBox().setSelected(false);
+            setNationalityCheckboxInVisible();
+            setVisRequiredCheckboxInVisible();
+            insertPersonView.getPayGroupOnHiring().setVisible(false);
+            insertPersonView.getTfPayGroupOnHiring().setVisible(false);
+            insertPersonView.getPayGradeOnHiring().setVisible(false);
+            insertPersonView.getPayGradeList().setVisible(false);
+            insertPersonView.getHiwiTypeOfPayment().setVisible(false);
+            insertPersonView.getHiwiTypeOfPaymentList().setVisible(false);
+            insertPersonView.getTfGeburtsdatum().setText(null);
+            insertPersonView.getTfVisaValidUntil().setText(null);
+            insertPersonView.getTfGehaltEingeplanntBis().setText(null);
+            insertPersonView.getTfWorkEnd().setText(null);
+            insertPersonView.getTfWorkStart().setText(null);
+
         }
         if (e.getSource() == insertPersonView.getTypeOfJobPicklist()){
             if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("WiMi") || insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("ATM")){
