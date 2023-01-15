@@ -55,6 +55,19 @@ public class EmployeeDataManager {
         return employee;
     }
 
+    public Employee getEmployeeByName(String surNameAndName){
+        Employee employee = null;
+        List<Employee> employeeList = getAllEmployees();
+        for (Employee emp: employeeList) {
+            String name = emp.getSurname() + " " + emp.getName();
+            if(name.equals(surNameAndName)){
+                employee = emp;
+                return employee;
+            }
+        }
+        return employee;
+    }
+
     public List<Employee> getAllEmployees(){
         List<Employee> employees = null;
         try {

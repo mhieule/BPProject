@@ -56,12 +56,15 @@ public class InsertSalaryController implements ActionListener {
         if (e.getSource() == insertSalaryView.getSubmit()) {
             System.out.println("submitting");
             ContractDataManager contractDataManager = new ContractDataManager();
-            int id = 1;
+            EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+            Employee employee = employeeDataManager.getEmployeeByName(insertSalaryView.getNamePickList().getSelectedItem().toString());
+            int id = employee.getId();
+            String gruppe = insertSalaryView.getTfGruppe().getText();
             String stufe = insertSalaryView.getPlStufe().getSelectedItem().toString();
             String gehalt = insertSalaryView.getTfGehalt().getText();
             String Sonderzahlung = insertSalaryView.getTfSonderzahlung().getText();
 
-            Contract newContract = new Contract(id, "status", stufe, "startdate", "enddate", Double.parseDouble(gehalt), Double.parseDouble(Sonderzahlung));
+            Contract newContract = new Contract(id, gruppe, stufe, "startdate", "enddate", Double.parseDouble(gehalt), Double.parseDouble(Sonderzahlung));
             contractDataManager.addContract(newContract);
             insertSalaryView.removeAll();
             insertSalaryView.revalidate();
