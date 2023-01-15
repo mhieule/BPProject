@@ -57,8 +57,7 @@ public class InsertPayRateTableController implements ActionListener {
 
 
         } else if (e.getSource() == insertPayRateTableView.getInsertBaseMoney()){
-            System.out.println("Here");
-            insertBaseMoneyDialogController = new InsertBaseMoneyDialogController(frameController);
+            insertBaseMoneyDialogController = new InsertBaseMoneyDialogController(frameController,this);
         }
     }
     public double calculateValue(String percent,String baseValue){
@@ -68,5 +67,15 @@ public class InsertPayRateTableController implements ActionListener {
         result = numberValue*(percentValue/100);
 
         return result;
+    }
+    public void insertValueInTable(String[] values){
+        for (int i = 0; i <values.length;i++){
+            insertPayRateTableView.getTable().setValueAt(values[i],0,i+1);
+        }
+    }
+
+
+    public InsertPayRateTableView getInsertPayRateTableView() {
+        return insertPayRateTableView;
     }
 }

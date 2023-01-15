@@ -1,5 +1,6 @@
 package excelchaos_controller;
 
+import excelchaos_model.PayRateTableStringOperationModel;
 import excelchaos_view.InsertBaseMoneyDialogView;
 
 import java.awt.event.ActionEvent;
@@ -13,8 +14,9 @@ public class InsertBaseMoneyDialogController implements ActionListener, MouseLis
     private InsertPayRateTableController insertPayRateTableController;
     private MainFrameController frameController;
 
-    public InsertBaseMoneyDialogController(MainFrameController mainFrameController){
+    public InsertBaseMoneyDialogController(MainFrameController mainFrameController, InsertPayRateTableController payRateTableController){
         frameController = mainFrameController;
+        insertPayRateTableController = payRateTableController;
         insertBaseMoneyDialogView = new InsertBaseMoneyDialogView();
         insertBaseMoneyDialogView.init();
         insertBaseMoneyDialogView.setActionListener(this);
@@ -25,6 +27,20 @@ public class InsertBaseMoneyDialogController implements ActionListener, MouseLis
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == insertBaseMoneyDialogView.getCloseButton()){
             insertBaseMoneyDialogView.dispose();
+        }
+        if (e.getSource() == insertBaseMoneyDialogView.getOkayButton()){
+            String temporary = insertBaseMoneyDialogView.getInsertField().getText();
+            PayRateTableStringOperationModel stringModel = new PayRateTableStringOperationModel();
+            String[] moneyValues = stringModel.prepareString(temporary);
+            if(moneyValues.length != insertPayRateTableController.getInsertPayRateTableView().getTable().getColumnCount()-1){
+                insertBaseMoneyDialogView.getLabel().setVisible(false);
+                insertBaseMoneyDialogView.getErrorLabel().setVisible(true);
+                insertBaseMoneyDialogView.getInsertField().removeAll();
+            } else {
+                insertPayRateTableController.insertValueInTable(moneyValues);
+                insertBaseMoneyDialogView.dispose();
+            }
+
         }
     }
 
