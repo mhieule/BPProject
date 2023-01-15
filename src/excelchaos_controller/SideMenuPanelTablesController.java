@@ -55,16 +55,18 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
-            sideMenu.getCenterpanel().setPreferredSize(new Dimension(130,245));
-            sideMenu.getShowE13Tables().setVisible(true);
-            sideMenu.getShowE14Tables().setVisible(true);
-            sideMenu.getShowSHKTables().setVisible(true);
+            sideMenu.getCenterpanel().setPreferredSize(new Dimension(140,255));
+            sideMenu.getTableButtonPanel().setVisible(true);
+            sideMenu.getToggleButtonPanel().setBorder(null);
+            sideMenu.getToggleButtonPanel().setPreferredSize(new Dimension(140,35));
+            sideMenu.getPayRatePanel().setBorder(sideMenu.getRaisedetchedBorder());
             sideMenu.openArrowLabelVisible();
         } else {
-            sideMenu.getCenterpanel().setPreferredSize(new Dimension(130,155));
-            sideMenu.getShowE13Tables().setVisible(false);
-            sideMenu.getShowE14Tables().setVisible(false);
-            sideMenu.getShowSHKTables().setVisible(false);
+            sideMenu.getCenterpanel().setPreferredSize(new Dimension(140,170));
+            sideMenu.getTableButtonPanel().setVisible(false);
+            sideMenu.getPayRatePanel().setBorder(null);
+            sideMenu.getToggleButtonPanel().setBorder(sideMenu.getRaisedetchedBorder());
+            sideMenu.getToggleButtonPanel().setPreferredSize(new Dimension(140,45));
             sideMenu.closeArrowLabelVisible();
         }
 

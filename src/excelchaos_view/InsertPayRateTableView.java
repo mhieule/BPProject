@@ -60,13 +60,22 @@ public class InsertPayRateTableView extends JPanel {
     }
     private void bottomPanelInit(){
         bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout());
+        bottomPanel.setLayout(new BoxLayout(bottomPanel,BoxLayout.X_AXIS));
+        JPanel leftbuttons = new JPanel(new FlowLayout());
+        JPanel rightbuttons = new JPanel(new FlowLayout());
+
         cancelButton = new JButton("Abbrechen");
         calculateCells = new JButton("Zellen berechnen");
         saveAndExit = new JButton("Entgelttabelle speichern und Verlassen");
-        bottomPanel.add(cancelButton);
-        bottomPanel.add(calculateCells);
-        bottomPanel.add(saveAndExit);
+
+        rightbuttons.add(cancelButton);
+        leftbuttons.add(calculateCells);
+        leftbuttons.add(saveAndExit);
+
+        bottomPanel.add(leftbuttons);
+        bottomPanel.add(Box.createHorizontalGlue());
+        bottomPanel.add(rightbuttons);
+
         constraints.gridy = 4;
         constraints.insets.bottom = 20;
         constraints.weighty = 0.2;

@@ -1,6 +1,8 @@
 package excelchaos_view;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -16,21 +18,23 @@ public class SideMenuPanelTables extends JPanel {
     private JButton showE14Tables;
     private JButton showSHKTables;
 
-    private JToggleButton payRates;
+    private JToggleButton payRatesToogleButton;
 
-    private JPanel topPanel, centerpanel, payRatePanel;
+    private JPanel topPanel, centerpanel, payRatePanel, toggleButtonPanel, tableButtonPanel;
     private JLabel navi, payTextLabel,openArrowLabel,closeArrowLabel;
     private BasicArrowButton arrowButtonWest;
 
     private ImageIcon closeArrow;
     private ImageIcon openArrow;
 
+    private Border raisedetchedBorder;
+
+    private final int RegularButtonWidth = 130;
+
+    private final int RegularButtonHeigt = 25;
+
     public void init() {
-        closeArrow = new ImageIcon("resources/images/arrow_right_mini.png");
-        openArrow = new ImageIcon("resources/images/arrow_down_mini.png");
-        closeArrowLabel = new JLabel(closeArrow);
-        openArrowLabel = new JLabel(openArrow);
-        payTextLabel = new JLabel("Entgelttabellen");
+
 
 
         personenliste = new JButton("Personenliste");
@@ -38,29 +42,13 @@ public class SideMenuPanelTables extends JPanel {
         inventarliste = new JButton("Inventarliste");
         gehaltshistorie = new JButton("Gehaltshistorie");
 
-        payRates = new JToggleButton();
-        payRates.setLayout(new BoxLayout(payRates,BoxLayout.X_AXIS));
-        payRates.add(payTextLabel);
-        payRates.add(closeArrowLabel);
-        closeArrowLabelVisible();
-        payRates.add(openArrowLabel);
+
+        personenliste.setPreferredSize(new Dimension(RegularButtonWidth, RegularButtonHeigt));
+        inventarliste.setPreferredSize(new Dimension(RegularButtonWidth, RegularButtonHeigt));
+        gehaltsliste.setPreferredSize(new Dimension(RegularButtonWidth, RegularButtonHeigt));
+        gehaltshistorie.setPreferredSize(new Dimension(RegularButtonWidth, RegularButtonHeigt));
 
 
-
-        showE13Tables = new JButton("E13 Tabellen");
-        showE14Tables = new JButton("E14 Tabellen");
-        showSHKTables = new JButton("SHK Tabellen");
-        personenliste.setPreferredSize(new Dimension(120, 25));
-        inventarliste.setPreferredSize(new Dimension(120, 25));
-        gehaltsliste.setPreferredSize(new Dimension(120, 25));
-        gehaltshistorie.setPreferredSize(new Dimension(120, 25));
-        payRates.setPreferredSize(new Dimension(120, 25));
-        showE13Tables.setPreferredSize(new Dimension(110, 20));
-        showE14Tables.setPreferredSize(new Dimension(110, 20));
-        showSHKTables.setPreferredSize(new Dimension(110, 20));
-        showE13Tables.setVisible(false);
-        showE14Tables.setVisible(false);
-        showSHKTables.setVisible(false);
 
 
         arrowButtonWest = new BasicArrowButton(BasicArrowButton.WEST);
@@ -72,22 +60,22 @@ public class SideMenuPanelTables extends JPanel {
         topPanel.add(navi);
         topPanel.add(arrowButtonWest);
         add(topPanel, BorderLayout.PAGE_START);
-        centerpanel.setPreferredSize(new Dimension(130, 400));
+        centerpanel.setPreferredSize(new Dimension(140, 170));
         centerpanel.add(personenliste);
         centerpanel.add(gehaltsliste);
         centerpanel.add(gehaltshistorie);
         centerpanel.add(inventarliste);
-        centerpanel.add(payRates);
-        initPayRatePanel();
-        //CollapsablePanel collapsablePanel = new CollapsablePanel("Entgelttabellen",payRatePanel);
-        centerpanel.add(showE13Tables);
-        centerpanel.add(showE14Tables);
-        centerpanel.add(showSHKTables);
+        //centerpanel.add(payRates);
+        initPayRateExpander();
+        centerpanel.add(payRatePanel);
+        //centerpanel.add(showE13Tables);
+        //centerpanel.add(showE14Tables);
+        //centerpanel.add(showSHKTables);
         //centerpanel.add(collapsablePanel);
         add(centerpanel, BorderLayout.CENTER);
         setBackground(Color.white);
 
-        setPreferredSize(new Dimension(130, 100));
+        setPreferredSize(new Dimension(140, 100));
 
     }
 
@@ -103,17 +91,69 @@ public class SideMenuPanelTables extends JPanel {
         openArrowLabel.setVisible(true);
     }
 
-    private void initPayRatePanel(){
+    private void initPayRateExpander(){
         payRatePanel = new JPanel();
-        payRatePanel.setLayout(new BoxLayout(payRatePanel,BoxLayout.Y_AXIS));
-        payRatePanel.setPreferredSize(new Dimension(130,100));
-        payRatePanel.add(showE13Tables);
-        payRatePanel.add(showE14Tables);
-        payRatePanel.add(showSHKTables);
+        toggleButtonPanel = new JPanel();
+        tableButtonPanel = new JPanel();
+        raisedetchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+        toggleButtonPanel.setPreferredSize(new Dimension(140,45));
+        tableButtonPanel.setPreferredSize(new Dimension(140,80));
+        toggleButtonPanel.setBorder(raisedetchedBorder);
+        //payRatePanel.setLayout(new BoxLayout(payRatePanel,BoxLayout.Y_AXIS));
+        payRatePanel.setLayout(new BorderLayout());
+        payRatePanel.setPreferredSize(new Dimension(140,120));
+
+        closeArrow = new ImageIcon("resources/images/arrow_right_mini.png");
+        openArrow = new ImageIcon("resources/images/arrow_down_mini.png");
+        closeArrowLabel = new JLabel(closeArrow);
+        openArrowLabel = new JLabel(openArrow);
+        payTextLabel = new JLabel("Entgelttabellen");
+        payRatesToogleButton = new JToggleButton();
+        payRatesToogleButton.setPreferredSize(new Dimension(RegularButtonWidth, 30));
+        payRatesToogleButton.setLayout(new BoxLayout(payRatesToogleButton,BoxLayout.X_AXIS));
+        payRatesToogleButton.add(payTextLabel);
+        payRatesToogleButton.add(closeArrowLabel);
+        closeArrowLabelVisible();
+        payRatesToogleButton.add(openArrowLabel);
+
+        toggleButtonPanel.add(payRatesToogleButton);
+
+        payRatePanel.add(toggleButtonPanel,BorderLayout.NORTH);
+
+
+        showE13Tables = new JButton("E13 Tabellen");
+        showE14Tables = new JButton("E14 Tabellen");
+        showSHKTables = new JButton("SHK Tabellen");
+
+        showE13Tables.setPreferredSize(new Dimension(110, 20));
+        showE14Tables.setPreferredSize(new Dimension(110, 20));
+        showSHKTables.setPreferredSize(new Dimension(110, 20));
+
+        tableButtonPanel.add(showE13Tables);
+        tableButtonPanel.add(showE14Tables);
+        tableButtonPanel.add(showSHKTables);
+        tableButtonPanel.setVisible(false);
+
+        payRatePanel.add(tableButtonPanel,BorderLayout.CENTER);
+
+
     }
 
+    public JPanel getToggleButtonPanel() {
+        return toggleButtonPanel;
+    }
 
+    public Border getRaisedetchedBorder() {
+        return raisedetchedBorder;
+    }
 
+    public JPanel getPayRatePanel() {
+        return payRatePanel;
+    }
+
+    public JPanel getTableButtonPanel() {
+        return tableButtonPanel;
+    }
 
     public BasicArrowButton getArrowButtonWest() {
         return arrowButtonWest;
@@ -132,7 +172,7 @@ public class SideMenuPanelTables extends JPanel {
     }
 
     public JToggleButton getPayRates() {
-        return payRates;
+        return payRatesToogleButton;
     }
 
     public JButton getShowE13Tables() {
@@ -161,7 +201,7 @@ public class SideMenuPanelTables extends JPanel {
         showSHKTables.addActionListener(l);
     }
     public void setItemListener(ItemListener l){
-        payRates.addItemListener(l);
+        payRatesToogleButton.addItemListener(l);
     }
 
 }
