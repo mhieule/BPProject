@@ -10,6 +10,7 @@ public class InsertPayRateTableController implements ActionListener {
 
     private InsertPayRateTableView insertPayRateTableView;
     private MainFrameController frameController;
+    private InsertBaseMoneyDialogController insertBaseMoneyDialogController;
     private String title;
 
 
@@ -55,6 +56,9 @@ public class InsertPayRateTableController implements ActionListener {
             }
 
 
+        } else if (e.getSource() == insertPayRateTableView.getInsertBaseMoney()){
+            System.out.println("Here");
+            insertBaseMoneyDialogController = new InsertBaseMoneyDialogController(frameController);
         }
     }
     public double calculateValue(String percent,String baseValue){

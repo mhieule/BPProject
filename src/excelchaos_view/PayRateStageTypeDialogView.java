@@ -40,6 +40,7 @@ public class PayRateStageTypeDialogView extends JDialog {
 
         setSize(new Dimension(300, 200));
         setLocationRelativeTo(getParent());
+        setAlwaysOnTop(true);
         setResizable(false);
         setVisible(true);
     }
