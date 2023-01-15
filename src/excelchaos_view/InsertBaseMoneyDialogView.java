@@ -16,7 +16,7 @@ public class InsertBaseMoneyDialogView extends JDialog {
 
     private JPopupMenu popupMenu;
 
-    private JLabel label;
+    private JLabel label, errorLabel;
 
     private JPanel textfieldPanel,buttonPanel;
 
@@ -27,6 +27,9 @@ public class InsertBaseMoneyDialogView extends JDialog {
         okayButton = new JButton("Ok");
         closeButton = new JButton("Abbrechen");
         label = new JLabel("Bitte Grundentgelt hier einfügen");
+        errorLabel = new JLabel("<html>Fehlerhafte Eingabe<br>Unterscheiden Sie Stufe 1A und 1B und Stufe 1</html>");
+        errorLabel.setForeground(Color.RED);
+        errorLabel.setVisible(false);
         insertField = new JTextField();
         insertField.setPreferredSize(new Dimension(200,30));
 
@@ -36,13 +39,15 @@ public class InsertBaseMoneyDialogView extends JDialog {
 
         buttonPanel.setLayout(new FlowLayout());
         textfieldPanel.setLayout(new GridBagLayout());
+        textfieldPanel.setPreferredSize(new Dimension(280,50));
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 0;
+        constraints.weighty = 1.0;
         textfieldPanel.add(label,constraints);
+        textfieldPanel.add(errorLabel,constraints);
         constraints.gridy = 1;
-        constraints.insets.bottom = 10;
-        constraints.insets.top = 10;
+        constraints.weighty = 0.0;
         textfieldPanel.add(insertField,constraints);
         createPopUpMenu();
         buttonPanel.add(okayButton);
@@ -103,6 +108,14 @@ public class InsertBaseMoneyDialogView extends JDialog {
 
     public JButton getCloseButton() {
         return closeButton;
+    }
+
+    public JLabel getErrorLabel() {
+        return errorLabel;
+    }
+
+    public JLabel getLabel() {
+        return label;
     }
 
     public JTextField getInsertField() {
