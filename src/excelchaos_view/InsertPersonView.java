@@ -12,11 +12,11 @@ public class InsertPersonView extends JPanel {
 
     private JLabel name, vorname, strasse, hausnummer, adresszusatz, plz, stadt, privatEmail, privateTelefonnummer, geburtsdatum,
             nationalityFirst, nationalitySecond, personalnummer, tuid, typeOfJob, visaValidUntil,
-            gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, workStart, workEnd, workScope, payClassOnHiring, payGradeOnHiring, hiwiTypeOfPayment, puffer;
+            gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, workStart, workEnd, workScope, payGroupOnHiring, payGradeOnHiring, hiwiTypeOfPayment, puffer;
 
     private JTextField tfName, tfVorname, tfStrasse, tfHausnummer, tfAdresszusatz, tfPLZ, tfStadt, tfPrivatEmail, tfPrivateTelefonnummer,
             tfPersonalnummer, tfTuid, tfGehaltEingeplanntBis, tfTranspondernummer, tfBueronummer,
-            tfTelefonnummerTUDA, tfWorkScope, tfPayClassOnHiring;
+            tfTelefonnummerTUDA, tfWorkScope, tfPayGroupOnHiring;
 
     private DatePicker tfGeburtsdatum, tfVisaValidUntil, tfWorkStart, tfWorkEnd;
 
@@ -171,12 +171,12 @@ public class InsertPersonView extends JPanel {
         tfWorkScope = new JTextField();
         setConstraintsTextField(tfWorkScope, 20);
 
-        payClassOnHiring = new JLabel("Gehaltsklasse bei Einstellung");
-        setConstraintsLabel(payClassOnHiring, 21);
-        payClassOnHiring.setVisible(false);
-        tfPayClassOnHiring = new JTextField();
-        setConstraintsTextField(tfPayClassOnHiring, 21);
-        tfPayClassOnHiring.setVisible(false);
+        payGroupOnHiring = new JLabel("Gehaltsgruppe bei Einstellung");
+        setConstraintsLabel(payGroupOnHiring, 21);
+        payGroupOnHiring.setVisible(false);
+        tfPayGroupOnHiring = new JTextField();
+        setConstraintsTextField(tfPayGroupOnHiring, 21);
+        tfPayGroupOnHiring.setVisible(false);
 
         payGradeOnHiring = new JLabel("Gehaltsstufe bei Einstellung");
         setConstraintsLabel(payGradeOnHiring, 22);
@@ -244,8 +244,8 @@ public class InsertPersonView extends JPanel {
         typeOfJobPicklist.addActionListener(l);
     }
 
-    public JLabel getPayClassOnHiring() {
-        return payClassOnHiring;
+    public JLabel getPayGroupOnHiring() {
+        return payGroupOnHiring;
     }
 
     public JLabel getPayGradeOnHiring() {
@@ -378,8 +378,8 @@ public class InsertPersonView extends JPanel {
         return tfWorkScope;
     }
 
-    public JTextField getTfPayClassOnHiring() {
-        return tfPayClassOnHiring;
+    public JTextField getTfPayGroupOnHiring() {
+        return tfPayGroupOnHiring;
     }
 
     public JComboBox getPayGradeList() {

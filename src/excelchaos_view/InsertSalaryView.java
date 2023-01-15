@@ -9,11 +9,11 @@ import java.awt.event.ActionListener;
 
 public class InsertSalaryView extends JPanel {
 
-    private JLabel name, status, stufe, gehalt, sonderzahlung, puffer;
+    private JLabel nameList, gruppe, stufe, gehalt, sonderzahlung, puffer;
 
-    private JTextField tfStatus, tfStufe, tfGehalt, tfSonderzahlung;
+    private JTextField tfGruppe, tfGehalt, tfSonderzahlung;
 
-    private JComboBox namePickList;
+    private JComboBox namePickList, plStufe;
 
     private JButton submit, reset;
 
@@ -41,22 +41,23 @@ public class InsertSalaryView extends JPanel {
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         String[] names = employeeDataManager.getAllEmployeesNameList();
 
-        name = new JLabel("Name");
-        setConstraintsLabel(name, 0);
+        nameList = new JLabel("Name");
+        setConstraintsLabel(nameList, 0);
         namePickList = new JComboBox(names);
         namePickList.setMaximumRowCount(10);
         setConstraintsJComboBox(namePickList, 0);
         constraints.insets.top = 5;
 
-        status = new JLabel("Status");
-        setConstraintsLabel(status, 1);
-        tfStatus = new JTextField();
-        setConstraintsTextField(tfStatus, 1);
+        gruppe = new JLabel("Gruppe");
+        setConstraintsLabel(gruppe, 1);
+        tfGruppe = new JTextField();
+        setConstraintsTextField(tfGruppe, 1);
 
-        stufe = new JLabel("Stufe");
+        stufe = new JLabel("Gehaltsstufe bei Einstellung");
         setConstraintsLabel(stufe, 2);
-        tfStufe = new JTextField();
-        setConstraintsTextField(tfStufe, 2);
+        String[] payGrades = {"Nicht ausgewählt", "1A","1B","1","2","3","4","5","6"};
+        plStufe = new JComboBox(payGrades);
+        setConstraintsJComboBox(plStufe,2);
 
         gehalt = new JLabel("Gehalt");
         setConstraintsLabel(gehalt, 3);
@@ -91,18 +92,16 @@ public class InsertSalaryView extends JPanel {
 
     public void setActionListener(ActionListener l) {
         submit.addActionListener(l);
+        reset.addActionListener(l);
     }
 
-    public JComboBox getNamePickList() {
-        return namePickList;
-    }
 
     public JLabel getGehalt() {
         return gehalt;
     }
 
-    public JLabel getStatus(){
-        return status;
+    public JLabel getGruppe(){
+        return gruppe;
     }
 
     public JLabel getSonderzahlung() {
@@ -121,12 +120,31 @@ public class InsertSalaryView extends JPanel {
         return submit;
     }
 
+    public JComboBox getNamePickList() {
+        return namePickList;
+    }
+
+    public JTextField getTfGehalt() {
+        return tfGehalt;
+    }
+
+    public JTextField getTfSonderzahlung() {
+        return tfSonderzahlung;
+    }
+
+    public JTextField getTfGruppe() {
+        return tfGruppe;
+    }
+
+    public JComboBox getPlStufe() {
+        return plStufe;
+    }
+
     private void setConstraintsLabel(JLabel label, int rowNumber) {
         constraints.gridx = 0;
         constraints.gridy = rowNumber;
         constraints.gridwidth = 1;
         constraints.weightx = 0.0;
-//        constraints.weighty = 1.0;
         centerUp.add(label, constraints);
     }
 

@@ -40,6 +40,7 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
             toolbar.getRemoveAdditionalSalaryStage().setVisible(false);
         }
         else if (e.getSource() == toolbar.getInsertEntry()){
+            frameController.getInsertSalaryController().getEmployeeNameList(false, null);
             frameController.getInsertSalaryController().showInsertSalaryView(frameController);
         }
     }

@@ -57,17 +57,27 @@ public class InsertSalaryController implements ActionListener {
             System.out.println("submitting");
             ContractDataManager contractDataManager = new ContractDataManager();
             int id = 1;
-            String status = insertSalaryView.getStatus().getText();
-            String stufe = insertSalaryView.getStufe().getText();
-            String gehalt = insertSalaryView.getGehalt().getText();
-            String Sonderzahlung = insertSalaryView.getSonderzahlung().getText();
+            String stufe = insertSalaryView.getPlStufe().getSelectedItem().toString();
+            String gehalt = insertSalaryView.getTfGehalt().getText();
+            String Sonderzahlung = insertSalaryView.getTfSonderzahlung().getText();
 
-            Contract newContract = new Contract(id, status, stufe, "startdate", "enddate", Double.parseDouble(gehalt), Double.parseDouble(Sonderzahlung));
+            Contract newContract = new Contract(id, "status", stufe, "startdate", "enddate", Double.parseDouble(gehalt), Double.parseDouble(Sonderzahlung));
             contractDataManager.addContract(newContract);
             insertSalaryView.removeAll();
             insertSalaryView.revalidate();
             insertSalaryView.repaint();
             SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
+        }
+        if(e.getSource() == insertSalaryView.getReset()){
+            System.out.println("resetting");
+            insertSalaryView.getPlStufe().setSelectedItem("Nicht ausgewählt");
+            insertSalaryView.getTfGehalt().setText(null);
+            insertSalaryView.getTfSonderzahlung().setText(null);
+            insertSalaryView.getTfGruppe().setText(null);
+
+            if(insertSalaryView.getNamePickList().isEnabled()){
+                insertSalaryView.getNamePickList().setSelectedItem(null);
+            }
         }
 
     }

@@ -142,13 +142,13 @@ public class InsertPersonController implements ActionListener {
         }
         if (e.getSource() == insertPersonView.getTypeOfJobPicklist()){
             if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("WiMi") || insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("ATM")){
-                insertPersonView.getPayClassOnHiring().setVisible(true);
-                insertPersonView.getTfPayClassOnHiring().setVisible(true);
+                insertPersonView.getPayGroupOnHiring().setVisible(true);
+                insertPersonView.getTfPayGroupOnHiring().setVisible(true);
                 insertPersonView.getPayGradeOnHiring().setVisible(true);
                 insertPersonView.getPayGradeList().setVisible(true);
             } else {
-                insertPersonView.getPayClassOnHiring().setVisible(false);
-                insertPersonView.getTfPayClassOnHiring().setVisible(false);
+                insertPersonView.getPayGroupOnHiring().setVisible(false);
+                insertPersonView.getTfPayGroupOnHiring().setVisible(false);
                 insertPersonView.getPayGradeOnHiring().setVisible(false);
                 insertPersonView.getPayGradeList().setVisible(false);
             }
