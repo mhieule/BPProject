@@ -12,7 +12,7 @@ public class InsertPersonView extends JPanel {
 
     private JLabel name, vorname, strasse, hausnummer, adresszusatz, plz, stadt, privatEmail, privateTelefonnummer, geburtsdatum,
             nationalityFirst, nationalitySecond, personalnummer, tuid, typeOfJob, visaValidUntil,
-            gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, workStart, workEnd, workScope, payClassOnHiring, payGradeOnHiring, hiwiTypeOfPayment;
+            gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, workStart, workEnd, workScope, payClassOnHiring, payGradeOnHiring, hiwiTypeOfPayment, puffer;
 
     private JTextField tfName, tfVorname, tfStrasse, tfHausnummer, tfAdresszusatz, tfPLZ, tfStadt, tfPrivatEmail, tfPrivateTelefonnummer,
             tfPersonalnummer, tfTuid, tfGehaltEingeplanntBis, tfTranspondernummer, tfBueronummer,
@@ -214,6 +214,9 @@ public class InsertPersonView extends JPanel {
         tfTelefonnummerTUDA = new JTextField();
         setConstraintsTextField(tfTelefonnummerTUDA, 26);
 
+        puffer = new JLabel(" ");
+        setConstraintsPuffer(puffer,27);
+
         leftButtons = new JPanel(new FlowLayout());
         rightButtons = new JPanel(new FlowLayout());
         submit = new JButton("Person speichern");
@@ -388,7 +391,6 @@ public class InsertPersonView extends JPanel {
         constraints.gridy = rowNumber;
         constraints.gridwidth = 1;
         constraints.weightx = 0.0;
-        constraints.weighty = 1.0;
         centerUp.add(label, constraints);
     }
 
@@ -424,8 +426,16 @@ public class InsertPersonView extends JPanel {
         constraints.gridy = rowNumber;
         constraints.gridwidth = 1;
         constraints.weightx = 0.0;
-        constraints.weighty = 1.0;
         centerUp.add(jCheckBox, constraints);
+    }
+
+    private void setConstraintsPuffer(JLabel label, int rowNumber) {
+        constraints.gridx = 0;
+        constraints.gridy = rowNumber;
+        constraints.gridwidth = 1;
+        constraints.weightx = 0.0;
+        constraints.weighty = 1.0;
+        centerUp.add(label, constraints);
     }
 }
 

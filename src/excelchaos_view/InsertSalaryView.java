@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class InsertSalaryView extends JPanel {
 
-    private JLabel name, status, stufe, gehalt, sonderzahlung;
+    private JLabel name, status, stufe, gehalt, sonderzahlung, puffer;
 
     private JTextField tfStatus, tfStufe, tfGehalt, tfSonderzahlung;
 
@@ -68,6 +68,9 @@ public class InsertSalaryView extends JPanel {
         tfSonderzahlung = new JTextField();
         setConstraintsTextField(tfSonderzahlung, 4);
 
+        puffer = new JLabel(" ");
+        setConstraintsPuffer(puffer,5);
+
 
         leftButtons = new JPanel(new FlowLayout());
         rightButtons = new JPanel(new FlowLayout());
@@ -123,7 +126,7 @@ public class InsertSalaryView extends JPanel {
         constraints.gridy = rowNumber;
         constraints.gridwidth = 1;
         constraints.weightx = 0.0;
-        constraints.weighty = 1.0;
+//        constraints.weighty = 1.0;
         centerUp.add(label, constraints);
     }
 
@@ -145,6 +148,14 @@ public class InsertSalaryView extends JPanel {
         centerUp.add(jComboBox, constraints);
     }
 
+    private void setConstraintsPuffer(JLabel label, int rowNumber) {
+        constraints.gridx = 0;
+        constraints.gridy = rowNumber;
+        constraints.gridwidth = 1;
+        constraints.weightx = 0.0;
+        constraints.weighty = 1.0;
+        centerUp.add(label, constraints);
+    }
 }
 
 
