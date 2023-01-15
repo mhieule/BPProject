@@ -48,7 +48,6 @@ public class ToolbarSalaryListView extends JToolBar {
         add(salaryStageOn);
         addSeparator(new Dimension(20,30));
         add(removeAdditionalSalaryStage);
-        removeAdditionalSalaryStage.setVisible(false);
         addSeparator(new Dimension(20,30));
         add(searchLabel);
         add(searchField);
