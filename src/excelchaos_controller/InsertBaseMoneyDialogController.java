@@ -1,6 +1,6 @@
 package excelchaos_controller;
 
-import excelchaos_model.PayRateTableStringOperationModel;
+import excelchaos_model.PayRateTableCalculationModel;
 import excelchaos_view.InsertBaseMoneyDialogView;
 
 import java.awt.event.ActionEvent;
@@ -31,7 +31,7 @@ public class InsertBaseMoneyDialogController implements ActionListener, MouseLis
         }
         if (e.getSource() == insertBaseMoneyDialogView.getOkayButton()) {
             String temporary = insertBaseMoneyDialogView.getInsertField().getText();
-            PayRateTableStringOperationModel stringModel = new PayRateTableStringOperationModel();
+            PayRateTableCalculationModel stringModel = new PayRateTableCalculationModel();
             String[] moneyValues = stringModel.prepareString(temporary);
             if (moneyValues.length != insertPayRateTableController.getInsertPayRateTableView().getTable().getColumnCount() - 1) {
                 insertBaseMoneyDialogView.getLabel().setVisible(false);
