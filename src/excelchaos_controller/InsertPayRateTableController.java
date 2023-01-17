@@ -5,8 +5,6 @@ import excelchaos_view.InsertPayRateTableView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class InsertPayRateTableController implements ActionListener {
 
@@ -15,7 +13,10 @@ public class InsertPayRateTableController implements ActionListener {
     private InsertBaseMoneyDialogController insertBaseMoneyDialogController;
     private String title;
 
-    private String[] moneyStringValues;
+    private PayRateTableCalculationModel model;
+    private String[] baseMoneyStringValues;
+
+    private String[] bonusMoneyStringValues;
 
 
     public InsertPayRateTableController(MainFrameController mainFrameController, String name, String[] columnNames, boolean typeOfTable) {
@@ -49,14 +50,43 @@ public class InsertPayRateTableController implements ActionListener {
             frameController.getTabs().removeTabNewWindow(insertPayRateTableView);
         } else if (e.getSource() == insertPayRateTableView.getCalculateCells()) {
             insertResultsInTable();
+            insertMonthlyCostWithoutYearBonus();
+            insertMonthlyCostWithYearBonus();
+            insertLastRow();
         } else if (e.getSource() == insertPayRateTableView.getInsertBaseMoney()) {
-            insertBaseMoneyDialogController = new InsertBaseMoneyDialogController(frameController, this);
+            insertBaseMoneyDialogController = new InsertBaseMoneyDialogController(frameController, this, insertPayRateTableView.getInsertBaseMoney());
+        } else if (e.getSource() == insertPayRateTableView.getInsertMonthlyBonusMoney()){
+            insertBaseMoneyDialogController = new InsertBaseMoneyDialogController(frameController,this,insertPayRateTableView.getInsertMonthlyBonusMoney());
+        }
+    }
+
+    private void insertMonthlyCostWithoutYearBonus(){
+        model.calculateMonthlyCostWithoutYearBonus();
+        String[] monthlyCostWithoutBonusString = model.convertMonthlyCostWithoutYearBonusToString();
+        for (int columns = 0; columns<insertPayRateTableView.getTable().getColumnCount()-1;columns++){
+            insertPayRateTableView.getTable().setValueAt(monthlyCostWithoutBonusString[columns],11,columns+1);
+        }
+    }
+
+
+    private void insertMonthlyCostWithYearBonus(){
+        model.calculateMonthlyCostWithYearBonus();
+        String[] monthlyCostWithBonusString = model.convertMonthlyCostWithYearBonusToString();
+        for (int columns = 0; columns<insertPayRateTableView.getTable().getColumnCount()-1;columns++){
+            insertPayRateTableView.getTable().setValueAt(monthlyCostWithBonusString[columns],13,columns+1);
+        }
+    }
+    private void insertLastRow(){
+        model.calculateLastRow();
+        String[] lastRow = model.convertLastRowResultsToString();
+        for (int columns = 0; columns<insertPayRateTableView.getTable().getColumnCount()-1;columns++){
+            insertPayRateTableView.getTable().setValueAt(lastRow[columns],14,columns+1);
         }
     }
 
     private void insertResultsInTable(){
         String[] percentageStringValues = getPercentageStringFromTable();
-        PayRateTableCalculationModel model = new PayRateTableCalculationModel(moneyStringValues, percentageStringValues);
+        model = new PayRateTableCalculationModel(baseMoneyStringValues, percentageStringValues,bonusMoneyStringValues);
         model.doStringOperations();
         String[][] stringResults = model.calculateResults();
         stringResults = model.rearrangeStringFormat(stringResults);
@@ -82,10 +112,17 @@ public class InsertPayRateTableController implements ActionListener {
         return result;
     }
 
-    public void insertValueInTable(String[] values) {
-        moneyStringValues = values;
+    public void insertBaseMoneyInTable(String[] values) {
+        baseMoneyStringValues = values;
         for (int i = 0; i < values.length; i++) {
             insertPayRateTableView.getTable().setValueAt(values[i], 0, i + 1);
+
+        }
+    }
+    public void insertBonusMoneyInTable(String[] values){
+        bonusMoneyStringValues = values;
+        for (int i = 0; i < values.length; i++) {
+            insertPayRateTableView.getTable().setValueAt(values[i], 12, i + 1);
 
         }
     }

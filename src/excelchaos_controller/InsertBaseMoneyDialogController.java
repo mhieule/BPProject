@@ -3,6 +3,7 @@ package excelchaos_controller;
 import excelchaos_model.PayRateTableCalculationModel;
 import excelchaos_view.InsertBaseMoneyDialogView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -13,11 +14,13 @@ public class InsertBaseMoneyDialogController implements ActionListener, MouseLis
 
     private InsertPayRateTableController insertPayRateTableController;
     private MainFrameController frameController;
+    private JButton testButton;
 
 
-    public InsertBaseMoneyDialogController(MainFrameController mainFrameController, InsertPayRateTableController payRateTableController) {
+    public InsertBaseMoneyDialogController(MainFrameController mainFrameController, InsertPayRateTableController payRateTableController, JButton sourceButton) {
         frameController = mainFrameController;
         insertPayRateTableController = payRateTableController;
+        testButton = sourceButton;
         insertBaseMoneyDialogView = new InsertBaseMoneyDialogView();
         insertBaseMoneyDialogView.init();
         insertBaseMoneyDialogView.setActionListener(this);
@@ -30,17 +33,30 @@ public class InsertBaseMoneyDialogController implements ActionListener, MouseLis
             insertBaseMoneyDialogView.dispose();
         }
         if (e.getSource() == insertBaseMoneyDialogView.getOkayButton()) {
+
             String temporary = insertBaseMoneyDialogView.getInsertField().getText();
             PayRateTableCalculationModel stringModel = new PayRateTableCalculationModel();
             String[] moneyValues = stringModel.prepareInsertionString(temporary);
-            if (moneyValues.length != insertPayRateTableController.getInsertPayRateTableView().getTable().getColumnCount() - 1) {
-                insertBaseMoneyDialogView.getLabel().setVisible(false);
-                insertBaseMoneyDialogView.getErrorLabel().setVisible(true);
-                insertBaseMoneyDialogView.getInsertField().removeAll();
-            } else {
-                insertPayRateTableController.insertValueInTable(moneyValues);
-                insertBaseMoneyDialogView.dispose();
+            if(testButton==insertPayRateTableController.getInsertPayRateTableView().getInsertBaseMoney()){
+                if (moneyValues.length != insertPayRateTableController.getInsertPayRateTableView().getTable().getColumnCount() - 1) {
+                    insertBaseMoneyDialogView.getLabel().setVisible(false);
+                    insertBaseMoneyDialogView.getErrorLabel().setVisible(true);
+                    insertBaseMoneyDialogView.getInsertField().removeAll();
+                } else {
+                    insertPayRateTableController.insertBaseMoneyInTable(moneyValues);
+                    insertBaseMoneyDialogView.dispose();
+                }
+            } else if (testButton==insertPayRateTableController.getInsertPayRateTableView().getInsertMonthlyBonusMoney()) {
+                if (moneyValues.length != insertPayRateTableController.getInsertPayRateTableView().getTable().getColumnCount() - 1) {
+                    insertBaseMoneyDialogView.getLabel().setVisible(false);
+                    insertBaseMoneyDialogView.getErrorLabel().setVisible(true);
+                    insertBaseMoneyDialogView.getInsertField().removeAll();
+                } else {
+                    insertPayRateTableController.insertBonusMoneyInTable(moneyValues);
+                    insertBaseMoneyDialogView.dispose();
+                }
             }
+
 
         }
     }

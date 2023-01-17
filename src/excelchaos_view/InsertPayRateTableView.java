@@ -36,6 +36,8 @@ public class InsertPayRateTableView extends JPanel {
 
     private JButton insertBaseMoney;
 
+    private JButton insertMonthlyBonusMoney;
+
     private JButton saveAndExit;
 
     private GridBagConstraints constraints;
@@ -67,11 +69,13 @@ public class InsertPayRateTableView extends JPanel {
         cancelButton = new JButton("Abbrechen");
         calculateCells = new JButton("Zellen berechnen");
         insertBaseMoney = new JButton("Grundentgelt einfügen");
+        insertMonthlyBonusMoney = new JButton("JSZ als monatliche Zulage einfügen");
         saveAndExit = new JButton("Entgelttabelle speichern und Verlassen");
 
         rightbuttons.add(cancelButton);
-        leftbuttons.add(calculateCells);
         leftbuttons.add(insertBaseMoney);
+        leftbuttons.add(insertMonthlyBonusMoney);
+        leftbuttons.add(calculateCells);
         leftbuttons.add(saveAndExit);
 
         bottomPanel.add(leftbuttons);
@@ -103,6 +107,10 @@ public class InsertPayRateTableView extends JPanel {
         return insertBaseMoney;
     }
 
+    public JButton getInsertMonthlyBonusMoney() {
+        return insertMonthlyBonusMoney;
+    }
+
     public JTable getTable() {
         return table;
     }
@@ -112,6 +120,7 @@ public class InsertPayRateTableView extends JPanel {
         calculateCells.addActionListener(l);
         saveAndExit.addActionListener(l);
         insertBaseMoney.addActionListener(l);
+        insertMonthlyBonusMoney.addActionListener(l);
     }
 
     private void centerPanelInit(String[] columns){

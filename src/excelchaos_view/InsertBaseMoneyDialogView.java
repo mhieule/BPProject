@@ -22,11 +22,11 @@ public class InsertBaseMoneyDialogView extends JDialog {
 
     public void init(){
         setLayout(new BorderLayout());
-        setTitle("Grundentgelt einfügen");
+        setTitle("Geldbeträge einfügen");
 
         okayButton = new JButton("Ok");
         closeButton = new JButton("Abbrechen");
-        label = new JLabel("Bitte Grundentgelt hier einfügen");
+        label = new JLabel("Bitte Geldbeträge hier einfügen");
         errorLabel = new JLabel("<html>Fehlerhafte Eingabe<br>Unterscheiden Sie Stufe 1A und 1B und Stufe 1</html>");
         errorLabel.setForeground(Color.RED);
         errorLabel.setVisible(false);
