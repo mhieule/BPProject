@@ -10,15 +10,23 @@ public class PayRateTableCalculationModel {
     private BigDecimal[] moneyValues;
     private BigDecimal[] percentageValues;
 
-    public PayRateTableCalculationModel(){
+    private BigDecimal[] monthlyCostWithoutYearBonus;
+    private BigDecimal[][] numberResults;
+
+    private BigDecimal[][] roundedResults;
+
+
+
+    public PayRateTableCalculationModel() {
 
     }
 
-    public PayRateTableCalculationModel(String[] money, String[] percentages){
+    public PayRateTableCalculationModel(String[] money, String[] percentages) {
         stringMoneyValues = money;
         stringPercentageValues = percentages;
     }
-    public void doStringOperations(){
+
+    public void doStringOperations() {
         stringPercentageValues = modifyPercentageValuesForCalculation(stringPercentageValues);
         stringMoneyValues = modifyMoneyValuesForCalculation(stringMoneyValues);
         percentageValues = convertPercentageStringsToBigDecimal(stringPercentageValues);
@@ -26,21 +34,48 @@ public class PayRateTableCalculationModel {
 
     }
 
-    public String[][] calculateResults(){
-        BigDecimal[][] numberResults = new BigDecimal[percentageValues.length][moneyValues.length];
+    public String[][] calculateResults() {
+        numberResults = new BigDecimal[percentageValues.length][moneyValues.length];
+        roundedResults = new BigDecimal[percentageValues.length][moneyValues.length];
+        monthlyCostWithoutYearBonus = new BigDecimal[moneyValues.length];
         String[][] stringResults = new String[percentageValues.length][moneyValues.length];
-        for (int i = 0; i < percentageValues.length;i++){
-            for (int j = 0; j < moneyValues.length;j++){
+        for (int i = 0; i < percentageValues.length; i++) {
+            for (int j = 0; j < moneyValues.length; j++) {
                 numberResults[i][j] = moneyValues[j].multiply(percentageValues[i]);
-                numberResults[i][j] = numberResults[i][j].setScale(2, RoundingMode.HALF_EVEN);
-                stringResults[i][j]=numberResults[i][j].toString();
+                roundedResults[i][j] = numberResults[i][j].setScale(2, RoundingMode.HALF_EVEN);
+                stringResults[i][j] = roundedResults[i][j].toString();
 
             }
         }
         return stringResults;
     }
 
-    public String[] prepareString(String text) {
+    public void calculateMonthlyCostWithoutYearBonus(){
+        for (int i = 0; i < roundedResults.length; i++){
+            for (int j = 0; j < roundedResults[i].length; j++){
+                if ((j % 2 ==0) && ((i==8) || (i==9) )){
+                    continue;
+                } else if((j % 2 ==1) && (i==10)){
+                    continue;
+                } else {
+                 //   monthlyCostWithoutYearBonus[i]
+                }
+            }
+        }
+    }
+
+    public String[][] rearrangeStringFormat(String[][] stringResults) {
+        for (int i = 0; i < stringResults.length; i++) {
+            for(int j = 0; j < stringResults[i].length; j++){
+                stringResults[i][j] = stringResults[i][j].replaceAll("\\.",",");
+                stringResults[i][j] = stringResults[i][j].concat(" €");
+            }
+        }
+
+        return stringResults;
+    }
+
+    public String[] prepareInsertionString(String text) {
         String[] resultString;
         text.replaceAll("\\s+", "");
         resultString = text.split("(?<=€)");
@@ -88,8 +123,6 @@ public class PayRateTableCalculationModel {
         }
         return result;
     }
-
-
 
 
 }
