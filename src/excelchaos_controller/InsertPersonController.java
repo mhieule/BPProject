@@ -112,7 +112,6 @@ public class InsertPersonController implements ActionListener {
             insertPersonView.revalidate();
             insertPersonView.repaint();
             frameController.getShowPersonalData().updateData();
-            frameController.getInsertSalaryController().getEmployeeNameList(false, null);
             SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
         }
         //speichert derzeit nur die Daten. Wenn Gehaltseingabe existiert muss diese danach angezeigt werden
