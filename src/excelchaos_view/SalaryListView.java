@@ -35,7 +35,7 @@ public class SalaryListView extends JPanel {
                 resultData[currentIndex] = values;
                 currentIndex++;
             }
-            jt = new JTable(resultData, column);
+            jt = new CustomTable(resultData, column);
             //jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             //TableColumnAdjuster tca = new TableColumnAdjuster(jt);
             //tca.adjustColumns();
@@ -91,7 +91,7 @@ public class SalaryListView extends JPanel {
         }
     }
 
-    public JTable getTable() {
-        return jt;
+    public CustomTable getTable() {
+        return (CustomTable) jt;
     }
 }

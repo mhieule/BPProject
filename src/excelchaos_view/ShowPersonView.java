@@ -5,15 +5,9 @@ import excelchaos_model.EmployeeDataManager;
 import excelchaos_model.TableColumnAdjuster;
 
 import javax.swing.*;
-import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -92,7 +86,7 @@ public class ShowPersonView extends JPanel {
             resultData[currentIndex] = values;
             currentIndex++;
         }
-        jt = new JTable(resultData, column);
+        jt = new CustomTable(resultData, column);
 
         jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         TableColumnAdjuster tca = new TableColumnAdjuster(jt);
