@@ -11,14 +11,17 @@ public class ShowSalaryStageDialogView extends JDialog {
     private JButton closeButton;
     private DatePicker datePicker;
 
+    private JLabel dateLabel;
+
     private JPanel buttonPanel;
     private JPanel datePanel;
 
 
     public void init() {
         setLayout(new BorderLayout());
-        setTitle("Datum auswählen");
-        okayButton = new JButton("Okay");
+        setTitle("Gehaltsprojektion");
+        dateLabel = new JLabel("Datum auswählen");
+        okayButton = new JButton("Ok");
         closeButton = new JButton("Abbrechen");
         datePicker = new DatePicker();
         datePicker.setDateToToday();
@@ -28,8 +31,14 @@ public class ShowSalaryStageDialogView extends JDialog {
         datePanel = new JPanel();
         //datePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         datePanel.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        datePanel.add(datePicker,c);
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        datePanel.add(dateLabel,constraints);
+        constraints.gridy = 1;
+        constraints.insets.bottom = 10;
+        constraints.insets.top = 10;
+        datePanel.add(datePicker,constraints);
 
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -42,6 +51,7 @@ public class ShowSalaryStageDialogView extends JDialog {
 
         setSize(new Dimension(300, 200));
         setLocationRelativeTo(getParent());
+        setAlwaysOnTop(true);
         setResizable(false);
         setVisible(true);
 

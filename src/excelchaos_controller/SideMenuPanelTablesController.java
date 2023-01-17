@@ -3,16 +3,17 @@ package excelchaos_controller;
 import excelchaos_view.MainFrame;
 import excelchaos_view.SideMenuPanelTables;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-public class SideMenuPanelTablesController implements ActionListener {
+public class SideMenuPanelTablesController implements ActionListener, ItemListener {
     private SideMenuPanelTables sideMenu;
     private MainFrameController frameController;
 
-    private ShowPersonController personalData;
-    private ToolbarShowPersonController toolbar;
     private SmallSideBarController smallSideBar;
 
     public SideMenuPanelTablesController(MainFrameController mainFrameController) {
@@ -20,6 +21,7 @@ public class SideMenuPanelTablesController implements ActionListener {
         sideMenu = new SideMenuPanelTables();
         sideMenu.init();
         sideMenu.setActionListener(this);
+        sideMenu.setItemListener(this);
         mainFrameController.getWindow().add(sideMenu, BorderLayout.WEST);
 
 
@@ -39,7 +41,35 @@ public class SideMenuPanelTablesController implements ActionListener {
             frameController.getSalaryListController().showSalaryView(frameController);
         } else if (e.getSource()==sideMenu.getGehaltshistorie()){
         frameController.getSalaryHistoryController().showSalaryHistoryView(frameController);
+        } else if (e.getSource() == sideMenu.getShowE13Tables()){
+            frameController.getPayRateTablesController().setTitle("E13 Entgelttabellen");
+            frameController.getPayRateTablesController().showPayRatesView(frameController);
+        } else if (e.getSource() == sideMenu.getShowE14Tables()){
+            frameController.getPayRateTablesController().setTitle("E14 Entgelttabellen");
+            frameController.getPayRateTablesController().showPayRatesView(frameController);
+        } else if (e.getSource() == sideMenu.getShowSHKTables()){
+            frameController.getPayRateTablesController().setTitle("SHK Entgelttabellen");
+            frameController.getPayRateTablesController().showPayRatesView(frameController);
         }
+    }
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            sideMenu.getCenterpanel().setPreferredSize(new Dimension(140,255));
+            sideMenu.getTableButtonPanel().setVisible(true);
+            sideMenu.getToggleButtonPanel().setBorder(null);
+            sideMenu.getToggleButtonPanel().setPreferredSize(new Dimension(140,35));
+            sideMenu.getPayRatePanel().setBorder(sideMenu.getRaisedetchedBorder());
+            sideMenu.openArrowLabelVisible();
+        } else {
+            sideMenu.getCenterpanel().setPreferredSize(new Dimension(140,170));
+            sideMenu.getTableButtonPanel().setVisible(false);
+            sideMenu.getPayRatePanel().setBorder(null);
+            sideMenu.getToggleButtonPanel().setBorder(sideMenu.getRaisedetchedBorder());
+            sideMenu.getToggleButtonPanel().setPreferredSize(new Dimension(140,45));
+            sideMenu.closeArrowLabelVisible();
+        }
+
     }
 
     private void westArrowButtonPressed(MainFrameController frameController) {
@@ -49,6 +79,7 @@ public class SideMenuPanelTablesController implements ActionListener {
         frameController.getWindow().revalidate();
         frameController.getWindow().repaint();
     }
+
 
 
 }

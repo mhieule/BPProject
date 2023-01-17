@@ -215,6 +215,17 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
     public void setActionListener(ActionListener l) {
         button.addActionListener(l);
     }
+    public void removeTabNewWindow(Component component){
+        if(component.getParent().getParent().getParent().getParent().getParent().getClass() == NewFrame.class){
+            if(((DnDCloseButtonTabbedPane)component.getParent()).getTabCount() <= 1){
+                ((javax.swing.JFrame) component.getParent().getParent().getParent().getParent().getParent()).dispose();
+            } else if (((DnDCloseButtonTabbedPane)component.getParent()).getTabCount() > 1){
+                ((DnDCloseButtonTabbedPane) component.getParent()).remove(component);
+            }
+        } else {
+            ((DnDCloseButtonTabbedPane) component.getParent()).remove(component);
+        }
+    }
 
     public TabCloseButton getButton() {
         return button;

@@ -5,23 +5,21 @@ import excelchaos_model.EmployeeDataManager;
 import excelchaos_model.TableColumnAdjuster;
 
 import javax.swing.*;
+import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class ShowPersonView extends JPanel {
     private JTable jt;
     public void init() {
-        setLayout(new BorderLayout());
-        System.out.println("SEEING ITEMS");
-
-        String column[] = {"Name", "Vorname","Haunsummer", "PLZ","Stadt","Addresszusatz",
-                "E-Mail Privat", "Telefon Privat",
-                "Geburtsdatum", "Staatsangehörigkeit 1", "Staatsangehörigkeit 2", "Personal.Nr", "TUID",
-                "Status", "Gehalt Eingeplant bis", "Transponder.Nr", "Büro.Nr", "Telefon TUDA"
-        };
 
         /*File f = new File("src/data");
         try {
@@ -52,6 +50,19 @@ public class ShowPersonView extends JPanel {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }*/
+        addData();
+    }
+
+    public void addData(){
+        removeAll();
+        setLayout(new BorderLayout());
+        System.out.println("SEEING ITEMS");
+
+        String column[] = {"Name", "Vorname","Haunsummer", "PLZ","Stadt","Addresszusatz",
+                "E-Mail Privat", "Telefon Privat",
+                "Geburtsdatum", "Staatsangehörigkeit 1", "Staatsangehörigkeit 2", "Personal.Nr", "TUID",
+                "Status", "Gehalt Eingeplant bis", "Transponder.Nr", "Büro.Nr", "Telefon TUDA"
+        };
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         int lines  = employeeDataManager.getRowCount();
         String resultData[][] = new String[lines][];
@@ -81,13 +92,12 @@ public class ShowPersonView extends JPanel {
             String city = employee.getCity();
 
             String[] values = {surname, name, house_number, zipCode, city, additionalAddress, email_private, phone_private,
-            dateOfBirth, citizenship_1, citizenship_2, employeeNumber, tu_id, status, salaryPlannedUntil, transponder_number,
-            office_number, phone_tuda};
+                    dateOfBirth, citizenship_1, citizenship_2, employeeNumber, tu_id, status, salaryPlannedUntil, transponder_number,
+                    office_number, phone_tuda};
             resultData[currentIndex] = values;
             currentIndex++;
         }
-        jt = new CustomTable(resultData, column);
-
+        jt = new JTable(resultData, column);
         jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         TableColumnAdjuster tca = new TableColumnAdjuster(jt);
         tca.adjustColumns();

@@ -12,11 +12,11 @@ public class InsertPersonView extends JPanel {
 
     private JLabel name, vorname, strasse, hausnummer, adresszusatz, plz, stadt, privatEmail, privateTelefonnummer, geburtsdatum,
             nationalityFirst, nationalitySecond, personalnummer, tuid, typeOfJob, visaValidUntil,
-            gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, workStart, workEnd, workScope, payClassOnHiring, payGradeOnHiring, hiwiTypeOfPayment;
+            gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, workStart, workEnd, workScope, payGroupOnHiring, payGradeOnHiring, hiwiTypeOfPayment, puffer;
 
     private JTextField tfName, tfVorname, tfStrasse, tfHausnummer, tfAdresszusatz, tfPLZ, tfStadt, tfPrivatEmail, tfPrivateTelefonnummer,
             tfPersonalnummer, tfTuid, tfGehaltEingeplanntBis, tfTranspondernummer, tfBueronummer,
-            tfTelefonnummerTUDA, tfWorkScope, tfPayClassOnHiring;
+            tfTelefonnummerTUDA, tfWorkScope, tfPayGroupOnHiring;
 
     private DatePicker tfGeburtsdatum, tfVisaValidUntil, tfWorkStart, tfWorkEnd;
 
@@ -26,7 +26,7 @@ public class InsertPersonView extends JPanel {
 
     private JButton submit, reset, salary;
 
-    private JPanel centerUp, centerDown;
+    private JPanel centerUp, centerDown, leftButtons, rightButtons;
 
     private GridBagConstraints constraints;
 
@@ -44,7 +44,7 @@ public class InsertPersonView extends JPanel {
         constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 
 
-        centerDown.setLayout(new GridLayout());
+        centerDown.setLayout(new BoxLayout(centerDown,BoxLayout.X_AXIS));
         add(centerUp, BorderLayout.CENTER);
         add(centerDown, BorderLayout.SOUTH);
 
@@ -94,7 +94,7 @@ public class InsertPersonView extends JPanel {
 
         // Land -> soll Land als Feld eingefügt werden????
 
-        privatEmail = new JLabel("Private E-Mail Adresse");
+        privatEmail = new JLabel("Private E-Mail-Adresse");
         setConstraintsLabel(privatEmail, 7);
         tfPrivatEmail = new JTextField();
         setConstraintsTextField(tfPrivatEmail, 7);
@@ -109,7 +109,6 @@ public class InsertPersonView extends JPanel {
         tfGeburtsdatum = new DatePicker();
         setConstraintsDatePicker(tfGeburtsdatum, 9);
 
-        // Das Feld sollte als Auswahlliste angelegt sein!
         nationalityFirst = new JLabel("Staatsangehörigkeit");
         setConstraintsLabel(nationalityFirst, 10);
         String[] nationalityArray = CountryModel.getCountries();
@@ -130,7 +129,6 @@ public class InsertPersonView extends JPanel {
         nationalityPickList2 = new JComboBox(nationalityArray2);
         setConstraintsJComboBox(nationalityPickList2, 12);
         nationalityPickList2.setVisible(false);
-
 
         visaRequiredCheckBox = new JCheckBox("Visum notwendig?", false);
         setConstraintsJCheckBox(visaRequiredCheckBox, 13);
@@ -173,18 +171,18 @@ public class InsertPersonView extends JPanel {
         tfWorkScope = new JTextField();
         setConstraintsTextField(tfWorkScope, 20);
 
-        payClassOnHiring = new JLabel("Gehaltsklasse bei Einstellung");
-        setConstraintsLabel(payClassOnHiring, 21);
-        payClassOnHiring.setVisible(false);
-        tfPayClassOnHiring = new JTextField();
-        setConstraintsTextField(tfPayClassOnHiring, 21);
-        tfPayClassOnHiring.setVisible(false);
+        payGroupOnHiring = new JLabel("Gehaltsgruppe bei Einstellung");
+        setConstraintsLabel(payGroupOnHiring, 21);
+        payGroupOnHiring.setVisible(false);
+        tfPayGroupOnHiring = new JTextField();
+        setConstraintsTextField(tfPayGroupOnHiring, 21);
+        tfPayGroupOnHiring.setVisible(false);
 
         payGradeOnHiring = new JLabel("Gehaltsstufe bei Einstellung");
         setConstraintsLabel(payGradeOnHiring, 22);
         payGradeOnHiring.setVisible(false);
         String[] payGrades = {"Nicht ausgewählt", "1A","1B","1","2","3","4","5","6"};
-        payGradeList = new JComboBox();
+        payGradeList = new JComboBox(payGrades);
         setConstraintsJComboBox(payGradeList,22);
         payGradeList.setVisible(false);
 
@@ -216,13 +214,20 @@ public class InsertPersonView extends JPanel {
         tfTelefonnummerTUDA = new JTextField();
         setConstraintsTextField(tfTelefonnummerTUDA, 26);
 
+        puffer = new JLabel(" ");
+        setConstraintsPuffer(puffer,27);
 
+        leftButtons = new JPanel(new FlowLayout());
+        rightButtons = new JPanel(new FlowLayout());
         submit = new JButton("Person speichern");
-        centerDown.add(submit);
+        leftButtons.add(submit);
         salary = new JButton("Person speichern und zur Gehaltseingabe");
-        centerDown.add(salary);
+        leftButtons.add(salary);
+        centerDown.add(leftButtons);
         reset = new JButton("Felder zurücksetzen");
-        centerDown.add(reset);
+        centerDown.add(Box.createHorizontalGlue());
+        rightButtons.add(reset);
+        centerDown.add(rightButtons);
 
         JScrollPane scrollPane = new JScrollPane(centerUp, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         add(scrollPane);
@@ -237,10 +242,11 @@ public class InsertPersonView extends JPanel {
         submit.addActionListener(l);
         salary.addActionListener(l);
         typeOfJobPicklist.addActionListener(l);
+        reset.addActionListener(l);
     }
 
-    public JLabel getPayClassOnHiring() {
-        return payClassOnHiring;
+    public JLabel getPayGroupOnHiring() {
+        return payGroupOnHiring;
     }
 
     public JLabel getPayGradeOnHiring() {
@@ -283,6 +289,10 @@ public class InsertPersonView extends JPanel {
         return salary;
     }
 
+    public JButton getReset() {
+        return reset;
+    }
+
     public JTextField getTfName() {
         return tfName;
     }
@@ -305,6 +315,10 @@ public class InsertPersonView extends JPanel {
 
     public JTextField getTfStadt() {
         return tfStadt;
+    }
+
+    public JTextField getTfStrasse(){
+        return tfStrasse;
     }
 
     public JTextField getTfPrivatEmail() {
@@ -373,8 +387,8 @@ public class InsertPersonView extends JPanel {
         return tfWorkScope;
     }
 
-    public JTextField getTfPayClassOnHiring() {
-        return tfPayClassOnHiring;
+    public JTextField getTfPayGroupOnHiring() {
+        return tfPayGroupOnHiring;
     }
 
     public JComboBox getPayGradeList() {
@@ -386,7 +400,6 @@ public class InsertPersonView extends JPanel {
         constraints.gridy = rowNumber;
         constraints.gridwidth = 1;
         constraints.weightx = 0.0;
-        constraints.weighty = 1.0;
         centerUp.add(label, constraints);
     }
 
@@ -422,8 +435,16 @@ public class InsertPersonView extends JPanel {
         constraints.gridy = rowNumber;
         constraints.gridwidth = 1;
         constraints.weightx = 0.0;
-        constraints.weighty = 1.0;
         centerUp.add(jCheckBox, constraints);
+    }
+
+    private void setConstraintsPuffer(JLabel label, int rowNumber) {
+        constraints.gridx = 0;
+        constraints.gridy = rowNumber;
+        constraints.gridwidth = 1;
+        constraints.weightx = 0.0;
+        constraints.weighty = 1.0;
+        centerUp.add(label, constraints);
     }
 }
 

@@ -9,6 +9,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.*;
+import java.util.Arrays;
 import java.util.List;
 
 public class EmployeeDataManager {
@@ -50,6 +51,19 @@ public class EmployeeDataManager {
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return employee;
+    }
+
+    public Employee getEmployeeByName(String surNameAndName){
+        Employee employee = null;
+        List<Employee> employeeList = getAllEmployees();
+        for (Employee emp: employeeList) {
+            String name = emp.getSurname() + " " + emp.getName();
+            if(name.equals(surNameAndName)){
+                employee = emp;
+                return employee;
+            }
         }
         return employee;
     }
@@ -113,5 +127,15 @@ public class EmployeeDataManager {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
+    }
+
+    public String[] getAllEmployeesNameList(){
+        List<Employee> employeeList = getAllEmployees();
+        String[] names = new String[getRowCount()];
+        for (int i = 0; i < names.length; i++) {
+            names[i] = employeeList.get(i).getSurname() + " " + employeeList.get(i).getName();
+        }
+        Arrays.sort(names);
+        return names;
     }
 }

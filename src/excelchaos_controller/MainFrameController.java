@@ -17,6 +17,9 @@ public class MainFrameController implements ActionListener {
     private InsertPersonController insertPersonController;
     private SalaryListController salaryListController;
     private SalaryHistoryController salaryHistoryController;
+    private InsertSalaryController insertSalaryController;
+    private PayRateTablesController payRateTablesController;
+
 
 
 
@@ -29,11 +32,14 @@ public class MainFrameController implements ActionListener {
         tabsController = new TabsController(this);
         window.add(tabsController.getTabs());
         sideMenuTables = new SideMenuPanelTablesController(this);
-        sideMenuActionLog = new SideMenuPanelActionLogController(this);
+        //sideMenuActionLog = new SideMenuPanelActionLogController(this);
         insertPersonController = new InsertPersonController(this);
         showPersonalData = new ShowPersonController(this);
         salaryListController = new SalaryListController(this);
         salaryHistoryController = new SalaryHistoryController(this);
+        insertSalaryController = new InsertSalaryController(this);
+        payRateTablesController = new PayRateTablesController(this);
+
 
         window.setVisible(true);
 
@@ -67,6 +73,16 @@ public class MainFrameController implements ActionListener {
     }
 
     public SalaryHistoryController getSalaryHistoryController(){return salaryHistoryController;}
+
+    public InsertSalaryController getInsertSalaryController(){
+        return insertSalaryController;
+    }
+
+    public PayRateTablesController getPayRateTablesController() {
+        return payRateTablesController;
+    }
+
+
 
     public void setChangeListener (ChangeListener l){
         tabsController.getTabs().addChangeListener(l);

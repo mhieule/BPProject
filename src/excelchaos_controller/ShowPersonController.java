@@ -62,7 +62,9 @@ public class ShowPersonController implements ActionListener {
 
 
     }*/
-
+    public void updateData(){
+        showPersonView.addData();
+    }
     public ToolbarShowPersonController getToolbarShowPerson() {
         return toolbarShowPerson;
     }
