@@ -32,7 +32,7 @@ public class InsertBaseMoneyDialogController implements ActionListener, MouseLis
         if (e.getSource() == insertBaseMoneyDialogView.getOkayButton()) {
             String temporary = insertBaseMoneyDialogView.getInsertField().getText();
             PayRateTableCalculationModel stringModel = new PayRateTableCalculationModel();
-            String[] moneyValues = stringModel.prepareString(temporary);
+            String[] moneyValues = stringModel.prepareInsertionString(temporary);
             if (moneyValues.length != insertPayRateTableController.getInsertPayRateTableView().getTable().getColumnCount() - 1) {
                 insertBaseMoneyDialogView.getLabel().setVisible(false);
                 insertBaseMoneyDialogView.getErrorLabel().setVisible(true);
