@@ -62,6 +62,7 @@ public class CustomTableModel extends DefaultTableModel /*implements TableModelL
         return super.getColumnCount()+1;
     }
 
+
     /**
      * Returns the value for the cell at <code>columnIndex</code> and
      * <code>rowIndex</code>.

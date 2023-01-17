@@ -196,6 +196,7 @@ public class CustomTable extends JTable {
         return new JTable(result);
     }
 
+
     /**This method is used to retrieve the headers of the table colummns.
      *
      * @return headers of the table colummns as string array
