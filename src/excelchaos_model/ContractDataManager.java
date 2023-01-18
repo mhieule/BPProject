@@ -33,6 +33,15 @@ public class ContractDataManager {
         }
     }
 
+    public void deleteTable(){
+        try {
+            TableUtils.dropTable(connectionSource, SalaryTable.class, true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public void addContract(Contract contract){
         try {
             contractsDao.create(contract);
