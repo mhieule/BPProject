@@ -42,14 +42,23 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
         } else if (e.getSource()==sideMenu.getGehaltshistorie()){
         frameController.getSalaryHistoryController().showSalaryHistoryView(frameController);
         } else if (e.getSource() == sideMenu.getShowE13Tables()){
-            frameController.getPayRateTablesController().setTitle("E13 Entgelttabellen");
-            frameController.getPayRateTablesController().showPayRatesView(frameController);
+            //frameController.getPayRateTablesController().setTitle("E13 Entgelttabellen");
+            //frameController.getPayRateTablesController().showPayRatesView(frameController);
+            PayRateTablesController E13Controller = new PayRateTablesController(frameController);
+            E13Controller.setTitle("E13 Entgelttabellen");
+            E13Controller.showPayRatesView(frameController);
         } else if (e.getSource() == sideMenu.getShowE14Tables()){
-            frameController.getPayRateTablesController().setTitle("E14 Entgelttabellen");
-            frameController.getPayRateTablesController().showPayRatesView(frameController);
+            //frameController.getPayRateTablesController().setTitle("E14 Entgelttabellen");
+            //frameController.getPayRateTablesController().showPayRatesView(frameController);
+            PayRateTablesController E14Controller = new PayRateTablesController(frameController);
+            E14Controller.setTitle("E14 Entgelttabellen");
+            E14Controller.showPayRatesView(frameController);
         } else if (e.getSource() == sideMenu.getShowSHKTables()){
-            frameController.getPayRateTablesController().setTitle("SHK Entgelttabellen");
-            frameController.getPayRateTablesController().showPayRatesView(frameController);
+            //frameController.getPayRateTablesController().setTitle("SHK Entgelttabellen");
+            //frameController.getPayRateTablesController().showPayRatesView(frameController);
+            PayRateTablesController SHKController = new PayRateTablesController(frameController);
+            SHKController.setTitle("SHK Entgelttabellen");
+            SHKController.showPayRatesView(frameController);
         }
     }
     @Override

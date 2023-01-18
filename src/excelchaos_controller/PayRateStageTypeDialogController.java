@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 public class PayRateStageTypeDialogController implements ActionListener {
     private PayRateStageTypeDialogView payRateStageTypeDialogView;
     private InsertPayRateTableController insertPayRateTableController;
+
+    private PayRateTablesController payRateController;
     private MainFrameController frameController;
 
     private final String[] columns13WithAAndB = {
@@ -27,8 +29,9 @@ public class PayRateStageTypeDialogController implements ActionListener {
             "E14 St. 4 VBL-befreit", "E14 St. 4 VBL-pflichtig", "E14 St. 5 VBL-befreit", "E14 St. 5 VBL-pflichtig", "E14 St. 6 VBL-befreit", "E14 St. 6 VBL-pflichtig"
     };
 
-    public PayRateStageTypeDialogController(MainFrameController mainFrameController){
+    public PayRateStageTypeDialogController(MainFrameController mainFrameController,PayRateTablesController payRateTablesController){
         frameController = mainFrameController;
+        payRateController = payRateTablesController;
         payRateStageTypeDialogView = new PayRateStageTypeDialogView();
         payRateStageTypeDialogView.init();
         payRateStageTypeDialogView.setActionListener(this);
@@ -40,13 +43,13 @@ public class PayRateStageTypeDialogController implements ActionListener {
             payRateStageTypeDialogView.dispose();
         }
         if(e.getSource() == payRateStageTypeDialogView.getOkayButton()){
-            if(frameController.getPayRateTablesController().getTitle() == "E13 Entgelttabellen" &&tablePayRateStageType()){
+            if(payRateController.getTitle() == "E13 Entgelttabellen" &&tablePayRateStageType()){
                 createInsertPayRateTable("E13 Entgelttabelle mit Stufe 1A und 1B hinzufügen",columns13WithAAndB,"E13 Entgelttabellen");
-            } else if (frameController.getPayRateTablesController().getTitle() == "E13 Entgelttabellen" &&!tablePayRateStageType()) {
+            } else if (payRateController.getTitle() == "E13 Entgelttabellen" &&!tablePayRateStageType()) {
                 createInsertPayRateTable("E13 Entgelttabelle mit Stufe 1 hinzufügen",columns13WithoutAAndB,"E13 Entgelttabellen");
-            } else if (frameController.getPayRateTablesController().getTitle() == "E14 Entgelttabellen" &&tablePayRateStageType()) {
+            } else if (payRateController.getTitle() == "E14 Entgelttabellen" &&tablePayRateStageType()) {
                 createInsertPayRateTable("E14 Entgelttabelle mit Stufe 1A und 1B hinzufügen",columns14WithAAndB,"E14 Entgelttabellen");
-            } else if(frameController.getPayRateTablesController().getTitle() == "E14 Entgelttabellen" &&!tablePayRateStageType()) {
+            } else if(payRateController.getTitle() == "E14 Entgelttabellen" &&!tablePayRateStageType()) {
                 createInsertPayRateTable("E14 Entgelttabelle mit Stufe 1 hinzufügen",columns14WithoutAAndB,"E14 Entgelttabellen");
             }
             payRateStageTypeDialogView.dispose();
@@ -62,10 +65,10 @@ public class PayRateStageTypeDialogController implements ActionListener {
         } else return false;
     }
     private void createInsertPayRateTable(String title, String[] columnNames, String originalTitle){
-        frameController.getPayRateTablesController().setTitle(title);
-        insertPayRateTableController = new InsertPayRateTableController(frameController,frameController.getPayRateTablesController().getTitle(),columnNames,tablePayRateStageType());
+        payRateController.setTitle(title);
+        insertPayRateTableController = new InsertPayRateTableController(frameController,payRateController.getTitle(),columnNames,tablePayRateStageType());
         insertPayRateTableController.showInsertPayRateTableView(frameController);
-        frameController.getPayRateTablesController().setTitle(originalTitle);
+        payRateController.setTitle(originalTitle);
 
     }
 }

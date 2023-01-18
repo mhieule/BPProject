@@ -21,7 +21,7 @@ public class PayRateTablesController {
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
             //SideMenuPanelActionLogView.model.addElement("Einträge anzeigen");
             payRateTablesView = new PayRateTablesView();
-            toolbarPayRateTables = new ToolbarPayRateTablesController(frameController);
+            toolbarPayRateTables = new ToolbarPayRateTablesController(frameController,this);
             payRateTablesView.init();
             payRateTablesView.add(toolbarPayRateTables.getToolbar(), BorderLayout.NORTH);
             mainFrameController.addTab(title,payRateTablesView);

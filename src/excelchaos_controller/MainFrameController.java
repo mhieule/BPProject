@@ -18,7 +18,7 @@ public class MainFrameController implements ActionListener {
     private SalaryListController salaryListController;
     private SalaryHistoryController salaryHistoryController;
     private InsertSalaryController insertSalaryController;
-    private PayRateTablesController payRateTablesController;
+
 
 
 
@@ -38,7 +38,7 @@ public class MainFrameController implements ActionListener {
         salaryListController = new SalaryListController(this);
         salaryHistoryController = new SalaryHistoryController(this);
         insertSalaryController = new InsertSalaryController(this);
-        payRateTablesController = new PayRateTablesController(this);
+
 
 
         window.setVisible(true);
@@ -78,9 +78,6 @@ public class MainFrameController implements ActionListener {
         return insertSalaryController;
     }
 
-    public PayRateTablesController getPayRateTablesController() {
-        return payRateTablesController;
-    }
 
 
 

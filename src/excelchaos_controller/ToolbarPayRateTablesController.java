@@ -7,13 +7,16 @@ import java.awt.event.ActionListener;
 
 public class ToolbarPayRateTablesController implements ActionListener {
     private ToolbarPayRateTablesView toolbar;
+
+    private PayRateTablesController payRateController;
     private InsertSHKPayRateTableController insertSHKPayRateTableController;
     private PayRateStageTypeDialogController payRateStageTypeDialogController;
 
     private MainFrameController frameController;
 
-    public ToolbarPayRateTablesController(MainFrameController mainFrameController){
+    public ToolbarPayRateTablesController(MainFrameController mainFrameController, PayRateTablesController payRateTablesController ){
         frameController = mainFrameController;
+        payRateController = payRateTablesController;
         toolbar = new ToolbarPayRateTablesView();
         toolbar.init();
         toolbar.setActionListener(this);
@@ -22,15 +25,15 @@ public class ToolbarPayRateTablesController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toolbar.getInsertNewPayRateTable()){
-            if(frameController.getPayRateTablesController().getTitle() =="E13 Entgelttabellen"){
+            if(payRateController.getTitle() =="E13 Entgelttabellen"){
                 //insertPayRateTableController = new InsertPayRateTableController(frameController, frameController.getPayRateTablesController().getTitle());
                 //insertPayRateTableController.showInsertPayRateTableView(frameController);
-                payRateStageTypeDialogController = new PayRateStageTypeDialogController(frameController);
-            } else if (frameController.getPayRateTablesController().getTitle() =="E14 Entgelttabellen") {
+                payRateStageTypeDialogController = new PayRateStageTypeDialogController(frameController,payRateController);
+            } else if (payRateController.getTitle() =="E14 Entgelttabellen") {
                 //insertPayRateTableController = new InsertPayRateTableController(frameController, frameController.getPayRateTablesController().getTitle());
                 //insertPayRateTableController.showInsertPayRateTableView(frameController);
-                payRateStageTypeDialogController = new PayRateStageTypeDialogController(frameController);
-            } else if (frameController.getPayRateTablesController().getTitle() == "SHK Entgelttabellen") {
+                payRateStageTypeDialogController = new PayRateStageTypeDialogController(frameController,payRateController);
+            } else if (payRateController.getTitle() == "SHK Entgelttabellen") {
                 insertSHKPayRateTableController = new InsertSHKPayRateTableController(frameController);
                 insertSHKPayRateTableController.showInsertSHKPayRateTableView(frameController);
             }
