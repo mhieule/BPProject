@@ -35,7 +35,7 @@ public class ContractDataManager {
 
     public void deleteTable(){
         try {
-            TableUtils.dropTable(connectionSource, SalaryTable.class, true);
+            TableUtils.dropTable(connectionSource, Contract.class, true);
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
