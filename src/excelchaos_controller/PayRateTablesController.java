@@ -32,6 +32,7 @@ public class PayRateTablesController implements ActionListener {
             toolbarPayRateTables = new ToolbarPayRateTablesController(frameController, this);
             payRateTablesView.init();
             payRateTablesView.add(toolbarPayRateTables.getToolbar(), BorderLayout.NORTH);
+            initButtons();
             mainFrameController.addTab(title, payRateTablesView);
         } else {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(title));
@@ -50,11 +51,29 @@ public class PayRateTablesController implements ActionListener {
     public void initButtons() {
         String paygrade = getPayGradeFromTitle();
         int temporary = manager.getNumOfTables(paygrade);
+        JPanel buttonPanel = new JPanel();
+
+        buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.Y_AXIS));
         for(int i = 0; i< temporary;i++){
-            JButton button = new JButton(manager.getDistinctTableNames(paygrade).get(i));
-            button.addActionListener(this);
-            payRateTablesView.getScrollPane().add(button);
+            String distinctTableName = manager.getDistinctTableNames(paygrade).get(i);
+            JButton button = new JButton(distinctTableName);
+            button.setPreferredSize(new Dimension(400,30));
+            JPanel panel = new JPanel();
+            panel.add(button);
+            buttonPanel.add(panel);
+            buttonPanel.add(Box.createVerticalStrut(10));
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ShowPayRateTableController payRateTableController = new ShowPayRateTableController(frameController,manager,distinctTableName,paygrade);
+                    payRateTableController.insertValuesInTable();
+
+                }
+            });
         }
+        JScrollPane scrollPane = new JScrollPane(buttonPanel);
+        scrollPane.setVisible(true);
+        payRateTablesView.getCenterPanel().add(scrollPane);
     }
 
     private String getPayGradeFromTitle() {
