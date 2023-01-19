@@ -16,7 +16,7 @@ public class InsertSalaryController implements ActionListener {
     private InsertSalaryView insertSalaryView;
     private MainFrameController frameController;
 
-    private String addSalaryTab = "Gehaltseintrag hinzufügen";
+    private String addSalaryTab = "Gehaltseintrag bearbeiten";
 
     public InsertSalaryController(MainFrameController mainFrameController) {
         insertSalaryView = new InsertSalaryView();
@@ -46,38 +46,21 @@ public class InsertSalaryController implements ActionListener {
 
         if(fixed){
             insertSalaryView.getNamePickList().setSelectedItem(currentName);
-            insertSalaryView.getNamePickList().setEnabled(false);
-
             insertSalaryView.getTfGruppe().setText(paygrade);
-            insertSalaryView.getTfGruppe().setEnabled(false);
-
             insertSalaryView.getPlStufe().setSelectedItem(paylevel);
-            insertSalaryView.getPlStufe().setEnabled(false);
         }
         else{
-            insertSalaryView.getNamePickList().setEnabled(true);
             insertSalaryView.getNamePickList().setSelectedItem(JComponent.getDefaultLocale());
-
-            insertSalaryView.getTfGruppe().setEnabled(true);
             insertSalaryView.getTfGruppe().setText(null);
-            insertSalaryView.getTfGruppe().setEditable(true);
-
-            insertSalaryView.getPlStufe().setEnabled(true);
             insertSalaryView.getPlStufe().setSelectedItem("Nicht ausgewählt");
         }
     }
 
     public void resetInputs(){
-        insertSalaryView.getTfGruppe().setEnabled(true);
         insertSalaryView.getTfGruppe().setText(null);
-        insertSalaryView.getPlStufe().setEnabled(true);
         insertSalaryView.getPlStufe().setSelectedItem("Nicht ausgewählt");
         insertSalaryView.getTfGehalt().setText(null);
         insertSalaryView.getTfSonderzahlung().setText(null);
-
-        if(insertSalaryView.getNamePickList().isEnabled()){
-            insertSalaryView.getNamePickList().setSelectedItem(null);
-        }
     }
 
     @Override
@@ -101,10 +84,11 @@ public class InsertSalaryController implements ActionListener {
             contract.setRegular_cost(gehalt);
             contract.setBonus_cost(sonderzahlung);
 
-            resetInputs();
             insertSalaryView.revalidate();
             insertSalaryView.repaint();
             SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
+            frameController.getSalaryListController().updateData();
+            resetInputs();
         }
         if(e.getSource() == insertSalaryView.getReset()){
             System.out.println("resetting");

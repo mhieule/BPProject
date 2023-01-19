@@ -30,7 +30,6 @@ public class ShowPersonController implements ActionListener {
         showPersonView.init();
         showPersonView.add(toolbarShowPerson.getToolbar(),BorderLayout.NORTH);
         searchAndFilterModel = new SearchAndFilterModel(showPersonView.getTable(),toolbarShowPerson.getToolbar().getSearchField());
-
     }
 
     public ShowPersonView getPersonView() {

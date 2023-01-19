@@ -43,6 +43,11 @@ public class SalaryListController {
         }
     }*/
 
+    public void updateData(){
+        salaryListView.addData();
+        salaryListView.add(toolbarSalaryList.getToolbar(),BorderLayout.NORTH);
+    }
+
     public ToolbarSalaryListController getToolbarSalary() {
         return toolbarSalaryList;
     }

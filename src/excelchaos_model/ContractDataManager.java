@@ -4,6 +4,7 @@ package excelchaos_model;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
@@ -71,5 +72,17 @@ public class ContractDataManager {
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
         return contracts;
+    }
+
+    public int getRowCount(){
+        long count = 0;
+        try {
+            QueryBuilder<Contract, Integer> builder = contractsDao.queryBuilder();
+            count = builder.countOf();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return (int)count;
     }
 }
