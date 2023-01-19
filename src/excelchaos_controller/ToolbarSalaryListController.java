@@ -17,6 +17,8 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
 
     private ShowSalaryStageDialogController showSalaryStageDialogController;
 
+    private IncreaseSalaryDialogController increaseSalaryDialogController;
+
     public ToolbarSalaryListController(MainFrameController mainFrameController, SalaryListView salaryView, SalaryListController salaryController) {
         frameController = mainFrameController;
         salaryListController = salaryController;
@@ -40,6 +42,8 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
         else if (e.getSource() == toolbar.getInsertEntry()){
             frameController.getInsertSalaryController().getEmployeeNameList(false, null, null, null);
             frameController.getInsertSalaryController().showInsertSalaryView(frameController);
+        } else if (e.getSource() == toolbar.getIncreaseSalary()){
+            increaseSalaryDialogController = new IncreaseSalaryDialogController(frameController);
         }
     }
 

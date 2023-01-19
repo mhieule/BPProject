@@ -81,4 +81,6 @@ public class ToolbarSalaryListView extends JToolBar {
     public JTextField getSearchField() {
         return searchField;
     }
+
+    public JButton getIncreaseSalary(){ return increaseSalary;};
 }

@@ -51,4 +51,6 @@ public class SalaryListController {
     public ToolbarSalaryListController getToolbarSalary() {
         return toolbarSalaryList;
     }
+
+    public SalaryListView getSalaryListView(){return salaryListView;};
 }
