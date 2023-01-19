@@ -39,15 +39,31 @@ public class InsertSalaryController implements ActionListener {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addSalaryTab));
     }
 
-    public void getEmployeeNameList(boolean fixedName, String currentName){
+    public void getEmployeeNameList(boolean fixed, String currentName, String paygrade, String paylevel){
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         String[] names = employeeDataManager.getAllEmployeesNameList();
         insertSalaryView.getNamePickList().setModel(new DefaultComboBoxModel<>(names));
 
-        if(fixedName){
-            insertSalaryView.getNamePickList().setEditable(true);
+        if(fixed){
             insertSalaryView.getNamePickList().setSelectedItem(currentName);
             insertSalaryView.getNamePickList().setEnabled(false);
+
+            insertSalaryView.getTfGruppe().setText(paygrade);
+            insertSalaryView.getTfGruppe().setEnabled(false);
+
+            insertSalaryView.getPlStufe().setSelectedItem(paylevel);
+            insertSalaryView.getPlStufe().setEnabled(false);
+        }
+        else{
+            insertSalaryView.getNamePickList().setEnabled(true);
+            insertSalaryView.getNamePickList().setSelectedItem(JComponent.getDefaultLocale());
+
+            insertSalaryView.getTfGruppe().setEnabled(true);
+            insertSalaryView.getTfGruppe().setText(null);
+            insertSalaryView.getTfGruppe().setEditable(true);
+
+            insertSalaryView.getPlStufe().setEnabled(true);
+            insertSalaryView.getPlStufe().setSelectedItem(JComponent.getDefaultLocale());
         }
     }
 
@@ -58,14 +74,20 @@ public class InsertSalaryController implements ActionListener {
             ContractDataManager contractDataManager = new ContractDataManager();
             EmployeeDataManager employeeDataManager = new EmployeeDataManager();
             Employee employee = employeeDataManager.getEmployeeByName(insertSalaryView.getNamePickList().getSelectedItem().toString());
-            int id = employee.getId();
-            String gruppe = insertSalaryView.getTfGruppe().getText();
-            String stufe = insertSalaryView.getPlStufe().getSelectedItem().toString();
-            String gehalt = insertSalaryView.getTfGehalt().getText();
-            String Sonderzahlung = insertSalaryView.getTfSonderzahlung().getText();
 
-            Contract newContract = new Contract(id, gruppe, stufe, "startdate", "enddate", Double.parseDouble(gehalt), Double.parseDouble(Sonderzahlung));
-            contractDataManager.addContract(newContract);
+            int id = employee.getId();
+            String paygrade = insertSalaryView.getTfGruppe().getText();
+            String paylevel = insertSalaryView.getPlStufe().getSelectedItem().toString();
+            double gehalt = Double.parseDouble(insertSalaryView.getTfGehalt().getText());
+            double sonderzahlung = Double.parseDouble(insertSalaryView.getTfSonderzahlung().getText());
+
+            Contract contract = contractDataManager.getContract(id);
+
+            contract.setPaygrade(paygrade);
+            contract.setPaylevel(paylevel);
+            contract.setRegular_cost(gehalt);
+            contract.setBonus_cost(sonderzahlung);
+
             insertSalaryView.removeAll();
             insertSalaryView.revalidate();
             insertSalaryView.repaint();

@@ -1,5 +1,7 @@
 package excelchaos_controller;
 
+import excelchaos_model.Contract;
+import excelchaos_model.ContractDataManager;
 import excelchaos_model.Employee;
 import excelchaos_view.InsertPersonView;
 import excelchaos_view.SideMenuPanelActionLogView;
@@ -78,6 +80,7 @@ public class InsertPersonController implements ActionListener {
         if (e.getSource() == insertPersonView.getSubmit()) {
             System.out.println("submitting");
             EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+            ContractDataManager contractDataManager = new ContractDataManager();
             int id = employeeDataManager.getNextID();
             String surname = insertPersonView.getTfName().getText();
             String name  = insertPersonView.getTfVorname().getText();
@@ -104,10 +107,16 @@ public class InsertPersonController implements ActionListener {
             String zip_code = insertPersonView.getTfPLZ().getText();
             String additional_address = insertPersonView.getTfAdresszusatz().getText();
             String city = insertPersonView.getTfStadt().getText();
+            String payGrade = insertPersonView.getTfPayGroupOnHiring().getText();
+            String payLevel = insertPersonView.getPayGradeList().getSelectedItem().toString();
+            String startDate = insertPersonView.getTfWorkStart().getText();
+            String endDate = insertPersonView.getTfWorkEnd().getText();
             Employee newEmployee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                     citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
                     salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
             employeeDataManager.addEmployee(newEmployee);
+            Contract newContract = new Contract(id, payGrade, payLevel, startDate, endDate, 0, 0);
+            contractDataManager.addContract(newContract);
             insertPersonView.removeAll();
             insertPersonView.revalidate();
             insertPersonView.repaint();
@@ -118,6 +127,7 @@ public class InsertPersonController implements ActionListener {
         if(e.getSource() == insertPersonView.getSalaryEntry()){
             System.out.println("submit and go to salary");
             EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+            ContractDataManager contractDataManager = new ContractDataManager();
             int id = employeeDataManager.getNextID();
             String surname = insertPersonView.getTfName().getText();
             String name  = insertPersonView.getTfVorname().getText();
@@ -144,16 +154,22 @@ public class InsertPersonController implements ActionListener {
             String zip_code = insertPersonView.getTfPLZ().getText();
             String additional_address = insertPersonView.getTfAdresszusatz().getText();
             String city = insertPersonView.getTfStadt().getText();
+            String payGrade = insertPersonView.getTfPayGroupOnHiring().getText();
+            String payLevel = insertPersonView.getPayGradeList().getSelectedItem().toString();
+            String startDate = insertPersonView.getTfWorkStart().getText();
+            String endDate = insertPersonView.getTfWorkEnd().getText();
             Employee newEmployee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                     citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
                     salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
             employeeDataManager.addEmployee(newEmployee);
+            Contract newContract = new Contract(id, payGrade, payLevel, startDate, endDate, 0, 0);
+            contractDataManager.addContract(newContract);
             insertPersonView.removeAll();
             insertPersonView.revalidate();
             insertPersonView.repaint();
             frameController.getShowPersonalData().updateData();
             SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
-            frameController.getInsertSalaryController().getEmployeeNameList(true, surname + " " + name);
+            frameController.getInsertSalaryController().getEmployeeNameList(true, surname + " " + name, payGrade, payLevel);
             frameController.getInsertSalaryController().showInsertSalaryView(frameController);
         }
         if(e.getSource() == insertPersonView.getReset()){
