@@ -63,7 +63,20 @@ public class InsertSalaryController implements ActionListener {
             insertSalaryView.getTfGruppe().setEditable(true);
 
             insertSalaryView.getPlStufe().setEnabled(true);
-            insertSalaryView.getPlStufe().setSelectedItem(JComponent.getDefaultLocale());
+            insertSalaryView.getPlStufe().setSelectedItem("Nicht ausgewählt");
+        }
+    }
+
+    public void resetInputs(){
+        insertSalaryView.getTfGruppe().setEnabled(true);
+        insertSalaryView.getTfGruppe().setText(null);
+        insertSalaryView.getPlStufe().setEnabled(true);
+        insertSalaryView.getPlStufe().setSelectedItem("Nicht ausgewählt");
+        insertSalaryView.getTfGehalt().setText(null);
+        insertSalaryView.getTfSonderzahlung().setText(null);
+
+        if(insertSalaryView.getNamePickList().isEnabled()){
+            insertSalaryView.getNamePickList().setSelectedItem(null);
         }
     }
 
@@ -88,21 +101,14 @@ public class InsertSalaryController implements ActionListener {
             contract.setRegular_cost(gehalt);
             contract.setBonus_cost(sonderzahlung);
 
-            insertSalaryView.removeAll();
+            resetInputs();
             insertSalaryView.revalidate();
             insertSalaryView.repaint();
             SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
         }
         if(e.getSource() == insertSalaryView.getReset()){
             System.out.println("resetting");
-            insertSalaryView.getPlStufe().setSelectedItem("Nicht ausgewählt");
-            insertSalaryView.getTfGehalt().setText(null);
-            insertSalaryView.getTfSonderzahlung().setText(null);
-            insertSalaryView.getTfGruppe().setText(null);
-
-            if(insertSalaryView.getNamePickList().isEnabled()){
-                insertSalaryView.getNamePickList().setSelectedItem(null);
-            }
+            resetInputs();
         }
 
     }

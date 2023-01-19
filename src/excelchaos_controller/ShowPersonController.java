@@ -64,6 +64,7 @@ public class ShowPersonController implements ActionListener {
     }*/
     public void updateData(){
         showPersonView.addData();
+        showPersonView.add(toolbarShowPerson.getToolbar(),BorderLayout.NORTH);
     }
     public ToolbarShowPersonController getToolbarShowPerson() {
         return toolbarShowPerson;

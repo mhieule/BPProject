@@ -60,6 +60,46 @@ public class InsertPersonController implements ActionListener {
         insertPersonView.getTfVisaValidUntil().setVisible(false);
     }
 
+    public void resetInputs(){
+        insertPersonView.getTfName().setText(null);
+        insertPersonView.getTfVorname().setText(null);
+        insertPersonView.getTfStrasse().setText(null);
+        insertPersonView.getTfPrivatEmail().setText(null);
+        insertPersonView.getTfPrivateTelefonnummer().setText(null);
+        insertPersonView.getTfPersonalnummer().setText(null);
+        insertPersonView.getTfTuid().setText(null);
+        insertPersonView.getTfTranspondernummer().setText(null);
+        insertPersonView.getTfBueronummer().setText(null);
+        insertPersonView.getTfGehaltEingeplanntBis().setText(null);
+        insertPersonView.getTfTelefonnummerTUDA().setText(null);
+        insertPersonView.getTfHausnummer().setText(null);
+        insertPersonView.getTfPLZ().setText(null);
+        insertPersonView.getTfAdresszusatz().setText(null);
+        insertPersonView.getTfStadt().setText(null);
+        insertPersonView.getTfHausnummer().setText(null);
+        insertPersonView.getTfAdresszusatz().setText(null);
+        insertPersonView.getTfPLZ().setText(null);
+        insertPersonView.getTfStadt().setText(null);
+        insertPersonView.getTfWorkScope().setText(null);
+        insertPersonView.getTypeOfJobPicklist().setSelectedItem("Nicht ausgewählt");
+        insertPersonView.getNationalityPickList().setSelectedItem("Afghanistan");
+        insertPersonView.getNationalityPickList2().setSelectedItem(null);
+        insertPersonView.getNationalityCheckBox().setSelected(false);
+        insertPersonView.getVisaRequiredCheckBox().setSelected(false);
+        setNationalityCheckboxInVisible();
+        setVisRequiredCheckboxInVisible();
+        insertPersonView.getPayGroupOnHiring().setVisible(false);
+        insertPersonView.getTfPayGroupOnHiring().setVisible(false);
+        insertPersonView.getPayGradeOnHiring().setVisible(false);
+        insertPersonView.getPayGradeList().setVisible(false);
+        insertPersonView.getHiwiTypeOfPayment().setVisible(false);
+        insertPersonView.getHiwiTypeOfPaymentList().setVisible(false);
+        insertPersonView.getTfGeburtsdatum().setText(null);
+        insertPersonView.getTfVisaValidUntil().setText(null);
+        insertPersonView.getTfGehaltEingeplanntBis().setText(null);
+        insertPersonView.getTfWorkEnd().setText(null);
+        insertPersonView.getTfWorkStart().setText(null);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -117,7 +157,7 @@ public class InsertPersonController implements ActionListener {
             employeeDataManager.addEmployee(newEmployee);
             Contract newContract = new Contract(id, payGrade, payLevel, startDate, endDate, 0, 0);
             contractDataManager.addContract(newContract);
-            insertPersonView.removeAll();
+            resetInputs();
             insertPersonView.revalidate();
             insertPersonView.repaint();
             frameController.getShowPersonalData().updateData();
@@ -164,7 +204,7 @@ public class InsertPersonController implements ActionListener {
             employeeDataManager.addEmployee(newEmployee);
             Contract newContract = new Contract(id, payGrade, payLevel, startDate, endDate, 0, 0);
             contractDataManager.addContract(newContract);
-            insertPersonView.removeAll();
+            resetInputs();
             insertPersonView.revalidate();
             insertPersonView.repaint();
             frameController.getShowPersonalData().updateData();
@@ -174,45 +214,7 @@ public class InsertPersonController implements ActionListener {
         }
         if(e.getSource() == insertPersonView.getReset()){
             System.out.println("resetting");
-            insertPersonView.getTfName().setText(null);
-            insertPersonView.getTfVorname().setText(null);
-            insertPersonView.getTfStrasse().setText(null);
-            insertPersonView.getTfPrivatEmail().setText(null);
-            insertPersonView.getTfPrivateTelefonnummer().setText(null);
-            insertPersonView.getTfPersonalnummer().setText(null);
-            insertPersonView.getTfTuid().setText(null);
-            insertPersonView.getTfTranspondernummer().setText(null);
-            insertPersonView.getTfBueronummer().setText(null);
-            insertPersonView.getTfGehaltEingeplanntBis().setText(null);
-            insertPersonView.getTfTelefonnummerTUDA().setText(null);
-            insertPersonView.getTfHausnummer().setText(null);
-            insertPersonView.getTfPLZ().setText(null);
-            insertPersonView.getTfAdresszusatz().setText(null);
-            insertPersonView.getTfStadt().setText(null);
-            insertPersonView.getTfHausnummer().setText(null);
-            insertPersonView.getTfAdresszusatz().setText(null);
-            insertPersonView.getTfPLZ().setText(null);
-            insertPersonView.getTfStadt().setText(null);
-            insertPersonView.getTfWorkScope().setText(null);
-            insertPersonView.getTypeOfJobPicklist().setSelectedItem("Nicht ausgewählt");
-            insertPersonView.getNationalityPickList().setSelectedItem("Afghanistan");
-            insertPersonView.getNationalityPickList2().setSelectedItem(null);
-            insertPersonView.getNationalityCheckBox().setSelected(false);
-            insertPersonView.getVisaRequiredCheckBox().setSelected(false);
-            setNationalityCheckboxInVisible();
-            setVisRequiredCheckboxInVisible();
-            insertPersonView.getPayGroupOnHiring().setVisible(false);
-            insertPersonView.getTfPayGroupOnHiring().setVisible(false);
-            insertPersonView.getPayGradeOnHiring().setVisible(false);
-            insertPersonView.getPayGradeList().setVisible(false);
-            insertPersonView.getHiwiTypeOfPayment().setVisible(false);
-            insertPersonView.getHiwiTypeOfPaymentList().setVisible(false);
-            insertPersonView.getTfGeburtsdatum().setText(null);
-            insertPersonView.getTfVisaValidUntil().setText(null);
-            insertPersonView.getTfGehaltEingeplanntBis().setText(null);
-            insertPersonView.getTfWorkEnd().setText(null);
-            insertPersonView.getTfWorkStart().setText(null);
-
+            resetInputs();
         }
         if (e.getSource() == insertPersonView.getTypeOfJobPicklist()){
             if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("WiMi") || insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("ATM")){
