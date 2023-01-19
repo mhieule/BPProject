@@ -3,6 +3,8 @@ package excelchaos_view;
 import excelchaos_model.CustomTableModel;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -25,7 +27,35 @@ public class CustomTable extends JTable {
         setRowSelectionAllowed(true);
         setAutoCreateRowSorter(true);
         setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        setAutoCheckboxSelection();
         init();
+
+    }
+
+    private void setAutoCheckboxSelection() {
+        ListSelectionModel rowSM=getSelectionModel();
+        rowSM.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                //Ignore extra messages.
+                if (e.getValueIsAdjusting()) return;
+
+                ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+                if (lsm.isSelectionEmpty()) {
+                    System.out.println("No rows are selected.");
+                } else {
+                    int selectedRowStart = lsm.getMinSelectionIndex();
+                    int selectedRowEnd = lsm.getMaxSelectionIndex();
+                    for(int i=selectedRowStart;i<selectedRowEnd+1;i++){
+                        setValueAt(true, i, 0);
+                    }
+                }
+            }
+        });
+    }
+
+    public CustomTable(DefaultTableModel model) {
+        super(model);
     }
 
     /**
@@ -165,7 +195,7 @@ public class CustomTable extends JTable {
      * The method is used to return the current selected row as a complete table with header to assist tasks involving selecting table rows
      * @return JTable with header
      */
-    public JTable getCurrentSelectedRowAsTable(){
+    public CustomTable getCurrentSelectedRowAsTable(){
         DefaultTableModel result=new DefaultTableModel(null, getTableHeaderAsStringArray());
         for(int i=0;i<this.getRowCount();i++){
             if ((Boolean) getValueAt(i, 0)) {
@@ -176,7 +206,9 @@ public class CustomTable extends JTable {
                 result.addRow(rowResult);
             }
         }
-        return new JTable(result);
+        CustomTable resultTable = new CustomTable(result);
+        resultTable.getColumnModel().removeColumn(resultTable.getColumnModel().getColumn(0));
+        return resultTable;
     }
 
     /**
@@ -212,4 +244,8 @@ public class CustomTable extends JTable {
     }
 
 
+
+
 }
+
+

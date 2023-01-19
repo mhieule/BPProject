@@ -1,9 +1,11 @@
 package excelchaos_model;
 
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.util.Arrays;
 
-public class CustomTableModel extends DefaultTableModel /*implements TableModelListener*/ {
+public class CustomTableModel extends DefaultTableModel implements TableModelListener {
 
     private String[][] data;
     private String[] header;
@@ -83,6 +85,7 @@ public class CustomTableModel extends DefaultTableModel /*implements TableModelL
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         if(columnIndex==0){
             checkboxValues[rowIndex]=(boolean) aValue;
+            fireTableCellUpdated(rowIndex, 0);
         } else super.setValueAt(aValue, rowIndex, columnIndex-1);
 
     }
@@ -96,15 +99,15 @@ public class CustomTableModel extends DefaultTableModel /*implements TableModelL
     }
 
 
-    /*@Override
+    @Override
     public void tableChanged(TableModelEvent e) {
-        if(e.getType()==TableModelEvent.UPDATE){
+        if(e.getType()== TableModelEvent.UPDATE){
             int row=e.getFirstRow();
             int column=e.getColumn();
             System.out.println("Row and column has been changed at "+row+".."+column);
             System.out.println("New value "+getValueAt(row, column));
         }
-    }*/
+    }
 
 
 }
