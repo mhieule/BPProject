@@ -3,7 +3,7 @@ package excelchaos_controller;
 import excelchaos_model.PayRateTableCalculationModel;
 import excelchaos_model.SalaryTable;
 import excelchaos_model.SalaryTableManager;
-import excelchaos_model.StringToDoubleForDataBaseModel;
+import excelchaos_model.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.InsertPayRateTableView;
 
 import java.awt.event.ActionEvent;
@@ -17,14 +17,17 @@ public class InsertPayRateTableController implements ActionListener {
     private String title;
 
     private PayRateTableCalculationModel model;
+
+    private PayRateTablesController payRateController;
     private String[] baseMoneyStringValues;
 
     private String[] bonusMoneyStringValues;
 
 
-    public InsertPayRateTableController(MainFrameController mainFrameController, String name, String[] columnNames, boolean typeOfTable) {
+    public InsertPayRateTableController(MainFrameController mainFrameController,PayRateTablesController payRateTablesController, String name, String[] columnNames, boolean typeOfTable) {
         frameController = mainFrameController;
         insertPayRateTableView = new InsertPayRateTableView();
+        payRateController = payRateTablesController;
         title = name;
         insertPayRateTableView.init(columnNames);
         insertPayRateTableView.setActionListener(this);
@@ -64,6 +67,8 @@ public class InsertPayRateTableController implements ActionListener {
             String tableName = insertPayRateTableView.getTfNameOfTable().getText();
             String paygrade = determinePayGrade();
             insertValuesInDatabase(tableName,paygrade,prepareTableForDatabaseInsertion());
+            payRateController.updateview();
+            frameController.getTabs().removeTabNewWindow(insertPayRateTableView);
 
         }
     }
@@ -145,7 +150,7 @@ public class InsertPayRateTableController implements ActionListener {
 
     private double[][] prepareTableForDatabaseInsertion() {
         double[][] result = new double[insertPayRateTableView.getTable().getRowCount()][insertPayRateTableView.getTable().getRowCount()];
-        StringToDoubleForDataBaseModel converter = new StringToDoubleForDataBaseModel();
+        StringAndDoubleTransformationForDatabase converter = new StringAndDoubleTransformationForDatabase();
         for (int row = 0; row < insertPayRateTableView.getTable().getRowCount(); row++) {
             for (int column = 0; column < insertPayRateTableView.getTable().getColumnCount(); column++) {
                 if (insertPayRateTableView.getTable().getValueAt(row, column) == null || insertPayRateTableView.getTable().getValueAt(row,column).equals("")) {
@@ -162,29 +167,29 @@ public class InsertPayRateTableController implements ActionListener {
 
     private void insertValuesInDatabase(String name,String paygrade,double[][] values){
         SalaryTableManager manager = new SalaryTableManager();
-        for(int row = 0; row < values[0].length;row++){
+        for(int column = 0; column < values[0].length;column++){
             String tableName = name;
-            double grundentgelt = values[0][row];
+            double grundentgelt = values[0][column];
             System.out.println(grundentgelt + "grundentgelt");
-            double av_ag_anteil_lfd_entgelt = values[1][row];
+            double av_ag_anteil_lfd_entgelt = values[1][column];
             System.out.println(av_ag_anteil_lfd_entgelt + "avag");
-            double kv_ag_anteil_lfd_entgelt = values[2][row];
+            double kv_ag_anteil_lfd_entgelt = values[2][column];
             System.out.println(kv_ag_anteil_lfd_entgelt+"kvag");
-            double zusbei_af_lfd_entgelt = values[3][row];
+            double zusbei_af_lfd_entgelt = values[3][column];
             System.out.println(zusbei_af_lfd_entgelt+"zusb");
-            double pv_ag_anteil_lfd_entgelt = values[4][row];
+            double pv_ag_anteil_lfd_entgelt = values[4][column];
             System.out.println(pv_ag_anteil_lfd_entgelt+"pvag");
-            double rv_ag_anteil_lfd_entgelt = values[5][row];
+            double rv_ag_anteil_lfd_entgelt = values[5][column];
             System.out.println(rv_ag_anteil_lfd_entgelt+"rvag");
-            double sv_umlage_u2 = values[6][row];
-            double steuern_ag = values[7][row];
-            double zv_Sanierungsbeitrag = values[8][row];
-            double zv_umlage_allgemein = values[9][row];
-            double vbl_wiss_4perc_ag_buchung = values[10][row];
-            double mtl_kosten_ohne_jsz = values[11][row];
-            double jsz_als_monatliche_zulage = values[12][row];
-            double mtl_kosten_mit_jsz = values[13][row];
-            double jaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung = values[14][row];
+            double sv_umlage_u2 = values[6][column];
+            double steuern_ag = values[7][column];
+            double zv_Sanierungsbeitrag = values[8][column];
+            double zv_umlage_allgemein = values[9][column];
+            double vbl_wiss_4perc_ag_buchung = values[10][column];
+            double mtl_kosten_ohne_jsz = values[11][column];
+            double jsz_als_monatliche_zulage = values[12][column];
+            double mtl_kosten_mit_jsz = values[13][column];
+            double jaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung = values[14][column];
             System.out.println(jaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung+"jaerliche....");
             String grade = paygrade;
 

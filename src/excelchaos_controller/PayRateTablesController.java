@@ -49,6 +49,7 @@ public class PayRateTablesController implements ActionListener {
     }
 
     public void initButtons() {
+        payRateTablesView.getCenterPanel().removeAll();
         String paygrade = getPayGradeFromTitle();
         int temporary = manager.getNumOfTables(paygrade);
         JPanel buttonPanel = new JPanel();
@@ -86,6 +87,10 @@ public class PayRateTablesController implements ActionListener {
             result = "SHK";
         }
         return result;
+    }
+
+    public void updateview(){
+        initButtons();
     }
 
     @Override

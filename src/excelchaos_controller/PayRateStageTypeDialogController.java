@@ -66,7 +66,7 @@ public class PayRateStageTypeDialogController implements ActionListener {
     }
     private void createInsertPayRateTable(String title, String[] columnNames, String originalTitle){
         payRateController.setTitle(title);
-        insertPayRateTableController = new InsertPayRateTableController(frameController,payRateController.getTitle(),columnNames,tablePayRateStageType());
+        insertPayRateTableController = new InsertPayRateTableController(frameController,payRateController,payRateController.getTitle(),columnNames,tablePayRateStageType());
         insertPayRateTableController.showInsertPayRateTableView(frameController);
         payRateController.setTitle(originalTitle);
 

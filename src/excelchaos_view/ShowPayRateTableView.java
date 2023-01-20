@@ -38,7 +38,7 @@ public class ShowPayRateTableView extends JPanel {
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 15));
         nameOfTable = new JLabel("Name der Tabelle");
         tfNameOfTable = new JTextField();
-        tfNameOfTable.setPreferredSize(new Dimension(150, 30));
+        tfNameOfTable.setPreferredSize(new Dimension(300, 30));
         topPanel.add(nameOfTable);
         topPanel.add(tfNameOfTable);
         add(topPanel, BorderLayout.NORTH);
@@ -160,6 +160,10 @@ public class ShowPayRateTableView extends JPanel {
 
     public JTable getTable() {
         return table;
+    }
+
+    public JTextField getTfNameOfTable() {
+        return tfNameOfTable;
     }
 
     public void setActionListener(ActionListener l) {
