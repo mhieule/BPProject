@@ -4,6 +4,7 @@ import excelchaos_model.MultiLineTableCellRenderer;
 import excelchaos_model.TableColumnAdjuster;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -43,7 +44,7 @@ public class InsertPayRateTableView extends JPanel {
     private GridBagConstraints constraints;
 
 
-    public void init(String [] columns) {
+    public void init(String[] columns) {
         setLayout(new BorderLayout());
         topPanelInit();
         centerPanelInit(columns);
@@ -60,9 +61,10 @@ public class InsertPayRateTableView extends JPanel {
         topPanel.add(tfNameOfTable);
         add(topPanel, BorderLayout.NORTH);
     }
-    private void bottomPanelInit(){
+
+    private void bottomPanelInit() {
         bottomPanel = new JPanel();
-        bottomPanel.setLayout(new BoxLayout(bottomPanel,BoxLayout.X_AXIS));
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
         JPanel leftbuttons = new JPanel(new FlowLayout());
         JPanel rightbuttons = new JPanel(new FlowLayout());
 
@@ -86,7 +88,7 @@ public class InsertPayRateTableView extends JPanel {
         constraints.insets.bottom = 20;
         constraints.weighty = 0.2;
         constraints.weightx = 0.2;
-        centerPanel.add(bottomPanel,constraints);
+        centerPanel.add(bottomPanel, constraints);
 
 
     }
@@ -119,7 +121,7 @@ public class InsertPayRateTableView extends JPanel {
         return table;
     }
 
-    public void setActionListener(ActionListener l){
+    public void setActionListener(ActionListener l) {
         cancelButton.addActionListener(l);
         calculateCells.addActionListener(l);
         saveAndExit.addActionListener(l);
@@ -127,7 +129,7 @@ public class InsertPayRateTableView extends JPanel {
         insertMonthlyBonusMoney.addActionListener(l);
     }
 
-    private void centerPanelInit(String[] columns){
+    private void centerPanelInit(String[] columns) {
         centerPanel = new JPanel();
         GridBagLayout layout = new GridBagLayout();
         centerPanel.setLayout(layout);
@@ -141,9 +143,9 @@ public class InsertPayRateTableView extends JPanel {
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;
         centerPanel.add(wageTypeLongtext, constraints);
-        constraints.ipadx=2000;
-        constraints.ipady=462;
-        centerPanel.add(scrollPane,constraints);
+        constraints.ipadx = 2000;
+        constraints.ipady = 462;
+        centerPanel.add(scrollPane, constraints);
         add(centerPanel, BorderLayout.CENTER);
     }
 
@@ -185,8 +187,24 @@ public class InsertPayRateTableView extends JPanel {
 
     public void initTable(String[] columns) {
 
-        DefaultTableModel test = new DefaultTableModel(columns, 15);
-        table = new JTable(test);
+        DefaultTableModel mainTableModel = new DefaultTableModel(columns, 15);
+        table = new JTable(mainTableModel);
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if ((row == 0 || row == 12) && column != 0) {
+                    c.setBackground(new Color(181, 237, 133));
+                } else if(column == 0 && (row != 0 && row!=11 && row!=12 && row !=13 && row != 14)){
+                    c.setBackground(new Color(237, 140, 133));
+                }
+                else if (column!=0) {
+                    c.setBackground(Color.LIGHT_GRAY);
+                } else {
+                    c.setBackground(Color.white);
+                }
+                return c;
+            }
+        });
         DefaultTableModel model = new DefaultTableModel() {
 
             @Override
@@ -230,7 +248,7 @@ public class InsertPayRateTableView extends JPanel {
         headerTable.setValueAt("JSZ als monatliche Zulage", 12, 0);
         headerTable.setValueAt("mtl. Kosten mit JSZ", 13, 0);
         headerTable.setValueAt("<html>Jährliche Arbeitgeberbelastung <br>" +
-                "inklusive Jahressonderzahlung</html>",14,0);
+                "inklusive Jahressonderzahlung</html>", 14, 0);
         headerTable.setShowGrid(false);
         headerTable.setPreferredScrollableViewportSize(new Dimension(180, 0));
         headerTable.getColumnModel().getColumn(0).setPreferredWidth(180);
@@ -243,8 +261,8 @@ public class InsertPayRateTableView extends JPanel {
         tca.adjustColumns();
         scrollPane = new JScrollPane(table);
         scrollPane.setRowHeaderView(headerTable);
-    }
 
+    }
 
 
 }

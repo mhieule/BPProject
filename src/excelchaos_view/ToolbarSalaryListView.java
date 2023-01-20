@@ -32,20 +32,13 @@ public class ToolbarSalaryListView extends JToolBar {
         searchLabel = new JLabel("Suchen:");
         searchField = new JTextField();
         searchField.setPreferredSize(new Dimension(130,30));
-        addSeparator(new Dimension(30,30));
         add(editEntry);
-        addSeparator(new Dimension(20,30));
         add(deleteEntry);
 
-        addSeparator(new Dimension(20,30));
         add(increaseSalary);
-        addSeparator(new Dimension(20,30));
         add(showNextPayGrade);
-        addSeparator(new Dimension(20,30));
         add(salaryStageOn);
-        addSeparator(new Dimension(20,30));
         add(removeAdditionalSalaryStage);
-        addSeparator(new Dimension(20,30));
         add(searchLabel);
         add(searchField);
 
