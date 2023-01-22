@@ -39,21 +39,15 @@ public class InsertSalaryController implements ActionListener {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addSalaryTab));
     }
 
-    public void getEmployeeNameList(boolean fixed, String currentName, String paygrade, String paylevel){
+    public void getEmployeeNameList(String currentName, String paygrade, String paylevel){
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         String[] names = employeeDataManager.getAllEmployeesNameList();
-        insertSalaryView.getNamePickList().setModel(new DefaultComboBoxModel<>(names));
 
-        if(fixed){
-            insertSalaryView.getNamePickList().setSelectedItem(currentName);
-            insertSalaryView.getTfGruppe().setText(paygrade);
-            insertSalaryView.getPlStufe().setSelectedItem(paylevel);
-        }
-        else{
-            insertSalaryView.getNamePickList().setSelectedItem(JComponent.getDefaultLocale());
-            insertSalaryView.getTfGruppe().setText(null);
-            insertSalaryView.getPlStufe().setSelectedItem("Nicht ausgewählt");
-        }
+        insertSalaryView.getNamePickList().setModel(new DefaultComboBoxModel<>(names));
+        insertSalaryView.getNamePickList().setSelectedItem(currentName);
+        insertSalaryView.getNamePickList().setEnabled(false);
+        insertSalaryView.getTfGruppe().setText(paygrade);
+        insertSalaryView.getPlStufe().setSelectedItem(paylevel);
     }
 
     public void resetInputs(){
@@ -89,6 +83,7 @@ public class InsertSalaryController implements ActionListener {
             SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
             frameController.getSalaryListController().updateData();
             resetInputs();
+            frameController.getTabs().removeTabNewWindow(insertSalaryView);
         }
         if(e.getSource() == insertSalaryView.getReset()){
             System.out.println("resetting");

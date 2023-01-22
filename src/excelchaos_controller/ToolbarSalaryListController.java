@@ -38,10 +38,6 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
         if (e.getSource() == toolbar.getSalaryStageOn()) {
             showSalaryStageDialogController = new ShowSalaryStageDialogController();
         } else if (e.getSource() == toolbar.getRemoveAdditionalSalaryStage()) {
-        }
-        else if (e.getSource() == toolbar.getInsertEntry()){
-            frameController.getInsertSalaryController().getEmployeeNameList(false, null, null, null);
-            frameController.getInsertSalaryController().showInsertSalaryView(frameController);
         } else if (e.getSource() == toolbar.getIncreaseSalary()){
             increaseSalaryDialogController = new IncreaseSalaryDialogController(frameController);
         }

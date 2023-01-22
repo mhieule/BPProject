@@ -164,7 +164,6 @@ public class InsertPersonController implements ActionListener {
             frameController.getSalaryListController().updateData();
             SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
         }
-        //speichert derzeit nur die Daten. Wenn Gehaltseingabe existiert muss diese danach angezeigt werden
         if(e.getSource() == insertPersonView.getSalaryEntry()){
             System.out.println("submit and go to salary");
             EmployeeDataManager employeeDataManager = new EmployeeDataManager();
@@ -205,14 +204,15 @@ public class InsertPersonController implements ActionListener {
             employeeDataManager.addEmployee(newEmployee);
             Contract newContract = new Contract(id, payGrade, payLevel, startDate, endDate, 0, 0);
             contractDataManager.addContract(newContract);
+            frameController.getInsertSalaryController().getEmployeeNameList(surname + " " + name, payGrade, payLevel);
             resetInputs();
             insertPersonView.revalidate();
             insertPersonView.repaint();
             frameController.getShowPersonalData().updateData();
             frameController.getSalaryListController().updateData();
             SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
-            frameController.getInsertSalaryController().getEmployeeNameList(true, surname + " " + name, payGrade, payLevel);
             frameController.getInsertSalaryController().showInsertSalaryView(frameController);
+            frameController.getTabs().removeTabNewWindow(insertPersonView);
         }
         if(e.getSource() == insertPersonView.getReset()){
             System.out.println("resetting");
