@@ -11,9 +11,10 @@ public class SalaryHistoryView extends JPanel{
 
 
     public void init(){
+        removeAll();
         setLayout(new BorderLayout());
         String column[] = {
-                "Name", "Datum", "Betrag", "Kommentar"
+                "Datum", "Gehalt", "Sonderzahlung", "Kommentar"
         };
         File f = new File("src/salaryHistoryData");
         try {

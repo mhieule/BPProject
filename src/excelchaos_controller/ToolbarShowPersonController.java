@@ -13,8 +13,6 @@ public class ToolbarShowPersonController implements ActionListener {
         toolbar = new ToolbarShowPersonView();
         toolbar.init();
         toolbar.setActionListener(this);
-
-
     }
 
     public ToolbarShowPersonView getToolbar() {

@@ -21,7 +21,12 @@ public class ToolbarSalaryHistoryController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+//        if(e.getSource() == toolbar.getNameComboBox()){
+//            toolbar.getNameComboBox().getSelectedItem();
+//        }
+//        else if(e.getSource() == toolbar.getÄnderungen()){
+//
+//        }
     }
 
 
