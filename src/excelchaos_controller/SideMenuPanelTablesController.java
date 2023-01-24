@@ -1,9 +1,7 @@
 package excelchaos_controller;
 
-import excelchaos_view.MainFrame;
 import excelchaos_view.SideMenuPanelTables;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -57,20 +55,32 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
     }
     @Override
     public void itemStateChanged(ItemEvent e) {
-        if (e.getStateChange() == ItemEvent.SELECTED) {
-            sideMenu.getCenterpanel().setPreferredSize(new Dimension(140,255));
-            sideMenu.getTableButtonPanel().setVisible(true);
-            sideMenu.getToggleButtonPanel().setBorder(null);
-            sideMenu.getToggleButtonPanel().setPreferredSize(new Dimension(140,35));
+        if (e.getStateChange() == ItemEvent.SELECTED && e.getSource() == sideMenu.getPayRates()) {
+            sideMenu.getPayRateTableButtonPanel().setVisible(true);
+            sideMenu.getPayRateToggleButtonPanel().setBorder(null);
+            sideMenu.getPayRateToggleButtonPanel().setPreferredSize(new Dimension(140,35));
             sideMenu.getPayRatePanel().setBorder(sideMenu.getRaisedetchedBorder());
-            sideMenu.openArrowLabelVisible();
-        } else {
-            sideMenu.getCenterpanel().setPreferredSize(new Dimension(140,170));
-            sideMenu.getTableButtonPanel().setVisible(false);
+            sideMenu.payRateOpenArrowLabelVisible();
+        } else if (e.getStateChange() == ItemEvent.DESELECTED && e.getSource() == sideMenu.getPayRates()){
+            sideMenu.getPayRateTableButtonPanel().setVisible(false);
             sideMenu.getPayRatePanel().setBorder(null);
-            sideMenu.getToggleButtonPanel().setBorder(sideMenu.getRaisedetchedBorder());
-            sideMenu.getToggleButtonPanel().setPreferredSize(new Dimension(140,45));
-            sideMenu.closeArrowLabelVisible();
+            sideMenu.getPayRateToggleButtonPanel().setBorder(sideMenu.getRaisedetchedBorder());
+            sideMenu.getPayRateToggleButtonPanel().setPreferredSize(new Dimension(140,45));
+            sideMenu.payRateCloseArrowLabelVisible();
+        } else if (e.getStateChange() == ItemEvent.SELECTED && e.getSource() == sideMenu.getSalaryToggleButton()) {
+            sideMenu.getSalaryPanel().setPreferredSize(new Dimension(140,150));
+            sideMenu.getSalaryTableButtonPanel().setVisible(true);
+            sideMenu.getSalaryToggleButtonPanel().setBorder(null);
+            sideMenu.getSalaryToggleButtonPanel().setPreferredSize(new Dimension(140,35));
+            sideMenu.getSalaryPanel().setBorder(sideMenu.getRaisedetchedBorder());
+            sideMenu.salaryOpenArrowLabelVisible();
+        } else if (e.getStateChange() == ItemEvent.DESELECTED && e.getSource() == sideMenu.getSalaryToggleButton()) {
+            sideMenu.getSalaryPanel().setPreferredSize(new Dimension(140,45));
+            sideMenu.getSalaryTableButtonPanel().setVisible(false);
+            sideMenu.getSalaryPanel().setBorder(null);
+            sideMenu.getSalaryToggleButtonPanel().setBorder(sideMenu.getRaisedetchedBorder());
+            sideMenu.getSalaryToggleButtonPanel().setPreferredSize(new Dimension(140,45));
+            sideMenu.salaryCloseArrowLabelVisible();
         }
 
     }

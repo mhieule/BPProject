@@ -50,7 +50,7 @@ public class PayRateTablesController implements ActionListener {
 
     public void initButtons() {
         payRateTablesView.getCenterPanel().removeAll();
-        String paygrade = getPayGradeFromTitle();
+        String paygrade = getPayGradeFromTitle(); //PayGrade ist Gruppe/Klasse
         int temporary = manager.getNumOfTables(paygrade);
         JPanel buttonPanel = new JPanel();
 
