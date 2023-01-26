@@ -68,7 +68,7 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             sideMenu.getPayRateToggleButtonPanel().setPreferredSize(new Dimension(140,45));
             sideMenu.payRateCloseArrowLabelVisible();
         } else if (e.getStateChange() == ItemEvent.SELECTED && e.getSource() == sideMenu.getSalaryToggleButton()) {
-            sideMenu.getSalaryPanel().setPreferredSize(new Dimension(140,150));
+            sideMenu.getSalaryPanel().setPreferredSize(new Dimension(140,202));
             sideMenu.getSalaryTableButtonPanel().setVisible(true);
             sideMenu.getSalaryToggleButtonPanel().setBorder(null);
             sideMenu.getSalaryToggleButtonPanel().setPreferredSize(new Dimension(140,35));

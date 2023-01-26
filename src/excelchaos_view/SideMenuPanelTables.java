@@ -114,7 +114,7 @@ public class SideMenuPanelTables extends JPanel {
         salaryTableButtonPanel = new JPanel();
         raisedetchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
         salaryToggleButtonPanel.setPreferredSize(new Dimension(140,45));
-        salaryTableButtonPanel.setPreferredSize(new Dimension(140,80));
+        salaryTableButtonPanel.setPreferredSize(new Dimension(140,60));
         salaryToggleButtonPanel.setBorder(raisedetchedBorder);
         salaryPanel.setLayout(new BorderLayout());
         salaryPanel.setPreferredSize(new Dimension(140,45));
@@ -133,16 +133,22 @@ public class SideMenuPanelTables extends JPanel {
         salaryToggleButtonPanel.add(salaryToggleButton);
         salaryPanel.add(salaryToggleButtonPanel,BorderLayout.NORTH);
 
+
         gehaltsliste = new JButton("Gehaltsliste");
-        manualSalary = new JButton("Manuelle Gehaltseinträge");
-        salaryIncrease = new JButton("Gehaltserhöhungen");
+        manualSalary = new JButton("<html>Manuelle<br>Gehaltseinträge</html>");
+        salaryIncrease = new JButton("<html>Gehalts-<br>erhöhung</html>");
         gehaltshistorie = new JButton("Gehaltshistorie");
 
+        gehaltsliste.setHorizontalAlignment(SwingConstants.LEFT);
+        manualSalary.setHorizontalAlignment(SwingConstants.LEFT);
+        salaryIncrease.setHorizontalAlignment(SwingConstants.LEFT);
+        gehaltshistorie.setHorizontalAlignment(SwingConstants.LEFT);
 
-        gehaltsliste.setPreferredSize(new Dimension(130, 20));
-        manualSalary.setPreferredSize(new Dimension(130, 20));
-        salaryIncrease.setPreferredSize(new Dimension(130, 20));
-        gehaltshistorie.setPreferredSize(new Dimension(130, 20));
+
+        gehaltsliste.setPreferredSize(new Dimension(130, 35));
+        manualSalary.setPreferredSize(new Dimension(130, 35));
+        salaryIncrease.setPreferredSize(new Dimension(130, 35));
+        gehaltshistorie.setPreferredSize(new Dimension(130, 35));
 
         salaryTableButtonPanel.add(gehaltsliste);
         salaryTableButtonPanel.add(manualSalary);
