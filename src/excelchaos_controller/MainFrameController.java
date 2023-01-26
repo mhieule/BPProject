@@ -21,6 +21,8 @@ public class MainFrameController implements ActionListener {
 
     private ManualSalaryEntryController manualSalaryEntryController;
 
+    private InsertManualSalaryEntryController insertManualSalaryEntryController;
+
 
 
 
@@ -41,6 +43,7 @@ public class MainFrameController implements ActionListener {
         salaryHistoryController = new SalaryHistoryController(this);
         insertSalaryController = new InsertSalaryController(this);
         manualSalaryEntryController = new ManualSalaryEntryController(this);
+        insertManualSalaryEntryController = new InsertManualSalaryEntryController(this);
 
 
 
@@ -84,6 +87,10 @@ public class MainFrameController implements ActionListener {
 
     public ManualSalaryEntryController getManualSalaryEntryController() {
         return manualSalaryEntryController;
+    }
+
+    public InsertManualSalaryEntryController getInsertManualSalaryEntryController() {
+        return insertManualSalaryEntryController;
     }
 
     public void setChangeListener (ChangeListener l){
