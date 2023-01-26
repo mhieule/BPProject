@@ -35,51 +35,54 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             westArrowButtonPressed(frameController);
         } else if (e.getSource() == sideMenu.getPersonenliste()) {
             frameController.getShowPersonalData().showPersonView(frameController);
-        } else if (e.getSource()==sideMenu.getGehaltsliste()){
+        } else if (e.getSource() == sideMenu.getGehaltsliste()) {
             frameController.getSalaryListController().showSalaryView(frameController);
-        } else if (e.getSource()==sideMenu.getGehaltshistorie()){
-        frameController.getSalaryHistoryController().showSalaryHistoryView(frameController);
-        } else if (e.getSource() == sideMenu.getShowE13Tables()){
+        } else if (e.getSource() == sideMenu.getManualSalary()) {
+            frameController.getManualSalaryEntryController().showManualSalaryEntryView(frameController);
+        } else if (e.getSource() == sideMenu.getGehaltshistorie()) {
+            frameController.getSalaryHistoryController().showSalaryHistoryView(frameController);
+        } else if (e.getSource() == sideMenu.getShowE13Tables()) {
             PayRateTablesController E13Controller = new PayRateTablesController(frameController);
             E13Controller.setTitle("E13 Entgelttabellen");
             E13Controller.showPayRatesView(frameController);
-        } else if (e.getSource() == sideMenu.getShowE14Tables()){
+        } else if (e.getSource() == sideMenu.getShowE14Tables()) {
             PayRateTablesController E14Controller = new PayRateTablesController(frameController);
             E14Controller.setTitle("E14 Entgelttabellen");
             E14Controller.showPayRatesView(frameController);
-        } else if (e.getSource() == sideMenu.getShowSHKTables()){
+        } else if (e.getSource() == sideMenu.getShowSHKTables()) {
             PayRateTablesController SHKController = new PayRateTablesController(frameController);
             SHKController.setTitle("SHK Entgelttabellen");
             SHKController.showPayRatesView(frameController);
         }
     }
+
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED && e.getSource() == sideMenu.getPayRates()) {
             sideMenu.getPayRateTableButtonPanel().setVisible(true);
             sideMenu.getPayRateToggleButtonPanel().setBorder(null);
-            sideMenu.getPayRateToggleButtonPanel().setPreferredSize(new Dimension(140,35));
+            sideMenu.getPayRateToggleButtonPanel().setPreferredSize(new Dimension(140, 35));
             sideMenu.getPayRatePanel().setBorder(sideMenu.getRaisedetchedBorder());
             sideMenu.payRateOpenArrowLabelVisible();
-        } else if (e.getStateChange() == ItemEvent.DESELECTED && e.getSource() == sideMenu.getPayRates()){
+        } else if (e.getStateChange() == ItemEvent.DESELECTED && e.getSource() == sideMenu.getPayRates()) {
             sideMenu.getPayRateTableButtonPanel().setVisible(false);
             sideMenu.getPayRatePanel().setBorder(null);
             sideMenu.getPayRateToggleButtonPanel().setBorder(sideMenu.getRaisedetchedBorder());
-            sideMenu.getPayRateToggleButtonPanel().setPreferredSize(new Dimension(140,45));
+            sideMenu.getPayRateToggleButtonPanel().setPreferredSize(new Dimension(140, 45));
             sideMenu.payRateCloseArrowLabelVisible();
         } else if (e.getStateChange() == ItemEvent.SELECTED && e.getSource() == sideMenu.getSalaryToggleButton()) {
-            sideMenu.getSalaryPanel().setPreferredSize(new Dimension(140,202));
+            sideMenu.getSalaryPanel().setPreferredSize(new Dimension(140, 202));
             sideMenu.getSalaryTableButtonPanel().setVisible(true);
             sideMenu.getSalaryToggleButtonPanel().setBorder(null);
-            sideMenu.getSalaryToggleButtonPanel().setPreferredSize(new Dimension(140,35));
+            sideMenu.getSalaryToggleButtonPanel().setPreferredSize(new Dimension(140, 35));
             sideMenu.getSalaryPanel().setBorder(sideMenu.getRaisedetchedBorder());
             sideMenu.salaryOpenArrowLabelVisible();
         } else if (e.getStateChange() == ItemEvent.DESELECTED && e.getSource() == sideMenu.getSalaryToggleButton()) {
-            sideMenu.getSalaryPanel().setPreferredSize(new Dimension(140,45));
+            sideMenu.getSalaryPanel().setPreferredSize(new Dimension(140, 45));
             sideMenu.getSalaryTableButtonPanel().setVisible(false);
             sideMenu.getSalaryPanel().setBorder(null);
             sideMenu.getSalaryToggleButtonPanel().setBorder(sideMenu.getRaisedetchedBorder());
-            sideMenu.getSalaryToggleButtonPanel().setPreferredSize(new Dimension(140,45));
+            sideMenu.getSalaryToggleButtonPanel().setPreferredSize(new Dimension(140, 45));
             sideMenu.salaryCloseArrowLabelVisible();
         }
 
@@ -92,7 +95,6 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
         frameController.getWindow().revalidate();
         frameController.getWindow().repaint();
     }
-
 
 
 }
