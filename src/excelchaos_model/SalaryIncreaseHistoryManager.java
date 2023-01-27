@@ -14,7 +14,7 @@ import java.util.List;
 
 public class SalaryIncreaseHistoryManager {
     private ConnectionSource connectionSource;
-    private Dao<SalaryIncreaseHistory, Integer> salaryIncreaseHistoriesDao;
+    private Dao<SalaryIncreaseHistory, Object> salaryIncreaseHistoriesDao;
     public SalaryIncreaseHistoryManager() {
         try {
             String databaseUrl = "jdbc:sqlite:Excelchaos.db";
@@ -35,6 +35,15 @@ public class SalaryIncreaseHistoryManager {
         }
     }
 
+    public void deleteTable(){
+        try {
+            TableUtils.dropTable(connectionSource, SalaryIncreaseHistory.class, true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public void addSalaryIncreaseHistory(SalaryIncreaseHistory salaryIncreaseHistory){
         try {
             salaryIncreaseHistoriesDao.create(salaryIncreaseHistory);
@@ -46,7 +55,7 @@ public class SalaryIncreaseHistoryManager {
 
     public List<SalaryIncreaseHistory> getSalaryIncreaseHistory(int id){
         List<SalaryIncreaseHistory> salaryIncreaseHistoryList = new ArrayList<>();
-        QueryBuilder<SalaryIncreaseHistory,Integer> queryBuilder = salaryIncreaseHistoriesDao.queryBuilder();
+        QueryBuilder<SalaryIncreaseHistory,Object> queryBuilder = salaryIncreaseHistoriesDao.queryBuilder();
         try {
             queryBuilder.where().eq("id",id);
             PreparedQuery<SalaryIncreaseHistory> preparedQuery = queryBuilder.prepare();

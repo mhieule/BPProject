@@ -7,7 +7,7 @@ import java.util.Date;
 
 @DatabaseTable(tableName = "PaygradeIncrease")
 public class PaygradeIncrease {
-    @DatabaseField(id = true)
+    @DatabaseField()
     private int id;
     @DatabaseField()
     private double new_salary;

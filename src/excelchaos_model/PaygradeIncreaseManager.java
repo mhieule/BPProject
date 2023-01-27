@@ -14,7 +14,7 @@ import java.util.List;
 
 public class PaygradeIncreaseManager {
     private ConnectionSource connectionSource;
-    private Dao<PaygradeIncrease, Integer> paygradeIncreasesDao;
+    private Dao<PaygradeIncrease, Object> paygradeIncreasesDao;
     public PaygradeIncreaseManager() {
         try {
             String databaseUrl = "jdbc:sqlite:Excelchaos.db";
@@ -35,6 +35,15 @@ public class PaygradeIncreaseManager {
         }
     }
 
+    public void deleteTable(){
+        try {
+            TableUtils.dropTable(connectionSource, PaygradeIncrease.class, true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public void addPaygradeIncrease(PaygradeIncrease paygradeIncrease){
         try {
             paygradeIncreasesDao.create(paygradeIncrease);
@@ -46,7 +55,7 @@ public class PaygradeIncreaseManager {
 
     public List<PaygradeIncrease> getPaygradeIncrease(int id){
         List<PaygradeIncrease> paygradeIncreaseList = new ArrayList<>();
-        QueryBuilder<PaygradeIncrease,Integer> queryBuilder = paygradeIncreasesDao.queryBuilder();
+        QueryBuilder<PaygradeIncrease,Object> queryBuilder = paygradeIncreasesDao.queryBuilder();
         try {
             queryBuilder.where().eq("id",id);
             PreparedQuery<PaygradeIncrease> preparedQuery = queryBuilder.prepare();

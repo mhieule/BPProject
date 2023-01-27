@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ManualSalaryEntryManager {
     private ConnectionSource connectionSource;
-    private Dao<ManualSalaryEntry, Integer> manualSalaryEntriesDao;
+    private Dao<ManualSalaryEntry, Object> manualSalaryEntriesDao;
     public ManualSalaryEntryManager() {
         try {
             String databaseUrl = "jdbc:sqlite:Excelchaos.db";
@@ -35,6 +35,15 @@ public class ManualSalaryEntryManager {
         }
     }
 
+    public void deleteTable(){
+        try {
+            TableUtils.dropTable(connectionSource, ManualSalaryEntry.class, true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public void addManualSalaryEntry(ManualSalaryEntry manualSalaryEntry){
         try {
             manualSalaryEntriesDao.create(manualSalaryEntry);
@@ -46,7 +55,7 @@ public class ManualSalaryEntryManager {
 
     public List<ManualSalaryEntry> getManualSalaryEntry(int id){
         List<ManualSalaryEntry> manualSalaryEntryList = new ArrayList<>();
-        QueryBuilder<ManualSalaryEntry,Integer> queryBuilder = manualSalaryEntriesDao.queryBuilder();
+        QueryBuilder<ManualSalaryEntry,Object> queryBuilder = manualSalaryEntriesDao.queryBuilder();
         try {
             queryBuilder.where().eq("id",id);
             PreparedQuery<ManualSalaryEntry> preparedQuery = queryBuilder.prepare();
