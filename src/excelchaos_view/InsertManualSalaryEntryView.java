@@ -16,7 +16,7 @@ public class InsertManualSalaryEntryView extends JPanel {
 
     private JComboBox namePickList;
 
-    private JButton submit, reset, cancel;
+    private JButton submit, submitAndClose, reset, cancel;
 
     private JPanel centerUp, centerDown, leftButtons, rightButtons;
 
@@ -73,8 +73,10 @@ public class InsertManualSalaryEntryView extends JPanel {
 
         leftButtons = new JPanel(new FlowLayout());
         rightButtons = new JPanel(new FlowLayout());
-        submit = new JButton("Gehaltseintrag speichern");
+        submit = new JButton("Gehaltseintrag speichern und Felder zurücksetzen");
+        submitAndClose = new JButton("Gehaltseintrag speichern und schließen");
         leftButtons.add(submit);
+        leftButtons.add(submitAndClose);
         centerDown.add(leftButtons);
         reset = new JButton("Felder zurücksetzen");
         cancel = new JButton("Abbrechen");
@@ -94,10 +96,15 @@ public class InsertManualSalaryEntryView extends JPanel {
         submit.addActionListener(l);
         reset.addActionListener(l);
         cancel.addActionListener(l);
+        submitAndClose.addActionListener(l);
     }
 
     public JButton getCancel() {
         return cancel;
+    }
+
+    public JButton getSubmitAndClose() {
+        return submitAndClose;
     }
 
     public JLabel getCommentLabel() {
@@ -108,6 +115,9 @@ public class InsertManualSalaryEntryView extends JPanel {
         return newSalaryLabel;
     }
 
+    public DatePicker getDatePicker() {
+        return datePicker;
+    }
 
     public JLabel getUsageDateLabel(){
         return usageDateLabel;
@@ -125,7 +135,7 @@ public class InsertManualSalaryEntryView extends JPanel {
         return namePickList;
     }
 
-    public JTextField getTfGehalt() {
+    public JTextField getTfComment() {
         return tfComment;
     }
 

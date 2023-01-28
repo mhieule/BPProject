@@ -1,13 +1,16 @@
 package excelchaos_controller;
 
-import excelchaos_model.Employee;
-import excelchaos_model.EmployeeDataManager;
+import excelchaos_model.*;
 import excelchaos_view.ManualSalaryEntryView;
 
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 public class ManualSalaryEntryController implements ItemListener {
     private ManualSalaryEntryView salaryEntryView;
@@ -40,19 +43,37 @@ public class ManualSalaryEntryController implements ItemListener {
         }
     }
 
-    @Override
-    public void itemStateChanged(ItemEvent e) {
+    public void getDataFromDB(Employee temporaryEmployee){
         DefaultTableModel tableModel = new DefaultTableModel(null,columns);
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
-        String[] rowData = new String[5];
-        Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) e.getItem());
-        rowData[0] = temporaryEmployee.getName();
-        rowData[1] = temporaryEmployee.getSurname();
-        rowData[2] = null;
-        rowData[3] = null;
-        rowData[4] = null;
-        tableModel.addRow(rowData);
+
+        ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
+        StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        int id = temporaryEmployee.getId();
+        int rowCount = manualSalaryEntryManager.getRowCount(id);
+
+
+
+        List<ManualSalaryEntry> manualSalaryEntryList = manualSalaryEntryManager.getManualSalaryEntry(id);
+        for (ManualSalaryEntry entry : manualSalaryEntryList){
+            String salary = transformer.formatDoubleToString(entry.getNew_salary(),1);
+            String usageDate = dateFormat.format(entry.getStart_date());
+            String comment = entry.getComment();
+            String[] values = {temporaryEmployee.getName(),temporaryEmployee.getSurname(),salary,usageDate,comment};
+            tableModel.addRow(values);
+
+
+        }
+
         defaultTableModel = tableModel;
         salaryEntryView.getTable().setModel(defaultTableModel);
+
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+        Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) e.getItem());
+        getDataFromDB(temporaryEmployee);
     }
 }
