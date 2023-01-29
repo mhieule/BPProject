@@ -35,7 +35,7 @@ public class SideMenuPanelTables extends JPanel {
 
     private Border raisedetchedBorder;
 
-    private final int RegularButtonWidth = 130;
+    private final int RegularButtonWidth = 140;
 
     private final int RegularButtonHeigt = 25;
 
@@ -62,11 +62,11 @@ public class SideMenuPanelTables extends JPanel {
         centerpanel = new JPanel();
         navi = new JLabel("Navigationsleiste");
 
-        topPanel.setPreferredSize(new Dimension(140, 30));
+        topPanel.setPreferredSize(new Dimension(150, 30));
         topPanel.add(navi);
         topPanel.add(arrowButtonWest);
         add(topPanel, BorderLayout.PAGE_START);
-        centerpanel.setPreferredSize(new Dimension(140, 500));
+        centerpanel.setPreferredSize(new Dimension(150, 500));
         centerpanel.add(personenliste);
 
         //centerpanel.add(payRates);
@@ -82,7 +82,7 @@ public class SideMenuPanelTables extends JPanel {
         add(centerpanel, BorderLayout.CENTER);
         setBackground(Color.white);
 
-        setPreferredSize(new Dimension(140, 100));
+        setPreferredSize(new Dimension(150, 100));
 
     }
 
@@ -113,11 +113,11 @@ public class SideMenuPanelTables extends JPanel {
         salaryToggleButtonPanel = new JPanel();
         salaryTableButtonPanel = new JPanel();
         raisedetchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-        salaryToggleButtonPanel.setPreferredSize(new Dimension(140,45));
-        salaryTableButtonPanel.setPreferredSize(new Dimension(140,60));
+        salaryToggleButtonPanel.setPreferredSize(new Dimension(150,45));
+        salaryTableButtonPanel.setPreferredSize(new Dimension(150,60));
         salaryToggleButtonPanel.setBorder(raisedetchedBorder);
         salaryPanel.setLayout(new BorderLayout());
-        salaryPanel.setPreferredSize(new Dimension(140,45));
+        salaryPanel.setPreferredSize(new Dimension(150,45));
         salaryCloseArrowLabel = new JLabel(salaryCloseArrow);
         salaryOpenArrowLabel = new JLabel(salaryOpenArrow);
         salaryTextLabel = new JLabel("Gehälter");
@@ -135,20 +135,16 @@ public class SideMenuPanelTables extends JPanel {
 
 
         gehaltsliste = new JButton("Gehaltsliste");
-        manualSalary = new JButton("<html>Manuelle<br>Gehaltseinträge</html>");
-        salaryIncrease = new JButton("<html>Gehalts-<br>erhöhung</html>");
+        manualSalary = new JButton("Manuelle Einträge");
+        salaryIncrease = new JButton("Gehaltserhöhung");
         gehaltshistorie = new JButton("Gehaltshistorie");
 
-        gehaltsliste.setHorizontalAlignment(SwingConstants.LEFT);
-        manualSalary.setHorizontalAlignment(SwingConstants.LEFT);
-        salaryIncrease.setHorizontalAlignment(SwingConstants.LEFT);
-        gehaltshistorie.setHorizontalAlignment(SwingConstants.LEFT);
 
 
-        gehaltsliste.setPreferredSize(new Dimension(130, 35));
-        manualSalary.setPreferredSize(new Dimension(130, 35));
-        salaryIncrease.setPreferredSize(new Dimension(130, 35));
-        gehaltshistorie.setPreferredSize(new Dimension(130, 35));
+        gehaltsliste.setPreferredSize(new Dimension(140, RegularButtonHeigt));
+        manualSalary.setPreferredSize(new Dimension(140, RegularButtonHeigt));
+        salaryIncrease.setPreferredSize(new Dimension(140, RegularButtonHeigt));
+        gehaltshistorie.setPreferredSize(new Dimension(140, RegularButtonHeigt));
 
         salaryTableButtonPanel.add(gehaltsliste);
         salaryTableButtonPanel.add(manualSalary);
@@ -166,12 +162,12 @@ public class SideMenuPanelTables extends JPanel {
         payRateToggleButtonPanel = new JPanel();
         payRateTableButtonPanel = new JPanel();
         raisedetchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-        payRateToggleButtonPanel.setPreferredSize(new Dimension(140,45));
-        payRateTableButtonPanel.setPreferredSize(new Dimension(140,80));
+        payRateToggleButtonPanel.setPreferredSize(new Dimension(150,45));
+        payRateTableButtonPanel.setPreferredSize(new Dimension(150,80));
         payRateToggleButtonPanel.setBorder(raisedetchedBorder);
         //payRatePanel.setLayout(new BoxLayout(payRatePanel,BoxLayout.Y_AXIS));
         payRatePanel.setLayout(new BorderLayout());
-        payRatePanel.setPreferredSize(new Dimension(140,120));
+        payRatePanel.setPreferredSize(new Dimension(150,120));
 
         payRateCloseArrowLabel = new JLabel(salaryCloseArrow);
         payRateOpenArrowLabel = new JLabel(salaryOpenArrow);
@@ -193,9 +189,9 @@ public class SideMenuPanelTables extends JPanel {
         showE14Tables = new JButton("E14 Tabellen");
         showSHKTables = new JButton("SHK Tabellen");
 
-        showE13Tables.setPreferredSize(new Dimension(110, 20));
-        showE14Tables.setPreferredSize(new Dimension(110, 20));
-        showSHKTables.setPreferredSize(new Dimension(110, 20));
+        showE13Tables.setPreferredSize(new Dimension(120, 20));
+        showE14Tables.setPreferredSize(new Dimension(120, 20));
+        showSHKTables.setPreferredSize(new Dimension(120, 20));
 
         payRateTableButtonPanel.add(showE13Tables);
         payRateTableButtonPanel.add(showE14Tables);
