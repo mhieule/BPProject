@@ -85,4 +85,14 @@ public class ContractDataManager {
         }
         return (int)count;
     }
+
+    public void updateContract(Contract contract){
+        try {
+            contractsDao.update(contract);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
 }

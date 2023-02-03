@@ -147,4 +147,13 @@ public class EmployeeDataManager {
         Arrays.sort(names);
         return names;
     }
+
+    public void updateEmployee(Employee employee){
+        try {
+            employeesDao.update(employee);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
 }
