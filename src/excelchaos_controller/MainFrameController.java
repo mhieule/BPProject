@@ -12,7 +12,6 @@ public class MainFrameController implements ActionListener {
     private MainFrame window;
     private TabsController tabsController;
     private SideMenuPanelTablesController sideMenuTables;
-    private SideMenuPanelActionLogController sideMenuActionLog;
     private ShowPersonController showPersonalData;
     private InsertPersonController insertPersonController;
     private SalaryListController salaryListController;
@@ -22,6 +21,8 @@ public class MainFrameController implements ActionListener {
     private ManualSalaryEntryController manualSalaryEntryController;
 
     private InsertManualSalaryEntryController insertManualSalaryEntryController;
+
+    private SalaryIncreaseController salaryIncreaseController;
 
 
 
@@ -44,6 +45,7 @@ public class MainFrameController implements ActionListener {
         insertSalaryController = new InsertSalaryController(this);
         manualSalaryEntryController = new ManualSalaryEntryController(this);
         insertManualSalaryEntryController = new InsertManualSalaryEntryController(this);
+        salaryIncreaseController = new SalaryIncreaseController(this);
 
 
 
@@ -91,6 +93,10 @@ public class MainFrameController implements ActionListener {
 
     public InsertManualSalaryEntryController getInsertManualSalaryEntryController() {
         return insertManualSalaryEntryController;
+    }
+
+    public SalaryIncreaseController getSalaryIncreaseController() {
+        return salaryIncreaseController;
     }
 
     public void setChangeListener (ChangeListener l){

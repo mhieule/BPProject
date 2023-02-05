@@ -1,7 +1,7 @@
 package excelchaos_controller;
 
 import excelchaos_model.*;
-import excelchaos_view.ManualSalaryEntryView;
+import excelchaos_view.SalaryIncreaseView;
 
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -11,52 +11,65 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class ManualSalaryEntryController implements ItemListener {
-    private ManualSalaryEntryView salaryEntryView;
-    private ToolbarManualSalaryEntryController toolbarManualSalaryEntry;
+public class SalaryIncreaseController implements ItemListener {
+
+    private SalaryIncreaseView salaryIncreaseView;
+
+    private ToolbarSalaryIncreaseController toolbarSalaryIncreaseController;
+
     private MainFrameController frameController;
 
     private CustomTableModel customTableModel;
 
-    String columns[] = {"Gültig ab","Gehalt", "Kommentar"};
-    private String title = "Manuelle Gehaltseinträge";
+    String columns[] = {"Gültig ab","Neues Gehalt","Kommentar","Sonderzahlung"};
 
-    public ManualSalaryEntryController(MainFrameController mainFrameController) {
+    private String title = "Gehaltserhöhung";
+
+    public SalaryIncreaseController(MainFrameController mainFrameController){
         frameController = mainFrameController;
-        salaryEntryView = new ManualSalaryEntryView();
-        toolbarManualSalaryEntry = new ToolbarManualSalaryEntryController(frameController);
-        toolbarManualSalaryEntry.getToolbar().setItemListener(this);
-        salaryEntryView.init();
-        salaryEntryView.add(toolbarManualSalaryEntry.getToolbar(), BorderLayout.NORTH);
-
+        salaryIncreaseView = new SalaryIncreaseView();
+        toolbarSalaryIncreaseController = new ToolbarSalaryIncreaseController(frameController);
+        toolbarSalaryIncreaseController.getToolbar().setItemListener(this);
+        salaryIncreaseView.init();
+        salaryIncreaseView.add(toolbarSalaryIncreaseController.getToolbar(), BorderLayout.NORTH);
     }
-
     public void showManualSalaryEntryView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
-            //ActionLogEintrag
-            mainFrameController.addTab(title, salaryEntryView);
-            //mainFrameController.setChangeListener(this);
+            mainFrameController.addTab(title, salaryIncreaseView);
         } else {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(title));
         }
     }
 
+    private void createTableWithData(String[][] data) {
+        salaryIncreaseView.createTable(data,columns);
+    }
+
+    private void setTableData(String[][] data) {
+        customTableModel = new CustomTableModel(data, columns);
+        salaryIncreaseView.getTable().setModel(customTableModel);
+    }
+
     public String[][] getDataFromDB(Employee temporaryEmployee) {
 
-        ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
+        SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = new SalaryIncreaseHistoryManager();
         StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         int id = temporaryEmployee.getId();
-        int rowCount = manualSalaryEntryManager.getRowCount(id);
+        int rowCount = salaryIncreaseHistoryManager.getRowCount(id);
         String resultData[][] = new String[rowCount][];
         int currentIndex = 0;
 
-        List<ManualSalaryEntry> manualSalaryEntryList = manualSalaryEntryManager.getManualSalaryEntry(id);
-        for (ManualSalaryEntry entry : manualSalaryEntryList) {
+        List<SalaryIncreaseHistory> salaryIncreaseHistory = salaryIncreaseHistoryManager.getSalaryIncreaseHistory(id);
+        for (SalaryIncreaseHistory entry : salaryIncreaseHistory) {
             String salary = transformer.formatDoubleToString(entry.getNew_salary(), 1);
             String usageDate = dateFormat.format(entry.getStart_date());
             String comment = entry.getComment();
-            String[] values = {usageDate,salary, comment};
+            String specialPayment;
+            if(entry.getIs_additional_payment()){
+                specialPayment = "Ja";
+            } else specialPayment = "Nein";
+            String[] values = {usageDate,salary, comment,specialPayment};
             resultData[currentIndex] = values;
             currentIndex++;
 
@@ -67,22 +80,13 @@ public class ManualSalaryEntryController implements ItemListener {
 
     }
 
-    private void createTableWithData(String[][] data) {
-        salaryEntryView.createTable(data,columns);
-    }
-
-    private void setTableData(String[][] data) {
-        customTableModel = new CustomTableModel(data, columns);
-        salaryEntryView.getTable().setModel(customTableModel);
-    }
-
     @Override
     public void itemStateChanged(ItemEvent e) {
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         if (!((String) e.getItem()).equals("Keine Auswahl")) {
             Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) e.getItem());
             String[][] data = getDataFromDB(temporaryEmployee);
-            if (salaryEntryView.getTable() == null) {
+            if (salaryIncreaseView.getTable() == null) {
                 createTableWithData(data);
                 frameController.getTabs().setLabel(title + " " + temporaryEmployee.getSurname()+" " + temporaryEmployee.getName());
             } else {
@@ -90,8 +94,8 @@ public class ManualSalaryEntryController implements ItemListener {
                 frameController.getTabs().setLabel(title + " " + temporaryEmployee.getSurname()+" " + temporaryEmployee.getName());
             }
         } else {
-            if(salaryEntryView.getTable() != null){
-                salaryEntryView.getTable().setModel(new DefaultTableModel(null, columns));
+            if(salaryIncreaseView.getTable() != null){
+                salaryIncreaseView.getTable().setModel(new DefaultTableModel(null, columns));
                 frameController.getTabs().setLabel(title);
             }
 
