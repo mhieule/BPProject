@@ -17,9 +17,9 @@ public class ManualSalaryEntryController implements ItemListener {
     private ToolbarManualSalaryEntryController toolbarManualSalaryEntry;
     private MainFrameController frameController;
 
-    private DefaultTableModel defaultTableModel;
+    private CustomTableModel defaultTableModel;
 
-    String columns[] = {"Name", "Vorname", "Gehalt", "Gültig ab", "Kommentar"};
+    String columns[] = {"Gültig ab","Gehalt", "Kommentar"};
     private String title = "Manuelle Gehaltseinträge";
 
     public ManualSalaryEntryController(MainFrameController mainFrameController) {
@@ -27,8 +27,7 @@ public class ManualSalaryEntryController implements ItemListener {
         salaryEntryView = new ManualSalaryEntryView();
         toolbarManualSalaryEntry = new ToolbarManualSalaryEntryController(frameController);
         toolbarManualSalaryEntry.getToolbar().setItemListener(this);
-        defaultTableModel = new DefaultTableModel(null,columns);
-        salaryEntryView.init(defaultTableModel);
+        salaryEntryView.init();
         salaryEntryView.add(toolbarManualSalaryEntry.getToolbar(), BorderLayout.NORTH);
 
     }
@@ -43,37 +42,61 @@ public class ManualSalaryEntryController implements ItemListener {
         }
     }
 
-    public void getDataFromDB(Employee temporaryEmployee){
-        DefaultTableModel tableModel = new DefaultTableModel(null,columns);
+    public String[][] getDataFromDB(Employee temporaryEmployee) {
 
         ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
         StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         int id = temporaryEmployee.getId();
         int rowCount = manualSalaryEntryManager.getRowCount(id);
-
-
+        String resultData[][] = new String[rowCount][];
+        int currentIndex = 0;
 
         List<ManualSalaryEntry> manualSalaryEntryList = manualSalaryEntryManager.getManualSalaryEntry(id);
-        for (ManualSalaryEntry entry : manualSalaryEntryList){
-            String salary = transformer.formatDoubleToString(entry.getNew_salary(),1);
+        for (ManualSalaryEntry entry : manualSalaryEntryList) {
+            String salary = transformer.formatDoubleToString(entry.getNew_salary(), 1);
             String usageDate = dateFormat.format(entry.getStart_date());
             String comment = entry.getComment();
-            String[] values = {temporaryEmployee.getName(),temporaryEmployee.getSurname(),salary,usageDate,comment};
-            tableModel.addRow(values);
-
+            String[] values = {usageDate,salary, comment};
+            resultData[currentIndex] = values;
+            currentIndex++;
 
         }
 
-        defaultTableModel = tableModel;
-        salaryEntryView.getTable().setModel(defaultTableModel);
+        return resultData;
 
+
+    }
+
+    private void createTableWithData(String[][] data) {
+        salaryEntryView.createTable(data,columns);
+    }
+
+    private void setTableData(String[][] data) {
+        defaultTableModel = new CustomTableModel(data, columns);
+        salaryEntryView.getTable().setModel(defaultTableModel);
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
-        Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) e.getItem());
-        getDataFromDB(temporaryEmployee);
+        if (!((String) e.getItem()).equals("Keine Auswahl")) {
+            Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) e.getItem());
+            String[][] data = getDataFromDB(temporaryEmployee);
+            if (salaryEntryView.getTable() == null) {
+                createTableWithData(data);
+                frameController.getTabs().setLabel(title + " " + temporaryEmployee.getSurname()+" " + temporaryEmployee.getName());
+            } else {
+                setTableData(data);
+                frameController.getTabs().setLabel(title + " " + temporaryEmployee.getSurname()+" " + temporaryEmployee.getName());
+            }
+        } else {
+            if(salaryEntryView.getTable() != null){
+                salaryEntryView.getTable().setModel(new DefaultTableModel(null, columns));
+                frameController.getTabs().setLabel(title);
+            }
+
+        }
+
     }
 }

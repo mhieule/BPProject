@@ -80,7 +80,7 @@ public class SideMenuPanelTables extends JPanel {
         //centerpanel.add(showSHKTables);
         //centerpanel.add(collapsablePanel);
         add(centerpanel, BorderLayout.CENTER);
-        setBackground(Color.white);
+       // setBackground(Color.white);
 
         setPreferredSize(new Dimension(150, 100));
 

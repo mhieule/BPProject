@@ -35,6 +35,8 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
     private final ImageIcon icon;
     private final Dimension buttonSize;
 
+    private JLabel label;
+
 
     public DnDCloseButtonTabbedPane(final Component parent) {
         super();
@@ -179,7 +181,7 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
     public void addTab(String title, final Component component) {
         JPanel tab = new JPanel(new BorderLayout());
         tab.setOpaque(false);
-        JLabel label = new JLabel(title);
+        label = new JLabel(title);
         label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 4));
         button = new TabCloseButton(icon);
         button.setPreferredSize(buttonSize);
@@ -210,6 +212,10 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         tab.setBorder(BorderFactory.createEmptyBorder(2, 1, 1, 1));
         super.addTab(title, component);
         setTabComponentAt(indexOfComponent(component), tab);
+    }
+
+    public void setLabel(String title) {
+        label.setText(title);
     }
 
     public void setActionListener(ActionListener l) {

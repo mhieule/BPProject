@@ -6,6 +6,7 @@ import excelchaos_model.EmployeeDataManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.time.*;
 
 public class InsertManualSalaryEntryView extends JPanel {
     private JLabel nameList, newSalaryLabel, usageDateLabel, commentLabel, puffer;
@@ -50,15 +51,19 @@ public class InsertManualSalaryEntryView extends JPanel {
         setConstraintsJComboBox(namePickList, 0);
         constraints.insets.top = 5;
 
-        newSalaryLabel = new JLabel("Neuer Gehaltseintrag");
-        setConstraintsLabel(newSalaryLabel, 1);
-        tfNewSalary = new JTextField();
-        setConstraintsTextField(tfNewSalary, 1);
-
         usageDateLabel = new JLabel("Gültig ab");
-        setConstraintsLabel(usageDateLabel, 2);
+        setConstraintsLabel(usageDateLabel, 1);
         datePicker =  new DatePicker();
-        setConstraintsDatePicker(datePicker,2);
+        LocalDate localDate = LocalDate.of(Year.now().getValue(),YearMonth.now().getMonth().getValue(),1);
+        datePicker.setDate(localDate);
+        setConstraintsDatePicker(datePicker,1);
+
+        newSalaryLabel = new JLabel("Neuer Gehaltseintrag");
+        setConstraintsLabel(newSalaryLabel, 2);
+        tfNewSalary = new JTextField();
+        setConstraintsTextField(tfNewSalary, 2);
+
+
 
 
         commentLabel = new JLabel("Kommentar");
