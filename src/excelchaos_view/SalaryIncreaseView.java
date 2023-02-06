@@ -11,11 +11,6 @@ public class SalaryIncreaseView extends JPanel {
 
     public void init() {
         setLayout(new BorderLayout());
-        //table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        //CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(table);
-        //tca.adjustColumns();
-
-
     }
 
     public void createTable(String[][] data, String[] columnNames) {

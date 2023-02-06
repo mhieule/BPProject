@@ -2,14 +2,16 @@ package excelchaos_controller;
 
 import excelchaos_model.SalaryTableManager;
 import excelchaos_view.PayRateTablesView;
-import excelchaos_view.SideMenuPanelActionLogView;
 
 import javax.swing.*;
+import javax.swing.text.DefaultEditorKit;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class PayRateTablesController implements ActionListener {
+public class PayRateTablesController extends MouseAdapter implements ActionListener {
     private PayRateTablesView payRateTablesView;
     private MainFrameController frameController;
     private ToolbarPayRateTablesController toolbarPayRateTables;
@@ -32,8 +34,9 @@ public class PayRateTablesController implements ActionListener {
             toolbarPayRateTables = new ToolbarPayRateTablesController(frameController, this);
             payRateTablesView.init();
             payRateTablesView.add(toolbarPayRateTables.getToolbar(), BorderLayout.NORTH);
-            initButtons();
+            fillListWithPayRateTableNames();
             mainFrameController.addTab(title, payRateTablesView);
+            payRateTablesView.setMouseListener(this);
         } else {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(title));
             //SideMenuPanelActionLogView.model.addElement("Einträge anzeigen");
@@ -48,33 +51,19 @@ public class PayRateTablesController implements ActionListener {
         return title;
     }
 
-    public void initButtons() {
-        payRateTablesView.getCenterPanel().removeAll();
+    public void fillListWithPayRateTableNames() {
+        //payRateTablesView.getCenterPanel().removeAll();
         String paygrade = getPayGradeFromTitle(); //PayGrade ist Gruppe/Klasse
-        int temporary = manager.getNumOfTables(paygrade);
-        JPanel buttonPanel = new JPanel();
+        int numberOfTables = manager.getNumOfTables(paygrade);
+        //JPanel buttonPanel = new JPanel();
+        String[] tableNames = new String[numberOfTables];
+        //buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.Y_AXIS));
+        for (int i = 0; i < numberOfTables; i++) {
+            tableNames[i] = manager.getDistinctTableNames(paygrade).get(i);
 
-        buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.Y_AXIS));
-        for(int i = 0; i< temporary;i++){
-            String distinctTableName = manager.getDistinctTableNames(paygrade).get(i);
-            JButton button = new JButton(distinctTableName);
-            button.setPreferredSize(new Dimension(400,30));
-            JPanel panel = new JPanel();
-            panel.add(button);
-            buttonPanel.add(panel);
-            buttonPanel.add(Box.createVerticalStrut(10));
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ShowPayRateTableController payRateTableController = new ShowPayRateTableController(frameController,manager,distinctTableName,paygrade);
-                    payRateTableController.insertValuesInTable();
-
-                }
-            });
         }
-        JScrollPane scrollPane = new JScrollPane(buttonPanel);
-        scrollPane.setVisible(true);
-        payRateTablesView.getCenterPanel().add(scrollPane);
+        payRateTablesView.getPayRateTableList().setListData(tableNames);
+
     }
 
     private String getPayGradeFromTitle() {
@@ -89,12 +78,67 @@ public class PayRateTablesController implements ActionListener {
         return result;
     }
 
-    public void updateview(){
-        initButtons();
+    public void updateview() {
+        fillListWithPayRateTableNames();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        JList list = (JList) e.getSource();
+        Rectangle r = list.getCellBounds(0, list.getLastVisibleIndex());
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            if (e.getClickCount() == 2) {
+                if (r != null && r.contains(e.getPoint())) {
+                    ShowPayRateTableController payRateTableController = new ShowPayRateTableController(frameController, manager, (String) list.getSelectedValue(), getPayGradeFromTitle());
+                    payRateTableController.insertValuesInTable();
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        JList list = (JList) e.getSource();
+        if (SwingUtilities.isRightMouseButton(e)) {
+            list.setSelectedIndex(list.locationToIndex(e.getPoint()));
+            showPopUp(e);
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        if (SwingUtilities.isRightMouseButton(e)) {
+            showPopUp(e);
+        }
+
+    }
+
+    private void showPopUp(MouseEvent e) {
+        JList list = (JList) e.getSource();
+        Rectangle r = list.getCellBounds(0, list.getLastVisibleIndex());
+        if (list.getSelectedValue() != null) {
+            if (e.isPopupTrigger()) {
+                if (r != null && r.contains(e.getPoint())) {
+                    JPopupMenu menu = new JPopupMenu();
+                    JMenuItem openItem = new JMenuItem();
+                    openItem.setText("Entgelttabelle bearbeiten");
+                    openItem.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            ShowPayRateTableController payRateTableController = new ShowPayRateTableController(frameController, manager, (String) list.getSelectedValue(), getPayGradeFromTitle());
+                            payRateTableController.insertValuesInTable();
+                        }
+                    });
+                    menu.add(openItem);
+                    menu.show(e.getComponent(), e.getX(), e.getY());
+                }
+            }
+        }
     }
 }
