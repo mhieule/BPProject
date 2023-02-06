@@ -4,6 +4,7 @@ package excelchaos_model;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -90,6 +91,26 @@ public class ContractDataManager {
         try {
             contractsDao.update(contract);
         } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
+    public void removeAllContracts(){
+        try {
+            TableUtils.clearTable(connectionSource, Contract.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
+    public void removeContract(int id){
+        try {
+            DeleteBuilder<Contract, Integer> builder = contractsDao.deleteBuilder();
+            builder.where().eq("id", id);
+            builder.delete();
+        }catch (SQLException e){
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
