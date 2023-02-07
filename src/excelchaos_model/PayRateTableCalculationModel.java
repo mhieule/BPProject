@@ -1,7 +1,10 @@
 package excelchaos_model;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PayRateTableCalculationModel {
 
@@ -165,10 +168,22 @@ public class PayRateTableCalculationModel {
     }
 
     public String[] prepareInsertionString(String text) {
+        ArrayList<String> resultList = new ArrayList<String>();
         String[] resultString;
-        text.replaceAll("\\s+", "");
-        resultString = text.split("(?<=€)");
+        String[] temporaryString;
+        //text = text.replaceAll("\\s+", "");
+        if(text.contains("%")){
+            temporaryString = text.split("(?<=%)");
+            resultList.add(temporaryString[0]);
+            resultString = temporaryString[1].split("(?<=€)");
+            resultList.addAll(Arrays.asList(resultString));
+            Object[] objectArray = resultList.toArray();
+            resultString = Arrays.copyOf(objectArray, objectArray.length, String[].class);
+        } else {
+            resultString = text.split("(?<=€)");
+        }
         return resultString;
+
     }
 
     public String[] modifyMoneyValuesForCalculation(String[] values) {

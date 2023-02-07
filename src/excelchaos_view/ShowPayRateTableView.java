@@ -4,6 +4,7 @@ import excelchaos_model.MultiLineTableCellRenderer;
 import excelchaos_model.TableColumnAdjuster;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -144,6 +145,8 @@ public class ShowPayRateTableView extends JPanel {
 
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setRowHeight(30);
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)table.getDefaultRenderer(Object.class);
+        renderer.setHorizontalAlignment( JLabel.RIGHT );
         TableColumnAdjuster tca = new TableColumnAdjuster(table);
         tca.adjustColumns();
         scrollPane = new JScrollPane(table);

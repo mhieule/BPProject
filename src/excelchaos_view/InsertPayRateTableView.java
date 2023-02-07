@@ -1,5 +1,6 @@
 package excelchaos_view;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import excelchaos_model.MultiLineTableCellRenderer;
 import excelchaos_model.TableColumnAdjuster;
 
@@ -8,11 +9,15 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
 
 public class InsertPayRateTableView extends JPanel {
     private JPanel topPanel;
 
-    private JLabel nameOfTable;
+    private JLabel nameOfTable,startDate;
 
     private JLabel wageTypeLongtext;
 
@@ -33,11 +38,8 @@ public class InsertPayRateTableView extends JPanel {
 
     private JButton cancelButton;
 
-    private JButton calculateCells;
+    private DatePicker datePicker;
 
-    private JButton insertBaseMoney;
-
-    private JButton insertMonthlyBonusMoney;
 
     private JButton saveAndExit;
 
@@ -55,10 +57,16 @@ public class InsertPayRateTableView extends JPanel {
         topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 15));
         nameOfTable = new JLabel("Name der Tabelle");
+        startDate = new JLabel("Gültig ab");
         tfNameOfTable = new JTextField();
-        tfNameOfTable.setPreferredSize(new Dimension(300, 30));
+        tfNameOfTable.setPreferredSize(new Dimension(250, 30));
+        datePicker = new DatePicker();
+        LocalDate localDate = LocalDate.of(Year.now().getValue(), YearMonth.now().getMonth().getValue(),1);
+        datePicker.setDate(localDate);
         topPanel.add(nameOfTable);
         topPanel.add(tfNameOfTable);
+        topPanel.add(startDate);
+        topPanel.add(datePicker);
         add(topPanel, BorderLayout.NORTH);
     }
 
@@ -69,15 +77,9 @@ public class InsertPayRateTableView extends JPanel {
         JPanel rightbuttons = new JPanel(new FlowLayout());
 
         cancelButton = new JButton("Abbrechen");
-        calculateCells = new JButton("Zellen berechnen");
-        insertBaseMoney = new JButton("Grundentgelt einfügen");
-        insertMonthlyBonusMoney = new JButton("JSZ als monatliche Zulage einfügen");
         saveAndExit = new JButton("Entgelttabelle speichern und Verlassen");
 
         rightbuttons.add(cancelButton);
-        leftbuttons.add(insertBaseMoney);
-        leftbuttons.add(insertMonthlyBonusMoney);
-        leftbuttons.add(calculateCells);
         leftbuttons.add(saveAndExit);
 
         bottomPanel.add(leftbuttons);
@@ -93,24 +95,12 @@ public class InsertPayRateTableView extends JPanel {
 
     }
 
-    public JButton getCalculateCells() {
-        return calculateCells;
-    }
-
     public JButton getCancelButton() {
         return cancelButton;
     }
 
     public JButton getSaveAndExit() {
         return saveAndExit;
-    }
-
-    public JButton getInsertBaseMoney() {
-        return insertBaseMoney;
-    }
-
-    public JButton getInsertMonthlyBonusMoney() {
-        return insertMonthlyBonusMoney;
     }
 
     public JTextField getTfNameOfTable() {
@@ -121,12 +111,13 @@ public class InsertPayRateTableView extends JPanel {
         return table;
     }
 
+    public DatePicker getDatePicker() {
+        return datePicker;
+    }
+
     public void setActionListener(ActionListener l) {
         cancelButton.addActionListener(l);
-        calculateCells.addActionListener(l);
         saveAndExit.addActionListener(l);
-        insertBaseMoney.addActionListener(l);
-        insertMonthlyBonusMoney.addActionListener(l);
     }
 
     private void centerPanelInit(String[] columns) {
@@ -195,10 +186,10 @@ public class InsertPayRateTableView extends JPanel {
                 if ((row == 0 || row == 12) && column != 0) {
                     c.setBackground(new Color(181, 237, 133));
                 } else if(column == 0 && (row != 0 && row!=11 && row!=12 && row !=13 && row != 14)){
-                    c.setBackground(new Color(237, 140, 133));
+                    c.setBackground(new Color(181, 237, 133));
                 }
                 else if (column!=0) {
-                    c.setBackground(Color.LIGHT_GRAY);
+                    c.setBackground(new Color(181, 237, 133));
                 } else {
                     c.setBackground(Color.white);
                 }
@@ -257,11 +248,17 @@ public class InsertPayRateTableView extends JPanel {
 
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setRowHeight(30);
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)table.getDefaultRenderer(Object.class);
+        renderer.setHorizontalAlignment( JLabel.RIGHT );
         TableColumnAdjuster tca = new TableColumnAdjuster(table);
         tca.adjustColumns();
         scrollPane = new JScrollPane(table);
         scrollPane.setRowHeaderView(headerTable);
 
+    }
+
+    public void setMouseListener(MouseAdapter l){
+        table.addMouseListener(l);
     }
 
 
