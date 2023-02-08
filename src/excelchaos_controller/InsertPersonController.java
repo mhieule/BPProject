@@ -9,9 +9,12 @@ import excelchaos_model.EmployeeDataManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class InsertPersonController implements ActionListener {
     private InsertPersonView insertPersonView;
@@ -149,13 +152,20 @@ public class InsertPersonController implements ActionListener {
             String city = insertPersonView.getTfStadt().getText();
             String payGrade = insertPersonView.getTfPayGroupOnHiring().getText();
             String payLevel = insertPersonView.getPayGradeList().getSelectedItem().toString();
-            String startDate = insertPersonView.getTfWorkStart().getText();
-            String endDate = insertPersonView.getTfWorkEnd().getText();
+
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            LocalDate workStartDate = insertPersonView.getTfWorkStart().getDate();
+            calendar.set(workStartDate.getYear(), workStartDate.getMonth().getValue(), workStartDate.getDayOfMonth());
+            String workStart = dateFormat.format(calendar.getTime());
+            LocalDate workEndDate = insertPersonView.getTfWorkEnd().getDate();
+            calendar.set(workEndDate.getYear(), workEndDate.getMonth().getValue(), workEndDate.getDayOfMonth());
+            String workEnd = dateFormat.format(calendar.getTime());
+
             Employee newEmployee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                     citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
                     salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
             employeeDataManager.addEmployee(newEmployee);
-            Contract newContract = new Contract(id, payGrade, payLevel, startDate, endDate, 0, 0);
+            Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0);
             contractDataManager.addContract(newContract);
             resetInputs();
             insertPersonView.revalidate();
@@ -196,15 +206,23 @@ public class InsertPersonController implements ActionListener {
             String city = insertPersonView.getTfStadt().getText();
             String payGrade = insertPersonView.getTfPayGroupOnHiring().getText();
             String payLevel = insertPersonView.getPayGradeList().getSelectedItem().toString();
-            String startDate = insertPersonView.getTfWorkStart().getText();
-            String endDate = insertPersonView.getTfWorkEnd().getText();
+
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            LocalDate workStartDate = insertPersonView.getTfWorkStart().getDate();
+            calendar.set(workStartDate.getYear(), workStartDate.getMonth().getValue(), workStartDate.getDayOfMonth());
+            String workStart = dateFormat.format(calendar.getTime());
+            LocalDate workEndDate = insertPersonView.getTfWorkEnd().getDate();
+            calendar.set(workEndDate.getYear(), workEndDate.getMonth().getValue(), workEndDate.getDayOfMonth());
+            String workEnd = dateFormat.format(calendar.getTime());
+
             Employee newEmployee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                     citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
                     salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
             employeeDataManager.addEmployee(newEmployee);
-            Contract newContract = new Contract(id, payGrade, payLevel, startDate, endDate, 0, 0);
+            Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0);
             contractDataManager.addContract(newContract);
-            frameController.getInsertSalaryController().getEmployeeNameList(surname + " " + name, payGrade, payLevel);
+            //vblFree richtigen wert übergeben wenn dieser gespeichert wird
+            frameController.getInsertSalaryController().fillFields(surname + " " + name, status, payGrade, workStart, payLevel, false);
             resetInputs();
             insertPersonView.revalidate();
             insertPersonView.repaint();
@@ -239,4 +257,5 @@ public class InsertPersonController implements ActionListener {
             }
         }
     }
+
 }

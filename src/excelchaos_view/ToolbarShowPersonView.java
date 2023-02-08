@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 public class ToolbarShowPersonView extends JToolBar {
     private JButton insertPerson;
-
+    private JButton editPerson;
     private JButton deletePerson;
 
     private JLabel searchLabel;
@@ -16,13 +16,16 @@ public class ToolbarShowPersonView extends JToolBar {
         setFloatable(false);
         setBackground(Color.WHITE);
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        insertPerson = new JButton("Person hinzufügen");
-        deletePerson = new JButton("Eintrag löschen");
+        insertPerson = new JButton("hinzufügen");
+        editPerson = new JButton("bearbeiten");
+        deletePerson = new JButton("löschen");
         searchLabel = new JLabel("Suchen:");
         searchField = new JTextField();
         searchField.setPreferredSize(new Dimension(130,30));
 
         add(insertPerson);
+        addSeparator(new Dimension(20,30));
+        add(editPerson);
         addSeparator(new Dimension(20,30));
         add(deletePerson);
         addSeparator(new Dimension(20,30));

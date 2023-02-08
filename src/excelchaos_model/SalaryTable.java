@@ -2,6 +2,7 @@ package excelchaos_model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import excelchaos_model.utility.PayRateTableNameDateSeperator;
 
 
 @DatabaseTable(tableName = "SalaryTable")
@@ -205,4 +206,10 @@ public class SalaryTable {
     public void setPaygrade(String paygrade){
         this.paygrade = paygrade;
     }
+
+    public String getDate(){
+        PayRateTableNameDateSeperator payRateTableNameDateSeperator = new PayRateTableNameDateSeperator();
+        return payRateTableNameDateSeperator.seperateDate(table_name);
+    }
+
 }
