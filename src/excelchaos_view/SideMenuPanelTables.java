@@ -134,7 +134,7 @@ public class SideMenuPanelTables extends JPanel {
         salaryPanel.add(salaryToggleButtonPanel,BorderLayout.NORTH);
 
 
-        gehaltsliste = new JButton("Gehaltsliste");
+        gehaltsliste = new JButton("Gehaltsprojektion");
         manualSalary = new JButton("Manuelle Einträge");
         salaryIncrease = new JButton("Gehaltserhöhung");
         gehaltshistorie = new JButton("Gehaltshistorie");

@@ -12,7 +12,7 @@ public class SalaryListController {
     private ToolbarSalaryListController toolbarSalaryList;
     private MainFrameController frameController;
 
-    private String title = "Gehaltsliste";
+    private String title = "Gehaltsprojektion";
 
     private SearchAndFilterModel searchAndFilterModel;
     public SalaryListController(MainFrameController mainFrameController){

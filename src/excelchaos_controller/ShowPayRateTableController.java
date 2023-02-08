@@ -3,10 +3,14 @@ package excelchaos_controller;
 import excelchaos_model.SalaryTable;
 import excelchaos_model.SalaryTableManager;
 import excelchaos_model.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.PayRateTableNameDateSeperator;
+import excelchaos_model.utility.PayRateTableNameStringEditor;
 import excelchaos_view.ShowPayRateTableView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class ShowPayRateTableController implements ActionListener {
@@ -40,7 +44,8 @@ public class ShowPayRateTableController implements ActionListener {
         frameController = mainFrameController;
         manager = salaryManager;
         showPayRateTableView = new ShowPayRateTableView();
-        tableTitle = tableName;
+        PayRateTableNameStringEditor editor = new PayRateTableNameStringEditor();
+        tableTitle = editor.revertToCorrectTableName(tableName);
         paygrade = actualPaygrade;
         showPayRateTableView.init(determineTableColumns());
         showPayRateTableView.setActionListener(this);
@@ -119,7 +124,11 @@ public class ShowPayRateTableController implements ActionListener {
             if (column < showPayRateTableView.getTable().getColumnCount() - 1) {
                 column++;
             } else {
-                showPayRateTableView.getTfNameOfTable().setText(salaryTable.getTable_name());
+                PayRateTableNameDateSeperator nameDateSeperator = new PayRateTableNameDateSeperator();
+                showPayRateTableView.getTfNameOfTable().setText(nameDateSeperator.seperateName(salaryTable.getTable_name()));
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                LocalDate date = LocalDate.parse(nameDateSeperator.seperateDate(salaryTable.getTable_name()),dtf);
+                showPayRateTableView.getDatePicker().setDate(date);
                 break;
             }
             if (row < showPayRateTableView.getTable().getRowCount()) {
@@ -165,11 +174,14 @@ public class ShowPayRateTableController implements ActionListener {
             salaryTable.setJsz_als_monatliche_zulage(values[12][column]);
             salaryTable.setMtl_kosten_mit_jsz(values[13][column]);
             salaryTable.setJaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung(values[14][column]);
-            System.out.println("Here");
             if (column < showPayRateTableView.getTable().getColumnCount() - 1) {
                 column++;
             } else {
-                salaryTable.setTable_name(showPayRateTableView.getTfNameOfTable().getText());
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                String tableName = showPayRateTableView.getTfNameOfTable().getText() + "_" +showPayRateTableView.getDatePicker().getDate().format(dateTimeFormatter);
+                salaryTable.setTable_name(tableName);
+                System.out.println(salaryTable.getTable_name());
+
                 break;
             }
         /*SalaryTableManager manager = new SalaryTableManager();

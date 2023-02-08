@@ -76,7 +76,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
             frameController.getTabs().removeTabNewWindow(insertPayRateTableView);
 
         } else if (e.getSource() == insertPayRateTableView.getSaveAndExit()) {
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             String tableName = insertPayRateTableView.getTfNameOfTable().getText() + "_" +insertPayRateTableView.getDatePicker().getDate().format(dateTimeFormatter);
             String paygrade = determinePayGrade();
             insertValuesInDatabase(tableName, paygrade, prepareTableForDatabaseInsertion());

@@ -1,6 +1,7 @@
 package excelchaos_controller;
 
 import excelchaos_model.SalaryTableManager;
+import excelchaos_model.utility.PayRateTableNameStringEditor;
 import excelchaos_view.PayRateTablesView;
 
 import javax.swing.*;
@@ -29,7 +30,6 @@ public class PayRateTablesController extends MouseAdapter implements ActionListe
 
     public void showPayRatesView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
-            //SideMenuPanelActionLogView.model.addElement("Einträge anzeigen");
             payRateTablesView = new PayRateTablesView();
             toolbarPayRateTables = new ToolbarPayRateTablesController(frameController, this);
             payRateTablesView.init();
@@ -39,7 +39,6 @@ public class PayRateTablesController extends MouseAdapter implements ActionListe
             payRateTablesView.setMouseListener(this);
         } else {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(title));
-            //SideMenuPanelActionLogView.model.addElement("Einträge anzeigen");
         }
     }
 
@@ -52,15 +51,13 @@ public class PayRateTablesController extends MouseAdapter implements ActionListe
     }
 
     public void fillListWithPayRateTableNames() {
-        //payRateTablesView.getCenterPanel().removeAll();
         String paygrade = getPayGradeFromTitle(); //PayGrade ist Gruppe/Klasse
+        PayRateTableNameStringEditor stringEditor = new PayRateTableNameStringEditor();
         int numberOfTables = manager.getNumOfTables(paygrade);
-        //JPanel buttonPanel = new JPanel();
         String[] tableNames = new String[numberOfTables];
-        //buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.Y_AXIS));
         for (int i = 0; i < numberOfTables; i++) {
             tableNames[i] = manager.getDistinctTableNames(paygrade).get(i);
-
+            tableNames[i] = stringEditor.createReadableTableNameForView(tableNames[i]);
         }
         payRateTablesView.getPayRateTableList().setListData(tableNames);
 

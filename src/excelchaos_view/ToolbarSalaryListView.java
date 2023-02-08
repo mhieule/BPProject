@@ -26,7 +26,7 @@ public class ToolbarSalaryListView extends JToolBar {
         editEntry = new JButton("Gehaltseintrag bearbeiten");
         deleteEntry = new JButton(("Gehaltseintrag löschen"));
         increaseSalary = new JButton("Gehaltserhöhung");
-        salaryStageOn = new JButton("Gehaltsstufenprojektion");
+        salaryStageOn = new JButton("Gehaltsprojektion");
         removeAdditionalSalaryStage = new JButton("Gehaltsstufenprojektion ausblenden");
         showNextPayGrade = new JToggleButton("Gehaltsstufenerhöhungen anzeigen");
         searchLabel = new JLabel("Suchen:");

@@ -60,7 +60,6 @@ public class SalaryListView extends JPanel {
     public void addData(){
         removeAll();
         setLayout(new BorderLayout());
-        System.out.println("SEEING ITEMS");
 
         String column[] = {
                 "Name", "Vorname", "Geburtsdatum", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"

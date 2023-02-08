@@ -1,5 +1,6 @@
 package excelchaos_view;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import excelchaos_model.MultiLineTableCellRenderer;
 import excelchaos_model.TableColumnAdjuster;
 
@@ -12,11 +13,13 @@ import java.awt.event.ActionListener;
 public class ShowPayRateTableView extends JPanel {
     private JPanel topPanel;
 
-    private JLabel nameOfTable;
+    private JLabel nameOfTable,startDate;
 
     private JLabel wageTypeLongtext;
 
     private JTextField tfNameOfTable;
+
+    private DatePicker datePicker;
     private JPanel centerPanel;
     private JPanel bottomPanel;
 
@@ -38,10 +41,14 @@ public class ShowPayRateTableView extends JPanel {
         topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 15));
         nameOfTable = new JLabel("Name der Tabelle");
+        startDate = new JLabel("Gültig ab");
+        datePicker = new DatePicker();
         tfNameOfTable = new JTextField();
         tfNameOfTable.setPreferredSize(new Dimension(300, 30));
         topPanel.add(nameOfTable);
         topPanel.add(tfNameOfTable);
+        topPanel.add(startDate);
+        topPanel.add(datePicker);
         add(topPanel, BorderLayout.NORTH);
     }
     private void bottomPanelInit() {
@@ -172,5 +179,9 @@ public class ShowPayRateTableView extends JPanel {
     public void setActionListener(ActionListener l) {
         cancelButton.addActionListener(l);
         saveAndExit.addActionListener(l);
+    }
+
+    public DatePicker getDatePicker() {
+        return datePicker;
     }
 }
