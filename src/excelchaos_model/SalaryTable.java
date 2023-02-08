@@ -209,7 +209,7 @@ public class SalaryTable {
 
     public String getDate(){
         PayRateTableNameDateSeperator payRateTableNameDateSeperator = new PayRateTableNameDateSeperator();
-        return payRateTableNameDateSeperator.seperateDate(table_name);
+        return payRateTableNameDateSeperator.seperateDateAsString(table_name);
     }
 
 }

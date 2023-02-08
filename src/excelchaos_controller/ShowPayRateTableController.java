@@ -126,8 +126,8 @@ public class ShowPayRateTableController implements ActionListener {
             } else {
                 PayRateTableNameDateSeperator nameDateSeperator = new PayRateTableNameDateSeperator();
                 showPayRateTableView.getTfNameOfTable().setText(nameDateSeperator.seperateName(salaryTable.getTable_name()));
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-                LocalDate date = LocalDate.parse(nameDateSeperator.seperateDate(salaryTable.getTable_name()),dtf);
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                LocalDate date = LocalDate.parse(nameDateSeperator.seperateDateAsString(salaryTable.getTable_name()),dateTimeFormatter);
                 showPayRateTableView.getDatePicker().setDate(date);
                 break;
             }
