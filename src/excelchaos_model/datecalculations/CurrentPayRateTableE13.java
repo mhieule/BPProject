@@ -6,7 +6,6 @@ import excelchaos_model.utility.PayRateTableNameDateSeperator;
 import excelchaos_model.utility.TableNameDateTuple;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class CurrentPayRateTableE13 {
@@ -25,7 +24,6 @@ public class CurrentPayRateTableE13 {
         tableNames = salaryTableManager.getDistinctTableNames(paygrade);
         tableNameDateTuple = new TableNameDateTuple[numberOfTables];
         initTuples();
-
     }
 
     private void initTuples() {
