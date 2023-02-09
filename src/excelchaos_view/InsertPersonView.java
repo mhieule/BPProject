@@ -16,12 +16,12 @@ public class InsertPersonView extends JPanel {
 
     private JTextField tfName, tfVorname, tfStrasse, tfHausnummer, tfAdresszusatz, tfPLZ, tfStadt, tfPrivatEmail, tfPrivateTelefonnummer,
             tfPersonalnummer, tfTuid, tfGehaltEingeplanntBis, tfTranspondernummer, tfBueronummer,
-            tfTelefonnummerTUDA, tfWorkScope, tfPayGroupOnHiring;
+            tfTelefonnummerTUDA, tfWorkScope;
 
     private DatePicker tfGeburtsdatum, tfVisaValidUntil, tfWorkStart, tfWorkEnd;
 
 
-    private JComboBox nationalityPickList, nationalityPickList2, typeOfJobPicklist, hiwiTypeOfPaymentList, payGradeList;
+    private JComboBox nationalityPickList, nationalityPickList2, typeOfJobPicklist, hiwiTypeOfPaymentList, payGradeList, payGroupList;
     private JCheckBox nationalityCheckBox, visaRequiredCheckBox;
 
     private JButton submit, reset, salary;
@@ -174,9 +174,10 @@ public class InsertPersonView extends JPanel {
         payGroupOnHiring = new JLabel("Gehaltsgruppe bei Einstellung");
         setConstraintsLabel(payGroupOnHiring, 21);
         payGroupOnHiring.setVisible(false);
-        tfPayGroupOnHiring = new JTextField();
-        setConstraintsTextField(tfPayGroupOnHiring, 21);
-        tfPayGroupOnHiring.setVisible(false);
+        String[] payGroups = {"Nicht ausgewählt", "E13", "E14"};
+        payGroupList = new JComboBox(payGroups);
+        setConstraintsJComboBox(payGroupList, 21);
+        payGroupList.setVisible(false);
 
         payGradeOnHiring = new JLabel("Gehaltsstufe bei Einstellung");
         setConstraintsLabel(payGradeOnHiring, 22);
@@ -387,8 +388,8 @@ public class InsertPersonView extends JPanel {
         return tfWorkScope;
     }
 
-    public JTextField getTfPayGroupOnHiring() {
-        return tfPayGroupOnHiring;
+    public JComboBox getPayGroupList() {
+        return payGroupList;
     }
 
     public JComboBox getPayGradeList() {

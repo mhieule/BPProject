@@ -92,7 +92,7 @@ public class InsertPersonController implements ActionListener {
         setNationalityCheckboxInVisible();
         setVisRequiredCheckboxInVisible();
         insertPersonView.getPayGroupOnHiring().setVisible(false);
-        insertPersonView.getTfPayGroupOnHiring().setVisible(false);
+        insertPersonView.getPayGroupList().setVisible(false);
         insertPersonView.getPayGradeOnHiring().setVisible(false);
         insertPersonView.getPayGradeList().setVisible(false);
         insertPersonView.getHiwiTypeOfPayment().setVisible(false);
@@ -150,9 +150,10 @@ public class InsertPersonController implements ActionListener {
             String zip_code = insertPersonView.getTfPLZ().getText();
             String additional_address = insertPersonView.getTfAdresszusatz().getText();
             String city = insertPersonView.getTfStadt().getText();
-            String payGrade = insertPersonView.getTfPayGroupOnHiring().getText();
+            String payGrade = insertPersonView.getPayGroupList().getSelectedItem().toString();
             String payLevel = insertPersonView.getPayGradeList().getSelectedItem().toString();
 
+            // muss in Datenbank als Date gespeichert werden und nicht als String
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             LocalDate workStartDate = insertPersonView.getTfWorkStart().getDate();
             calendar.set(workStartDate.getYear(), workStartDate.getMonth().getValue(), workStartDate.getDayOfMonth());
@@ -204,9 +205,10 @@ public class InsertPersonController implements ActionListener {
             String zip_code = insertPersonView.getTfPLZ().getText();
             String additional_address = insertPersonView.getTfAdresszusatz().getText();
             String city = insertPersonView.getTfStadt().getText();
-            String payGrade = insertPersonView.getTfPayGroupOnHiring().getText();
+            String payGrade = insertPersonView.getPayGroupList().getSelectedItem().toString();
             String payLevel = insertPersonView.getPayGradeList().getSelectedItem().toString();
 
+            // muss in Datenbank als Date gespeichert werden und nicht als String
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             LocalDate workStartDate = insertPersonView.getTfWorkStart().getDate();
             calendar.set(workStartDate.getYear(), workStartDate.getMonth().getValue(), workStartDate.getDayOfMonth());
@@ -239,12 +241,12 @@ public class InsertPersonController implements ActionListener {
         if (e.getSource() == insertPersonView.getTypeOfJobPicklist()){
             if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("WiMi") || insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("ATM")){
                 insertPersonView.getPayGroupOnHiring().setVisible(true);
-                insertPersonView.getTfPayGroupOnHiring().setVisible(true);
+                insertPersonView.getPayGroupList().setVisible(true);
                 insertPersonView.getPayGradeOnHiring().setVisible(true);
                 insertPersonView.getPayGradeList().setVisible(true);
             } else {
                 insertPersonView.getPayGroupOnHiring().setVisible(false);
-                insertPersonView.getTfPayGroupOnHiring().setVisible(false);
+                insertPersonView.getPayGroupList().setVisible(false);
                 insertPersonView.getPayGradeOnHiring().setVisible(false);
                 insertPersonView.getPayGradeList().setVisible(false);
             }
