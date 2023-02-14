@@ -54,6 +54,7 @@ public class ToolbarManualSalaryEntryView extends JToolBar {
     public void setItemListener(ItemListener l){
         nameComboBox.addItemListener(l);
     }
+
     public JComboBox getNameComboBox(){
         return nameComboBox;
     }

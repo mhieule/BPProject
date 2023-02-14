@@ -6,7 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ToolbarSalaryHistoryController implements ActionListener {
+
     private ToolbarSalaryHistoryView toolbar;
+
     private MainFrameController frameController;
 
     public ToolbarSalaryHistoryController(MainFrameController mainFrameController){
@@ -21,12 +23,8 @@ public class ToolbarSalaryHistoryController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        if(e.getSource() == toolbar.getNameComboBox()){
-//            toolbar.getNameComboBox().getSelectedItem();
-//        }
-//        else if(e.getSource() == toolbar.getÄnderungen()){
-//
-//        }
+        if(e.getSource() == toolbar.getÄnderungen()){
+        }
     }
 
 

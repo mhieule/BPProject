@@ -31,8 +31,8 @@ public class ToolbarShowPersonView extends JToolBar {
         addSeparator(new Dimension(20,30));
         add(searchLabel);
         add(searchField);
-        addSeparator(new Dimension(20,30));
     }
+
     public void setActionListener(ActionListener l) {
         insertPerson.addActionListener(l);
         deletePerson.addActionListener(l);

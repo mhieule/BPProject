@@ -54,7 +54,7 @@ public class InsertManualSalaryEntryController implements ActionListener {
         insertManualSalaryEntryView.revalidate();
         insertManualSalaryEntryView.repaint();
         frameController.getManualSalaryEntryController().getDataFromDB(temporaryEmployee);
-
+        frameController.getSalaryHistoryController().getDataFromDB(temporaryEmployee);
     }
 
     private void resetInputs(){

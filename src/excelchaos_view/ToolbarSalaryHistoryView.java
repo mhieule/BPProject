@@ -5,8 +5,12 @@ import excelchaos_model.EmployeeDataManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ToolbarSalaryHistoryView extends JToolBar {
+
     private JComboBox nameComboBox;
 
     private JTextField searchField;
@@ -18,17 +22,23 @@ public class ToolbarSalaryHistoryView extends JToolBar {
     public void init(){
         setFloatable(false);
         setBackground(Color.WHITE);
+        setLayout(new FlowLayout(FlowLayout.LEFT));
 
         nameLabel = new JLabel("Name: ");
         searchLabel = new JLabel("Suchen: ");
 
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
-        String[] names = employeeDataManager.getAllEmployeesNameList();
-        nameComboBox = new JComboBox(names);
-        nameComboBox.setMaximumRowCount(20);
+        ArrayList<String> employeeNames = new ArrayList<String>(List.of(employeeDataManager.getAllEmployeesNameList()));
+        ArrayList<String>names = new ArrayList<String>();
+        names.add("Keine Auswahl");
+        names.addAll(employeeNames);
+
+        nameComboBox = new JComboBox(names.toArray());
+        nameComboBox.setMaximumRowCount(10);
 
         änderungen = new JButton("Änderungen");
         searchField = new JTextField();
+        searchField.setPreferredSize(new Dimension(130,30));
 
         add(nameLabel);
         add(nameComboBox);
@@ -40,9 +50,12 @@ public class ToolbarSalaryHistoryView extends JToolBar {
     }
 
     public void setActionListener(ActionListener l){
-        nameComboBox.addActionListener(l);
         änderungen.addActionListener(l);
         searchField.addActionListener(l);
+    }
+
+    public void setItemListener(ItemListener l){
+        nameComboBox.addItemListener(l);
     }
 
     public JComboBox getNameComboBox(){

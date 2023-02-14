@@ -28,7 +28,6 @@ public class ManualSalaryEntryController implements ItemListener {
         toolbarManualSalaryEntry.getToolbar().setItemListener(this);
         salaryEntryView.init();
         salaryEntryView.add(toolbarManualSalaryEntry.getToolbar(), BorderLayout.NORTH);
-
     }
 
     public void showManualSalaryEntryView(MainFrameController mainFrameController) {

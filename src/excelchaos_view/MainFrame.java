@@ -1,6 +1,7 @@
 package excelchaos_view;
 
 import excelchaos_controller.TabsController;
+import excelchaos_model.EmployeeDataManager;
 
 import javax.swing.*;
 import javax.swing.border.Border;
