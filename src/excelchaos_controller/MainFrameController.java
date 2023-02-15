@@ -18,6 +18,7 @@ public class MainFrameController implements ActionListener {
     private SalaryHistoryController salaryHistoryController;
     private InsertSalaryController insertSalaryController;
     private ShowProjectsController showProjectsController;
+    private InsertProjectsController insertProjectsController;
 
     private ManualSalaryEntryController manualSalaryEntryController;
 
@@ -43,6 +44,7 @@ public class MainFrameController implements ActionListener {
         insertManualSalaryEntryController = new InsertManualSalaryEntryController(this);
         salaryIncreaseController = new SalaryIncreaseController(this);
         showProjectsController = new ShowProjectsController(this);
+        insertProjectsController = new InsertProjectsController(this);
 
         window.setVisible(true);
     }
@@ -94,6 +96,10 @@ public class MainFrameController implements ActionListener {
 
     public ShowProjectsController getShowProjectsController() {
         return showProjectsController;
+    }
+
+    public InsertProjectsController getInsertProjectsController() {
+        return insertProjectsController;
     }
 
     public void setChangeListener (ChangeListener l){

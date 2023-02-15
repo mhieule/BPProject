@@ -23,7 +23,16 @@ public class ToolbarShowProjectsController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == toolbar.getInsertProject()){
-//            frameController.getInsertProjectsController().showInsertProjectsView(frameController);
+            frameController.getInsertProjectsController().showInsertProjectsView(frameController);
+        }
+        if(e.getSource() == toolbar.getEditProject()){
+
+        }
+        if(e.getSource() == toolbar.getDeleteProject()){
+
+        }
+        if (e.getSource() == toolbar.getCostOverview()){
+
         }
     }
 }
