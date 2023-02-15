@@ -21,8 +21,6 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
         sideMenu.setActionListener(this);
         sideMenu.setItemListener(this);
         mainFrameController.getWindow().add(sideMenu, BorderLayout.WEST);
-
-
     }
 
     public SideMenuPanelTables getSideTable() {

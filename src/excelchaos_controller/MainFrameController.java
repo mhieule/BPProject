@@ -17,17 +17,13 @@ public class MainFrameController implements ActionListener {
     private SalaryListController salaryListController;
     private SalaryHistoryController salaryHistoryController;
     private InsertSalaryController insertSalaryController;
+    private ShowProjectsController showProjectsController;
 
     private ManualSalaryEntryController manualSalaryEntryController;
 
     private InsertManualSalaryEntryController insertManualSalaryEntryController;
 
     private SalaryIncreaseController salaryIncreaseController;
-
-
-
-
-
 
 
     public MainFrameController() {
@@ -46,12 +42,9 @@ public class MainFrameController implements ActionListener {
         manualSalaryEntryController = new ManualSalaryEntryController(this);
         insertManualSalaryEntryController = new InsertManualSalaryEntryController(this);
         salaryIncreaseController = new SalaryIncreaseController(this);
-
-
-
+        showProjectsController = new ShowProjectsController(this);
 
         window.setVisible(true);
-
     }
 
     @Override
@@ -99,6 +92,10 @@ public class MainFrameController implements ActionListener {
         return salaryIncreaseController;
     }
 
+    public ShowProjectsController getShowProjectsController() {
+        return showProjectsController;
+    }
+
     public void setChangeListener (ChangeListener l){
         tabsController.getTabs().addChangeListener(l);
     }
@@ -115,6 +112,7 @@ public class MainFrameController implements ActionListener {
         getTabs().addTab(name,panel);
         getTabs().setSelectedIndex(getTabs().indexOfTab(name));
     }
+
     /*public void tabSwitch(String name,JToolBar toolBar){
         if(getTabs().getSelectedIndex() == getTabs().indexOfTab(name)){
             getWindow().add(toolBar,BorderLayout.NORTH);
