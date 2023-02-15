@@ -23,7 +23,7 @@ public class ToolbarShowProjectsController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == toolbar.getInsertProject()){
-            frameController.getInsertPersonController().showInsertPersonView(frameController);
+//            frameController.getInsertProjectsController().showInsertProjectsView(frameController);
         }
     }
 }

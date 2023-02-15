@@ -45,7 +45,6 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-
         if (e.getStateChange() == ItemEvent.SELECTED) {
             salaryListView.showPayGradeIncrease();
             salaryListView.add(toolbar, BorderLayout.NORTH);

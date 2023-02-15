@@ -10,8 +10,9 @@ import java.awt.event.ItemListener;
 
 public class SideMenuPanelTables extends JPanel {
     private JButton personenliste;
+    private JButton projektliste;
     private JButton gehaltsliste;
-    private JButton inventarliste;
+//    private JButton inventarliste;
     private JButton gehaltshistorie;
 
     private JButton salaryIncrease;
@@ -40,21 +41,13 @@ public class SideMenuPanelTables extends JPanel {
     private final int RegularButtonHeigt = 25;
 
     public void init() {
-
-
-
         personenliste = new JButton("Personenliste");
-
-        inventarliste = new JButton("Inventarliste");
-
-
+        projektliste = new JButton("Projektliste");
+//        inventarliste = new JButton("Inventarliste");
 
         personenliste.setPreferredSize(new Dimension(RegularButtonWidth, RegularButtonHeigt));
-        inventarliste.setPreferredSize(new Dimension(RegularButtonWidth, RegularButtonHeigt));
-
-
-
-
+        projektliste.setPreferredSize(new Dimension(RegularButtonWidth, RegularButtonHeigt));
+//        inventarliste.setPreferredSize(new Dimension(RegularButtonWidth, RegularButtonHeigt));
 
 
         arrowButtonWest = new BasicArrowButton(BasicArrowButton.WEST);
@@ -68,11 +61,12 @@ public class SideMenuPanelTables extends JPanel {
         add(topPanel, BorderLayout.PAGE_START);
         centerpanel.setPreferredSize(new Dimension(150, 500));
         centerpanel.add(personenliste);
+        centerpanel.add(projektliste);
 
         //centerpanel.add(payRates);
         initSalaryExpander();
         centerpanel.add(salaryPanel);
-        centerpanel.add(inventarliste);
+//        centerpanel.add(inventarliste);
         initPayRateExpander();
         centerpanel.add(payRatePanel);
         //centerpanel.add(showE13Tables);
@@ -133,13 +127,10 @@ public class SideMenuPanelTables extends JPanel {
         salaryToggleButtonPanel.add(salaryToggleButton);
         salaryPanel.add(salaryToggleButtonPanel,BorderLayout.NORTH);
 
-
         gehaltsliste = new JButton("Gehaltsprojektion");
         manualSalary = new JButton("Manuelle Einträge");
         salaryIncrease = new JButton("Gehaltserhöhung");
         gehaltshistorie = new JButton("Gehaltshistorie");
-
-
 
         gehaltsliste.setPreferredSize(new Dimension(140, RegularButtonHeigt));
         manualSalary.setPreferredSize(new Dimension(140, RegularButtonHeigt));
@@ -153,8 +144,6 @@ public class SideMenuPanelTables extends JPanel {
 
         salaryTableButtonPanel.setVisible(false);
         salaryPanel.add(salaryTableButtonPanel,BorderLayout.CENTER);
-
-
     }
 
     private void initPayRateExpander(){
@@ -184,7 +173,6 @@ public class SideMenuPanelTables extends JPanel {
 
         payRatePanel.add(payRateToggleButtonPanel,BorderLayout.NORTH);
 
-
         showE13Tables = new JButton("E13 Tabellen");
         showE14Tables = new JButton("E14 Tabellen");
         showSHKTables = new JButton("SHK Tabellen");
@@ -199,8 +187,6 @@ public class SideMenuPanelTables extends JPanel {
         payRateTableButtonPanel.setVisible(false);
 
         payRatePanel.add(payRateTableButtonPanel,BorderLayout.CENTER);
-
-
     }
 
     public JPanel getPayRateToggleButtonPanel() {
@@ -225,6 +211,10 @@ public class SideMenuPanelTables extends JPanel {
 
     public JButton getPersonenliste(){
         return personenliste;
+    }
+
+    public JButton getProjektliste() {
+        return projektliste;
     }
 
     public JButton getGehaltsliste() {
@@ -281,6 +271,7 @@ public class SideMenuPanelTables extends JPanel {
 
     public void setActionListener(ActionListener l) {
         personenliste.addActionListener(l);
+        projektliste.addActionListener(l);
         gehaltsliste.addActionListener(l);
         manualSalary.addActionListener(l);
         salaryIncrease.addActionListener(l);

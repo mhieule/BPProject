@@ -49,22 +49,26 @@ public class ShowProjectsView extends JPanel {
         setLayout(new BorderLayout());
 
         String columns[] = {"Name", "Bewilligungsdatum","Anfangsdatum", "Laufzeit"};
-        ProjectManager projectManager = new ProjectManager();
-        int lines  = projectManager.getRowCount();
-        String resultData[][] = new String[lines][];
-        int currentIndex = 0;
-        List<Project> projects = projectManager.getAllProjects();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        for (Project project : projects){
-            String name = project.getProject_name();
-            String date = dateFormat.format(project.getApproval_date());
-            String start = dateFormat.format(project.getStart_date());
-            String duration = String.valueOf(project.getDuration());
+//        ProjectManager projectManager = new ProjectManager();
+//        int lines  = projectManager.getRowCount();
+//        String resultData[][] = new String[lines][];
+//        int currentIndex = 0;
+//        List<Project> projects = projectManager.getAllProjects();
+//        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+//        for (Project project : projects){
+//            String name = project.getProject_name();
+//            String approval = dateFormat.format(project.getApproval_date());
+//            String start = dateFormat.format(project.getStart_date());
+//            String duration = String.valueOf(project.getDuration());
+//
+//            String[] values = {name, approval, start, duration};
+//            resultData[currentIndex] = values;
+//            currentIndex++;
+//        }
+        String[][] resultData = new String[2][4];
+        resultData[0] = new String[]{"Name1", "approval1", "start1", "duration1"};
+        resultData[1] = new String[]{"Name2", "approval2", "start2", "duration2"};
 
-            String[] values = {name, date, start, duration};
-            resultData[currentIndex] = values;
-            currentIndex++;
-        }
         jt = new CustomTable(resultData, columns);
         jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(jt);

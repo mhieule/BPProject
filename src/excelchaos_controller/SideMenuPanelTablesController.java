@@ -33,6 +33,8 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             westArrowButtonPressed(frameController);
         } else if (e.getSource() == sideMenu.getPersonenliste()) {
             frameController.getShowPersonalData().showPersonView(frameController);
+        } else if (e.getSource() == sideMenu.getProjektliste()) {
+            frameController.getShowProjectsController().showProjectsView(frameController);
         } else if (e.getSource() == sideMenu.getGehaltsliste()) {
             frameController.getSalaryListController().showSalaryView(frameController);
         } else if (e.getSource() == sideMenu.getManualSalary()) {
@@ -85,7 +87,6 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             sideMenu.getSalaryToggleButtonPanel().setPreferredSize(new Dimension(150, 45));
             sideMenu.salaryCloseArrowLabelVisible();
         }
-
     }
 
     private void westArrowButtonPressed(MainFrameController frameController) {

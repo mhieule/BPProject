@@ -8,6 +8,7 @@ public class ToolbarShowProjectsView extends JToolBar {
     private JButton insertProject;
     private JButton editProject;
     private JButton deleteProject;
+    private JButton costOverview;
 
     private JLabel searchLabel;
     private JTextField searchField;
@@ -19,6 +20,7 @@ public class ToolbarShowProjectsView extends JToolBar {
         insertProject = new JButton("hinzufügen");
         editProject = new JButton("bearbeiten");
         deleteProject = new JButton("löschen");
+        costOverview = new JButton("Kostenübersicht");
         searchLabel = new JLabel("Suchen:");
         searchField = new JTextField();
         searchField.setPreferredSize(new Dimension(130,30));
@@ -29,17 +31,33 @@ public class ToolbarShowProjectsView extends JToolBar {
         addSeparator(new Dimension(20,30));
         add(deleteProject);
         addSeparator(new Dimension(20,30));
+        add(costOverview);
+        addSeparator(new Dimension(20,30));
         add(searchLabel);
         add(searchField);
     }
 
     public void setActionListener(ActionListener l) {
         insertProject.addActionListener(l);
+        editProject.addActionListener(l);
         deleteProject.addActionListener(l);
+        costOverview.addActionListener(l);
     }
 
     public JButton getInsertProject() {
         return insertProject;
+    }
+
+    public JButton getEditProject() {
+        return editProject;
+    }
+
+    public JButton getDeleteProject() {
+        return deleteProject;
+    }
+
+    public JButton getCostOverview() {
+        return costOverview;
     }
 
     public JTextField getSearchField() {
