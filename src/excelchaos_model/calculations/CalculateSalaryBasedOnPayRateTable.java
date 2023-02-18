@@ -12,7 +12,7 @@ import java.util.List;
 public class CalculateSalaryBasedOnPayRateTable {
 
     boolean vblpflicht = true; //TODO Als Attribut in Contract einführen um die entsprechende Konditionenabfrage(If) durchführen zu können.
-
+    //TODO Großflächig testen
     public double getCurrentPayRateTableEntryForWiMiAndATM(Contract contract) {
         double result = 0;
         CurrentPayRateTableE13 currentPayRateTableE13 = new CurrentPayRateTableE13();
@@ -219,7 +219,7 @@ public class CalculateSalaryBasedOnPayRateTable {
         }
         return result;
     }
-
+    //TODO Großflächig testen
     public double getPayRateTableEntryForWiMiAndATMBasedOnChoosenDate(Contract contract, LocalDate choosenDate) {
         double result = 0;
         CurrentPayRateTableE13 currentPayRateTableE13 = new CurrentPayRateTableE13();

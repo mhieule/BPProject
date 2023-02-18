@@ -1,5 +1,6 @@
 package excelchaos_controller;
 
+import excelchaos_model.BackEndUpdates;
 import excelchaos_view.*;
 
 import javax.swing.*;
@@ -10,6 +11,8 @@ import java.awt.event.ActionListener;
 
 public class MainFrameController implements ActionListener {
     private MainFrame window;
+
+    private BackEndUpdates backEndUpdates = new BackEndUpdates();
     private TabsController tabsController;
     private SideMenuPanelTablesController sideMenuTables;
     private ShowPersonController showPersonalData;
@@ -34,6 +37,7 @@ public class MainFrameController implements ActionListener {
         window = new MainFrame();
         window.init();
         window.setActionListener(this);
+        //backEndUpdates.calculationsOnStartUp();
         tabsController = new TabsController(this);
         window.add(tabsController.getTabs());
         sideMenuTables = new SideMenuPanelTablesController(this);

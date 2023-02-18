@@ -25,6 +25,7 @@ public class ContractSalary {
 
     }
 
+    //TODO Großflächig testen (insbesondere die verschiedenen If Verzweigungen)
     public double determineCurrentSalary() throws ParseException {
         double result = 0;
         Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());

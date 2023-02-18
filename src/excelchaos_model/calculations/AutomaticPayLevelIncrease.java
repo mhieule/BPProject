@@ -27,7 +27,7 @@ public class AutomaticPayLevelIncrease {
        employeeList = employeeDataManager.getAllEmployees();
        payLevelIncreaseForEmployees = new List[numberOfEmployees];
    }
-
+    //TODO Großflächig testen
    public void performPayLevelIncrease() throws ParseException {
        Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
