@@ -35,7 +35,6 @@ public class InsertPersonController implements ActionListener {
     }
 
     public void showInsertPersonView(MainFrameController mainFrameController) {
-        SideMenuPanelActionLogView.model.addElement("Eintrag einfügen");
         if (mainFrameController.getTabs().indexOfTab(addPersonTab) == -1) {
             mainFrameController.getTabs().addTab(addPersonTab, insertPersonView);
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addPersonTab));
@@ -64,7 +63,6 @@ public class InsertPersonController implements ActionListener {
     }
 
     public void resetInputs(){
-        //TODO VBL Feld hinzufügen
         insertPersonView.getTfName().setText(null);
         insertPersonView.getTfVorname().setText(null);
         insertPersonView.getTfStrasse().setText(null);
@@ -96,6 +94,8 @@ public class InsertPersonController implements ActionListener {
         insertPersonView.getPayGroupList().setVisible(false);
         insertPersonView.getPayGradeOnHiring().setVisible(false);
         insertPersonView.getPayGradeList().setVisible(false);
+        insertPersonView.getVblList().setVisible(false);
+        insertPersonView.getVblstate().setVisible(false);
         insertPersonView.getHiwiTypeOfPayment().setVisible(false);
         insertPersonView.getHiwiTypeOfPaymentList().setVisible(false);
         insertPersonView.getTfGeburtsdatum().setText(null);
