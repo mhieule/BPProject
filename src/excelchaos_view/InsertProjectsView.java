@@ -65,7 +65,7 @@ public class InsertProjectsView extends JPanel {
 
         leftButtons = new JPanel(new FlowLayout());
         rightButtons = new JPanel(new FlowLayout());
-        submit = new JButton("Person speichern");
+        submit = new JButton("Projekt speichern");
         leftButtons.add(submit);
         centerDown.add(leftButtons);
         reset = new JButton("Felder zurücksetzen");
