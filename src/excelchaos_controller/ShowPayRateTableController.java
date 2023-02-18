@@ -2,7 +2,7 @@ package excelchaos_controller;
 
 import excelchaos_model.SalaryTable;
 import excelchaos_model.SalaryTableManager;
-import excelchaos_model.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_model.utility.PayRateTableNameDateSeperator;
 import excelchaos_model.utility.PayRateTableNameStringEditor;
 import excelchaos_view.ShowPayRateTableView;

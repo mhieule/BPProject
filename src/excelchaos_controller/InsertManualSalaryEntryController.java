@@ -1,8 +1,8 @@
 package excelchaos_controller;
 
 import excelchaos_model.*;
+import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.InsertManualSalaryEntryView;
-import excelchaos_view.ManualSalaryEntryView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
