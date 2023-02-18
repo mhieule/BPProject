@@ -64,13 +64,13 @@ public class SalaryListView extends JPanel {
                 "Name", "Vorname", "Geburtsdatum", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
         };
         ContractDataManager contractDataManager = new ContractDataManager();
+        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         int lines  = contractDataManager.getRowCount();
         String resultData[][] = new String[lines][];
         int currentIndex = 0;
         List<Contract> contracts = contractDataManager.getAllContracts();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         for (Contract contract : contracts){
-            EmployeeDataManager employeeDataManager = new EmployeeDataManager();
             Employee employee = employeeDataManager.getEmployee(contract.getId());
 
             String name = employee.getName();

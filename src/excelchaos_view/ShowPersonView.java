@@ -1,8 +1,6 @@
 package excelchaos_view;
 
-import excelchaos_model.Employee;
-import excelchaos_model.EmployeeDataManager;
-import excelchaos_model.CustomTableColumnAdjuster;
+import excelchaos_model.*;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
@@ -56,42 +54,53 @@ public class ShowPersonView extends JPanel {
     public void addData(){
         removeAll();
         setLayout(new BorderLayout());
-
         String columns[] = {"Name", "Vorname","Straße","Haunsummer","Adresszusatz", "Postleitzahl","Stadt",
-                "Geburtsdatum","E-Mail Privat", "Telefon Privat", "Telefon TUDA",  "Staatsangehörigkeit 1", "Staatsangehörigkeit 2", "Visum Gültigkeit", "Personalnummer", "Transpondernummer", "Büronummer", "TUID",
+                "Geburtsdatum","E-Mail Privat", "Telefon Privat", "Telefon TUDA",  "Staatsangehörigkeit 1", "Staatsangehörigkeit 2", "Visum Gültigkeit", "Personalnummer", "Transpondernummer", "Büronummer", "TU-ID",
                 "Anstellungsart","Beschäftigungsbeginn","Beschäftigungsende", "Beschäftigungsumfgang","Gehaltsklasse","Gehaltsstufe","VBL-Status","SHK Stundensatz", "Gehalt Eingeplant bis"
-        }; //TODO Die Spalten die schon Daten haben mit Daten z.B. aus Contract füllen
+        };
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+        ContractDataManager contractDataManager = new ContractDataManager();
         int lines  = employeeDataManager.getRowCount();
         String resultData[][] = new String[lines][];
         int currentIndex = 0;
         List<Employee> employees = employeeDataManager.getAllEmployees();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         for (Employee employee : employees){
+            Contract contract = contractDataManager.getContract(employee.getId());
             String name = employee.getName();
             String surname = employee.getSurname();
-            String email_private = employee.getEmail_private();
-            String phone_private = employee.getPhone_private();
-            String citizenship_1 = employee.getCitizenship_1();
-            String citizenship_2 = employee.getCitizenship_2();
-            String employeeNumber = employee.getEmployee_number();
-            String tu_id = employee.getTu_id();
-            String visa_required = String.valueOf(employee.getVisa_required());
-            String status = employee.getStatus();
-            String transponder_number = employee.getTransponder_number();
-            String office_number = employee.getOffice_number();
-            String salaryPlannedUntil = employee.getSalary_planned_until();
-            Date visaExpiration = employee.getVisa_expiration();
-            String phone_tuda = employee.getPhone_tuda();
-            String dateOfBirth = dateFormat.format(employee.getDate_of_birth());
-            String house_number = employee.getHouse_number();
-            String zipCode = employee.getZip_code();
+            //TODO füllen wenn vorhanden
+            String street = null;
+            String houseNumber = employee.getHouse_number();
             String additionalAddress = employee.getAdditional_address();
+            String zipCode = employee.getZip_code();
             String city = employee.getCity();
+            String dateOfBirth = dateFormat.format(employee.getDate_of_birth());
+            String emailPrivate = employee.getEmail_private();
+            String phonePrivate = employee.getPhone_private();
+            String phoneTuda = employee.getPhone_tuda();
+            String citizenship1 = employee.getCitizenship_1();
+            String citizenship2 = employee.getCitizenship_2();
+            String visaExpiration = dateFormat.format(employee.getVisa_expiration());
+            String employeeNumber = employee.getEmployee_number();
+            String transponderNumber = employee.getTransponder_number();
+            String officeNumber = employee.getOffice_number();
+            String tuId = employee.getTu_id();
+            String status = employee.getStatus();
+            //TODO in Date umwandeln wenn in DB
+            String startDate = contract.getStart_date();
+            String endDate = contract.getEnd_date();
+            //TODO füllen wenn vorhanden (contract)
+            String extend = null; //arbeitsumfang
+            String payGrade = contract.getPaygrade();
+            String payLevel = contract.getPaylevel();
+            //TODO füllen wenn vorhanden (contract)
+            String vblStatus = null;
+            String shkHourlyRate = null;
+            String salaryPlannedUntil = employee.getSalary_planned_until();
 
-            String[] values = {surname, name, house_number, zipCode, city, additionalAddress, email_private, phone_private,
-                    dateOfBirth, citizenship_1, citizenship_2, employeeNumber, tu_id, status, salaryPlannedUntil, transponder_number,
-                    office_number, phone_tuda};
+            String[] values = {name, surname, houseNumber, zipCode, city, additionalAddress, emailPrivate, phonePrivate, phoneTuda,
+                    dateOfBirth, citizenship1, citizenship2, visaExpiration, employeeNumber, transponderNumber, officeNumber, tuId, status, startDate, endDate, extend, payGrade, payLevel, vblStatus, shkHourlyRate, salaryPlannedUntil};
             resultData[currentIndex] = values;
             currentIndex++;
         }
