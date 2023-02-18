@@ -58,11 +58,11 @@ public class ShowPersonView extends JPanel {
         setLayout(new BorderLayout());
         System.out.println("SEEING ITEMS");
 
-        String columns[] = {"Name", "Vorname","Haunsummer", "PLZ","Stadt","Addresszusatz",
-                "E-Mail Privat", "Telefon Privat",
-                "Geburtsdatum", "Staatsangehörigkeit 1", "Staatsangehörigkeit 2", "Personal.Nr", "TUID",
-                "Status", "Gehalt Eingeplant bis", "Transponder.Nr", "Büro.Nr", "Telefon TUDA"
-        };
+        String columns[] = {"Name", "Vorname","Straße","Haunsummer","Adresszusatz", "Postleitzahl","Stadt",
+                "E-Mail Privat", "Telefon Privat", "Telefon TUDA",
+                "Geburtsdatum", "Staatsangehörigkeit 1", "Staatsangehörigkeit 2", "Visum Gültigkeit", "Personalnummer", "Transpondernummer", "Büronummer", "TUID",
+                "Anstellungsart","Beschäftigungsbeginn","Beschäftigungsende", "Beschäftigungsumfgang","Gehaltsklasse","Gehaltsstufe","SHK Stundensatz", "Gehalt Eingeplant bis"
+        }; //TODO Die Spalten die schon Daten haben mit Daten z.B. aus Contract füllen
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         int lines  = employeeDataManager.getRowCount();
         String resultData[][] = new String[lines][];
