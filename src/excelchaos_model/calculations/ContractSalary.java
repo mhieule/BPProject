@@ -5,6 +5,7 @@ import excelchaos_model.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 public class ContractSalary {
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
@@ -18,6 +19,7 @@ public class ContractSalary {
 
 
 
+
     private int numberOfEmployees;
 
     public ContractSalary(){
@@ -26,7 +28,11 @@ public class ContractSalary {
     }
 
     public void determineCurrentSalary(){
+        Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        List<Employee> employees = employeeDataManager.getAllEmployees();
+        for (Employee employee : employees){
 
+        }
 
     }
 
@@ -46,6 +52,23 @@ public class ContractSalary {
         return lastManualInsertedSalaryDate;
     }
 
+    private double getLastCurrentManualInsertedSalary(int id,Date currentDate){
+        double lastManualInsertedSalary = 0;
+        Date temporaryDate = null;
+        for (int i = 0; i < manualSalaryEntryManager.getRowCount(id); i++) {
+            if(currentDate.compareTo(manualSalaryEntryManager.getManualSalaryEntry(id).get(i).getStart_date()) >=0){
+                if(temporaryDate == null){
+                    temporaryDate = manualSalaryEntryManager.getManualSalaryEntry(id).get(i).getStart_date();
+                    lastManualInsertedSalary = manualSalaryEntryManager.getManualSalaryEntry(id).get(i).getNew_salary();
+                } else if(manualSalaryEntryManager.getManualSalaryEntry(id).get(i).getStart_date().compareTo(temporaryDate) > 0){
+                    temporaryDate = manualSalaryEntryManager.getManualSalaryEntry(id).get(i).getStart_date();
+                    lastManualInsertedSalary = manualSalaryEntryManager.getManualSalaryEntry(id).get(i).getNew_salary();
+                }
+            }
+        }
+        return lastManualInsertedSalary;
+    }
+
     private LocalDate getLastCurrentSalaryIncreaseDate(int id,Date currentDate){
         LocalDate lastSalaryIncreaseDate;
         Date temporaryDate = null;
@@ -60,6 +83,24 @@ public class ContractSalary {
         }
         lastSalaryIncreaseDate = temporaryDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         return lastSalaryIncreaseDate;
+
+    }
+
+    private double getLastCurrentSalaryIncrease(int id,Date currentDate){
+        double lastSalaryIncrease = 0;
+        Date temporaryDate = null;
+        for (int i = 0; i < salaryIncreaseHistoryManager.getRowCount(id); i++) {
+            if(currentDate.compareTo(salaryIncreaseHistoryManager.getSalaryIncreaseHistory(id).get(i).getStart_date()) >= 0){
+                if(temporaryDate == null){
+                    temporaryDate = salaryIncreaseHistoryManager.getSalaryIncreaseHistory(id).get(i).getStart_date();
+                    lastSalaryIncrease = salaryIncreaseHistoryManager.getSalaryIncreaseHistory(id).get(i).getNew_salary();
+                } else if(salaryIncreaseHistoryManager.getSalaryIncreaseHistory(id).get(i).getStart_date().compareTo(temporaryDate) >0){
+                    temporaryDate = salaryIncreaseHistoryManager.getSalaryIncreaseHistory(id).get(i).getStart_date();
+                    lastSalaryIncrease = salaryIncreaseHistoryManager.getSalaryIncreaseHistory(id).get(i).getNew_salary();
+                }
+            }
+        }
+        return lastSalaryIncrease;
 
     }
 

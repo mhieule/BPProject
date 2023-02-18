@@ -31,7 +31,7 @@ public class AutomaticPayLevelIncrease {
    public void performPayLevelIncrease() throws ParseException {
        Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-       for (int i = 0; i < numberOfEmployees; i++) {
+       for (int i = 0; i < numberOfEmployees; i++) { //Hier nicht mit int sondern über Employees iterieren
            payLevelIncreasesForEmployees[i] = ProjectedSalaryModel.calculatePayLevelIncrease(dateFormat.parse(contractDataManager.getContract(employeeList.get(i).getId()).getStart_date()),contractDataManager.getContract(employeeList.get(i).getId()).getPaylevel());
             if(currentDate.compareTo(payLevelIncreasesForEmployees[i].get(0)) >= 0){
                 setNewPayLevel(contractDataManager.getContract(i).getPaylevel(),i);
