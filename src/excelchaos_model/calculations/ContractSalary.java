@@ -27,6 +27,7 @@ public class ContractSalary {
 
     public void determineCurrentSalary(){
 
+
     }
 
     private LocalDate getLastCurrentManualInsertedSalaryDate(int id,Date currentDate){

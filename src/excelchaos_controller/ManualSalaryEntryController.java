@@ -1,6 +1,7 @@
 package excelchaos_controller;
 
 import excelchaos_model.*;
+import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.ManualSalaryEntryView;
 
 import javax.swing.table.DefaultTableModel;

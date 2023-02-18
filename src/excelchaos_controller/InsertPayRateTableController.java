@@ -3,24 +3,20 @@ package excelchaos_controller;
 import excelchaos_model.PayRateTableCalculationModel;
 import excelchaos_model.SalaryTable;
 import excelchaos_model.SalaryTableManager;
-import excelchaos_model.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.InsertPayRateTableView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 
 public class InsertPayRateTableController extends MouseAdapter implements ActionListener {
 

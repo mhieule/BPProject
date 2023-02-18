@@ -1,7 +1,7 @@
 package excelchaos_view;
 
 import excelchaos_model.MultiLineTableCellRenderer;
-import excelchaos_model.TableColumnAdjuster;
+import excelchaos_model.utility.TableColumnAdjuster;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

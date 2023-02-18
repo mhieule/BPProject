@@ -1,4 +1,4 @@
-package excelchaos_model;
+package excelchaos_model.utility;
 
 import java.util.Formatter;
 

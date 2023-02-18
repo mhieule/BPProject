@@ -1,12 +1,10 @@
 package excelchaos_controller;
 
 import excelchaos_model.*;
+import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.SalaryHistoryView;
-import excelchaos_view.ToolbarSalaryHistoryView;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -16,8 +14,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class SalaryHistoryController  implements ItemListener {
