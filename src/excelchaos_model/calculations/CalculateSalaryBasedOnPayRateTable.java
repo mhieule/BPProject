@@ -25,33 +25,46 @@ public class CalculateSalaryBasedOnPayRateTable {
                     switch (contract.getPaylevel()) {
                         case "1A":
                             result = E13SalaryTable.get(2).getMtl_kosten_ohne_jsz();
+                            break;
                         case "1B":
                             result = E13SalaryTable.get(4).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E13SalaryTable.get(6).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E13SalaryTable.get(8).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E13SalaryTable.get(10).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E13SalaryTable.get(12).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E13SalaryTable.get(14).getMtl_kosten_ohne_jsz();
+                            break;
                     }
                 } else {
                     switch (contract.getPaylevel()) {
                         case "1":
                             result = E13SalaryTable.get(2).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E13SalaryTable.get(4).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E13SalaryTable.get(6).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E13SalaryTable.get(8).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E13SalaryTable.get(10).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E13SalaryTable.get(12).getMtl_kosten_ohne_jsz();
+                            break;
                     }
                 }
 
@@ -60,33 +73,46 @@ public class CalculateSalaryBasedOnPayRateTable {
                     switch (contract.getPaylevel()) {
                         case "1A":
                             result = E13SalaryTable.get(1).getMtl_kosten_ohne_jsz();
+                            break;
                         case "1B":
                             result = E13SalaryTable.get(3).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E13SalaryTable.get(5).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E13SalaryTable.get(7).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E13SalaryTable.get(9).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E13SalaryTable.get(11).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E13SalaryTable.get(13).getMtl_kosten_ohne_jsz();
+                            break;
                     }
                 } else {
                     switch (contract.getPaylevel()) {
                         case "1":
                             result = E13SalaryTable.get(1).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E13SalaryTable.get(3).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E13SalaryTable.get(5).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E13SalaryTable.get(7).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E13SalaryTable.get(9).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E13SalaryTable.get(11).getMtl_kosten_ohne_jsz();
+                            break;
                     }
                 }
 
@@ -97,34 +123,47 @@ public class CalculateSalaryBasedOnPayRateTable {
                     switch (contract.getPaylevel()) {
                         case "1A":
                             result = E14SalaryTable.get(2).getMtl_kosten_ohne_jsz();
+                            break;
                         case "1B":
                             result = E14SalaryTable.get(4).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E14SalaryTable.get(6).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E14SalaryTable.get(8).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E14SalaryTable.get(10).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E14SalaryTable.get(12).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E14SalaryTable.get(14).getMtl_kosten_ohne_jsz();
+                            break;
 
                     }
                 } else {
                     switch (contract.getPaylevel()) {
                         case "1":
                             result = E14SalaryTable.get(2).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E14SalaryTable.get(4).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E14SalaryTable.get(6).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E14SalaryTable.get(8).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E14SalaryTable.get(10).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E14SalaryTable.get(12).getMtl_kosten_ohne_jsz();
+                            break;
                     }
                 }
 
@@ -133,33 +172,46 @@ public class CalculateSalaryBasedOnPayRateTable {
                     switch (contract.getPaylevel()) {
                         case "1A":
                             result = E14SalaryTable.get(1).getMtl_kosten_ohne_jsz();
+                            break;
                         case "1B":
                             result = E14SalaryTable.get(3).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E14SalaryTable.get(5).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E14SalaryTable.get(7).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E14SalaryTable.get(9).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E14SalaryTable.get(11).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E14SalaryTable.get(13).getMtl_kosten_ohne_jsz();
+                            break;
                     }
                 } else {
                     switch (contract.getPaylevel()) {
                         case "1":
                             result = E14SalaryTable.get(1).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E14SalaryTable.get(3).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E14SalaryTable.get(5).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E14SalaryTable.get(7).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E14SalaryTable.get(9).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E14SalaryTable.get(11).getMtl_kosten_ohne_jsz();
+                            break;
                     }
                 }
 
@@ -180,33 +232,46 @@ public class CalculateSalaryBasedOnPayRateTable {
                     switch (contract.getPaylevel()) {
                         case "1A":
                             result = E13SalaryTable.get(2).getMtl_kosten_ohne_jsz();
+                            break;
                         case "1B":
                             result = E13SalaryTable.get(4).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E13SalaryTable.get(6).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E13SalaryTable.get(8).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E13SalaryTable.get(10).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E13SalaryTable.get(12).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E13SalaryTable.get(14).getMtl_kosten_ohne_jsz();
+                            break;
                     }
                 } else {
                     switch (contract.getPaylevel()) {
                         case "1":
                             result = E13SalaryTable.get(2).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E13SalaryTable.get(4).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E13SalaryTable.get(6).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E13SalaryTable.get(8).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E13SalaryTable.get(10).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E13SalaryTable.get(12).getMtl_kosten_ohne_jsz();
+                            break;
                     }
                 }
 
@@ -215,33 +280,46 @@ public class CalculateSalaryBasedOnPayRateTable {
                     switch (contract.getPaylevel()) {
                         case "1A":
                             result = E13SalaryTable.get(1).getMtl_kosten_ohne_jsz();
+                            break;
                         case "1B":
                             result = E13SalaryTable.get(3).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E13SalaryTable.get(5).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E13SalaryTable.get(7).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E13SalaryTable.get(9).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E13SalaryTable.get(11).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E13SalaryTable.get(13).getMtl_kosten_ohne_jsz();
+                            break;
                     }
                 } else {
                     switch (contract.getPaylevel()) {
                         case "1":
                             result = E13SalaryTable.get(1).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E13SalaryTable.get(3).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E13SalaryTable.get(5).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E13SalaryTable.get(7).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E13SalaryTable.get(9).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E13SalaryTable.get(11).getMtl_kosten_ohne_jsz();
+                            break;
                     }
                 }
 
@@ -252,34 +330,47 @@ public class CalculateSalaryBasedOnPayRateTable {
                     switch (contract.getPaylevel()) {
                         case "1A":
                             result = E14SalaryTable.get(2).getMtl_kosten_ohne_jsz();
+                            break;
                         case "1B":
                             result = E14SalaryTable.get(4).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E14SalaryTable.get(6).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E14SalaryTable.get(8).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E14SalaryTable.get(10).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E14SalaryTable.get(12).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E14SalaryTable.get(14).getMtl_kosten_ohne_jsz();
+                            break;
 
                     }
                 } else {
                     switch (contract.getPaylevel()) {
                         case "1":
                             result = E14SalaryTable.get(2).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E14SalaryTable.get(4).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E14SalaryTable.get(6).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E14SalaryTable.get(8).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E14SalaryTable.get(10).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E14SalaryTable.get(12).getMtl_kosten_ohne_jsz();
+                            break;
                     }
                 }
 
@@ -288,33 +379,46 @@ public class CalculateSalaryBasedOnPayRateTable {
                     switch (contract.getPaylevel()) {
                         case "1A":
                             result = E14SalaryTable.get(1).getMtl_kosten_ohne_jsz();
+                            break;
                         case "1B":
                             result = E14SalaryTable.get(3).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E14SalaryTable.get(5).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E14SalaryTable.get(7).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E14SalaryTable.get(9).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E14SalaryTable.get(11).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E14SalaryTable.get(13).getMtl_kosten_ohne_jsz();
+                            break;
                     }
                 } else {
                     switch (contract.getPaylevel()) {
                         case "1":
                             result = E14SalaryTable.get(1).getMtl_kosten_ohne_jsz();
+                            break;
                         case "2":
                             result = E14SalaryTable.get(3).getMtl_kosten_ohne_jsz();
+                            break;
                         case "3":
                             result = E14SalaryTable.get(5).getMtl_kosten_ohne_jsz();
+                            break;
                         case "4":
                             result = E14SalaryTable.get(7).getMtl_kosten_ohne_jsz();
+                            break;
                         case "5":
                             result = E14SalaryTable.get(9).getMtl_kosten_ohne_jsz();
+                            break;
                         case "6":
                             result = E14SalaryTable.get(11).getMtl_kosten_ohne_jsz();
+                            break;
                     }
                 }
 
