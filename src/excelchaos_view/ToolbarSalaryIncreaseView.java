@@ -28,13 +28,12 @@ public class ToolbarSalaryIncreaseView extends JToolBar {
         names.add("Keine Auswahl");
         names.addAll(employeeNames);
 
-        doSalaryIncrease = new JButton("Gehaltserhöhung durchführen");
-        editSalaryEntry = new JButton("Ausgewählten Eintrag bearbeiten");
-        deleteSalaryEntry = new JButton("Ausgewählten Eintrag löschen");
+        doSalaryIncrease = new JButton("Eintrag hinzufügen");
+        editSalaryEntry = new JButton("Eintrag bearbeiten");
+        deleteSalaryEntry = new JButton("Eintrag löschen");
         nameComboBox = new JComboBox(names.toArray());
         nameComboBox.setBackground(Color.WHITE);
         nameComboBox.setMaximumRowCount(8);
-        addSeparator(new Dimension(10,10));
         add(nameLabel);
         addSeparator(new Dimension(5,10));
         add(nameComboBox);

@@ -2,7 +2,6 @@ package excelchaos_controller;
 
 import excelchaos_model.SearchAndFilterModel;
 import excelchaos_view.ShowPersonView;
-import excelchaos_view.SideMenuPanelActionLogView;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -38,12 +37,10 @@ public class ShowPersonController implements ActionListener {
 
     public void showPersonView(MainFrameController mainFrameController){
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
-            SideMenuPanelActionLogView.model.addElement("Einträge anzeigen");
             mainFrameController.addTab(title,showPersonView);
             //mainFrameController.setChangeListener(this);
         } else {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(title));
-            SideMenuPanelActionLogView.model.addElement("Einträge anzeigen");
             //mainFrameController.setChangeListener(this);
         }
     }

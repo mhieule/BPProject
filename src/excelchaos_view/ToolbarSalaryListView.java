@@ -7,7 +7,6 @@ import java.awt.event.ItemListener;
 
 public class ToolbarSalaryListView extends JToolBar {
     private JButton editEntry;
-    private JButton deleteEntry;
     private JButton increaseSalary;
 
     private JButton salaryStageOn;
@@ -23,8 +22,7 @@ public class ToolbarSalaryListView extends JToolBar {
         setFloatable(false);
         setBackground(Color.WHITE);
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        editEntry = new JButton("Gehaltseintrag bearbeiten");
-        deleteEntry = new JButton(("Gehaltseintrag löschen"));
+        editEntry = new JButton("Eintrag bearbeiten");
         increaseSalary = new JButton("Gehaltserhöhung");
         salaryStageOn = new JButton("Gehaltsprojektion");
         removeAdditionalSalaryStage = new JButton("Gehaltsstufenprojektion ausblenden");
@@ -33,7 +31,6 @@ public class ToolbarSalaryListView extends JToolBar {
         searchField = new JTextField();
         searchField.setPreferredSize(new Dimension(130,30));
         add(editEntry);
-        add(deleteEntry);
 
         add(increaseSalary);
         add(showNextPayGrade);
@@ -46,7 +43,6 @@ public class ToolbarSalaryListView extends JToolBar {
 
     public void setActionListener(ActionListener l){
         editEntry.addActionListener(l);
-        deleteEntry.addActionListener(l);
         increaseSalary.addActionListener(l);
         salaryStageOn.addActionListener(l);
         removeAdditionalSalaryStage.addActionListener(l);

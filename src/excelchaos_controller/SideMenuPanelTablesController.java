@@ -41,8 +41,8 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             frameController.getManualSalaryEntryController().showManualSalaryEntryView(frameController);
         } else if (e.getSource() == sideMenu.getSalaryIncrease()) {
             frameController.getSalaryIncreaseController().showManualSalaryEntryView(frameController);
-        } else if (e.getSource() == sideMenu.getGehaltshistorie()) {
-            frameController.getSalaryHistoryController().showSalaryHistoryView(frameController);
+//        } else if (e.getSource() == sideMenu.getGehaltshistorie()) {
+//            frameController.getSalaryHistoryController().showSalaryHistoryView(frameController);
         } else if (e.getSource() == sideMenu.getShowE13Tables()) {
             PayRateTablesController E13Controller = new PayRateTablesController(frameController);
             E13Controller.setTitle("E13 Entgelttabellen");

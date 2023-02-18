@@ -3,7 +3,6 @@ package excelchaos_controller;
 import excelchaos_model.*;
 import excelchaos_view.InsertPersonView;
 import excelchaos_view.InsertProjectsView;
-import excelchaos_view.SideMenuPanelActionLogView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

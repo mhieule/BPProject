@@ -3,7 +3,6 @@ package excelchaos_controller;
 import excelchaos_model.*;
 import excelchaos_view.InsertPersonView;
 import excelchaos_view.InsertSalaryView;
-import excelchaos_view.SideMenuPanelActionLogView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,7 +31,6 @@ public class InsertSalaryController implements ActionListener {
     }
 
     public void showInsertSalaryView(MainFrameController mainFrameController) {
-        SideMenuPanelActionLogView.model.addElement("Eintrag einfügen");
         if (mainFrameController.getTabs().indexOfTab(addSalaryTab) == -1) {
             mainFrameController.getTabs().addTab(addSalaryTab, insertSalaryView);
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addSalaryTab));
@@ -221,7 +219,6 @@ public class InsertSalaryController implements ActionListener {
 
             insertSalaryView.revalidate();
             insertSalaryView.repaint();
-            SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
             frameController.getSalaryListController().updateData();
             resetInputs();
             frameController.getTabs().removeTabNewWindow(insertSalaryView);

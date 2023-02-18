@@ -17,9 +17,9 @@ public class ToolbarShowProjectsView extends JToolBar {
         setFloatable(false);
         setBackground(Color.WHITE);
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        insertProject = new JButton("hinzufügen");
-        editProject = new JButton("bearbeiten");
-        deleteProject = new JButton("löschen");
+        insertProject = new JButton("Eintrag hinzufügen");
+        editProject = new JButton("Eintrag bearbeiten");
+        deleteProject = new JButton("Eintrag löschen");
         costOverview = new JButton("Kostenübersicht");
         searchLabel = new JLabel("Suchen:");
         searchField = new JTextField();

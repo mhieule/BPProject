@@ -29,13 +29,12 @@ public class ToolbarManualSalaryEntryView extends JToolBar {
         names.add("Keine Auswahl");
         names.addAll(employeeNames);
 
-        addSalaryEntry = new JButton("Gehaltseintrag hinzufügen");
-        editSalaryEntry = new JButton("Ausgewählten Eintrag bearbeiten");
-        deleteSalaryEntry = new JButton("Ausgewählten Eintrag löschen");
+        addSalaryEntry = new JButton("Eintrag hinzufügen");
+        editSalaryEntry = new JButton("Eintrag bearbeiten");
+        deleteSalaryEntry = new JButton("Eintrag löschen");
         nameComboBox = new JComboBox(names.toArray());
         nameComboBox.setBackground(Color.WHITE);
         nameComboBox.setMaximumRowCount(8);
-        addSeparator(new Dimension(10,10));
         add(nameLabel);
         addSeparator(new Dimension(5,10));
         add(nameComboBox);

@@ -4,7 +4,6 @@ import excelchaos_model.Contract;
 import excelchaos_model.ContractDataManager;
 import excelchaos_model.Employee;
 import excelchaos_view.InsertPersonView;
-import excelchaos_view.SideMenuPanelActionLogView;
 import excelchaos_model.EmployeeDataManager;
 
 import java.awt.event.ActionEvent;
@@ -35,7 +34,6 @@ public class InsertPersonController implements ActionListener {
     }
 
     public void showInsertPersonView(MainFrameController mainFrameController) {
-        SideMenuPanelActionLogView.model.addElement("Eintrag einfügen");
         if (mainFrameController.getTabs().indexOfTab(addPersonTab) == -1) {
             mainFrameController.getTabs().addTab(addPersonTab, insertPersonView);
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addPersonTab));
