@@ -12,7 +12,7 @@ public class InsertPersonView extends JPanel {
 
     private JLabel name, vorname, strasse, hausnummer, adresszusatz, plz, stadt, privatEmail, privateTelefonnummer, geburtsdatum,
             nationalityFirst, nationalitySecond, personalnummer, tuid, typeOfJob, visaValidUntil,
-            gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, workStart, workEnd, workScope, payGroupOnHiring, payGradeOnHiring, hiwiTypeOfPayment, puffer;
+            gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, workStart, workEnd, workScope, payGroupOnHiring, payGradeOnHiring, hiwiTypeOfPayment, vblstate, puffer;
 
     private JTextField tfName, tfVorname, tfStrasse, tfHausnummer, tfAdresszusatz, tfPLZ, tfStadt, tfPrivatEmail, tfPrivateTelefonnummer,
             tfPersonalnummer, tfTuid, tfGehaltEingeplanntBis, tfTranspondernummer, tfBueronummer,
@@ -21,7 +21,7 @@ public class InsertPersonView extends JPanel {
     private DatePicker tfGeburtsdatum, tfVisaValidUntil, tfWorkStart, tfWorkEnd;
 
 
-    private JComboBox nationalityPickList, nationalityPickList2, typeOfJobPicklist, hiwiTypeOfPaymentList, payGradeList, payGroupList;
+    private JComboBox nationalityPickList, nationalityPickList2, typeOfJobPicklist, hiwiTypeOfPaymentList, payGradeList, payGroupList,vblList;
     private JCheckBox nationalityCheckBox, visaRequiredCheckBox;
 
     private JButton submit, reset, salary;
@@ -48,7 +48,7 @@ public class InsertPersonView extends JPanel {
         add(centerUp, BorderLayout.CENTER);
         add(centerDown, BorderLayout.SOUTH);
 
-        name = new JLabel("Nachname");
+        name = new JLabel("Name");
 
         setConstraintsLabel(name, 0);
         tfName = new JTextField();
@@ -90,133 +90,144 @@ public class InsertPersonView extends JPanel {
         setConstraintsLabel(stadt, 6);
         tfStadt = new JTextField();
         setConstraintsTextField(tfStadt, 6);
+
+        geburtsdatum = new JLabel("Geburtsdatum");
+        setConstraintsLabel(geburtsdatum, 7);
+        tfGeburtsdatum = new DatePicker();
+        setConstraintsDatePicker(tfGeburtsdatum, 7);
         //factor++;
 
         // Land -> soll Land als Feld eingefügt werden????
 
         privatEmail = new JLabel("Private E-Mail-Adresse");
-        setConstraintsLabel(privatEmail, 7);
+        setConstraintsLabel(privatEmail, 8);
         tfPrivatEmail = new JTextField();
-        setConstraintsTextField(tfPrivatEmail, 7);
+        setConstraintsTextField(tfPrivatEmail, 8);
 
         privateTelefonnummer = new JLabel("Private Telefonnummer");
-        setConstraintsLabel(privateTelefonnummer, 8);
+        setConstraintsLabel(privateTelefonnummer, 9);
         tfPrivateTelefonnummer = new JTextField();
-        setConstraintsTextField(tfPrivateTelefonnummer, 8);
+        setConstraintsTextField(tfPrivateTelefonnummer, 9);
 
-        geburtsdatum = new JLabel("Geburtsdatum");
-        setConstraintsLabel(geburtsdatum, 9);
-        tfGeburtsdatum = new DatePicker();
-        setConstraintsDatePicker(tfGeburtsdatum, 9);
+        telefonnummerTUDA = new JLabel("Telefon TU-DA");
+        setConstraintsLabel(telefonnummerTUDA, 10);
+        tfTelefonnummerTUDA = new JTextField();
+        setConstraintsTextField(tfTelefonnummerTUDA, 10);
+
 
         nationalityFirst = new JLabel("Staatsangehörigkeit");
-        setConstraintsLabel(nationalityFirst, 10);
+        setConstraintsLabel(nationalityFirst, 11);
         String[] nationalityArray = CountryModel.getCountries();
         nationalityPickList = new JComboBox(nationalityArray);
         nationalityPickList.setMaximumRowCount(5); // die Anzahl der Reihen in der Auswahlliste, die bei der Wahl angezeigt werden
-        setConstraintsJComboBox(nationalityPickList, 10);
+        setConstraintsJComboBox(nationalityPickList, 11);
 
         // Checkbox, die abfragt, ob eine zweite Staatsangehoerigkeit vorhanden ist. Wenn diese TRUE ist, erst dann sollte "STAATANGEHOERIGKEIT 2?" sichtbar und der Eintrag auch möglich sein!
         nationalityCheckBox = new JCheckBox("Zweite Staatsangehörigkeit?", false);
-        setConstraintsJCheckBox(nationalityCheckBox, 11);
+        setConstraintsJCheckBox(nationalityCheckBox, 12);
 
         // Sichtbarkeit von dem Label mit dem dazugehörigen Textfeld für die Eintragung
         nationalitySecond = new JLabel("Zweite Staatsangehörigkeit");
-        setConstraintsLabel(nationalitySecond, 12);
+        setConstraintsLabel(nationalitySecond, 13);
         nationalitySecond.setVisible(false);
 
         String[] nationalityArray2 = CountryModel.getCountriesWithKeine();
         nationalityPickList2 = new JComboBox(nationalityArray2);
-        setConstraintsJComboBox(nationalityPickList2, 12);
+        setConstraintsJComboBox(nationalityPickList2, 13);
         nationalityPickList2.setVisible(false);
 
         visaRequiredCheckBox = new JCheckBox("Visum notwendig?", false);
-        setConstraintsJCheckBox(visaRequiredCheckBox, 13);
+        setConstraintsJCheckBox(visaRequiredCheckBox, 14);
         visaValidUntil = new JLabel("Visum gültig bis");
-        setConstraintsLabel(visaValidUntil, 14);
+        setConstraintsLabel(visaValidUntil, 15);
         visaValidUntil.setVisible(false);
         tfVisaValidUntil = new DatePicker();
-        setConstraintsDatePicker(tfVisaValidUntil, 14);
+        setConstraintsDatePicker(tfVisaValidUntil, 15);
         tfVisaValidUntil.setVisible(false);
 
 
         personalnummer = new JLabel("Personalnummer");
-        setConstraintsLabel(personalnummer, 15);
+        setConstraintsLabel(personalnummer, 16);
         tfPersonalnummer = new JTextField();
-        setConstraintsTextField(tfPersonalnummer, 15);
+        setConstraintsTextField(tfPersonalnummer, 16);
+
+        transpondernummer = new JLabel("Transpondernummer");
+        setConstraintsLabel(transpondernummer, 17);
+        tfTranspondernummer = new JTextField();
+        setConstraintsTextField(tfTranspondernummer, 17);
+
+        bueronummer = new JLabel("Büronummer");
+        setConstraintsLabel(bueronummer, 18);
+        tfBueronummer = new JTextField();
+        setConstraintsTextField(tfBueronummer, 18);
 
         tuid = new JLabel("TU-ID");
-        setConstraintsLabel(tuid, 16);
+        setConstraintsLabel(tuid, 19);
         tfTuid = new JTextField();
-        setConstraintsTextField(tfTuid, 16);
+        setConstraintsTextField(tfTuid, 19);
 
         typeOfJob = new JLabel("Art der Anstellung");
-        setConstraintsLabel(typeOfJob, 17);
+        setConstraintsLabel(typeOfJob, 20);
         String[] statusArray = {"Nicht ausgewählt", "WiMi", "ATM"}; //TODO SHK Wieder hinzufügen (Wurde für Nutzungsstudie rausgenommen)
         typeOfJobPicklist = new JComboBox(statusArray);
-        setConstraintsJComboBox(typeOfJobPicklist, 17);
+        setConstraintsJComboBox(typeOfJobPicklist, 20);
 
         workStart = new JLabel("Beschäftigungsbeginn");
-        setConstraintsLabel(workStart, 18);
+        setConstraintsLabel(workStart, 21);
         tfWorkStart = new DatePicker();
-        setConstraintsDatePicker(tfWorkStart, 18);
+        setConstraintsDatePicker(tfWorkStart, 21);
 
         workEnd = new JLabel("Beschäftigungsende");
-        setConstraintsLabel(workEnd, 19);
+        setConstraintsLabel(workEnd, 22);
         tfWorkEnd = new DatePicker();
-        setConstraintsDatePicker(tfWorkEnd, 19);
+        setConstraintsDatePicker(tfWorkEnd, 22);
 
         workScope = new JLabel("Beschäftigungsumfang");
-        setConstraintsLabel(workScope, 20);
+        setConstraintsLabel(workScope, 23);
         tfWorkScope = new JTextField();
-        setConstraintsTextField(tfWorkScope, 20);
+        setConstraintsTextField(tfWorkScope, 23);
 
-        payGroupOnHiring = new JLabel("Gehaltsgruppe bei Einstellung");
-        setConstraintsLabel(payGroupOnHiring, 21);
+        payGroupOnHiring = new JLabel("Gehaltsklasse bei Einstellung");
+        setConstraintsLabel(payGroupOnHiring, 24);
         payGroupOnHiring.setVisible(false);
         String[] payGroups = {"Nicht ausgewählt", "E13", "E14"};
         payGroupList = new JComboBox(payGroups);
-        setConstraintsJComboBox(payGroupList, 21);
+        setConstraintsJComboBox(payGroupList, 24);
         payGroupList.setVisible(false);
 
         payGradeOnHiring = new JLabel("Gehaltsstufe bei Einstellung");
-        setConstraintsLabel(payGradeOnHiring, 22);
+        setConstraintsLabel(payGradeOnHiring, 25);
         payGradeOnHiring.setVisible(false);
         String[] payGrades = {"Nicht ausgewählt", "1A","1B","1","2","3","4","5","6"};
         payGradeList = new JComboBox(payGrades);
-        setConstraintsJComboBox(payGradeList,22);
+        setConstraintsJComboBox(payGradeList,25);
         payGradeList.setVisible(false);
 
+        vblstate = new JLabel("VBL-Status");
+        setConstraintsLabel(vblstate,26);
+        vblstate.setVisible(false);
+        String[] vbl = {"Nicht ausgewählt","Pflichtig","Befreit"};
+        vblList = new JComboBox(vbl);
+        setConstraintsJComboBox(vblList,26);
+        vblList.setVisible(false);
+
+
         hiwiTypeOfPayment = new JLabel("SHK Stundensatz");
-        setConstraintsLabel(hiwiTypeOfPayment, 21);
+        setConstraintsLabel(hiwiTypeOfPayment, 27);
         hiwiTypeOfPayment.setVisible(false);
         String[] hiwiPaymentArray = {"Nicht ausgewählt", "SHK Basisvergütung", "SHK erhöhter Stundensatz", "WHK"};
         hiwiTypeOfPaymentList = new JComboBox(hiwiPaymentArray);
-        setConstraintsJComboBox(hiwiTypeOfPaymentList, 21);
+        setConstraintsJComboBox(hiwiTypeOfPaymentList, 27);
         hiwiTypeOfPaymentList.setVisible(false);
 
         gehaltEingeplanntBis = new JLabel("Gehalt eingeplant bis");
-        setConstraintsLabel(gehaltEingeplanntBis, 23);
+        setConstraintsLabel(gehaltEingeplanntBis, 28);
         tfGehaltEingeplanntBis = new JTextField();
-        setConstraintsTextField(tfGehaltEingeplanntBis, 23);
+        setConstraintsTextField(tfGehaltEingeplanntBis, 28);
 
-        transpondernummer = new JLabel("Transpondernummer");
-        setConstraintsLabel(transpondernummer, 24);
-        tfTranspondernummer = new JTextField();
-        setConstraintsTextField(tfTranspondernummer, 24);
-
-        bueronummer = new JLabel("Büronummer");
-        setConstraintsLabel(bueronummer, 25);
-        tfBueronummer = new JTextField();
-        setConstraintsTextField(tfBueronummer, 25);
-
-        telefonnummerTUDA = new JLabel("Telefon TU-DA");
-        setConstraintsLabel(telefonnummerTUDA, 26);
-        tfTelefonnummerTUDA = new JTextField();
-        setConstraintsTextField(tfTelefonnummerTUDA, 26);
 
         puffer = new JLabel(" ");
-        setConstraintsPuffer(puffer,27);
+        setConstraintsPuffer(puffer,29);
 
         leftButtons = new JPanel(new FlowLayout());
         rightButtons = new JPanel(new FlowLayout());
@@ -268,6 +279,10 @@ public class InsertPersonView extends JPanel {
 
     public JComboBox getNationalityPickList2() {
         return nationalityPickList2;
+    }
+
+    public JLabel getVblstate() {
+        return vblstate;
     }
 
     public JCheckBox getVisaRequiredCheckBox() {
@@ -394,6 +409,10 @@ public class InsertPersonView extends JPanel {
 
     public JComboBox getPayGradeList() {
         return payGradeList;
+    }
+
+    public JComboBox getVblList() {
+        return vblList;
     }
 
     private void setConstraintsLabel(JLabel label, int rowNumber) {

@@ -64,6 +64,7 @@ public class InsertPersonController implements ActionListener {
     }
 
     public void resetInputs(){
+        //TODO VBL Feld hinzufügen
         insertPersonView.getTfName().setText(null);
         insertPersonView.getTfVorname().setText(null);
         insertPersonView.getTfStrasse().setText(null);
@@ -104,6 +105,7 @@ public class InsertPersonController implements ActionListener {
         insertPersonView.getTfWorkStart().setText(null);
     }
 
+    //TODO VBL Status Speichern (wenn Feld in DB verfügbar ist)
     public Employee safeData(){
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         ContractDataManager contractDataManager = new ContractDataManager();
@@ -204,11 +206,15 @@ public class InsertPersonController implements ActionListener {
                 insertPersonView.getPayGroupList().setVisible(true);
                 insertPersonView.getPayGradeOnHiring().setVisible(true);
                 insertPersonView.getPayGradeList().setVisible(true);
+                insertPersonView.getVblstate().setVisible(true);
+                insertPersonView.getVblList().setVisible(true);
             } else {
                 insertPersonView.getPayGroupOnHiring().setVisible(false);
                 insertPersonView.getPayGroupList().setVisible(false);
                 insertPersonView.getPayGradeOnHiring().setVisible(false);
                 insertPersonView.getPayGradeList().setVisible(false);
+                insertPersonView.getVblstate().setVisible(false);
+                insertPersonView.getVblList().setVisible(false);
             }
             if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("SHK")){
                 insertPersonView.getHiwiTypeOfPayment().setVisible(true);
