@@ -104,6 +104,59 @@ public class InsertPersonController implements ActionListener {
         insertPersonView.getTfWorkStart().setText(null);
     }
 
+    public Employee safeData(){
+        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+        ContractDataManager contractDataManager = new ContractDataManager();
+        int id = employeeDataManager.getNextID();
+        String surname = insertPersonView.getTfName().getText();
+        String name  = insertPersonView.getTfVorname().getText();
+        String email_private = insertPersonView.getTfPrivatEmail().getText();
+        String phone_private = insertPersonView.getTfPrivateTelefonnummer().getText();
+        String citizenship_1 = insertPersonView.getNationalityPickList().getSelectedItem().toString();
+        String citizenship_2 = insertPersonView.getNationalityPickList2().getSelectedItem().toString();
+        String employeeNumber = insertPersonView.getTfPersonalnummer().getText();
+        String tu_id = insertPersonView.getTfTuid().getText();
+        boolean visa_required = insertPersonView.getVisaRequiredCheckBox().isSelected();
+        String status = insertPersonView.getStatusPicklist().getSelectedItem().toString();
+        String transponder_number = insertPersonView.getTfTranspondernummer().getText();
+        String office_number = insertPersonView.getTfBueronummer().getText();
+        String salaryPlannedUntil = insertPersonView.getTfGehaltEingeplanntBis().getText();
+        Date visaExpiration = null;
+        Calendar calendar = Calendar.getInstance();
+        if(visa_required) {
+            LocalDate visaExpirationDate = insertPersonView.getTfVisaValidUntil().getDate();
+            calendar.set(visaExpirationDate.getYear(), visaExpirationDate.getMonth().getValue(), visaExpirationDate.getDayOfMonth());
+            visaExpiration = calendar.getTime();
+        }
+        String phone_tuda = insertPersonView.getTfTelefonnummerTUDA().getText();
+        LocalDate dateOfBirthDate = insertPersonView.getTfGeburtsdatum().getDate();
+        calendar.set(dateOfBirthDate.getYear(), dateOfBirthDate.getMonth().getValue(), dateOfBirthDate.getDayOfMonth());
+        Date dateOfBirth = calendar.getTime();
+        String houseNumber = insertPersonView.getTfHausnummer().getText();
+        String zip_code = insertPersonView.getTfPLZ().getText();
+        String additional_address = insertPersonView.getTfAdresszusatz().getText();
+        String city = insertPersonView.getTfStadt().getText();
+        String payGrade = insertPersonView.getPayGroupList().getSelectedItem().toString();
+        String payLevel = insertPersonView.getPayGradeList().getSelectedItem().toString();
+
+        //TODO muss in Datenbank als Date gespeichert werden und nicht als String
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        LocalDate workStartDate = insertPersonView.getTfWorkStart().getDate();
+        calendar.set(workStartDate.getYear(), workStartDate.getMonth().getValue(), workStartDate.getDayOfMonth());
+        String workStart = dateFormat.format(calendar.getTime());
+        LocalDate workEndDate = insertPersonView.getTfWorkEnd().getDate();
+        calendar.set(workEndDate.getYear(), workEndDate.getMonth().getValue(), workEndDate.getDayOfMonth());
+        String workEnd = dateFormat.format(calendar.getTime());
+
+        Employee newEmployee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
+                citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+        employeeDataManager.addEmployee(newEmployee);
+        Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0);
+        contractDataManager.addContract(newContract);
+        return newEmployee;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == insertPersonView.getNationalityCheckBox()) {
@@ -121,121 +174,28 @@ public class InsertPersonController implements ActionListener {
             }
         }
         if (e.getSource() == insertPersonView.getSubmit()) {
-            System.out.println("submitting");
-            EmployeeDataManager employeeDataManager = new EmployeeDataManager();
-            ContractDataManager contractDataManager = new ContractDataManager();
-            int id = employeeDataManager.getNextID();
-            String surname = insertPersonView.getTfName().getText();
-            String name  = insertPersonView.getTfVorname().getText();
-            String email_private = insertPersonView.getTfPrivatEmail().getText();
-            String phone_private = insertPersonView.getTfPrivateTelefonnummer().getText();
-            String citizenship_1 = insertPersonView.getNationalityPickList().getSelectedItem().toString();
-            String citizenship_2 = insertPersonView.getNationalityPickList2().getSelectedItem().toString();
-            String employeeNumber = insertPersonView.getTfPersonalnummer().getText();
-            String tu_id = insertPersonView.getTfTuid().getText();
-            boolean visa_required = false;
-            String status = insertPersonView.getStatusPicklist().getSelectedItem().toString();
-            String transponder_number = insertPersonView.getTfTranspondernummer().getText();
-            String office_number = insertPersonView.getTfBueronummer().getText();
-            String salaryPlannedUntil = insertPersonView.getTfGehaltEingeplanntBis().getText();
-            Calendar calendar = Calendar.getInstance();
-            LocalDate visaExpirationDate = insertPersonView.getTfVisaValidUntil().getDate();
-            calendar.set(visaExpirationDate.getYear(), visaExpirationDate.getMonth().getValue(),visaExpirationDate.getDayOfMonth());
-            Date visaExpiration = calendar.getTime();
-            String phone_tuda = insertPersonView.getTfTelefonnummerTUDA().getText();
-            LocalDate dateOfBirthDate = insertPersonView.getTfGeburtsdatum().getDate();
-            calendar.set(dateOfBirthDate.getYear(), dateOfBirthDate.getMonth().getValue(), dateOfBirthDate.getDayOfMonth());
-            Date dateOfBirth = calendar.getTime();
-            String houseNumber = insertPersonView.getTfHausnummer().getText();
-            String zip_code = insertPersonView.getTfPLZ().getText();
-            String additional_address = insertPersonView.getTfAdresszusatz().getText();
-            String city = insertPersonView.getTfStadt().getText();
-            String payGrade = insertPersonView.getPayGroupList().getSelectedItem().toString();
-            String payLevel = insertPersonView.getPayGradeList().getSelectedItem().toString();
-
-            // muss in Datenbank als Date gespeichert werden und nicht als String
-            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            LocalDate workStartDate = insertPersonView.getTfWorkStart().getDate();
-            calendar.set(workStartDate.getYear(), workStartDate.getMonth().getValue(), workStartDate.getDayOfMonth());
-            String workStart = dateFormat.format(calendar.getTime());
-            LocalDate workEndDate = insertPersonView.getTfWorkEnd().getDate();
-            calendar.set(workEndDate.getYear(), workEndDate.getMonth().getValue(), workEndDate.getDayOfMonth());
-            String workEnd = dateFormat.format(calendar.getTime());
-
-            Employee newEmployee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
-                    citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                    salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
-            employeeDataManager.addEmployee(newEmployee);
-            Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0);
-            contractDataManager.addContract(newContract);
+            safeData();
             resetInputs();
             insertPersonView.revalidate();
             insertPersonView.repaint();
             frameController.getShowPersonalData().updateData();
             frameController.getSalaryListController().updateData();
-            SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
         }
         if(e.getSource() == insertPersonView.getSalaryEntry()){
-            System.out.println("submit and go to salary");
-            EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+            Employee newEmployee = safeData();
             ContractDataManager contractDataManager = new ContractDataManager();
-            int id = employeeDataManager.getNextID();
-            String surname = insertPersonView.getTfName().getText();
-            String name  = insertPersonView.getTfVorname().getText();
-            String email_private = insertPersonView.getTfPrivatEmail().getText();
-            String phone_private = insertPersonView.getTfPrivateTelefonnummer().getText();
-            String citizenship_1 = insertPersonView.getNationalityPickList().getSelectedItem().toString();
-            String citizenship_2 = insertPersonView.getNationalityPickList2().getSelectedItem().toString();
-            String employeeNumber = insertPersonView.getTfPersonalnummer().getText();
-            String tu_id = insertPersonView.getTfTuid().getText();
-            boolean visa_required = false;
-            String status = insertPersonView.getStatusPicklist().getSelectedItem().toString();
-            String transponder_number = insertPersonView.getTfTranspondernummer().getText();
-            String office_number = insertPersonView.getTfBueronummer().getText();
-            String salaryPlannedUntil = insertPersonView.getTfGehaltEingeplanntBis().getText();
-            Calendar calendar = Calendar.getInstance();
-            LocalDate visaExpirationDate = insertPersonView.getTfVisaValidUntil().getDate();
-            calendar.set(visaExpirationDate.getYear(), visaExpirationDate.getMonth().getValue(),visaExpirationDate.getDayOfMonth());
-            Date visaExpiration = calendar.getTime();
-            String phone_tuda = insertPersonView.getTfTelefonnummerTUDA().getText();
-            LocalDate dateOfBirthDate = insertPersonView.getTfGeburtsdatum().getDate();
-            calendar.set(dateOfBirthDate.getYear(), dateOfBirthDate.getMonth().getValue(), dateOfBirthDate.getDayOfMonth());
-            Date dateOfBirth = calendar.getTime();
-            String houseNumber = insertPersonView.getTfHausnummer().getText();
-            String zip_code = insertPersonView.getTfPLZ().getText();
-            String additional_address = insertPersonView.getTfAdresszusatz().getText();
-            String city = insertPersonView.getTfStadt().getText();
-            String payGrade = insertPersonView.getPayGroupList().getSelectedItem().toString();
-            String payLevel = insertPersonView.getPayGradeList().getSelectedItem().toString();
-
-            // muss in Datenbank als Date gespeichert werden und nicht als String
-            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            LocalDate workStartDate = insertPersonView.getTfWorkStart().getDate();
-            calendar.set(workStartDate.getYear(), workStartDate.getMonth().getValue(), workStartDate.getDayOfMonth());
-            String workStart = dateFormat.format(calendar.getTime());
-            LocalDate workEndDate = insertPersonView.getTfWorkEnd().getDate();
-            calendar.set(workEndDate.getYear(), workEndDate.getMonth().getValue(), workEndDate.getDayOfMonth());
-            String workEnd = dateFormat.format(calendar.getTime());
-
-            Employee newEmployee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
-                    citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                    salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
-            employeeDataManager.addEmployee(newEmployee);
-            Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0);
-            contractDataManager.addContract(newContract);
-            //vblFree richtigen wert übergeben wenn dieser gespeichert wird
-            frameController.getInsertSalaryController().fillFields(surname + " " + name, status, payGrade, workStart, payLevel, false);
+            Contract contract = contractDataManager.getContract(newEmployee.getId());
+            //TODO vblFree richtigen wert übergeben wenn dieser gespeichert wird
+            frameController.getInsertSalaryController().fillFields(newEmployee.getSurname() + " " + newEmployee.getName(), newEmployee.getStatus(), contract.getPaygrade(), contract.getStart_date(), contract.getPaylevel(), false);
             resetInputs();
             insertPersonView.revalidate();
             insertPersonView.repaint();
             frameController.getShowPersonalData().updateData();
             frameController.getSalaryListController().updateData();
-            SideMenuPanelActionLogView.model.addElement("Eintrag eingefügt!");
             frameController.getInsertSalaryController().showInsertSalaryView(frameController);
             frameController.getTabs().removeTabNewWindow(insertPersonView);
         }
         if(e.getSource() == insertPersonView.getReset()){
-            System.out.println("resetting");
             resetInputs();
         }
         if (e.getSource() == insertPersonView.getTypeOfJobPicklist()){
