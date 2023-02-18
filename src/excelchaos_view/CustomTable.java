@@ -211,6 +211,8 @@ public class CustomTable extends JTable {
         return resultTable;
     }
 
+    //TODO Ausgewählte Zeile als Array zurückgeben bzw. mehrere Zeilen als 2D Array zurückgeben
+
     /**
      * Same as the method above, this method is used to retrieve one row as a complete table
      * @param rowIndex the row index indicating the row to be chosen to turn into a table
