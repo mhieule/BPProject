@@ -152,7 +152,7 @@ public class InsertPersonView extends JPanel {
 
         typeOfJob = new JLabel("Art der Anstellung");
         setConstraintsLabel(typeOfJob, 17);
-        String[] statusArray = {"Nicht ausgewählt", "WiMi", "ATM", "SHK"};
+        String[] statusArray = {"Nicht ausgewählt", "WiMi", "ATM"}; //TODO SHK Wieder hinzufügen (Wurde für Nutzungsstudie rausgenommen)
         typeOfJobPicklist = new JComboBox(statusArray);
         setConstraintsJComboBox(typeOfJobPicklist, 17);
 

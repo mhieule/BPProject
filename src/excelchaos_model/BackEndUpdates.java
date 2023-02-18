@@ -1,7 +1,6 @@
 package excelchaos_model;
 
 import excelchaos_model.calculations.AutomaticPayLevelIncrease;
-import excelchaos_model.calculations.CalculateSalaryBasedOnPayRateTable;
 import excelchaos_model.calculations.ContractSalary;
 
 import java.text.ParseException;
