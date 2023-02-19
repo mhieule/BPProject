@@ -53,6 +53,15 @@ public class SalaryIncreaseHistoryManager {
         }
     }
 
+    public void removeAllSalaryIncreaseHistories(){
+        try {
+            TableUtils.clearTable(connectionSource, SalaryIncreaseHistory.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public List<SalaryIncreaseHistory> getSalaryIncreaseHistory(int id){
         List<SalaryIncreaseHistory> salaryIncreaseHistoryList = new ArrayList<>();
         QueryBuilder<SalaryIncreaseHistory,Object> queryBuilder = salaryIncreaseHistoriesDao.queryBuilder();
@@ -60,6 +69,17 @@ public class SalaryIncreaseHistoryManager {
             queryBuilder.where().eq("id",id);
             PreparedQuery<SalaryIncreaseHistory> preparedQuery = queryBuilder.prepare();
             salaryIncreaseHistoryList = salaryIncreaseHistoriesDao.query(preparedQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return salaryIncreaseHistoryList;
+    }
+
+    public List<SalaryIncreaseHistory> getAllSalaryIncreaseHistories(){
+        List<SalaryIncreaseHistory> salaryIncreaseHistoryList = new ArrayList<>();
+        try {
+            salaryIncreaseHistoryList = salaryIncreaseHistoriesDao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
