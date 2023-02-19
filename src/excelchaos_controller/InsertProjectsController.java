@@ -10,8 +10,10 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -49,6 +51,9 @@ public class InsertProjectsController implements ActionListener {
         insertProjectsView.getTfStart().setText(null);
         insertProjectsView.getCategoriesTable().setModel(resetTable(insertProjectsView.getCategoryColumns()));
         insertProjectsView.getProjectFunderTable().setModel(resetTable(insertProjectsView.getFunderColumns()));
+        insertProjectsView.getProjectParticipationTable().setModel(resetTable(insertProjectsView.getParticipationColumns()));
+        insertProjectsView.setUpNameSelection(insertProjectsView.getProjectParticipationTable());
+        insertProjectsView.setUpDateSelection(insertProjectsView.getProjectParticipationTable());
     }
 
     public DefaultTableModel resetTable(String[] newColumns) {
@@ -81,6 +86,13 @@ public class InsertProjectsController implements ActionListener {
             Project project = new Project(id, name, dateOfStart, dateOfApproval, endDate);
 
             projectManager.addProject(project);
+            insertCategoryValuesDB(project.getProject_id());
+            insertFunderValuesDB(project.getProject_id());
+            try {
+                insertParticipationValuesDB(project.getProject_id());
+            } catch (ParseException ex) {
+                throw new RuntimeException(ex);
+            }
 
             resetInputs();
             insertProjectsView.revalidate();
@@ -99,11 +111,15 @@ public class InsertProjectsController implements ActionListener {
         ProjectCategoryManager projectCategoryManager = new ProjectCategoryManager();
         JTable categoriesTable = insertProjectsView.getCategoriesTable();
         String[][] tableValues = getTableValues(categoriesTable);
+        System.out.println(tableValues.length);
         ProjectCategory projectCategory;
         StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
         for (int row = 0; row < tableValues.length; row++) {
-            projectCategory = new ProjectCategory(projectId, projectCategoryManager.getNextID(), tableValues[row][0], transformer.transformStringToDouble(tableValues[row][1]));
-            projectCategoryManager.addProjectCategory(projectCategory);
+            if (tableValues[row][0] != null && tableValues[row][1] != null) {
+                projectCategory = new ProjectCategory(projectId, projectCategoryManager.getNextID(), tableValues[row][0], transformer.transformStringToDouble(tableValues[row][1]));
+                projectCategoryManager.addProjectCategory(projectCategory);
+            }
+
         }
     }
 
@@ -113,22 +129,51 @@ public class InsertProjectsController implements ActionListener {
         String[][] tableValues = getTableValues(funderTable);
         ProjectFunder projectFunder;
         for (int row = 0; row < tableValues.length; row++) {
-            projectFunder = new ProjectFunder(projectId, projectFunderManager.getNextID(), tableValues[row][0], tableValues[row][1], tableValues[row][2]);
-            projectFunderManager.addProjectFunder(projectFunder);
+            if (tableValues[row][0] != null && tableValues[row][1] != null && tableValues[row][2] != null) {
+                projectFunder = new ProjectFunder(projectId, projectFunderManager.getNextID(), tableValues[row][0], tableValues[row][1], tableValues[row][2]);
+                projectFunderManager.addProjectFunder(projectFunder);
+            }
+
         }
     }
 
-    private void insertParticipationValuesDB(int projectId) {
+    private void insertParticipationValuesDB(int projectId) throws ParseException {
         ProjectParticipationManager projectParticipationManager = new ProjectParticipationManager();
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         JTable participationTable = insertProjectsView.getProjectParticipationTable();
-        String[][] tableValues = getTableValues(participationTable);
+        String[][] tableValues = getParticipationTableValues(participationTable);
         ProjectParticipation projectParticipation;
         StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         for (int row = 0; row < tableValues.length; row++) { //TODO Umwandlungsmethoden für SHK Angestellte implementieren
-            int personId = employeeDataManager.getEmployeeByName(tableValues[row][0]).getId();
-            //projectParticipation = new ProjectParticipation(projectId, personId, transformer.formatStringToPercentageValueForScope(tableValues[row][1]), )
+            if (tableValues[row][0] != null && tableValues[row][1] != null && tableValues[row][2] != null) {
+                int personId = employeeDataManager.getEmployeeByName(tableValues[row][0]).getId();
+                Date date = format.parse(tableValues[row][2]);
+                projectParticipation = new ProjectParticipation(projectId, personId, transformer.formatStringToPercentageValueForScope(tableValues[row][1]),date);
+                projectParticipationManager.addProjectParticipation(projectParticipation);
+            }
+
         }
+    }
+
+    private String[][] getParticipationTableValues(JTable participationTable) {
+        String[][] tableValues = new String[participationTable.getRowCount()][participationTable.getColumnCount()];
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        for (int row = 0; row < participationTable.getRowCount(); row++) {
+            for (int column = 0; column < participationTable.getColumnCount(); column++) {
+                if (participationTable.getValueAt(row, column) == null || participationTable.getValueAt(row, column).equals("")) {
+                    break;
+                }
+                if (column == 2) {
+                    LocalDate temporaryDate = (LocalDate) participationTable.getValueAt(row,column);
+                    String temporaryString = temporaryDate.format(dateTimeFormatter);
+                    tableValues[row][column] = temporaryString;
+                } else {
+                    tableValues[row][column] = (String) participationTable.getValueAt(row, column);
+                }
+            }
+        }
+        return tableValues;
     }
 
     private String[][] getTableValues(JTable givenTable) {

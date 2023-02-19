@@ -1,6 +1,9 @@
 package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.tableeditors.DateTableEditor;
+import com.github.lgooddatepicker.tableeditors.DateTimeTableEditor;
+import excelchaos_model.EmployeeDataManager;
 import excelchaos_model.utility.TableColumnAdjuster;
 
 import javax.swing.*;
@@ -8,6 +11,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class InsertProjectsView extends JPanel {
@@ -151,10 +158,29 @@ public class InsertProjectsView extends JPanel {
         DefaultTableModel participationModel = new DefaultTableModel(null, participationColumns);
         participationModel.setRowCount(40);
         projectParticipationTable = new JTable(participationModel);
+        setUpNameSelection(projectParticipationTable);
+        setUpDateSelection(projectParticipationTable);
         JScrollPane participationScrollpane = new JScrollPane(projectParticipationTable);
         participationScrollpane.setVisible(true);
         projectParticipationPanel.add(participationScrollpane, BorderLayout.CENTER);
         projectParticipationPanel.add(participationLabel, BorderLayout.NORTH);
+    }
+
+    public void setUpNameSelection(JTable table){
+        TableColumn nameColumn = table.getColumnModel().getColumn(0);
+        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+        ArrayList<String> employeeNames = new ArrayList<String>(List.of(employeeDataManager.getAllEmployeesNameList()));
+        JComboBox nameCombobox = new JComboBox(employeeNames.toArray());
+        nameCombobox.setBackground(Color.WHITE);
+        nameColumn.setCellEditor(new DefaultCellEditor(nameCombobox));
+    }
+
+    public void setUpDateSelection(JTable table){
+        TableColumn dateColumn = table.getColumnModel().getColumn(2);
+        table.setDefaultEditor(LocalDate.class, new DateTableEditor());
+        table.setDefaultRenderer(LocalDate.class, new DateTableEditor());
+        dateColumn.setCellEditor(table.getDefaultEditor(LocalDate.class));
+        dateColumn.setCellRenderer(table.getDefaultRenderer(LocalDate.class));
     }
 
     public void setActionListener(ActionListener l) {
