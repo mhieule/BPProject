@@ -125,6 +125,21 @@ public class ProjectParticipationManagerTest {
     }
 
     @Test
+    void testRemoveInvalid(){
+        var manager = new ProjectParticipationManager();
+        manager.removeAllProjectParticipations();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1970,12,30);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
+        manager.addProjectParticipation(projectParticipation);
+        manager.removeProjectParticipation(2, 1);
+        assertEquals(manager.getProjectParticipationByProjectIDandPersonID(1 ,1).size(), 1);
+    }
+
+    @Test
     void testGetAll(){
         var manager = new ProjectParticipationManager();
         manager.removeAllProjectParticipations();
