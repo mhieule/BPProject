@@ -104,6 +104,24 @@ public class ProjectManager {
         }
     }
 
+    public int getNextID(){
+        int id = 0;
+        try {
+            QueryBuilder<Project, Integer> builder = projectDao.queryBuilder();
+            builder.orderBy("project_id", false);
+            Project highest = projectDao.queryForFirst(builder.prepare());
+            if (highest == null){
+                id = 1;
+            }else{
+                id = highest.getProject_id()+1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return id;
+    }
+
     public int getRowCount(){
         int rowCount = 0;
         try {

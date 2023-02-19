@@ -14,9 +14,9 @@ public class InsertProjectsView extends JPanel {
 
     private JLabel name, approval, start, duration, puffer, categoryLabel, funderLabel, participationLabel;
 
-    private JTextField tfName, tfDuration;
+    private JTextField tfName;
 
-    private DatePicker tfApproval, tfStart;
+    private DatePicker tfApproval, tfStart, tfDuration;
 
     private JButton submit, reset, cancel;
 
@@ -86,10 +86,10 @@ public class InsertProjectsView extends JPanel {
         tfStart = new DatePicker();
         setConstraintsDatePicker(tfStart, 2);
 
-        duration = new JLabel("Laufzeit");
+        duration = new JLabel("Enddatum");
         setConstraintsLabel(duration, 3);
-        tfDuration = new JTextField();
-        setConstraintsTextField(tfDuration, 3);
+        tfDuration = new DatePicker();
+        setConstraintsDatePicker(tfDuration, 3);
 
         puffer = new JLabel(" ");
         setConstraintsPuffer(puffer, 4);
@@ -177,7 +177,7 @@ public class InsertProjectsView extends JPanel {
         return tfName;
     }
 
-    public JTextField getTfDuration() {
+    public DatePicker getTfDuration() {
         return tfDuration;
     }
 
@@ -187,6 +187,18 @@ public class InsertProjectsView extends JPanel {
 
     public DatePicker getTfStart() {
         return tfStart;
+    }
+
+    public JTable getCategoriesTable() {
+        return categoriesTable;
+    }
+
+    public JTable getProjectFunderTable() {
+        return projectFunderTable;
+    }
+
+    public JTable getProjectParticipationTable() {
+        return projectParticipationTable;
     }
 
     private void setConstraintsLabel(JLabel label, int rowNumber) {

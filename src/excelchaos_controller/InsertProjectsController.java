@@ -50,9 +50,8 @@ public class InsertProjectsController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == insertProjectsView.getSubmit()) {
             ProjectManager projectManager = new ProjectManager();
-
+            int id = projectManager.getNextID();
             String name  = insertProjectsView.getTfName().getText();
-            String duration = insertProjectsView.getTfDuration().getText();
 
             Calendar calendar = Calendar.getInstance();
             LocalDate approval = insertProjectsView.getTfApproval().getDate();
@@ -63,8 +62,12 @@ public class InsertProjectsController implements ActionListener {
             calendar.set(start.getYear(), start.getMonth().getValue(), start.getDayOfMonth());
             Date dateOfStart = calendar.getTime();
 
-//            Project project = new Project(name, duration, dateOfApproval, dateOfStart);
-//            projectManager.addProject(project);
+            LocalDate duration = insertProjectsView.getTfDuration().getDate();
+            calendar.set(duration.getYear(),duration.getMonth().getValue(), duration.getDayOfMonth());
+            Date endDate = calendar.getTime();
+
+            Project project = new Project(id,name, dateOfStart, dateOfApproval, endDate);
+            projectManager.addProject(project);
 
             resetInputs();
             insertProjectsView.revalidate();
