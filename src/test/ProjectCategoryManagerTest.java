@@ -122,4 +122,20 @@ public class ProjectCategoryManagerTest {
         assertEquals(recProjectCategory.getCategory_name(), projectCategory.getCategory_name());
         assertEquals(recProjectCategory.getApproved_funds(), projectCategory.getApproved_funds());
     }
+
+    @Test
+    void testGetNextID(){
+        var manager = new ProjectCategoryManager();
+        manager.removeAllProjectCategories();
+        var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
+        manager.addProjectCategory(projectCategory);
+        assertEquals(manager.getNextID(), 2);
+    }
+
+    @Test
+    void testGetNextIDEmpty(){
+        var manager = new ProjectCategoryManager();
+        manager.removeAllProjectCategories();
+        assertEquals(manager.getNextID(), 1);
+    }
 }
