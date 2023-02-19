@@ -77,6 +77,52 @@ public class ProjectParticipationManagerTest {
         manager.addProjectParticipation(projectParticipation);
         assertEquals(manager.getProjectParticipationByPersonID(2).size(), 0);
     }
+    @Test
+    void testGetByPersonAndProjectIDValid(){
+        var manager = new ProjectParticipationManager();
+        manager.removeAllProjectParticipations();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1970,12,30);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
+        manager.addProjectParticipation(projectParticipation);
+        var recProjectParticipation = manager.getProjectParticipationByProjectIDandPersonID(1, 1).get(0);
+        assertEquals(projectParticipation.getParticipation_period(), recProjectParticipation.getParticipation_period());
+        assertEquals(projectParticipation.getProject_id(), recProjectParticipation.getProject_id());
+        assertEquals(projectParticipation.getPerson_id(), recProjectParticipation.getPerson_id());
+        assertEquals(projectParticipation.getScope(), recProjectParticipation.getScope());
+    }
+
+    @Test
+    void testGetByPersonAndProjectIDInvalid(){
+        var manager = new ProjectParticipationManager();
+        manager.removeAllProjectParticipations();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1970,12,30);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
+        manager.addProjectParticipation(projectParticipation);
+        assertEquals(manager.getProjectParticipationByProjectIDandPersonID(2, 2).size(), 0);
+    }
+
+    @Test
+    void testRemoveValid(){
+        var manager = new ProjectParticipationManager();
+        manager.removeAllProjectParticipations();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1970,12,30);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
+        manager.addProjectParticipation(projectParticipation);
+        manager.removeProjectParticipation(1, 1);
+        assertEquals(manager.getProjectParticipationByProjectIDandPersonID(1 ,1).size(), 0);
+    }
 
     @Test
     void testGetAll(){

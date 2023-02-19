@@ -3,6 +3,7 @@ package excelchaos_model;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
@@ -53,6 +54,17 @@ public class ProjectParticipationManager {
         }
     }
 
+    public void  removeProjectParticipation(int project_id, int person_id){
+        try{
+            DeleteBuilder<ProjectParticipation, Object> builder = projectParticipationsDao.deleteBuilder();
+            builder.where().eq("project_id", project_id).and().eq("person_id", person_id);
+            builder.delete();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public void removeAllProjectParticipations(){
         try {
             TableUtils.clearTable(connectionSource, ProjectParticipation.class);
@@ -67,6 +79,20 @@ public class ProjectParticipationManager {
         QueryBuilder<ProjectParticipation,Object> queryBuilder = projectParticipationsDao.queryBuilder();
         try {
             queryBuilder.where().eq("project_id",project_id);
+            PreparedQuery<ProjectParticipation> preparedQuery = queryBuilder.prepare();
+            projectParticipationList = projectParticipationsDao.query(preparedQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return projectParticipationList;
+    }
+
+    public List<ProjectParticipation> getProjectParticipationByProjectIDandPersonID(int project_id, int person_id){
+        List<ProjectParticipation> projectParticipationList = new ArrayList<>();
+        QueryBuilder<ProjectParticipation,Object> queryBuilder = projectParticipationsDao.queryBuilder();
+        try {
+            queryBuilder.where().eq("project_id", project_id).and().eq("person_id", person_id);
             PreparedQuery<ProjectParticipation> preparedQuery = queryBuilder.prepare();
             projectParticipationList = projectParticipationsDao.query(preparedQuery);
         } catch (SQLException e) {
