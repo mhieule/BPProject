@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
@@ -95,6 +96,24 @@ public class ProjectFunderManager {
 
     public int getRowCount(){
         return getAllProjectFunder().size();
+    }
+
+    public int getNextID(){
+        int id = 0;
+        try {
+            QueryBuilder<ProjectFunder, Integer> builder = projectFunderDao.queryBuilder();
+            builder.orderBy("project_funder_id", false);
+            ProjectFunder highest = projectFunderDao.queryForFirst(builder.prepare());
+            if (highest == null){
+                id = 1;
+            }else{
+                id = highest.getProject_id()+1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return id;
     }
 
     public void updateProjectFunder(ProjectFunder projectFunder){
