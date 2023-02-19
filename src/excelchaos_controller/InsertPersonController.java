@@ -143,16 +143,16 @@ public class InsertPersonController implements ActionListener {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         LocalDate workStartDate = insertPersonView.getTfWorkStart().getDate();
         calendar.set(workStartDate.getYear(), workStartDate.getMonth().getValue(), workStartDate.getDayOfMonth());
-        String workStart = dateFormat.format(calendar.getTime());
+        Date workStart = calendar.getTime();
         LocalDate workEndDate = insertPersonView.getTfWorkEnd().getDate();
         calendar.set(workEndDate.getYear(), workEndDate.getMonth().getValue(), workEndDate.getDayOfMonth());
-        String workEnd = dateFormat.format(calendar.getTime());
+        Date workEnd = calendar.getTime();
 
         Employee newEmployee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
                 salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city,"street");
         employeeDataManager.addEmployee(newEmployee);
-        Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0);
+        Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0, 0, "0", false);
         contractDataManager.addContract(newContract);
         return newEmployee;
     }

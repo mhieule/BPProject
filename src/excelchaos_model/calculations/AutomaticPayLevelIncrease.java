@@ -37,7 +37,7 @@ public class AutomaticPayLevelIncrease {
                i++;
                continue;
            }
-           payLevelIncreaseForEmployees[i] = ProjectedSalaryModel.calculatePayLevelIncrease(dateFormat.parse(contractDataManager.getContract(employee.getId()).getStart_date()),contractDataManager.getContract(employee.getId()).getPaylevel());
+           payLevelIncreaseForEmployees[i] = ProjectedSalaryModel.calculatePayLevelIncrease(dateFormat.parse(contractDataManager.getContract(employee.getId()).getStart_date().toString()),contractDataManager.getContract(employee.getId()).getPaylevel());
            if(currentDate.compareTo(payLevelIncreaseForEmployees[i].get(0)) >= 0){
                setNewPayLevel(contractDataManager.getContract(employee.getId()));
            }

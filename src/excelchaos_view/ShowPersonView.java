@@ -95,19 +95,19 @@ public class ShowPersonView extends JPanel {
             String tuId = employee.getTu_id();
             String status = employee.getStatus();
             //TODO in Date umwandeln wenn in DB
-            String startDate = contract.getStart_date();
-            String endDate = contract.getEnd_date();
+            Date startDate = contract.getStart_date();
+            Date endDate = contract.getEnd_date();
             //TODO füllen wenn vorhanden (contract)
-            String extend = null; //arbeitsumfang
+            String extend = String.valueOf(contract.getScope()); //arbeitsumfang
             String payGrade = contract.getPaygrade();
             String payLevel = contract.getPaylevel();
             //TODO füllen wenn vorhanden (contract)
-            String vblStatus = null;
-            String shkHourlyRate = null;
+            String vblStatus = String.valueOf(contract.getVbl_status());
+            String shkHourlyRate = contract.getShk_hourly_rate();
             String salaryPlannedUntil = employee.getSalary_planned_until();
 
             String[] values = {name, surname, street, houseNumber, zipCode, city, additionalAddress, emailPrivate, phonePrivate, phoneTuda,
-                    dateOfBirth, citizenship1, citizenship2, visaExpiration, employeeNumber, transponderNumber, officeNumber, tuId, status, startDate, endDate, extend, payGrade, payLevel, vblStatus, shkHourlyRate, salaryPlannedUntil};
+                    dateOfBirth, citizenship1, citizenship2, visaExpiration, employeeNumber, transponderNumber, officeNumber, tuId, status, startDate.toString(), endDate.toString(), extend, payGrade, payLevel, vblStatus, shkHourlyRate, salaryPlannedUntil};
             resultData[currentIndex] = values;
             currentIndex++;
         }

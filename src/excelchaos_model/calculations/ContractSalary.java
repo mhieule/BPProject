@@ -37,7 +37,7 @@ public class ContractSalary {
             Contract contract = contractDataManager.getContract(employee.getId());
             LocalDate currentManualSalaryDate = getLastCurrentManualInsertedSalaryDate(employee.getId(), currentDate);
             LocalDate currentSalaryIncreaseDate = getLastCurrentSalaryIncreaseDate(employee.getId(), currentDate);
-            LocalDate lastPayLevelIncreaseDate = getLastCurrentPayLevelIncreaseDate(dateFormat.parse(contract.getStart_date()), currentDate); //TODO Später ändern, wenn getStartDate ein Datum zurückgibt
+            LocalDate lastPayLevelIncreaseDate = getLastCurrentPayLevelIncreaseDate(dateFormat.parse(contract.getStart_date().toString()), currentDate); //TODO Später ändern, wenn getStartDate ein Datum zurückgibt
 
             if (currentManualSalaryDate == null && currentSalaryIncreaseDate == null && lastPayLevelIncreaseDate == null) {
                 contract.setRegular_cost(result);

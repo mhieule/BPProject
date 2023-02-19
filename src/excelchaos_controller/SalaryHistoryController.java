@@ -46,7 +46,7 @@ public class SalaryHistoryController  implements ItemListener {
     public LocalDate[] getMonths(Employee employee){
         ContractDataManager contractDataManager = new ContractDataManager();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate startDate = LocalDate.parse(contractDataManager.getContract(employee.getId()).getStart_date(), formatter).minusMonths(0).withDayOfMonth(1);
+        LocalDate startDate = LocalDate.parse(contractDataManager.getContract(employee.getId()).getStart_date().toString(), formatter).minusMonths(0).withDayOfMonth(1);
         LocalDate currentDate = LocalDate.now().plusMonths(1).withDayOfMonth(1);
         int numberOfMonths = Period.between(startDate, currentDate).getYears()*12 + Period.between(startDate, currentDate).getMonths() + 1;
         LocalDate[] months = new LocalDate[numberOfMonths];
