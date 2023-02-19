@@ -53,6 +53,15 @@ public class ProjectParticipationManager {
         }
     }
 
+    public void removeAllProjectParticipations(){
+        try {
+            TableUtils.clearTable(connectionSource, ProjectParticipation.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public List<ProjectParticipation> getProjectParticipationByProjectID(int project_id){
         List<ProjectParticipation> projectParticipationList = new ArrayList<>();
         QueryBuilder<ProjectParticipation,Object> queryBuilder = projectParticipationsDao.queryBuilder();
@@ -90,5 +99,13 @@ public class ProjectParticipationManager {
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
         return projectParticipationList;
+    }
+
+    public int getRowCountByPersonID(int id){
+        return getProjectParticipationByPersonID(id).size();
+    }
+
+    public int getRowCountByProjectID(int id){
+        return getProjectParticipationByProjectID(id).size();
     }
 }
