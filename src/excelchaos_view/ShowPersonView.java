@@ -63,6 +63,8 @@ public class ShowPersonView extends JPanel {
         int lines  = employeeDataManager.getRowCount();
         String resultData[][] = new String[lines][];
         int currentIndex = 0;
+//        employeeDataManager.removeAllEmployees();
+//        contractDataManager.removeAllContracts();
         List<Employee> employees = employeeDataManager.getAllEmployees();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         for (Employee employee : employees){

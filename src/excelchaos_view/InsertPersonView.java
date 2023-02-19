@@ -24,7 +24,7 @@ public class InsertPersonView extends JPanel {
     private JComboBox nationalityPickList, nationalityPickList2, typeOfJobPicklist, hiwiTypeOfPaymentList, payGradeList, payGroupList,vblList;
     private JCheckBox nationalityCheckBox, visaRequiredCheckBox;
 
-    private JButton submit, reset, salary;
+    private JButton submit, reset, salary, cancel;
 
     private JPanel centerUp, centerDown, leftButtons, rightButtons;
 
@@ -43,7 +43,6 @@ public class InsertPersonView extends JPanel {
         constraints.insets = new Insets(30, 25, 0, 50);
         constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 
-
         centerDown.setLayout(new BoxLayout(centerDown,BoxLayout.X_AXIS));
         add(centerUp, BorderLayout.CENTER);
         add(centerDown, BorderLayout.SOUTH);
@@ -60,32 +59,26 @@ public class InsertPersonView extends JPanel {
         tfVorname = new JTextField();
         setConstraintsTextField(tfVorname, 1);
 
-        // An dieser Stelle müssen folgende 6 Felder hinzugefügt werden: Straße, Hausnummer, Adresszusatz, PLZ, Stadt, Land
         strasse = new JLabel("Straße");
         setConstraintsLabel(strasse, 2);
         tfStrasse = new JTextField();
         setConstraintsTextField(tfStrasse, 2);
 
-
-        // Hausnummer
         hausnummer = new JLabel("Hausnummer");
         setConstraintsLabel(hausnummer, 3);
         tfHausnummer = new JTextField();
         setConstraintsTextField(tfHausnummer, 3);
 
-        // Adresszusatz
         adresszusatz = new JLabel("Adresszusatz");
         setConstraintsLabel(adresszusatz, 4);
         tfAdresszusatz = new JTextField();
         setConstraintsTextField(tfAdresszusatz, 4);
 
-        // PLZ
         plz = new JLabel("Postleitzahl");
         setConstraintsLabel(plz, 5);
         tfPLZ = new JTextField();
         setConstraintsTextField(tfPLZ, 5);
 
-        // Stadt
         stadt = new JLabel("Stadt");
         setConstraintsLabel(stadt, 6);
         tfStadt = new JTextField();
@@ -95,9 +88,6 @@ public class InsertPersonView extends JPanel {
         setConstraintsLabel(geburtsdatum, 7);
         tfGeburtsdatum = new DatePicker();
         setConstraintsDatePicker(tfGeburtsdatum, 7);
-        //factor++;
-
-        // Land -> soll Land als Feld eingefügt werden????
 
         privatEmail = new JLabel("Private E-Mail-Adresse");
         setConstraintsLabel(privatEmail, 8);
@@ -119,14 +109,12 @@ public class InsertPersonView extends JPanel {
         setConstraintsLabel(nationalityFirst, 11);
         String[] nationalityArray = CountryModel.getCountries();
         nationalityPickList = new JComboBox(nationalityArray);
-        nationalityPickList.setMaximumRowCount(5); // die Anzahl der Reihen in der Auswahlliste, die bei der Wahl angezeigt werden
+        nationalityPickList.setMaximumRowCount(5);
         setConstraintsJComboBox(nationalityPickList, 11);
 
-        // Checkbox, die abfragt, ob eine zweite Staatsangehoerigkeit vorhanden ist. Wenn diese TRUE ist, erst dann sollte "STAATANGEHOERIGKEIT 2?" sichtbar und der Eintrag auch möglich sein!
         nationalityCheckBox = new JCheckBox("Zweite Staatsangehörigkeit?", false);
         setConstraintsJCheckBox(nationalityCheckBox, 12);
 
-        // Sichtbarkeit von dem Label mit dem dazugehörigen Textfeld für die Eintragung
         nationalitySecond = new JLabel("Zweite Staatsangehörigkeit");
         setConstraintsLabel(nationalitySecond, 13);
         nationalitySecond.setVisible(false);
@@ -144,7 +132,6 @@ public class InsertPersonView extends JPanel {
         tfVisaValidUntil = new DatePicker();
         setConstraintsDatePicker(tfVisaValidUntil, 15);
         tfVisaValidUntil.setVisible(false);
-
 
         personalnummer = new JLabel("Personalnummer");
         setConstraintsLabel(personalnummer, 16);
@@ -211,7 +198,6 @@ public class InsertPersonView extends JPanel {
         setConstraintsJComboBox(vblList,26);
         vblList.setVisible(false);
 
-
         hiwiTypeOfPayment = new JLabel("SHK Stundensatz");
         setConstraintsLabel(hiwiTypeOfPayment, 27);
         hiwiTypeOfPayment.setVisible(false);
@@ -224,7 +210,6 @@ public class InsertPersonView extends JPanel {
         setConstraintsLabel(gehaltEingeplanntBis, 28);
         tfGehaltEingeplanntBis = new JTextField();
         setConstraintsTextField(tfGehaltEingeplanntBis, 28);
-
 
         puffer = new JLabel(" ");
         setConstraintsPuffer(puffer,29);
@@ -239,6 +224,8 @@ public class InsertPersonView extends JPanel {
         reset = new JButton("Felder zurücksetzen");
         centerDown.add(Box.createHorizontalGlue());
         rightButtons.add(reset);
+        cancel = new JButton("Abbrechen");
+        rightButtons.add(cancel);
         centerDown.add(rightButtons);
 
         JScrollPane scrollPane = new JScrollPane(centerUp, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -309,6 +296,10 @@ public class InsertPersonView extends JPanel {
         return reset;
     }
 
+    public JButton getCancel() {
+        return cancel;
+    }
+
     public JTextField getTfName() {
         return tfName;
     }
@@ -357,7 +348,6 @@ public class InsertPersonView extends JPanel {
         return tfTuid;
     }
 
-
     public JTextField getTfGehaltEingeplanntBis() {
         return tfGehaltEingeplanntBis;
     }
@@ -373,7 +363,6 @@ public class InsertPersonView extends JPanel {
     public JTextField getTfTelefonnummerTUDA() {
         return tfTelefonnummerTUDA;
     }
-
 
     public JComboBox getStatusPicklist() {
         return typeOfJobPicklist;

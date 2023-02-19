@@ -13,7 +13,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class InsertPersonController implements ActionListener {
     private InsertPersonView insertPersonView;
@@ -184,10 +183,7 @@ public class InsertPersonController implements ActionListener {
         }
         if(e.getSource() == insertPersonView.getSalaryEntry()){
             Employee newEmployee = safeData();
-            ContractDataManager contractDataManager = new ContractDataManager();
-            Contract contract = contractDataManager.getContract(newEmployee.getId());
-            //TODO vblFree richtigen wert übergeben wenn dieser gespeichert wird
-            frameController.getInsertSalaryController().fillFields(newEmployee.getSurname() + " " + newEmployee.getName(), newEmployee.getStatus(), contract.getPaygrade(), contract.getStart_date(), contract.getPaylevel(), false);
+            frameController.getInsertSalaryController().fillFields(newEmployee.getSurname() + " " + newEmployee.getName());
             resetInputs();
             insertPersonView.revalidate();
             insertPersonView.repaint();
@@ -198,6 +194,10 @@ public class InsertPersonController implements ActionListener {
         }
         if(e.getSource() == insertPersonView.getReset()){
             resetInputs();
+        }
+        if(e.getSource() == insertPersonView.getCancel()){
+            resetInputs();
+            frameController.getTabs().removeTabNewWindow(insertPersonView);
         }
         if (e.getSource() == insertPersonView.getTypeOfJobPicklist()){
             if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("WiMi") || insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("ATM")){
