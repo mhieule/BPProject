@@ -129,4 +129,20 @@ public class ProjectFunderManagerTest {
         assertEquals(projectFunder.getProject_number(), recProjectFunder.getProject_number());
         assertEquals(projectFunder.getFunding_id(), recProjectFunder.getFunding_id());
     }
+
+    @Test
+    void testGetNextID(){
+        var manager = new ProjectFunderManager();
+        manager.removeAllProjectFunder();
+        var projectFunder = new ProjectFunder(1, 1, "test_1", "test_1", "test_1");
+        manager.addProjectFunder(projectFunder);
+        assertEquals(manager.getNextID(), 2);
+    }
+
+    @Test
+    void testGetNextIDEmpty(){
+        var manager = new ProjectFunderManager();
+        manager.removeAllProjectFunder();
+        assertEquals(manager.getNextID(), 1);
+    }
 }
