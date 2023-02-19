@@ -46,6 +46,67 @@ public class PaygradeIncreaseManagerTest {
     }
 
     @Test
+    void testGetValidByDate(){
+        var manager = new PaygradeIncreaseManager();
+        manager.removeAllPaygradeIncreases();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1970,12,30);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        var payGradeIncrease = new PaygradeIncrease(1, 4.20, calendar.getTime());
+        manager.addPaygradeIncrease(payGradeIncrease);
+        var recPayGradeIncrease = manager.getPaygradeIncreaseByDate(1, calendar.getTime()).get(0);
+        assertEquals(payGradeIncrease.getId(), recPayGradeIncrease.getId());
+        assertEquals(payGradeIncrease.getStart_date(), recPayGradeIncrease.getStart_date());
+        assertEquals(payGradeIncrease.getNew_salary(), recPayGradeIncrease.getNew_salary());
+    }
+
+    @Test
+    void testGetInvalidByDate(){
+        var manager = new PaygradeIncreaseManager();
+        manager.removeAllPaygradeIncreases();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1970,12,30);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        var payGradeIncrease = new PaygradeIncrease(1, 4.20, calendar.getTime());
+        manager.addPaygradeIncrease(payGradeIncrease);
+        assertEquals(manager.getPaygradeIncreaseByDate(2, calendar.getTime()).size(), 0);
+    }
+
+    @Test
+    void testRemoveValid(){
+        var manager = new PaygradeIncreaseManager();
+        manager.removeAllPaygradeIncreases();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1970,12,30);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        var payGradeIncrease = new PaygradeIncrease(1, 4.20, calendar.getTime());
+        manager.addPaygradeIncrease(payGradeIncrease);
+        manager.removePaygradeIncrease(1, calendar.getTime());
+        assertEquals(manager.getPaygradeIncreaseByDate(1, calendar.getTime()).size(), 0);
+    }
+
+    @Test
+    void testRemoveInvalid(){
+        var manager = new PaygradeIncreaseManager();
+        manager.removeAllPaygradeIncreases();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1970,12,30);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        var payGradeIncrease = new PaygradeIncrease(1, 4.20, calendar.getTime());
+        manager.addPaygradeIncrease(payGradeIncrease);
+        manager.removePaygradeIncrease(2, calendar.getTime());
+        assertEquals(manager.getPaygradeIncreaseByDate(1, calendar.getTime()).size(), 1);
+    }
+
+    @Test
     void testGetAll(){
         var manager = new PaygradeIncreaseManager();
         manager.removeAllPaygradeIncreases();

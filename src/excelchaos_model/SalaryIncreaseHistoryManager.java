@@ -55,10 +55,10 @@ public class SalaryIncreaseHistoryManager {
         }
     }
 
-    public void  removeSalaryIncreaseHistory(int project_id, Date date){
+    public void  removeSalaryIncreaseHistory(int id, Date date){
         try{
             DeleteBuilder<SalaryIncreaseHistory, Object> builder = salaryIncreaseHistoriesDao.deleteBuilder();
-            builder.where().eq("id", project_id).and().eq("start_date", date);
+            builder.where().eq("id", id).and().eq("start_date", date);
             builder.delete();
         }catch (SQLException e){
             e.printStackTrace();
