@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
@@ -95,6 +96,24 @@ public class ProjectCategoryManager {
 
     public int getRowCount(){
         return getAllProjectCategories().size();
+    }
+
+    public int getNextID(){
+        int id = 0;
+        try {
+            QueryBuilder<ProjectCategory, Integer> builder = projectCategoriesDao.queryBuilder();
+            builder.orderBy("category_id", false);
+            ProjectCategory highest = projectCategoriesDao.queryForFirst(builder.prepare());
+            if (highest == null){
+                id = 1;
+            }else{
+                id = highest.getProject_id()+1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return id;
     }
 
     public void updateProjectCategory(ProjectCategory projectCategory){
