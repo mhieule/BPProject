@@ -83,7 +83,12 @@ public class ShowPersonView extends JPanel {
             String phoneTuda = employee.getPhone_tuda();
             String citizenship1 = employee.getCitizenship_1();
             String citizenship2 = employee.getCitizenship_2();
-            String visaExpiration = dateFormat.format(employee.getVisa_expiration());
+            String visaExpiration;
+            if(employee.getVisa_expiration() != null){
+                visaExpiration = dateFormat.format(employee.getVisa_expiration());
+            } else {
+                 visaExpiration = null;
+            }
             String employeeNumber = employee.getEmployee_number();
             String transponderNumber = employee.getTransponder_number();
             String officeNumber = employee.getOffice_number();
@@ -101,7 +106,7 @@ public class ShowPersonView extends JPanel {
             String shkHourlyRate = null;
             String salaryPlannedUntil = employee.getSalary_planned_until();
 
-            String[] values = {name, surname, houseNumber, zipCode, city, additionalAddress, emailPrivate, phonePrivate, phoneTuda,
+            String[] values = {name, surname, street, houseNumber, zipCode, city, additionalAddress, emailPrivate, phonePrivate, phoneTuda,
                     dateOfBirth, citizenship1, citizenship2, visaExpiration, employeeNumber, transponderNumber, officeNumber, tuId, status, startDate, endDate, extend, payGrade, payLevel, vblStatus, shkHourlyRate, salaryPlannedUntil};
             resultData[currentIndex] = values;
             currentIndex++;

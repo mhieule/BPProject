@@ -11,9 +11,9 @@ public class InsertSalaryView extends JPanel {
 
     private JLabel nameList, gruppe, stufe, gehalt, sonderzahlung, puffer;
 
-    private JTextField tfGruppe, tfGehalt, tfSonderzahlung;
+    private JTextField  tfGehalt, tfSonderzahlung;
 
-    private JComboBox namePickList, plStufe;
+    private JComboBox namePickList, plStufe,tfGruppe;
 
     private JButton submit, reset;
 
@@ -48,15 +48,16 @@ public class InsertSalaryView extends JPanel {
         setConstraintsJComboBox(namePickList, 0);
         constraints.insets.top = 5;
 
-        gruppe = new JLabel("Gruppe");
+        gruppe = new JLabel("Gehaltsklasse");
         setConstraintsLabel(gruppe, 1);
-        tfGruppe = new JTextField();
-        setConstraintsTextField(tfGruppe, 1);
+        String[] payGrade = {"Nicht ausgewählt","E13","E14"};
+        tfGruppe = new JComboBox(payGrade);
+        setConstraintsJComboBox(tfGruppe, 1);
 
-        stufe = new JLabel("Gehaltsstufe bei Einstellung");
+        stufe = new JLabel("Gehaltsstufe");
         setConstraintsLabel(stufe, 2);
-        String[] payGrades = {"Nicht ausgewählt", "1A","1B","1","2","3","4","5","6"};
-        plStufe = new JComboBox(payGrades);
+        String[] payLevel = {"Nicht ausgewählt", "1A","1B","1","2","3","4","5","6"};
+        plStufe = new JComboBox(payLevel);
         setConstraintsJComboBox(plStufe,2);
 
         gehalt = new JLabel("Gehalt");
@@ -132,7 +133,7 @@ public class InsertSalaryView extends JPanel {
         return tfSonderzahlung;
     }
 
-    public JTextField getTfGruppe() {
+    public JComboBox getTfGruppe() {
         return tfGruppe;
     }
 
