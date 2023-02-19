@@ -53,6 +53,15 @@ public class ManualSalaryEntryManager {
         }
     }
 
+    public void removeAllManualSalaryEntries(){
+        try {
+            TableUtils.clearTable(connectionSource, ManualSalaryEntry.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public List<ManualSalaryEntry> getManualSalaryEntry(int id){
         List<ManualSalaryEntry> manualSalaryEntryList = new ArrayList<>();
         QueryBuilder<ManualSalaryEntry,Object> queryBuilder = manualSalaryEntriesDao.queryBuilder();
@@ -60,6 +69,17 @@ public class ManualSalaryEntryManager {
             queryBuilder.where().eq("id",id);
             PreparedQuery<ManualSalaryEntry> preparedQuery = queryBuilder.prepare();
             manualSalaryEntryList = manualSalaryEntriesDao.query(preparedQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return manualSalaryEntryList;
+    }
+
+    public List<ManualSalaryEntry> getAllManualSalaryEntries(){
+        List<ManualSalaryEntry> manualSalaryEntryList = new ArrayList<>();
+        try {
+            manualSalaryEntryList = manualSalaryEntriesDao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
