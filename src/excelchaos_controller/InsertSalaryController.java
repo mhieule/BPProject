@@ -50,7 +50,8 @@ public class InsertSalaryController implements ActionListener {
         insertSalaryView.getNamePickList().setModel(new DefaultComboBoxModel<>(names));
         insertSalaryView.getNamePickList().setSelectedItem(surNameAndName);
         insertSalaryView.getNamePickList().setEnabled(false);
-        insertSalaryView.getTfGruppe().setText(contract.getPaygrade());
+        insertSalaryView.getTfGruppe().setSelectedItem(contract.getPaygrade());
+        insertSalaryView.getTfGruppe().setEnabled(false);
         insertSalaryView.getPlStufe().setSelectedItem(contract.getPaylevel());
 
         StringAndDoubleTransformationForDatabase stringAndDoubleTransformationForDatabase = new StringAndDoubleTransformationForDatabase();
@@ -61,7 +62,7 @@ public class InsertSalaryController implements ActionListener {
     }
 
     public void resetInputs(){
-        insertSalaryView.getTfGruppe().setText(null);
+        insertSalaryView.getTfGruppe().setSelectedItem("Nicht ausgewählt");
         insertSalaryView.getPlStufe().setSelectedItem("Nicht ausgewählt");
         insertSalaryView.getTfGehalt().setText(null);
         insertSalaryView.getTfSonderzahlung().setText(null);
@@ -74,11 +75,13 @@ public class InsertSalaryController implements ActionListener {
             EmployeeDataManager employeeDataManager = new EmployeeDataManager();
             Employee employee = employeeDataManager.getEmployeeByName(insertSalaryView.getNamePickList().getSelectedItem().toString());
 
+            StringAndDoubleTransformationForDatabase stringAndDoubleTransformationForDatabase = new StringAndDoubleTransformationForDatabase();
+
             int id = employee.getId();
-            String paygrade = insertSalaryView.getTfGruppe().getText();
+            String paygrade = insertSalaryView.getTfGruppe().getSelectedItem().toString();
             String paylevel = insertSalaryView.getPlStufe().getSelectedItem().toString();
-            double gehalt = Double.parseDouble(insertSalaryView.getTfGehalt().getText());
-            double sonderzahlung = Double.parseDouble(insertSalaryView.getTfSonderzahlung().getText());
+            double gehalt = stringAndDoubleTransformationForDatabase.transformStringToDouble(insertSalaryView.getTfGehalt().getText());
+            double sonderzahlung = stringAndDoubleTransformationForDatabase.transformStringToDouble(insertSalaryView.getTfSonderzahlung().getText());
 
             Contract contract = contractDataManager.getContract(id);
             contract.setPaygrade(paygrade);
