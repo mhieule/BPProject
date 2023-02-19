@@ -53,6 +53,15 @@ public class PaygradeIncreaseManager {
         }
     }
 
+    public void removeAllPaygradeIncreases(){
+        try {
+            TableUtils.clearTable(connectionSource, PaygradeIncrease.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public List<PaygradeIncrease> getPaygradeIncrease(int id){
         List<PaygradeIncrease> paygradeIncreaseList = new ArrayList<>();
         QueryBuilder<PaygradeIncrease,Object> queryBuilder = paygradeIncreasesDao.queryBuilder();
@@ -60,6 +69,17 @@ public class PaygradeIncreaseManager {
             queryBuilder.where().eq("id",id);
             PreparedQuery<PaygradeIncrease> preparedQuery = queryBuilder.prepare();
             paygradeIncreaseList = paygradeIncreasesDao.query(preparedQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return paygradeIncreaseList;
+    }
+
+    public List<PaygradeIncrease> getAllPaygradeIncreases(){
+        List<PaygradeIncrease> paygradeIncreaseList = new ArrayList<>();
+        try {
+            paygradeIncreaseList = paygradeIncreasesDao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
