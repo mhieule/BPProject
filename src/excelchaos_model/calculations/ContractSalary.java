@@ -51,7 +51,7 @@ public class ContractSalary {
                 return result;
             }
             if (currentManualSalaryDate == null && currentSalaryIncreaseDate == null && lastPayLevelIncreaseDate != null) {
-                result = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(contract);
+                result = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(contract)[0];
                 contract.setRegular_cost(result);
                 contractDataManager.updateContract(contract);
                 return result;
@@ -68,7 +68,7 @@ public class ContractSalary {
             }
             if (currentManualSalaryDate != null && currentSalaryIncreaseDate == null && lastPayLevelIncreaseDate != null) {
                 if (lastPayLevelIncreaseDate.compareTo(currentManualSalaryDate) > 0) {
-                    result = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(contract);
+                    result = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(contract)[0];
                 } else {
                     result = getLastCurrentManualInsertedSalary(employee.getId(), currentDate);
                 }
@@ -80,7 +80,7 @@ public class ContractSalary {
                 if (currentSalaryIncreaseDate.compareTo(lastPayLevelIncreaseDate) > 0) {
                     result = getLastCurrentSalaryIncrease(employee.getId(), currentDate);
                 } else {
-                    result = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(contract);
+                    result = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(contract)[0];
                 }
                 contract.setRegular_cost(result);
                 contractDataManager.updateContract(contract);
@@ -93,7 +93,7 @@ public class ContractSalary {
                     contractDataManager.updateContract(contract);
                     return result;
                 } else if (lastPayLevelIncreaseDate.compareTo(currentManualSalaryDate) > 0) {
-                    result = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(contract);
+                    result = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(contract)[0];
                     contract.setRegular_cost(result);
                     contractDataManager.updateContract(contract);
                     return result;
