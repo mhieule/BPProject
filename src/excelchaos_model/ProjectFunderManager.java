@@ -84,13 +84,17 @@ public class ProjectFunderManager {
         }
     }
 
-    public void removeAllEmployees(){
+    public void removeAllProjectFunder(){
         try {
             TableUtils.clearTable(connectionSource, ProjectFunder.class);
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
+    }
+
+    public int getRowCount(){
+        return getAllProjectFunder().size();
     }
 
     public void updateProjectFunder(ProjectFunder projectFunder){
