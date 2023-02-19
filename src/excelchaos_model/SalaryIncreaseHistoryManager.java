@@ -3,6 +3,7 @@ package excelchaos_model;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
@@ -10,6 +11,7 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SalaryIncreaseHistoryManager {
@@ -53,6 +55,17 @@ public class SalaryIncreaseHistoryManager {
         }
     }
 
+    public void  removeSalaryIncreaseHistory(int project_id, Date date){
+        try{
+            DeleteBuilder<SalaryIncreaseHistory, Object> builder = salaryIncreaseHistoriesDao.deleteBuilder();
+            builder.where().eq("id", project_id).and().eq("start_date", date);
+            builder.delete();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public void removeAllSalaryIncreaseHistories(){
         try {
             TableUtils.clearTable(connectionSource, SalaryIncreaseHistory.class);
@@ -67,6 +80,20 @@ public class SalaryIncreaseHistoryManager {
         QueryBuilder<SalaryIncreaseHistory,Object> queryBuilder = salaryIncreaseHistoriesDao.queryBuilder();
         try {
             queryBuilder.where().eq("id",id);
+            PreparedQuery<SalaryIncreaseHistory> preparedQuery = queryBuilder.prepare();
+            salaryIncreaseHistoryList = salaryIncreaseHistoriesDao.query(preparedQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return salaryIncreaseHistoryList;
+    }
+
+    public List<SalaryIncreaseHistory> getSalaryIncreaseHistoryByDate(int id, Date date){
+        List<SalaryIncreaseHistory> salaryIncreaseHistoryList = new ArrayList<>();
+        QueryBuilder<SalaryIncreaseHistory,Object> queryBuilder = salaryIncreaseHistoriesDao.queryBuilder();
+        try {
+            queryBuilder.where().eq("id",id).and().eq("start_date", date);
             PreparedQuery<SalaryIncreaseHistory> preparedQuery = queryBuilder.prepare();
             salaryIncreaseHistoryList = salaryIncreaseHistoriesDao.query(preparedQuery);
         } catch (SQLException e) {
