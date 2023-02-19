@@ -3,6 +3,7 @@ package excelchaos_model;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
@@ -53,6 +54,17 @@ public class SalaryTableManager {
         }
     }
 
+    public List<SalaryTable> getAllSalaryTables(){
+        List<SalaryTable> salaryTableList = null;
+        try {
+            salaryTableList = salaryTablesDao.queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return salaryTableList;
+    }
+
     public List<SalaryTable> getSalaryTable(String tableName){
         List<SalaryTable> salaryTables = new ArrayList<>();
         QueryBuilder<SalaryTable, Object> queryBuilder = salaryTablesDao.queryBuilder();
@@ -89,5 +101,25 @@ public class SalaryTableManager {
     public int getNumOfTables(String paygrade){
         List<String> tableNames = getDistinctTableNames(paygrade);
         return tableNames.size();
+    }
+
+    public void removeAllTables(){
+        try {
+            TableUtils.clearTable(connectionSource, SalaryTable.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
+    public void removeSalaryTable(String tableName){
+        try{
+            DeleteBuilder<SalaryTable, Object> builder = salaryTablesDao.deleteBuilder();
+            builder.where().eq("table_name", tableName);
+            builder.delete();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
     }
 }
