@@ -18,6 +18,8 @@ public class InsertProjectsView extends JPanel {
 
     private DatePicker tfApproval, tfStart, tfDuration;
 
+    private String[] categoryColumns,funderColumns,participationColumns;
+
     private JButton submit, reset, cancel;
 
     private JPanel projectValuesPanel, categoriesPanel, projectFunderPanel, projectParticipationPanel, tablePanel, buttonPanel, leftButtons, rightButtons;
@@ -116,8 +118,8 @@ public class InsertProjectsView extends JPanel {
         categoriesPanel.setLayout(new BorderLayout());
         categoryLabel = new JLabel("Kategorien");
         categoryLabel.setFont(new Font("Dialog", Font.BOLD, 18));
-        String columns[] = {"Name", "Bewilligte Mittel"};
-        DefaultTableModel categoriesModel = new DefaultTableModel(null, columns);
+        categoryColumns = new String[]{"Name", "Bewilligte Mittel"};
+        DefaultTableModel categoriesModel = new DefaultTableModel(null, categoryColumns);
         categoriesModel.setRowCount(40);
         categoriesTable = new JTable(categoriesModel);
         JScrollPane categoriesScrollpane = new JScrollPane(categoriesTable);
@@ -131,8 +133,8 @@ public class InsertProjectsView extends JPanel {
         projectFunderPanel.setLayout(new BorderLayout());
         funderLabel = new JLabel("Projektträger");
         funderLabel.setFont(new Font("Dialog", Font.BOLD, 18));
-        String columns[] = {"Name des Projektträgers", "Förderkennzeichen", "Projektnummer der TU Darmstadt"};
-        DefaultTableModel funderModel = new DefaultTableModel(null, columns);
+        funderColumns = new String[]{"Name des Projektträgers", "Förderkennzeichen", "Projektnummer der TU Darmstadt"};
+        DefaultTableModel funderModel = new DefaultTableModel(null, funderColumns);
         funderModel.setRowCount(40);
         projectFunderTable = new JTable(funderModel);
         JScrollPane funderScrollpane = new JScrollPane(projectFunderTable);
@@ -145,8 +147,8 @@ public class InsertProjectsView extends JPanel {
         projectParticipationPanel.setLayout(new BorderLayout());
         participationLabel = new JLabel("Mitarbeiter");
         participationLabel.setFont(new Font("Dialog", Font.BOLD, 18));
-        String columns[] = {"Name", "Beschäftigungsumfang", "Datum"};
-        DefaultTableModel participationModel = new DefaultTableModel(null, columns);
+        participationColumns= new String[]{"Name", "Beschäftigungsumfang", "Datum"};
+        DefaultTableModel participationModel = new DefaultTableModel(null, participationColumns);
         participationModel.setRowCount(40);
         projectParticipationTable = new JTable(participationModel);
         JScrollPane participationScrollpane = new JScrollPane(projectParticipationTable);
@@ -159,6 +161,18 @@ public class InsertProjectsView extends JPanel {
         submit.addActionListener(l);
         reset.addActionListener(l);
         cancel.addActionListener(l);
+    }
+
+    public String[] getCategoryColumns() {
+        return categoryColumns;
+    }
+
+    public String[] getFunderColumns() {
+        return funderColumns;
+    }
+
+    public String[] getParticipationColumns() {
+        return participationColumns;
     }
 
     public JButton getSubmit() {

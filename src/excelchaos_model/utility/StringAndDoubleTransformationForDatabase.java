@@ -36,4 +36,23 @@ public class StringAndDoubleTransformationForDatabase {
         }
         return result;
     }
+
+    public double formatStringToPercentageValueForScope(String valueToFormat){
+        double result;
+        valueToFormat = valueToFormat.replaceAll("%","");
+        result = Double.parseDouble(valueToFormat);
+        result = result/100;
+        return result;
+    }
+
+    public String formatPercentageToStringForScope(double valueToFormat){
+        String result;
+        valueToFormat = valueToFormat*100;
+        Formatter formatter = new Formatter();
+        formatter.format("%.0f",valueToFormat);
+        result = formatter.toString();
+        result = result.concat("%");
+
+        return result;
+    }
 }
