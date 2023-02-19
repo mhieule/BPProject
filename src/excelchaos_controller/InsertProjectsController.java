@@ -50,6 +50,7 @@ public class InsertProjectsController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == insertProjectsView.getSubmit()) {
             ProjectManager projectManager = new ProjectManager();
+
             int id = projectManager.getNextID();
             String name  = insertProjectsView.getTfName().getText();
 
