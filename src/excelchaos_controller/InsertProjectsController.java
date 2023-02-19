@@ -74,5 +74,8 @@ public class InsertProjectsController implements ActionListener {
         if(e.getSource() == insertProjectsView.getReset()){
             resetInputs();
         }
+        if(e.getSource()==insertProjectsView.getCancel()){
+            frameController.getTabs().removeTabNewWindow(insertProjectsView);
+        }
     }
 }
