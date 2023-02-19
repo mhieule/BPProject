@@ -9,8 +9,11 @@ import java.util.Date;
 public class ProjectParticipation {
     @DatabaseField
     private int project_id;
+    @DatabaseField
     private int person_id;
+    @DatabaseField
     private double scope;
+    @DatabaseField
     private Date participation_period;
 
     public ProjectParticipation(int project_id, int person_id, double scope, Date participation_period){

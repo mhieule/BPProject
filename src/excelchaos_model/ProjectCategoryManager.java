@@ -76,7 +76,7 @@ public class ProjectCategoryManager {
     public void removeProjectCategory(int id){
         try{
             DeleteBuilder<ProjectCategory, Integer> builder = projectCategoriesDao.deleteBuilder();
-            builder.where().eq("project_category_id", id);
+            builder.where().eq("category_id", id);
             builder.delete();
         }catch (SQLException e){
             e.printStackTrace();
@@ -91,6 +91,10 @@ public class ProjectCategoryManager {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
+    }
+
+    public int getRowCount(){
+        return getAllProjectCategories().size();
     }
 
     public void updateProjectCategory(ProjectCategory projectCategory){
