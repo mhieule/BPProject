@@ -187,4 +187,27 @@ public class ProjectManagerTest {
         assertEquals(project.getDuration(), recProject.getDuration());
         assertEquals(project.getApproval_date(), recProject.getApproval_date());
     }
+
+    @Test
+    void testGetNextID(){
+        var manager = new ProjectManager();
+        manager.removeAllProjects();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1970,12,30);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        var project = new Project(1, "test_project", calendar.getTime(), calendar.getTime(),
+                calendar.getTime());
+        manager.addProject(project);
+        assertEquals(manager.getNextID(), 2);
+    }
+
+    @Test
+    void testGetNextIDEmpty(){
+        var manager = new ProjectManager();
+        manager.removeAllProjects();
+        assertEquals(manager.getNextID(), 1);
+    }
 }
