@@ -47,9 +47,10 @@ public class EmployeeDataManagerTest {
         String zip_code = "test_2";
         String additional_address = "test_3";
         String city = "test_4";
+        String street = "test_1";
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
         manager.addEmployee(employee);
         Employee recEmployee = manager.getEmployee(1);
         assertEquals(recEmployee.getId(), employee.getId());
@@ -69,6 +70,7 @@ public class EmployeeDataManagerTest {
         assertEquals(recEmployee.getZip_code(), employee.getZip_code());
         assertEquals(recEmployee.getAdditional_address(), employee.getAdditional_address());
         assertEquals(recEmployee.getCity(), employee.getCity());
+        assertEquals(recEmployee.getStreet(), employee.getStreet());
     }
     @Test
     void testGetValidNoVisa(){
@@ -101,9 +103,10 @@ public class EmployeeDataManagerTest {
         String zip_code = "test_2";
         String additional_address = "test_3";
         String city = "test_4";
+        String street = "test_1";
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
         manager.addEmployee(employee);
         Employee recEmployee = manager.getEmployee(1);
         assertEquals(recEmployee.getId(), employee.getId());
@@ -123,6 +126,7 @@ public class EmployeeDataManagerTest {
         assertEquals(recEmployee.getZip_code(), employee.getZip_code());
         assertEquals(recEmployee.getAdditional_address(), employee.getAdditional_address());
         assertEquals(recEmployee.getCity(), employee.getCity());
+        assertEquals(recEmployee.getStreet(), employee.getStreet());
     }
 
     @Test
@@ -156,9 +160,10 @@ public class EmployeeDataManagerTest {
         String zip_code = "test_2";
         String additional_address = "test_3";
         String city = "test_4";
+        String street = "test_1";
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
         manager.addEmployee(employee);
         Employee recEmployee = manager.getEmployee(2);
         assertNull(recEmployee);
@@ -194,9 +199,10 @@ public class EmployeeDataManagerTest {
         String zip_code = "test_2";
         String additional_address = "test_3";
         String city = "test_4";
+        String street = "test_1";
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
         manager.addEmployee(employee);
         manager.removeEmployee(1);
         Employee recEmployee = manager.getEmployee(1);
@@ -234,9 +240,10 @@ public class EmployeeDataManagerTest {
         String zip_code = "test_2";
         String additional_address = "test_3";
         String city = "test_4";
+        String street = "test_1";
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
         manager.addEmployee(employee);
         manager.removeEmployee(2);
         assertEquals(manager.getAllEmployees().size(),1);
@@ -272,11 +279,12 @@ public class EmployeeDataManagerTest {
         String zip_code = "test_2";
         String additional_address = "test_3";
         String city = "test_4";
+        String street = "test_1";
         var employees = new Employee[10];
         for (int i = 0; i < 10; i++){
             Employee employee = new Employee(i, surname, name, email_private, phone_private, citizenship_1,
                     citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                    salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                    salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
             manager.addEmployee(employee);
             employees[i] = employee;
         }
@@ -299,6 +307,7 @@ public class EmployeeDataManagerTest {
             assertEquals(recEmployee.get(i).getZip_code(), employees[i].getZip_code());
             assertEquals(recEmployee.get(i).getAdditional_address(), employees[i].getAdditional_address());
             assertEquals(recEmployee.get(i).getCity(), employees[i].getCity());
+            assertEquals(recEmployee.get(i).getStreet(), employees[i].getStreet());
         }
     }
     @Test
@@ -332,9 +341,10 @@ public class EmployeeDataManagerTest {
         String zip_code = "test_2";
         String additional_address = "test_3";
         String city = "test_4";
+        String street = "test_1";
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
         manager.addEmployee(employee);
         assertEquals(manager.getNextID(), 2);
     }
@@ -374,10 +384,11 @@ public class EmployeeDataManagerTest {
         String zip_code = "test_2";
         String additional_address = "test_3";
         String city = "test_4";
+        String street = "test_1";
         for (int i = 0; i < 10; i++){
             Employee employee = new Employee(i, surname, name, email_private, phone_private, citizenship_1,
                     citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                    salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                    salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
             manager.addEmployee(employee);
         }
         assertEquals(manager.getRowCount(),10);
@@ -421,13 +432,14 @@ public class EmployeeDataManagerTest {
         String zip_code = "test_2";
         String additional_address = "test_3";
         String city = "test_4";
+        String street = "test_1";
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, "street");
         manager.addEmployee(employee);
         Employee upEmployee = new Employee(id, "changed_test", "change_test", email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, "changed_test", visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
         manager.updateEmployee(upEmployee);
         Employee recEmployee = manager.getEmployee(1);
         assertEquals(recEmployee.getId(), upEmployee.getId());
@@ -447,6 +459,7 @@ public class EmployeeDataManagerTest {
         assertEquals(recEmployee.getZip_code(), upEmployee.getZip_code());
         assertEquals(recEmployee.getAdditional_address(), upEmployee.getAdditional_address());
         assertEquals(recEmployee.getCity(), upEmployee.getCity());
+        assertEquals(recEmployee.getStreet(), upEmployee.getStreet());
     }
     @Test
     void testUpdateEmployeeInvalid(){
@@ -479,13 +492,14 @@ public class EmployeeDataManagerTest {
         String zip_code = "test_2";
         String additional_address = "test_3";
         String city = "test_4";
+        String street = "test_1";
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
         manager.addEmployee(employee);
         Employee upEmployee = new Employee(3, "changed_test", "change_test", email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, "changed_test", visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
         manager.updateEmployee(upEmployee);
         Employee recEmployee = manager.getEmployee(1);
         assertEquals(recEmployee.getId(), employee.getId());
@@ -505,6 +519,7 @@ public class EmployeeDataManagerTest {
         assertEquals(recEmployee.getZip_code(), employee.getZip_code());
         assertEquals(recEmployee.getAdditional_address(), employee.getAdditional_address());
         assertEquals(recEmployee.getCity(), employee.getCity());
+        assertEquals(recEmployee.getStreet(), employee.getStreet());
         assertNull(manager.getEmployee(3));
     }
     @Test
@@ -538,9 +553,10 @@ public class EmployeeDataManagerTest {
         String zip_code = "test_2";
         String additional_address = "test_3";
         String city = "test_4";
+        String street = "test_1";
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
         manager.addEmployee(employee);
         Employee recEmployee = manager.getEmployeeByName(name + " " + surname);
         assertEquals(recEmployee.getId(), employee.getId());
@@ -560,6 +576,7 @@ public class EmployeeDataManagerTest {
         assertEquals(recEmployee.getZip_code(), employee.getZip_code());
         assertEquals(recEmployee.getAdditional_address(), employee.getAdditional_address());
         assertEquals(recEmployee.getCity(), employee.getCity());
+        assertEquals(recEmployee.getStreet(), employee.getStreet());
     }
 
     @Test
@@ -593,9 +610,10 @@ public class EmployeeDataManagerTest {
         String zip_code = "test_2";
         String additional_address = "test_3";
         String city = "test_4";
+        String street = "test_1";
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
         manager.addEmployee(employee);
         Employee recEmployee = manager.getEmployeeByName("invalid_name" + " " + "invalid_surname");
         assertNull(recEmployee);
@@ -631,11 +649,12 @@ public class EmployeeDataManagerTest {
         String zip_code = "test_2";
         String additional_address = "test_3";
         String city = "test_4";
+        String street = "test_1";
         var employees = new Employee[10];
         for (int i = 0; i < 10; i++){
             Employee employee = new Employee(i, surname, name, email_private, phone_private, citizenship_1,
                     citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                    salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                    salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
             manager.addEmployee(employee);
             employees[i] = employee;
         }

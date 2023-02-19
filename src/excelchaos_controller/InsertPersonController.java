@@ -150,7 +150,7 @@ public class InsertPersonController implements ActionListener {
 
         Employee newEmployee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city);
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city,"street");
         employeeDataManager.addEmployee(newEmployee);
         Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0);
         contractDataManager.addContract(newContract);

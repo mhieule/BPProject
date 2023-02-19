@@ -50,13 +50,15 @@ public class Employee {
     private String additional_address;
     @DatabaseField()
     private String city;
+    @DatabaseField
+    private String street;
 
     public Employee(){}
     public Employee(int id, String name, String surname, String email_private, String phone_private,
                     String citizenship_1, String citizenship_2, String employee_number, String tu_id, boolean visa_required,
                     String status, String transponder_number, String office_number, String phone_tuda,
                     String salary_planned_until, Date visa_expiration, Date date_of_birth, String house_number,
-                    String zip_code, String additional_address, String city){
+                    String zip_code, String additional_address, String city, String street){
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -78,6 +80,7 @@ public class Employee {
         this.zip_code = zip_code;
         this.additional_address = additional_address;
         this.city = city;
+        this.street = street;
     }
 
     public int getId(){
@@ -242,5 +245,13 @@ public class Employee {
 
     public String getCity(){
         return this.city;
+    }
+
+    public void setStreet(String street){
+        this.street = street;
+    }
+
+    public String getStreet(){
+        return this.street;
     }
 }
