@@ -3,6 +3,7 @@ package excelchaos_model;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
@@ -10,6 +11,7 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ManualSalaryEntryManager {
@@ -53,6 +55,17 @@ public class ManualSalaryEntryManager {
         }
     }
 
+    public void  removeManualSalaryEntry(int id, Date date){
+        try{
+            DeleteBuilder<ManualSalaryEntry, Object> builder = manualSalaryEntriesDao.deleteBuilder();
+            builder.where().eq("id", id).and().eq("start_date", date);
+            builder.delete();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public void removeAllManualSalaryEntries(){
         try {
             TableUtils.clearTable(connectionSource, ManualSalaryEntry.class);
@@ -67,6 +80,20 @@ public class ManualSalaryEntryManager {
         QueryBuilder<ManualSalaryEntry,Object> queryBuilder = manualSalaryEntriesDao.queryBuilder();
         try {
             queryBuilder.where().eq("id",id);
+            PreparedQuery<ManualSalaryEntry> preparedQuery = queryBuilder.prepare();
+            manualSalaryEntryList = manualSalaryEntriesDao.query(preparedQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return manualSalaryEntryList;
+    }
+
+    public List<ManualSalaryEntry> getManualSalaryEntryByDate(int id, Date date){
+        List<ManualSalaryEntry> manualSalaryEntryList = new ArrayList<>();
+        QueryBuilder<ManualSalaryEntry,Object> queryBuilder = manualSalaryEntriesDao.queryBuilder();
+        try {
+            queryBuilder.where().eq("id",id).and().eq("start_date", date);
             PreparedQuery<ManualSalaryEntry> preparedQuery = queryBuilder.prepare();
             manualSalaryEntryList = manualSalaryEntriesDao.query(preparedQuery);
         } catch (SQLException e) {

@@ -49,6 +49,72 @@ public class ManualSalaryEntryManagerTest {
     }
 
     @Test
+    void testGetByDateValid(){
+        var manager = new ManualSalaryEntryManager();
+        manager.removeAllManualSalaryEntries();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1970,12,30);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        var manualSalaryEntry = new ManualSalaryEntry(1, 4.20, calendar.getTime(),
+                "test_comment");
+        manager.addManualSalaryEntry(manualSalaryEntry);
+        var recManualSalaryEntry = manager.getManualSalaryEntryByDate(1, calendar.getTime()).get(0);
+        assertEquals(manualSalaryEntry.getNew_salary(), recManualSalaryEntry.getNew_salary());
+        assertEquals(manualSalaryEntry.getId(), recManualSalaryEntry.getId());
+        assertEquals(manualSalaryEntry.getStart_date(), recManualSalaryEntry.getStart_date());
+        assertEquals(manualSalaryEntry.getComment(), recManualSalaryEntry.getComment());
+    }
+
+    @Test
+    void testGetByDateInvalid(){
+        var manager = new ManualSalaryEntryManager();
+        manager.removeAllManualSalaryEntries();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1970,12,30);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        var manualSalaryEntry = new ManualSalaryEntry(1, 4.20, calendar.getTime(),
+                "test_comment");
+        manager.addManualSalaryEntry(manualSalaryEntry);
+        assertEquals(manager.getManualSalaryEntryByDate(2, calendar.getTime()).size(), 0);
+    }
+
+    @Test
+    void testRemoveValid(){
+        var manager = new ManualSalaryEntryManager();
+        manager.removeAllManualSalaryEntries();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1970,12,30);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        var manualSalaryEntry = new ManualSalaryEntry(1, 4.20, calendar.getTime(),
+                "test_comment");
+        manager.addManualSalaryEntry(manualSalaryEntry);
+        manager.removeManualSalaryEntry(1, calendar.getTime());
+        assertEquals(manager.getManualSalaryEntryByDate(1, calendar.getTime()).size(), 0);
+    }
+
+    @Test
+    void testRemoveInvalid(){
+        var manager = new ManualSalaryEntryManager();
+        manager.removeAllManualSalaryEntries();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1970,12,30);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        var manualSalaryEntry = new ManualSalaryEntry(1, 4.20, calendar.getTime(),
+                "test_comment");
+        manager.addManualSalaryEntry(manualSalaryEntry);
+        manager.removeManualSalaryEntry(2, calendar.getTime());
+        assertEquals(manager.getManualSalaryEntryByDate(1, calendar.getTime()).size(), 1);
+    }
+
+    @Test
     void testGetAll(){
         var manager = new ManualSalaryEntryManager();
         manager.removeAllManualSalaryEntries();
