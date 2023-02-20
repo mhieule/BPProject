@@ -12,9 +12,16 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Class to facilitate database integration for Contracts
+ */
 public class ContractDataManager {
     private ConnectionSource connectionSource;
     private Dao<Contract, Integer> contractsDao;
+
+    /**
+     * Constructor creates database connection and DAO manager
+     */
     public ContractDataManager() {
         try {
             String databaseUrl = "jdbc:sqlite:Excelchaos.db";
@@ -26,6 +33,10 @@ public class ContractDataManager {
         }
     }
 
+    /**
+     * Method to create the Contract table in the database
+     */
+
     public void createTable(){
         try {
             TableUtils.createTable(connectionSource, Contract.class);
@@ -34,6 +45,10 @@ public class ContractDataManager {
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
     }
+
+    /**
+     * Method to delete the Contract table in the database
+     */
 
     public void deleteTable(){
         try {
@@ -44,6 +59,11 @@ public class ContractDataManager {
         }
     }
 
+    /**
+     * Methods adds a contract to the database
+     * @param contract contract to be added to
+     */
+
     public void addContract(Contract contract){
         try {
             contractsDao.create(contract);
@@ -52,6 +72,12 @@ public class ContractDataManager {
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
     }
+
+    /**
+     * Method to select contract with a given id from the database
+     * @param id id of the contract to be selected
+     * @return contract with the given id
+     */
 
     public Contract getContract(int id){
         Contract contract = null;
@@ -64,6 +90,11 @@ public class ContractDataManager {
         return contract;
     }
 
+    /**
+     * Method to select all contracts in the database
+     * @return all contracts in the database
+     */
+
     public List<Contract> getAllContracts(){
         List<Contract> contracts = null;
         try {
@@ -74,6 +105,11 @@ public class ContractDataManager {
         }
         return contracts;
     }
+
+    /**
+     * Method to get the total number of rows in the contract table
+     * @return total number of rows in contract table
+     */
 
     public int getRowCount(){
         long count = 0;
@@ -87,6 +123,11 @@ public class ContractDataManager {
         return (int)count;
     }
 
+    /**
+     * Method to update a given contract that's already in the database
+     * @param contract contract to be updated
+     */
+
     public void updateContract(Contract contract){
         try {
             contractsDao.update(contract);
@@ -96,6 +137,10 @@ public class ContractDataManager {
         }
     }
 
+    /**
+     * Method to remove all contracts from the database
+     */
+
     public void removeAllContracts(){
         try {
             TableUtils.clearTable(connectionSource, Contract.class);
@@ -104,6 +149,11 @@ public class ContractDataManager {
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
     }
+
+    /**
+     * Method to remove the contract with the given id from the database
+     * @param id  id of the contract to be updated
+     */
 
     public void removeContract(int id){
         try {
