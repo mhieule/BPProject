@@ -63,8 +63,6 @@ public class ShowPersonView extends JPanel {
         int lines  = employeeDataManager.getRowCount();
         String resultData[][] = new String[lines][];
         int currentIndex = 0;
-//        employeeDataManager.removeAllEmployees();
-//        contractDataManager.removeAllContracts();
         List<Employee> employees = employeeDataManager.getAllEmployees();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         for (Employee employee : employees){
@@ -72,7 +70,7 @@ public class ShowPersonView extends JPanel {
             String name = employee.getName();
             String surname = employee.getSurname();
             //TODO füllen wenn vorhanden
-            String street = null;
+            String street = employee.getStreet();
             String houseNumber = employee.getHouse_number();
             String additionalAddress = employee.getAdditional_address();
             String zipCode = employee.getZip_code();
@@ -101,7 +99,6 @@ public class ShowPersonView extends JPanel {
             String extend = String.valueOf(contract.getScope()); //arbeitsumfang
             String payGrade = contract.getPaygrade();
             String payLevel = contract.getPaylevel();
-            //TODO füllen wenn vorhanden (contract)
             String vblStatus = String.valueOf(contract.getVbl_status());
             String shkHourlyRate = contract.getShk_hourly_rate();
             String salaryPlannedUntil = employee.getSalary_planned_until();

@@ -123,6 +123,7 @@ public class InsertPersonController implements ActionListener {
         String status = insertPersonView.getStatusPicklist().getSelectedItem().toString();
         String transponder_number = insertPersonView.getTfTranspondernummer().getText();
         String office_number = insertPersonView.getTfBueronummer().getText();
+        //TODO als Date abfragen und speichern
         String salaryPlannedUntil = insertPersonView.getTfGehaltEingeplanntBis().getText();
         Date visaExpiration = null;
         Calendar calendar = Calendar.getInstance();
@@ -136,12 +137,16 @@ public class InsertPersonController implements ActionListener {
         calendar.set(dateOfBirthDate.getYear(), dateOfBirthDate.getMonth().getValue(), dateOfBirthDate.getDayOfMonth());
         Date dateOfBirth = calendar.getTime();
         String houseNumber = insertPersonView.getTfHausnummer().getText();
+        String street = insertPersonView.getTfStrasse().getText();
         String zip_code = insertPersonView.getTfPLZ().getText();
         String additional_address = insertPersonView.getTfAdresszusatz().getText();
         String city = insertPersonView.getTfStadt().getText();
         String payGrade = insertPersonView.getPayGroupList().getSelectedItem().toString();
         String payLevel = insertPersonView.getPayGradeList().getSelectedItem().toString();
-
+        boolean vbl = false;
+        if(insertPersonView.getVblList().getSelectedItem().toString().equals("pflichtig")){
+            vbl = true;
+        }
         //TODO muss in Datenbank als Date gespeichert werden und nicht als String
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         LocalDate workStartDate = insertPersonView.getTfWorkStart().getDate();
@@ -153,9 +158,10 @@ public class InsertPersonController implements ActionListener {
 
         Employee newEmployee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city,"street");
+                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city,street);
         employeeDataManager.addEmployee(newEmployee);
-        Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0, 0, "0", false);
+        //TODO shk rate muss noch abgefragt werden
+        Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0, 0, "0", vbl);
         contractDataManager.addContract(newContract);
         return newEmployee;
     }
