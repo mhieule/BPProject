@@ -1,18 +1,33 @@
 package excelchaos_view;
 
-import excelchaos_model.MultiLineTableCellRenderer;
+import com.github.lgooddatepicker.tableeditors.DateTableEditor;
+import excelchaos_model.*;
+import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_model.utility.TableColumnAdjuster;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.List;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
 
 public class ProjectParticipationView extends JPanel {
 
     private JPanel mainPanel;
+
+    private ProjectParticipationDataModel projectParticipationDataModel = new ProjectParticipationDataModel();
+
 
     public void init(){
 
@@ -24,18 +39,10 @@ public class ProjectParticipationView extends JPanel {
         add(scrollPane,BorderLayout.CENTER);
         GridLayout gridLayout = new GridLayout(0,1,0,10);
         mainPanel.setLayout(gridLayout);
-        /*String[] months = {"Februar 23", "März 23", "April 23", "Mai 23", "Juni 23", "Juli 23", "August 23", "September 23", "Oktober 23","November 23","Dezember 23", "Gesamtkosten pro Person"};
-        String[] names = {"wdawadwwad wdadw", "adwdawadaad", "Max Mustermann", "Fabian siuuu", "Alex rex", "wdawdw wdadwa", "Test boy","Troolol"};
-        String[][] tableData = new String[names.length*2][months.length];
-        String[][] summedTableData = new String[2][months.length];
-        String[] projectCostPerson = new String[names.length];
-        String totalcost = "235555€";
-        setUpProjectPanel("Test",months,names,tableData,summedTableData,totalcost);
-        setUpProjectPanel("Test",months,names,tableData,summedTableData,totalcost);
-        setUpProjectPanel("Test",months,names,tableData,summedTableData,totalcost);*/
+
     }
 
-    public void setUpProjectPanel(String projectName, String[] monthColumns, String[] nameRows, String[][] tableData, String[][] summedTableData, String totalCost){
+    public void setUpProjectPanel(String projectName, String[] monthColumns, String[] nameRows, String[][] tableData, String[][] summedTableData, String totalCost,int projectId){
 
         JPanel projectPanel = new JPanel();
         projectPanel.setLayout(new BorderLayout());
@@ -58,9 +65,19 @@ public class ProjectParticipationView extends JPanel {
 
         projectPanel.add(projectNamePanel,BorderLayout.NORTH);
 
-        projectPanel.add(initMainTable(monthColumns,tableData,nameRows),BorderLayout.CENTER);
+        JScrollPane mainScrollPane = initMainTable(monthColumns,tableData,nameRows);
+        JScrollPane sideScrollPane = initSumTable(summedTableData,monthColumns);
 
-        projectPanel.add(initSumTable(summedTableData,monthColumns),BorderLayout.SOUTH);
+        projectPanel.add(mainScrollPane,BorderLayout.CENTER);
+        projectPanel.add(sideScrollPane,BorderLayout.SOUTH);
+
+        addPersonButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setUpAddParticipationView(projectPanel,projectId,monthColumns,mainScrollPane,sideScrollPane);
+            }
+        });
+
         mainPanel.add(projectPanel);
     }
 
@@ -174,5 +191,140 @@ public class ProjectParticipationView extends JPanel {
         scrollPane.setBorder(createEmptyBorder());
         return scrollPane;
     }
+
+
+    private void setUpAddParticipationView(JPanel projectPanel,int projectId,String[] monthColumns,JScrollPane oldMain,JScrollPane oldSide){
+        JDialog participationDialog = new JDialog();
+
+        JPanel tablePanel = new JPanel();
+        tablePanel.setLayout(new BorderLayout());
+        String[] participationColumns= new String[]{"Name", "Beschäftigungsumfang", "Datum"};
+        DefaultTableModel participationModel = new DefaultTableModel(null, participationColumns);
+        participationModel.setRowCount(40);
+        JTable projectParticipationTable = new JTable(participationModel);
+        setUpNameSelection(projectParticipationTable);
+        setUpDateSelection(projectParticipationTable);
+        JScrollPane participationScrollpane = new JScrollPane(projectParticipationTable);
+        participationScrollpane.setVisible(true);
+        participationScrollpane.setViewportView(projectParticipationTable);
+        tablePanel.add(participationScrollpane, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+        JButton closeButton = new JButton("Abbrechen");
+        JButton submitButton = new JButton("Eingaben hinzufügen");
+        closeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                participationDialog.dispose();
+            }
+        });
+
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ProjectParticipationManager projectParticipationManager = new ProjectParticipationManager();
+                EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+                String[][] tableValues = getParticipationTableValues(projectParticipationTable);
+                ProjectParticipation projectParticipation;
+                StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
+                DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+                for (int row = 0; row < tableValues.length; row++) {  //TODO Umwandlungsmethoden für SHK Angestellte implementieren
+                    if (tableValues[row][0] != null && tableValues[row][1] != null && tableValues[row][2] != null) {
+                        int personId = employeeDataManager.getEmployeeByName(tableValues[row][0]).getId();
+                        Date date = null;
+                        try {
+                            date = format.parse(tableValues[row][2]);
+                        } catch (ParseException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        projectParticipation = new ProjectParticipation(projectId, personId, transformer.formatStringToPercentageValueForScope(tableValues[row][1]),date);
+                        projectParticipationManager.addProjectParticipation(projectParticipation);
+                    }
+
+                }
+
+                String[] newNames = projectParticipationDataModel.getPersonNamesForProject(projectId);
+                String[][] summedTableDate = null;
+                String[][] newTableData = null;
+                try {
+                    newTableData = projectParticipationDataModel.getTableData(projectId,newNames.length,monthColumns,newNames);
+                    summedTableDate = projectParticipationDataModel.getSummedTableData(projectId, newNames.length,monthColumns);
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
+                JScrollPane newMainScrollPane = initMainTable(monthColumns,newTableData,newNames);
+                JScrollPane newSideScrollPane = initSumTable(summedTableDate,monthColumns);
+
+                projectPanel.remove(oldMain);
+                projectPanel.remove(oldSide);
+
+                projectPanel.add(newMainScrollPane,BorderLayout.CENTER);
+                projectPanel.add(newSideScrollPane,BorderLayout.SOUTH);
+
+                projectPanel.revalidate();
+                projectPanel.repaint();
+                mainPanel.revalidate();
+                mainPanel.repaint();
+                participationDialog.dispose();
+            }
+        });
+
+        buttonPanel.add(submitButton);
+
+        buttonPanel.add(closeButton);
+
+
+
+
+        participationDialog.setLayout(new BorderLayout());
+        participationDialog.add(tablePanel,BorderLayout.CENTER);
+        participationDialog.add(buttonPanel,BorderLayout.SOUTH);
+        participationDialog.setName("Mitarbeiter hinzufügen");
+        participationDialog.pack();
+        participationDialog.setLocationRelativeTo(null);
+        participationDialog.setAlwaysOnTop(true);
+        participationDialog.setVisible(true);
+
+
+
+
+    }
+    private void setUpDateSelection(JTable table){
+        TableColumn dateColumn = table.getColumnModel().getColumn(2);
+        table.setDefaultEditor(LocalDate.class, new DateTableEditor());
+        table.setDefaultRenderer(LocalDate.class, new DateTableEditor());
+        dateColumn.setCellEditor(table.getDefaultEditor(LocalDate.class));
+        dateColumn.setCellRenderer(table.getDefaultRenderer(LocalDate.class));
+    }
+    private void setUpNameSelection(JTable table){
+        TableColumn nameColumn = table.getColumnModel().getColumn(0);
+        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+        ArrayList<String> employeeNames = new ArrayList<String>(List.of(employeeDataManager.getAllEmployeesNameList()));
+        JComboBox nameCombobox = new JComboBox(employeeNames.toArray());
+        nameCombobox.setBackground(Color.WHITE);
+        nameColumn.setCellEditor(new DefaultCellEditor(nameCombobox));
+    }
+
+    private String[][] getParticipationTableValues(JTable participationTable) {
+        String[][] tableValues = new String[participationTable.getRowCount()][participationTable.getColumnCount()];
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        for (int row = 0; row < participationTable.getRowCount(); row++) {
+            for (int column = 0; column < participationTable.getColumnCount(); column++) {
+                if (participationTable.getValueAt(row, column) == null || participationTable.getValueAt(row, column).equals("")) {
+                    break;
+                }
+                if (column == 2) {
+                    LocalDate temporaryDate = (LocalDate) participationTable.getValueAt(row,column);
+                    String temporaryString = temporaryDate.format(dateTimeFormatter);
+                    tableValues[row][column] = temporaryString;
+                } else {
+                    tableValues[row][column] = (String) participationTable.getValueAt(row, column);
+                }
+            }
+        }
+        return tableValues;
+    }
+
 
 }

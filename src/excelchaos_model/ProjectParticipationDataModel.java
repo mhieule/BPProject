@@ -29,6 +29,12 @@ public class ProjectParticipationDataModel {
         }
     }
 
+    public ProjectParticipationDataModel(){
+        projectManager = new ProjectManager();
+        participationManager = new ProjectParticipationManager();
+        employeeDataManager = new EmployeeDataManager();
+    }
+
     public int[] getProjectIds() {
         return projectIds;
     }
@@ -68,8 +74,10 @@ public class ProjectParticipationDataModel {
             arrayLength++;
             beginCalendarArrayLength.add(Calendar.MONTH, 1);
         }
+        arrayLength +=1;
         months = new String[arrayLength];
-        int index = 0;
+        months[0] = "Namen";
+        int index = 1;
         while (beginCalendar.before(finishCalendar)) {
             if (index < arrayLength) {
                 months[index] = formatter.format(beginCalendar.getTime());
@@ -85,17 +93,10 @@ public class ProjectParticipationDataModel {
     public String[] getPersonNamesForProject(int projectId) {
         String[] names;
         List<ProjectParticipation> projectParticipationsList = new ArrayList<>();
-        projectParticipationsList = participationManager.getProjectParticipationByProjectID(projectId);
-        HashSet<String> namesSet = new HashSet<String>();
-        for (ProjectParticipation participation : projectParticipationsList) {
-            namesSet.add(employeeDataManager.getEmployee(participation.getPerson_id()).getSurname() + " " + employeeDataManager.getEmployee(participation.getPerson_id()).getName());
-        }
-
-        names = new String[namesSet.size()];
-        int index = 0;
-        for (String name : namesSet) {
-            names[index] = name;
-            index++;
+        int[] employeeIds = getPersonIdsForProject(projectId);
+        names = new String[employeeIds.length];
+        for (int i = 0; i < employeeIds.length; i++) {
+            names[i] = employeeDataManager.getEmployee(employeeIds[i]).getSurname() + " " + employeeDataManager.getEmployee(employeeIds[i]).getName();
         }
         /*int arrayLength = 0;
         int oldemployeeId = -1;
@@ -144,13 +145,14 @@ public class ProjectParticipationDataModel {
         personIds = new int[personIdSet.size()];
         int index = 0;
         for (Integer integer : personIdSet) {
+            System.out.println(integer);
             personIds[index] = integer;
             index++;
         }
 
         return personIds;
     }
-    public String[][] getTableData(int projectId, int numOfRows, String[] months) throws ParseException {
+    public String[][] getTableData(int projectId, int numOfRows, String[] months,String[] employeeNames) throws ParseException {
         String[][] tableData = new String[numOfRows * 2][months.length];
         DateFormat format = new SimpleDateFormat("MMMM-yyyy");
         int lastCorrectGivenValue = 0;
@@ -159,9 +161,11 @@ public class ProjectParticipationDataModel {
             List<ProjectParticipation> projectParticipationsList = new ArrayList<>();
             projectParticipationsList = participationManager.getProjectParticipationByProjectIDandPersonID(projectId, personIdsForProject[row / 2]);
             for (int column = 0; column < months.length; column++) {
+                if(column == 0){
+                    tableData[row][column] = employeeNames[row/2];
+                    continue;
+                }
                 if ((row % 2) == 0) {
-                    System.out.println(projectParticipationsList.size());
-                    System.out.println(column);
                     if(column < projectParticipationsList.size()){
                         tableData[row][column] = transformer.formatPercentageToStringForScope(projectParticipationsList.get(column).getScope());
                         lastCorrectGivenValue = column;
@@ -195,6 +199,9 @@ public class ProjectParticipationDataModel {
             List<ProjectParticipation> projectParticipationsList = new ArrayList<>();
             projectParticipationsList = participationManager.getProjectParticipationByProjectIDandPersonID(projectId, personIdsForProject[row / 2]);
             for (int column = 0; column < months.length; column++) {
+                if(column == 0){
+                    continue;
+                }
                 if ((row % 2) == 0) {
                     if(column < projectParticipationsList.size()){
                         sumPersonenMonate[column] += projectParticipationsList.get(column).getScope();

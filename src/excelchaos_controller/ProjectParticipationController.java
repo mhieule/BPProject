@@ -3,9 +3,11 @@ package excelchaos_controller;
 import excelchaos_model.ProjectParticipationDataModel;
 import excelchaos_view.ProjectParticipationView;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 
-public class ProjectParticipationController {
+public class ProjectParticipationController implements ActionListener {
     private ProjectParticipationView participationView;
     private MainFrameController frameController;
     private String addParticipationTab = "Projektmitarbeit";
@@ -37,14 +39,19 @@ public class ProjectParticipationController {
             String[] monthColumns = model.getProjectRunTimeInMonths(selectedProjectIds[projectId]);
             String[] involvedEmployees = model.getPersonNamesForProject(selectedProjectIds[projectId]);
             try {
-                String[][] tableData = model.getTableData(selectedProjectIds[projectId],involvedEmployees.length,monthColumns);
+                String[][] tableData = model.getTableData(selectedProjectIds[projectId],involvedEmployees.length,monthColumns,involvedEmployees);
                 String[][] summedTableData = model.getSummedTableData(selectedProjectIds[projectId],involvedEmployees.length,monthColumns);
                 String totalCost = model.getTotalProjectPersonalCost();
-                participationView.setUpProjectPanel(projectName,monthColumns,involvedEmployees,tableData,summedTableData,totalCost);
+                participationView.setUpProjectPanel(projectName,monthColumns,involvedEmployees,tableData,summedTableData,totalCost,selectedProjectIds[projectId]);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
 
         }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }
