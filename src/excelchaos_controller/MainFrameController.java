@@ -33,7 +33,7 @@ public class MainFrameController implements ActionListener {
     public MainFrameController() {
         window = new MainFrame();
         window.init();
-        window.setActionListener(this);
+        //window.setActionListener(this);
         //backEndUpdates.calculationsOnStartUp();
         tabsController = new TabsController(this);
         window.add(tabsController.getTabs());

@@ -7,8 +7,10 @@ import java.awt.event.ActionListener;
 public class ToolbarShowProjectsController implements ActionListener {
     private ToolbarShowProjectsView toolbar;
     private MainFrameController frameController;
+    private ShowProjectsController showProjectsController;
 
-    public ToolbarShowProjectsController(MainFrameController mainFrameController){
+    public ToolbarShowProjectsController(MainFrameController mainFrameController,ShowProjectsController showProjectsController){
+        this.showProjectsController = showProjectsController;
         frameController = mainFrameController;
         toolbar = new ToolbarShowProjectsView();
         toolbar.init();
@@ -32,7 +34,9 @@ public class ToolbarShowProjectsController implements ActionListener {
 
         }
         if (e.getSource() == toolbar.getCostOverview()){
-
+            if(showProjectsController.getShowProjectsView().getTable().isRowCurrentlySelected()){
+                new ProjectParticipationController(frameController,showProjectsController.getShowProjectsView().getTable().getIdsOfCurrentSelectedRows()).showInsertProjectsView(frameController);
+            }
         }
     }
 }

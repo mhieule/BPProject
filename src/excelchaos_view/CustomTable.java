@@ -213,6 +213,55 @@ public class CustomTable extends JTable {
 
     //TODO Ausgewählte Zeile als Array zurückgeben bzw. mehrere Zeilen als 2D Array zurückgeben
 
+    public String[] getIdsOfCurrentSelectedRows(){
+        int selectedRows = 0;
+        for (int row = 0; row < this.getRowCount(); row++) {
+            if((Boolean) getValueAt(row,0)){
+                selectedRows++;
+            }
+        }
+        String[] result = new String[selectedRows];
+        int index = 0;
+        for (int row = 0; row < this.getRowCount(); row++) {
+                if((Boolean) getValueAt(row,0)){
+                    result[index] = (String) getValueAt(row,1);
+                    index++;
+
+            }
+        }
+        return result;
+    }
+
+    public String[][] getCurrentSelectedRowsAsArray(){
+        int selectedRows = 0;
+        for (int row = 0; row < this.getRowCount(); row++) {
+            if((Boolean) getValueAt(row,0)){
+                selectedRows++;
+            }
+        }
+        String[][] result = new String[selectedRows][this.getColumnCount()];
+        int index = 0;
+        for (int row = 0; row < this.getRowCount(); row++) {
+            for (int column = 0; column < this.getColumnCount(); column++) {
+                if((Boolean) getValueAt(row,0)){
+                    result[index][column] = (String) getValueAt(row,column);
+                    index++;
+                }
+            }
+        }
+        return result;
+    }
+
+    public boolean isRowCurrentlySelected(){
+        int selectedRows = 0;
+        for (int row = 0; row < this.getRowCount(); row++) {
+            if((Boolean) getValueAt(row,0)){
+                selectedRows++;
+            }
+        }
+        return selectedRows > 0;
+    }
+
     /**
      * Same as the method above, this method is used to retrieve one row as a complete table
      * @param rowIndex the row index indicating the row to be chosen to turn into a table

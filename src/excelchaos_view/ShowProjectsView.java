@@ -49,7 +49,7 @@ public class ShowProjectsView extends JPanel {
         removeAll();
         setLayout(new BorderLayout());
 
-        String columns[] = {"Name", "Bewilligungsdatum", "Anfangsdatum", "Enddatum"};
+        String columns[] = {"ID", "Name", "Bewilligungsdatum", "Anfangsdatum", "Enddatum"};
         ProjectManager projectManager = new ProjectManager();
         int lines = projectManager.getRowCount();
         String resultData[][] = new String[lines][];
@@ -57,26 +57,30 @@ public class ShowProjectsView extends JPanel {
         List<Project> projects = projectManager.getAllProjects();
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         for (Project project : projects) {
+            String Id = Integer.toString(project.getProject_id());
             String name = project.getProject_name();
             String approval = dateFormat.format(project.getApproval_date());
             String start = dateFormat.format(project.getStart_date());
             String duration = dateFormat.format(project.getDuration());
 
-            String[] values = {name, approval, start, duration};
+            String[] values = {Id, name, approval, start, duration};
             resultData[currentIndex] = values;
             currentIndex++;
         }
 
-            jt = new CustomTable(resultData, columns);
-            JScrollPane sp = new JScrollPane(jt);
-            sp.setVisible(true);
-            add(sp);
-            revalidate();
-            repaint();
+        jt = new CustomTable(resultData, columns);
+        jt.getColumnModel().getColumn(1).setMinWidth(0);
+        jt.getColumnModel().getColumn(1).setMaxWidth(0);
+        jt.getColumnModel().getColumn(1).setWidth(0);
+        JScrollPane sp = new JScrollPane(jt);
+        sp.setVisible(true);
+        add(sp);
+        revalidate();
+        repaint();
 
     }
 
-        public CustomTable getTable () {
-            return jt;
-        }
+    public CustomTable getTable() {
+        return jt;
     }
+}

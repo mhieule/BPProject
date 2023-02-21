@@ -11,73 +11,74 @@ import java.util.Date;
 import java.util.List;
 
 public class AutomaticPayLevelIncrease {
-   private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
-   private ContractDataManager contractDataManager = new ContractDataManager();
+    private ContractDataManager contractDataManager = new ContractDataManager();
 
 
-   private List<Employee> employeeList;
+    private List<Employee> employeeList;
 
-   private List<Date>[] payLevelIncreaseForEmployees;
+    private List<Date>[] payLevelIncreaseForEmployees;
 
-   private int numberOfEmployees;
+    private int numberOfEmployees;
 
-   public AutomaticPayLevelIncrease(){
-       numberOfEmployees = employeeDataManager.getAllEmployees().size();
-       employeeList = employeeDataManager.getAllEmployees();
-       payLevelIncreaseForEmployees = new List[numberOfEmployees];
-   }
+    public AutomaticPayLevelIncrease() {
+        numberOfEmployees = employeeDataManager.getAllEmployees().size();
+        employeeList = employeeDataManager.getAllEmployees();
+        payLevelIncreaseForEmployees = new List[numberOfEmployees];
+    }
+
     //TODO Großflächig testen
-   public void performPayLevelIncrease() throws ParseException {
-       Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
-       DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-       int i = 0;
-       for (Employee employee : employeeList){
-           if(contractDataManager.getContract(employee.getId()) == null){
-               i++;
-               continue;
-           }
-           payLevelIncreaseForEmployees[i] = ProjectedSalaryModel.calculatePayLevelIncrease(dateFormat.parse(contractDataManager.getContract(employee.getId()).getStart_date().toString()),contractDataManager.getContract(employee.getId()).getPaylevel());
-           if(currentDate.compareTo(payLevelIncreaseForEmployees[i].get(0)) >= 0){
-               setNewPayLevel(contractDataManager.getContract(employee.getId()));
-           }
-           if(i < numberOfEmployees){
-               i++;
-           } else break;
-       }
+    public void performPayLevelIncrease() {
+        Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        int i = 0;
+        for (Employee employee : employeeList) {
+            if (contractDataManager.getContract(employee.getId()) == null) {
+                i++;
+                continue;
+            }
+            payLevelIncreaseForEmployees[i] = ProjectedSalaryModel.calculatePayLevelIncrease(contractDataManager.getContract(employee.getId()).getStart_date(), contractDataManager.getContract(employee.getId()).getPaylevel());
+            if (currentDate.compareTo(payLevelIncreaseForEmployees[i].get(0)) >= 0) {
+                setNewPayLevel(contractDataManager.getContract(employee.getId()));
+            }
+            if (i < numberOfEmployees) {
+                i++;
+            } else break;
+        }
 
-   }
+    }
 
 
-   private void setNewPayLevel(Contract contract){
-       switch (contract.getPaylevel()){
-           case "1A":
-               contract.setPaylevel("1B");
-               contractDataManager.updateContract(contract);
-               break;
-           case "1B":
-           case "1":
-               contract.setPaylevel("2");
-               contractDataManager.updateContract(contract);
-               break;
-           case "2":
-               contract.setPaylevel("3");
-               contractDataManager.updateContract(contract);
-               break;
-           case "3":
-               contract.setPaylevel("4");
-               contractDataManager.updateContract(contract);
-               break;
-           case "4":
-               contract.setPaylevel("5");
-               contractDataManager.updateContract(contract);
-               break;
-           case "5":
-               contract.setPaylevel("6");
-               contractDataManager.updateContract(contract);
-               break;
-           case "6":
-               break;
-       }
-   }
+    private void setNewPayLevel(Contract contract) {
+        switch (contract.getPaylevel()) {
+            case "1A":
+                contract.setPaylevel("1B");
+                contractDataManager.updateContract(contract);
+                break;
+            case "1B":
+            case "1":
+                contract.setPaylevel("2");
+                contractDataManager.updateContract(contract);
+                break;
+            case "2":
+                contract.setPaylevel("3");
+                contractDataManager.updateContract(contract);
+                break;
+            case "3":
+                contract.setPaylevel("4");
+                contractDataManager.updateContract(contract);
+                break;
+            case "4":
+                contract.setPaylevel("5");
+                contractDataManager.updateContract(contract);
+                break;
+            case "5":
+                contract.setPaylevel("6");
+                contractDataManager.updateContract(contract);
+                break;
+            case "6":
+                break;
+        }
+    }
 }

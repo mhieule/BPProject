@@ -83,7 +83,7 @@ public class InsertPersonController implements ActionListener {
         insertPersonView.getTfWorkScope().setText(null);
         insertPersonView.getTypeOfJobPicklist().setSelectedItem("Nicht ausgewählt");
         insertPersonView.getNationalityPickList().setSelectedItem("Afghanistan");
-        insertPersonView.getNationalityPickList2().setSelectedItem(null);
+        insertPersonView.getNationalityPickList2().setSelectedItem("Keine");
         insertPersonView.getNationalityCheckBox().setSelected(false);
         insertPersonView.getVisaRequiredCheckBox().setSelected(false);
         setNationalityCheckboxInVisible();
@@ -113,7 +113,10 @@ public class InsertPersonController implements ActionListener {
         String email_private = insertPersonView.getTfPrivatEmail().getText();
         String phone_private = insertPersonView.getTfPrivateTelefonnummer().getText();
         String citizenship_1 = insertPersonView.getNationalityPickList().getSelectedItem().toString();
-        String citizenship_2 = insertPersonView.getNationalityPickList2().getSelectedItem().toString();
+        String citizenship_2 = null;
+        if(insertPersonView.getNationalityPickList2().getSelectedItem().toString() != null){
+             citizenship_2 = insertPersonView.getNationalityPickList2().getSelectedItem().toString();
+        }
         String employeeNumber = insertPersonView.getTfPersonalnummer().getText();
         String tu_id = insertPersonView.getTfTuid().getText();
         boolean visa_required = insertPersonView.getVisaRequiredCheckBox().isSelected();

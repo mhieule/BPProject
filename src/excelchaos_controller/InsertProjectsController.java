@@ -25,10 +25,11 @@ public class InsertProjectsController implements ActionListener {
     private String addProjectsTab = "Projekt hinzufügen";
 
     public InsertProjectsController(MainFrameController mainFrameController) {
+        frameController = mainFrameController;
         insertProjectsView = new InsertProjectsView();
         insertProjectsView.init();
         insertProjectsView.setActionListener(this);
-        frameController = mainFrameController;
+
     }
 
     public InsertProjectsView getInsertProjectsView() {
@@ -137,6 +138,7 @@ public class InsertProjectsController implements ActionListener {
         }
     }
 
+    //TODO Wenn nur für einen Monat der Beschäftigungsumfang eingetragen wurde, dann erstelle automatisch für alle weiteren. Wenn mehrere dann erstelle wenn welche fehlen für den letzten Monat die verbleibenden Einträge
     private void insertParticipationValuesDB(int projectId) throws ParseException {
         ProjectParticipationManager projectParticipationManager = new ProjectParticipationManager();
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
@@ -145,7 +147,7 @@ public class InsertProjectsController implements ActionListener {
         ProjectParticipation projectParticipation;
         StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        for (int row = 0; row < tableValues.length; row++) { //TODO Umwandlungsmethoden für SHK Angestellte implementieren
+        for (int row = 0; row < tableValues.length; row++) {  //TODO Umwandlungsmethoden für SHK Angestellte implementieren
             if (tableValues[row][0] != null && tableValues[row][1] != null && tableValues[row][2] != null) {
                 int personId = employeeDataManager.getEmployeeByName(tableValues[row][0]).getId();
                 Date date = format.parse(tableValues[row][2]);

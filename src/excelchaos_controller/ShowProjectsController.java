@@ -18,7 +18,7 @@ public class ShowProjectsController implements ActionListener {
     public ShowProjectsController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         showProjectsView = new ShowProjectsView();
-        toolbarShowProjects = new ToolbarShowProjectsController(frameController);
+        toolbarShowProjects = new ToolbarShowProjectsController(frameController,this);
         showProjectsView.init();
         showProjectsView.add(toolbarShowProjects.getToolbar(),BorderLayout.NORTH);
         searchAndFilterModel = new SearchAndFilterModel(showProjectsView.getTable(),toolbarShowProjects.getToolbar().getSearchField());

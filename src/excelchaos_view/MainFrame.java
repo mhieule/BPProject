@@ -22,7 +22,7 @@ public class MainFrame extends JFrame {
     Font f2 = new Font(Font.SANS_SERIF, Font.PLAIN, 15);
 
     public void init() {
-        menubar = new JMenuBar();
+       /* menubar = new JMenuBar();
         menubar.setBackground(Color.WHITE);
         actionMenu = new JMenu("Aktionen");
         actionMenu.setFont(f1);
@@ -62,14 +62,14 @@ public class MainFrame extends JFrame {
         actionMenu.add(updateItem);
         actionMenu.add(deleteItem);
         docuMenu.add(aboutUsItem);
-        docuMenu.add(docuItem);
+        docuMenu.add(docuItem);*/
 
 
         setTitle("Excelchaos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(true);
         setSize(750, 750);
-        setJMenuBar(menubar);
+        //setJMenuBar(menubar);
 
 
 
@@ -86,9 +86,9 @@ public class MainFrame extends JFrame {
         return seeItem;
     }
 
-    public void setActionListener(ActionListener l) {
+   /* public void setActionListener(ActionListener l) {
         insertItem.addActionListener(l);
         seeItem.addActionListener(l);
-    }
+    }*/
 
 }

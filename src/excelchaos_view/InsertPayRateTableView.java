@@ -245,7 +245,6 @@ public class InsertPayRateTableView extends JPanel {
         headerTable.getColumnModel().getColumn(0).setPreferredWidth(180);
         headerTable.setRowHeight(30);
         headerTable.getColumnModel().getColumn(0).setCellRenderer(new MultiLineTableCellRenderer());
-
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setRowHeight(30);
         DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)table.getDefaultRenderer(Object.class);
