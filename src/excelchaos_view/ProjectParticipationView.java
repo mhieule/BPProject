@@ -74,7 +74,7 @@ public class ProjectParticipationView extends JPanel {
         addPersonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setUpAddParticipationView(projectPanel,projectId,monthColumns,mainScrollPane,sideScrollPane);
+                setUpAddParticipationView(projectPanel,projectId,monthColumns,projectName);
             }
         });
 
@@ -135,6 +135,7 @@ public class ProjectParticipationView extends JPanel {
         table.getColumnModel().getColumn(0).setMinWidth(0);
         table.getColumnModel().getColumn(0).setMaxWidth(0);
         table.getColumnModel().getColumn(0).setWidth(0);
+        table.setPreferredScrollableViewportSize(table.getPreferredSize());
         scrollPane = new JScrollPane(table);
         scrollPane.setRowHeaderView(headerTable);
         return scrollPane;
@@ -199,7 +200,7 @@ public class ProjectParticipationView extends JPanel {
     }
 
 
-    private void setUpAddParticipationView(JPanel projectPanel,int projectId,String[] monthColumns,JScrollPane oldMain,JScrollPane oldSide){
+    private void setUpAddParticipationView(JPanel projectPanel,int projectId,String[] monthColumns,String projectName){
         JDialog participationDialog = new JDialog();
 
         JPanel tablePanel = new JPanel();
@@ -244,6 +245,14 @@ public class ProjectParticipationView extends JPanel {
                         } catch (ParseException ex) {
                             throw new RuntimeException(ex);
                         }
+                        List<ProjectParticipation> checkAlreadyExistingParticipationList = projectParticipationManager.getProjectParticipationByProjectIDandPersonID(projectId,personId);
+                        for(ProjectParticipation participation : checkAlreadyExistingParticipationList){
+                            System.out.println(participation.getParticipation_period()+ "Trennung " +"ÜbergebenesDatum " + date);
+                            if(participation.getParticipation_period().equals(date)&&participation.getPerson_id() == personId && participation.getProject_id() == projectId){
+                                projectParticipationManager.removeProjectParticipationBasedOnDate(projectId,personId,date);
+                                break;
+                            }
+                        }
                         projectParticipation = new ProjectParticipation(projectId, personId, transformer.formatStringToPercentageValueForScope(tableValues[row][1]),date);
                         projectParticipationManager.addProjectParticipation(projectParticipation);
                     }
@@ -251,20 +260,43 @@ public class ProjectParticipationView extends JPanel {
                 }
 
                 String[] newNames = projectParticipationDataModel.getPersonNamesForProject(projectId);
-                String[][] summedTableDate = null;
                 String[][] newTableData = null;
+                String[][] summedTableDate = null;
                 try {
                     newTableData = projectParticipationDataModel.getTableData(projectId,newNames.length,monthColumns,newNames);
                     summedTableDate = projectParticipationDataModel.getSummedTableData(projectId, newNames.length,monthColumns);
                 } catch (ParseException ex) {
                     throw new RuntimeException(ex);
                 }
+                String totalCost = projectParticipationDataModel.getTotalProjectPersonalCost();
                 JScrollPane newMainScrollPane = initMainTable(monthColumns,newTableData,newNames);
                 JScrollPane newSideScrollPane = initSumTable(summedTableDate,monthColumns);
 
-                projectPanel.remove(oldMain);
-                projectPanel.remove(oldSide);
+                JPanel projectNamePanel = new JPanel();
+                projectNamePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
+                JLabel projectNameLabel = new JLabel(projectName);
+                projectNameLabel.setFont(new Font("Dialog", Font.BOLD, 22));
+                projectNamePanel.add(projectNameLabel);
+                projectNamePanel.add(Box.createHorizontalStrut(100));
+
+                JButton addPersonButton = new JButton("Person zum Projekt hinzufügen");
+                projectNamePanel.add(addPersonButton);
+
+                projectNamePanel.add(Box.createHorizontalStrut(500));
+                JLabel totalCostLabel = new JLabel("Gesamtpersonalkosten: " + totalCost);
+                totalCostLabel.setFont(new Font("Dialog", Font.BOLD, 16));
+                projectNamePanel.add(totalCostLabel);
+
+                addPersonButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setUpAddParticipationView(projectPanel,projectId,monthColumns,projectName);
+                    }
+                });
+
+                projectPanel.removeAll();
+                projectPanel.add(projectNamePanel,BorderLayout.NORTH);
                 projectPanel.add(newMainScrollPane,BorderLayout.CENTER);
                 projectPanel.add(newSideScrollPane,BorderLayout.SOUTH);
 
@@ -287,6 +319,7 @@ public class ProjectParticipationView extends JPanel {
         participationDialog.add(tablePanel,BorderLayout.CENTER);
         participationDialog.add(buttonPanel,BorderLayout.SOUTH);
         participationDialog.setName("Mitarbeiter hinzufügen");
+        participationDialog.setTitle("Mitarbeiter hinzufügen");
         participationDialog.pack();
         participationDialog.setLocationRelativeTo(null);
         participationDialog.setAlwaysOnTop(true);
