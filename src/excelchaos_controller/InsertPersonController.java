@@ -109,7 +109,6 @@ public class InsertPersonController implements ActionListener {
         insertPersonView.getTfWorkStart().setText(null);
     }
 
-    //TODO VBL Status Speichern (wenn Feld in DB verfügbar ist)
     public Employee safeData() {
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         ContractDataManager contractDataManager = new ContractDataManager();
@@ -153,8 +152,6 @@ public class InsertPersonController implements ActionListener {
         if (insertPersonView.getVblList().getSelectedItem().toString().equals("Pflichtig")) {
             vbl = true;
         }
-        //TODO muss in Datenbank als Date gespeichert werden und nicht als String
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         LocalDate workStartDate = insertPersonView.getTfWorkStart().getDate();
         calendar.set(workStartDate.getYear(), workStartDate.getMonth().getValue(), workStartDate.getDayOfMonth());
         Date workStart = calendar.getTime();

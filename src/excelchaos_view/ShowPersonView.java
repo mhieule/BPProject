@@ -65,7 +65,6 @@ public class ShowPersonView extends JPanel {
             Contract contract = contractDataManager.getContract(employee.getId());
             String name = employee.getName();
             String surname = employee.getSurname();
-            //TODO füllen wenn vorhanden
             String street = employee.getStreet();
             String houseNumber = employee.getHouse_number();
             String additionalAddress = employee.getAdditional_address();
@@ -92,7 +91,6 @@ public class ShowPersonView extends JPanel {
             String startDateString = dateFormat.format(startDate);
             Date endDate = contract.getEnd_date();
             String endDateString = dateFormat.format(endDate);
-            //TODO füllen wenn vorhanden (contract)
             String extend = transformer.formatPercentageToStringForScope(contract.getScope()); //arbeitsumfang
             String payGrade = contract.getPaygrade();
             String payLevel = contract.getPaylevel();

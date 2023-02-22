@@ -20,8 +20,8 @@ public class InsertPersonView extends JPanel {
 
     private DatePicker tfGeburtsdatum, tfVisaValidUntil, tfWorkStart, tfWorkEnd;
 
+    private JComboBox nationalityPickList, nationalityPickList2, typeOfJobPicklist, hiwiTypeOfPaymentList, payLevelList, payGroupList, vblList;
 
-    private JComboBox nationalityPickList, nationalityPickList2, typeOfJobPicklist, hiwiTypeOfPaymentList, payLevelList, payGroupList,vblList;
     private JCheckBox nationalityCheckBox, visaRequiredCheckBox;
 
     private JButton submit, reset, salary, cancel;
@@ -48,7 +48,6 @@ public class InsertPersonView extends JPanel {
         add(centerDown, BorderLayout.SOUTH);
 
         name = new JLabel("Name");
-
         setConstraintsLabel(name, 0);
         tfName = new JTextField();
         setConstraintsTextField(tfName, 0);
@@ -103,7 +102,6 @@ public class InsertPersonView extends JPanel {
         setConstraintsLabel(telefonnummerTUDA, 10);
         tfTelefonnummerTUDA = new JTextField();
         setConstraintsTextField(tfTelefonnummerTUDA, 10);
-
 
         nationalityFirst = new JLabel("Staatsangehörigkeit");
         setConstraintsLabel(nationalityFirst, 11);
