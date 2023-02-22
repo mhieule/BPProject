@@ -25,5 +25,13 @@ public class ToolbarShowPersonController implements ActionListener {
         if(e.getSource() == toolbar.getInsertPerson()){
             frameController.getInsertPersonController().showInsertPersonView(frameController);
         }
+        else if(e.getSource() == toolbar.getEditPerson()){
+            frameController.getInsertPersonController().showInsertPersonView(frameController);
+            String id = frameController.getShowPersonalData().getPersonView().getTable().getIdsOfCurrentSelectedRows()[0];
+            frameController.getInsertPersonController().fillFields(id);
+        }
+        else if(e.getSource() == toolbar.getDeletePerson()){
+            //TODO delete muss noch implementiert werden
+        }
     }
 }

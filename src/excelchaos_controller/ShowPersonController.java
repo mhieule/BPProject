@@ -13,6 +13,7 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 
 public class ShowPersonController implements ActionListener {
     private ShowPersonView showPersonView;
@@ -45,9 +46,25 @@ public class ShowPersonController implements ActionListener {
         }
     }
 
+    public void disableButtons(String[] ids){
+        if (ids.length == 0){
+            toolbarShowPerson.getToolbar().getEditPerson().setEnabled(false);
+            toolbarShowPerson.getToolbar().getDeletePerson().setEnabled(false);
+        } else if (ids.length == 1){
+            toolbarShowPerson.getToolbar().getEditPerson().setEnabled(true);
+            toolbarShowPerson.getToolbar().getDeletePerson().setEnabled(true);
+        } else {
+            toolbarShowPerson.getToolbar().getEditPerson().setEnabled(false);
+            toolbarShowPerson.getToolbar().getDeletePerson().setEnabled(true);
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if(e.getSource() == showPersonView.getTable()){
+            String[] ids = showPersonView.getTable().getIdsOfCurrentSelectedRows();
+            disableButtons(ids);
+        }
     }
 
     /*@Override
@@ -58,10 +75,12 @@ public class ShowPersonController implements ActionListener {
 
 
     }*/
+
     public void updateData(){
         showPersonView.addData();
         showPersonView.add(toolbarShowPerson.getToolbar(),BorderLayout.NORTH);
     }
+
     public ToolbarShowPersonController getToolbarShowPerson() {
         return toolbarShowPerson;
     }
