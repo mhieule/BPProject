@@ -11,6 +11,7 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ProjectParticipationManager {
@@ -63,6 +64,18 @@ public class ProjectParticipationManager {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
+    }
+
+    public void  removeProjectParticipationBasedOnDate(int project_id, int person_id, Date date){
+        try{
+            DeleteBuilder<ProjectParticipation, Object> builder = projectParticipationsDao.deleteBuilder();
+            builder.where().eq("project_id", project_id).and().eq("person_id", person_id).and().eq("participation_period",date);
+            builder.delete();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+
     }
 
     public void removeAllProjectParticipations(){
