@@ -11,7 +11,6 @@ import java.util.List;
 
 public class CalculateSalaryBasedOnPayRateTable {
 
-    boolean vblpflicht = true; //TODO Als Attribut in Contract einführen um die entsprechende Konditionenabfrage(If) durchführen zu können.
 
     //TODO Großflächig testen
     public double[] getCurrentPayRateTableEntryForWiMiAndATM(Contract contract) {
@@ -23,7 +22,7 @@ public class CalculateSalaryBasedOnPayRateTable {
         if (contract.getPaygrade().equals("E13")) {
             if (currentPayRateTableE13.getCurrentPayRateTable() != null) {
                 List<SalaryTable> E13SalaryTable = currentPayRateTableE13.getCurrentPayRateTable();
-                if (vblpflicht) {
+                if (contract.getVbl_status()) {
                     if (E13SalaryTable.get(0).getTable_name().contains("1A")) {
                         switch (contract.getPaylevel()) {
                             case "1A":
@@ -149,7 +148,7 @@ public class CalculateSalaryBasedOnPayRateTable {
         } else {
             if (currentPayRateTableE14.getCurrentPayRateTable() != null) {
                 List<SalaryTable> E14SalaryTable = currentPayRateTableE14.getCurrentPayRateTable();
-                if (vblpflicht) {
+                if (contract.getVbl_status()) {
                     if (E14SalaryTable.get(0).getTable_name().contains("1A")) {
                         switch (contract.getPaylevel()) {
                             case "1A":
@@ -286,7 +285,7 @@ public class CalculateSalaryBasedOnPayRateTable {
         List<SalaryTable> E13SalaryTable = currentPayRateTableE13.getPayRateTableBasedOnChosenDate(choosenDate);
         List<SalaryTable> E14SalaryTable = currentPayRateTableE14.getPayRateTableBasedOnChosenDate(choosenDate);
         if (contract.getPaygrade().equals("E13")) {
-            if (vblpflicht) {
+            if (contract.getVbl_status()) {
                 if (E13SalaryTable.get(0).getTable_name().contains("1A")) {
                     switch (contract.getPaylevel()) {
                         case "1A":
@@ -384,7 +383,7 @@ public class CalculateSalaryBasedOnPayRateTable {
 
             }
         } else {
-            if (vblpflicht) {
+            if (contract.getVbl_status()) {
                 if (E14SalaryTable.get(0).getTable_name().contains("1A")) {
                     switch (contract.getPaylevel()) {
                         case "1A":

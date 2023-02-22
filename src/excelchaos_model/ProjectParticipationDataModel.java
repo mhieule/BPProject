@@ -156,15 +156,12 @@ public class ProjectParticipationDataModel {
     public String[][] getTableData(int projectId, int numOfRows, String[] months,String[] employeeNames) throws ParseException {
         String[][] tableData = new String[numOfRows * 2][months.length];
         DateFormat format = new SimpleDateFormat("MMMM-yyyy");
-        int lastCorrectGivenValue = 0;
         int[] personIdsForProject = getPersonIdsForProject(projectId);
         for (int row = 0; row < tableData.length; row++) {
+            int lastCorrectGivenValue = 0;
             List<ProjectParticipation> projectParticipationsList = new ArrayList<>();
             projectParticipationsList = participationManager.getProjectParticipationByProjectIDandPersonID(projectId, personIdsForProject[row / 2]);
             projectParticipationsList.sort(new ParticipationSortByDate());
-            for (ProjectParticipation participation : projectParticipationsList){
-                System.out.println(participation.getScope() + " " + "Datum" + participation.getParticipation_period());
-            }
             for (int column = 0; column < months.length; column++) {
                 if(column == 0){
                     tableData[row][column] = employeeNames[row/2];

@@ -8,8 +8,11 @@ public class ToolbarShowPersonController implements ActionListener {
     private ToolbarShowPersonView toolbar;
     private MainFrameController frameController;
 
-    public ToolbarShowPersonController(MainFrameController mainFrameController){
+    private ShowPersonController showPersonController;
+
+    public ToolbarShowPersonController(MainFrameController mainFrameController,ShowPersonController showPersonController){
         frameController = mainFrameController;
+        this.showPersonController = showPersonController;
         toolbar = new ToolbarShowPersonView();
         toolbar.init();
         toolbar.setActionListener(this);
@@ -23,12 +26,14 @@ public class ToolbarShowPersonController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == toolbar.getInsertPerson()){
-            frameController.getInsertPersonController().showInsertPersonView(frameController);
+            InsertPersonController insertPersonController = new InsertPersonController(frameController);
+            insertPersonController.showInsertPersonView(frameController);
         }
         else if(e.getSource() == toolbar.getEditPerson()){
-            frameController.getInsertPersonController().showInsertPersonView(frameController);
-            String id = frameController.getShowPersonalData().getPersonView().getTable().getIdsOfCurrentSelectedRows()[0];
-            frameController.getInsertPersonController().fillFields(id);
+            InsertPersonController insertPersonController = new InsertPersonController(frameController);
+            String employeeID = showPersonController.getPersonView().getTable().getIdsOfCurrentSelectedRows()[0];
+            insertPersonController.fillFields(employeeID);
+            insertPersonController.showInsertPersonView(frameController);
         }
         else if(e.getSource() == toolbar.getDeletePerson()){
             //TODO delete muss noch implementiert werden

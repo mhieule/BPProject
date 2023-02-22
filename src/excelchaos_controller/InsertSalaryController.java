@@ -36,23 +36,23 @@ public class InsertSalaryController implements ActionListener {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addSalaryTab));
     }
 
-    public void fillFields(String surNameAndName){
+    public void fillFields(int id){
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         ContractDataManager contractDataManager = new ContractDataManager();
-        Contract contract = contractDataManager.getContract(employeeDataManager.getEmployeeByName(surNameAndName).getId());
+        Contract contract = contractDataManager.getContract(id);
         CalculateSalaryBasedOnPayRateTable calculateSalaryBasedOnPayRateTable = new CalculateSalaryBasedOnPayRateTable();
         String[] names = employeeDataManager.getAllEmployeesNameList();
-
+        String currentEmployeeName = employeeDataManager.getEmployee(id).getSurname() + " " + employeeDataManager.getEmployee(id).getName();
         insertSalaryView.getNamePickList().setModel(new DefaultComboBoxModel<>(names));
-        insertSalaryView.getNamePickList().setSelectedItem(surNameAndName);
+        insertSalaryView.getNamePickList().setSelectedItem(currentEmployeeName);
         insertSalaryView.getNamePickList().setEnabled(false);
         insertSalaryView.getTfGruppe().setSelectedItem(contract.getPaygrade());
         insertSalaryView.getTfGruppe().setEnabled(false);
         insertSalaryView.getPlStufe().setSelectedItem(contract.getPaylevel());
 
         StringAndDoubleTransformationForDatabase stringAndDoubleTransformationForDatabase = new StringAndDoubleTransformationForDatabase();
-        String salary = stringAndDoubleTransformationForDatabase.formatDoubleToString(calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(contract)[0], 1);
-        String extraCost = stringAndDoubleTransformationForDatabase.formatDoubleToString(calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(contract)[1]*12, 1);
+        String salary = stringAndDoubleTransformationForDatabase.formatDoubleToString(contract.getRegular_cost(),1);
+        String extraCost = stringAndDoubleTransformationForDatabase.formatDoubleToString(contract.getBonus_cost(), 1);
         insertSalaryView.getTfGehalt().setText(salary);
         insertSalaryView.getTfSonderzahlung().setText(extraCost);
     }

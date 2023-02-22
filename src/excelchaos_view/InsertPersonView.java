@@ -15,10 +15,10 @@ public class InsertPersonView extends JPanel {
             gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, workStart, workEnd, workScope, payGroupOnHiring, payLevelOnHiring, hiwiTypeOfPayment, vblstate, puffer;
 
     private JTextField tfName, tfVorname, tfStrasse, tfHausnummer, tfAdresszusatz, tfPLZ, tfStadt, tfPrivatEmail, tfPrivateTelefonnummer,
-            tfPersonalnummer, tfTuid, tfGehaltEingeplanntBis, tfTranspondernummer, tfBueronummer,
+            tfPersonalnummer, tfTuid,  tfTranspondernummer, tfBueronummer,
             tfTelefonnummerTUDA, tfWorkScope;
 
-    private DatePicker tfGeburtsdatum, tfVisaValidUntil, tfWorkStart, tfWorkEnd;
+    private DatePicker tfGeburtsdatum, tfVisaValidUntil, tfWorkStart, tfWorkEnd,tfSalaryPlannedUntil;
 
     private JComboBox nationalityPickList, nationalityPickList2, typeOfJobPicklist, hiwiTypeOfPaymentList, payLevelList, payGroupList, vblList;
 
@@ -206,8 +206,8 @@ public class InsertPersonView extends JPanel {
 
         gehaltEingeplanntBis = new JLabel("Gehalt eingeplant bis");
         setConstraintsLabel(gehaltEingeplanntBis, 28);
-        tfGehaltEingeplanntBis = new JTextField();
-        setConstraintsTextField(tfGehaltEingeplanntBis, 28);
+        tfSalaryPlannedUntil = new DatePicker();
+        setConstraintsDatePicker(tfSalaryPlannedUntil, 28);
 
         puffer = new JLabel(" ");
         setConstraintsPuffer(puffer,29);
@@ -347,8 +347,8 @@ public class InsertPersonView extends JPanel {
         return tfTuid;
     }
 
-    public JTextField getTfGehaltEingeplanntBis() {
-        return tfGehaltEingeplanntBis;
+    public DatePicker getTfSalaryPlannedUntil() {
+        return tfSalaryPlannedUntil;
     }
 
     public JTextField getTfTranspondernummer() {

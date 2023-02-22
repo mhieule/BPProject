@@ -36,8 +36,8 @@ public class Employee {
     private String office_number;
     @DatabaseField()
     private String phone_tuda;
-    @DatabaseField()
-    private String salary_planned_until;
+    @DatabaseField(dataType = DataType.DATE_STRING, format = "yyyy-MM-dd")
+    private Date salary_planned_until;
     @DatabaseField(dataType = DataType.DATE_STRING, format = "yyyy-MM-dd")
     private Date visa_expiration;
     @DatabaseField(dataType = DataType.DATE_STRING, format = "yyyy-MM-dd")
@@ -57,7 +57,7 @@ public class Employee {
     public Employee(int id, String name, String surname, String email_private, String phone_private,
                     String citizenship_1, String citizenship_2, String employee_number, String tu_id, boolean visa_required,
                     String status, String transponder_number, String office_number, String phone_tuda,
-                    String salary_planned_until, Date visa_expiration, Date date_of_birth, String house_number,
+                    Date salary_planned_until, Date visa_expiration, Date date_of_birth, String house_number,
                     String zip_code, String additional_address, String city, String street){
         this.id = id;
         this.name = name;
@@ -191,11 +191,11 @@ public class Employee {
         this.phone_tuda = phone_tuda;
     }
 
-    public String getSalary_planned_until(){
+    public Date getSalary_planned_until(){
         return this.salary_planned_until;
     }
 
-    public void setSalary_planned_until(String salary_planned_until){
+    public void setSalary_planned_until(Date salary_planned_until){
         this.salary_planned_until = salary_planned_until;
     }
 

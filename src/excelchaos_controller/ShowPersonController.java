@@ -4,10 +4,7 @@ import excelchaos_model.SearchAndFilterModel;
 import excelchaos_view.ShowPersonView;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.event.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
@@ -15,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
-public class ShowPersonController implements ActionListener {
+public class ShowPersonController implements TableModelListener {
     private ShowPersonView showPersonView;
     private MainFrameController frameController;
     private ToolbarShowPersonController toolbarShowPerson;
@@ -26,10 +23,11 @@ public class ShowPersonController implements ActionListener {
     public ShowPersonController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         showPersonView = new ShowPersonView();
-        toolbarShowPerson = new ToolbarShowPersonController(frameController);
+        toolbarShowPerson = new ToolbarShowPersonController(frameController,this);
         showPersonView.init();
         showPersonView.add(toolbarShowPerson.getToolbar(),BorderLayout.NORTH);
         searchAndFilterModel = new SearchAndFilterModel(showPersonView.getTable(),toolbarShowPerson.getToolbar().getSearchField());
+        showPersonView.getTable().getModel().addTableModelListener(this);
     }
 
     public ShowPersonView getPersonView() {
@@ -46,26 +44,6 @@ public class ShowPersonController implements ActionListener {
         }
     }
 
-    public void disableButtons(String[] ids){
-        if (ids.length == 0){
-            toolbarShowPerson.getToolbar().getEditPerson().setEnabled(false);
-            toolbarShowPerson.getToolbar().getDeletePerson().setEnabled(false);
-        } else if (ids.length == 1){
-            toolbarShowPerson.getToolbar().getEditPerson().setEnabled(true);
-            toolbarShowPerson.getToolbar().getDeletePerson().setEnabled(true);
-        } else {
-            toolbarShowPerson.getToolbar().getEditPerson().setEnabled(false);
-            toolbarShowPerson.getToolbar().getDeletePerson().setEnabled(true);
-        }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == showPersonView.getTable()){
-            String[] ids = showPersonView.getTable().getIdsOfCurrentSelectedRows();
-            disableButtons(ids);
-        }
-    }
 
     /*@Override
     public void stateChanged(ChangeEvent e) {
@@ -83,5 +61,23 @@ public class ShowPersonController implements ActionListener {
 
     public ToolbarShowPersonController getToolbarShowPerson() {
         return toolbarShowPerson;
+    }
+
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        int numberOfSelectedRows = showPersonView.getTable().getNumberOfSelectedRows();
+        if(e.getColumn() == 0){
+            if(numberOfSelectedRows == 0){
+                toolbarShowPerson.getToolbar().getEditPerson().setEnabled(false);
+                toolbarShowPerson.getToolbar().getDeletePerson().setEnabled(false);
+            } else if (numberOfSelectedRows == 1) {
+                toolbarShowPerson.getToolbar().getEditPerson().setEnabled(true);
+                toolbarShowPerson.getToolbar().getDeletePerson().setEnabled(true);
+            } else {
+                toolbarShowPerson.getToolbar().getEditPerson().setEnabled(false);
+                toolbarShowPerson.getToolbar().getDeletePerson().setEnabled(true);
+            }
+
+        }
     }
 }

@@ -9,14 +9,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainFrameController implements ActionListener {
+public class MainFrameController {
     private MainFrame window;
 
     private BackEndUpdates backEndUpdates = new BackEndUpdates();
     private TabsController tabsController;
     private SideMenuPanelTablesController sideMenuTables;
     private ShowPersonController showPersonalData;
-    private InsertPersonController insertPersonController;
     private SalaryListController salaryListController;
     private SalaryHistoryController salaryHistoryController;
     private InsertSalaryController insertSalaryController;
@@ -39,7 +38,6 @@ public class MainFrameController implements ActionListener {
         window.add(tabsController.getTabs());
         sideMenuTables = new SideMenuPanelTablesController(this);
         //sideMenuActionLog = new SideMenuPanelActionLogController(this);
-        insertPersonController = new InsertPersonController(this);
         showPersonalData = new ShowPersonController(this);
         salaryListController = new SalaryListController(this);
         salaryHistoryController = new SalaryHistoryController(this);
@@ -53,16 +51,6 @@ public class MainFrameController implements ActionListener {
         window.setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == window.getInsertItem()) {
-            insertPersonController.showInsertPersonView(this);
-
-        } else if (e.getSource() == window.getSeeItem()) {
-            showPersonalData.showPersonView(this);
-        }
-
-    }
 
     public MainFrame getWindow() {
         return window;
@@ -72,9 +60,7 @@ public class MainFrameController implements ActionListener {
         return showPersonalData;
     }
 
-    public InsertPersonController getInsertPersonController() {
-        return insertPersonController;
-    }
+
 
     public SalaryListController getSalaryListController() {
         return salaryListController;

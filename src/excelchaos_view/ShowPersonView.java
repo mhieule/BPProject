@@ -51,7 +51,7 @@ public class ShowPersonView extends JPanel {
     public void addData(){
         removeAll();
         setLayout(new BorderLayout());
-        String columns[] = {"Name", "Vorname","Straße","Haunsummer","Adresszusatz", "Postleitzahl","Stadt",
+        String columns[] = {"ID","Name", "Vorname","Straße","Haunsummer","Adresszusatz", "Postleitzahl","Stadt",
                 "Geburtsdatum","E-Mail Privat", "Telefon Privat", "Telefon TUDA",  "Staatsangehörigkeit 1", "Staatsangehörigkeit 2", "Visum Gültigkeit", "Personalnummer", "Transpondernummer", "Büronummer", "TU-ID",
                 "Anstellungsart","Beschäftigungsbeginn","Beschäftigungsende", "Beschäftigungsumfgang","Gehaltsklasse","Gehaltsstufe","VBL-Status","SHK Stundensatz", "Gehalt Eingeplant bis"
         };
@@ -64,6 +64,7 @@ public class ShowPersonView extends JPanel {
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         for (Employee employee : employees){
             Contract contract = contractDataManager.getContract(employee.getId());
+            String id = String.valueOf(employee.getId());
             String name = employee.getName();
             String surname = employee.getSurname();
             String street = employee.getStreet();
@@ -100,15 +101,19 @@ public class ShowPersonView extends JPanel {
                 vblStatus = "Pflichtig";
             } else vblStatus = "Befreit";
             String shkHourlyRate = contract.getShk_hourly_rate();
-            String salaryPlannedUntil = employee.getSalary_planned_until();
+            Date salaryPlannedUntil = employee.getSalary_planned_until();
+            String salaryPlannedUntilString = dateFormat.format(salaryPlannedUntil);
 
-            String[] values = {name, surname, street, houseNumber, additionalAddress, zipCode, city, dateOfBirth,  emailPrivate, phonePrivate, phoneTuda,
-                     citizenship1, citizenship2, visaExpiration, employeeNumber, transponderNumber, officeNumber, tuId, status, startDateString, endDateString, extend, payGrade, payLevel, vblStatus, shkHourlyRate, salaryPlannedUntil};
+            String[] values = {id,name, surname, street, houseNumber, additionalAddress, zipCode, city, dateOfBirth,  emailPrivate, phonePrivate, phoneTuda,
+                     citizenship1, citizenship2, visaExpiration, employeeNumber, transponderNumber, officeNumber, tuId, status, startDateString, endDateString, extend, payGrade, payLevel, vblStatus, shkHourlyRate, salaryPlannedUntilString};
             resultData[currentIndex] = values;
             currentIndex++;
         }
         employeeDataTable = new CustomTable(resultData, columns);
         employeeDataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        employeeDataTable.getColumnModel().getColumn(1).setMinWidth(0);
+        employeeDataTable.getColumnModel().getColumn(1).setMaxWidth(0);
+        employeeDataTable.getColumnModel().getColumn(1).setWidth(0);
         CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(employeeDataTable);
         tca.adjustColumns();
         JScrollPane sp = new JScrollPane(employeeDataTable);

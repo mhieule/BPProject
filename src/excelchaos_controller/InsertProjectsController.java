@@ -2,7 +2,6 @@ package excelchaos_controller;
 
 import excelchaos_model.*;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
-import excelchaos_view.InsertPersonView;
 import excelchaos_view.InsertProjectsView;
 
 import javax.swing.*;
@@ -15,9 +14,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class InsertProjectsController implements ActionListener {
     private InsertProjectsView insertProjectsView;
@@ -66,7 +63,7 @@ public class InsertProjectsController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == insertProjectsView.getSubmit()) {
+        if (e.getSource() == insertProjectsView.getSubmitAndReset()) {
             ProjectManager projectManager = new ProjectManager();
 
             int id = projectManager.getNextID();
@@ -74,30 +71,64 @@ public class InsertProjectsController implements ActionListener {
 
 
             LocalDate approval = insertProjectsView.getTfApproval().getDate();
-
-            Date dateOfApproval = Date.from(approval.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
             LocalDate startDate = insertProjectsView.getTfStart().getDate();
-            Date dateOfStart = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
             LocalDate endLocalDate = insertProjectsView.getTfDuration().getDate();
-            Date endDate = Date.from(endLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-            Project project = new Project(id, name, dateOfStart, dateOfApproval, endDate);
-
-            projectManager.addProject(project);
-            insertCategoryValuesDB(project.getProject_id());
-            insertFunderValuesDB(project.getProject_id());
-            try {
-                insertParticipationValuesDB(project.getProject_id());
-            } catch (ParseException ex) {
-                throw new RuntimeException(ex);
+            Project project = null;
+            if(name == null || name.equals("") || approval == null || startDate == null|| endLocalDate == null){
+                JOptionPane.showConfirmDialog(null,"Bitte füllen Sie die Spalten \"Projektname\", \"Bewilligungsdatum\", \"Startdatum\" und \"Enddatum\" aus.","Spalten nicht vollständig ausgefüllt",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
+           } else {
+                Date dateOfApproval = Date.from(approval.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                Date dateOfStart = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                Date endDate = Date.from(endLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                project = new Project(id, name, dateOfStart, dateOfApproval, endDate);
+                projectManager.addProject(project);
+                insertCategoryValuesDB(project.getProject_id());
+                insertFunderValuesDB(project.getProject_id());
+                try {
+                    insertParticipationValuesDB(project.getProject_id());
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
+                frameController.getShowProjectsController().updateData();
+                resetInputs();
             }
 
-            resetInputs();
+
             insertProjectsView.revalidate();
             insertProjectsView.repaint();
-            frameController.getShowProjectsController().updateData();
+
+        }
+        if(e.getSource() == insertProjectsView.getSubmitAndClose()){
+            ProjectManager projectManager = new ProjectManager();
+
+            int id = projectManager.getNextID();
+            String name = insertProjectsView.getTfName().getText();
+
+
+            LocalDate approval = insertProjectsView.getTfApproval().getDate();
+            LocalDate startDate = insertProjectsView.getTfStart().getDate();
+            LocalDate endLocalDate = insertProjectsView.getTfDuration().getDate();
+            Project project = null;
+
+            if(name == null || name.equals("") || approval == null || startDate == null|| endLocalDate == null){
+                JOptionPane.showConfirmDialog(null,"Bitte füllen Sie die Spalten \"Projektname\", \"Bewilligungsdatum\", \"Startdatum\" und \"Enddatum\" aus.","Spalten nicht vollständig ausgefüllt",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
+            } else {
+                Date dateOfApproval = Date.from(approval.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                Date dateOfStart = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                Date endDate = Date.from(endLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                project = new Project(id, name, dateOfStart, dateOfApproval, endDate);
+                projectManager.addProject(project);
+                insertCategoryValuesDB(project.getProject_id());
+                insertFunderValuesDB(project.getProject_id());
+                try {
+                    insertParticipationValuesDB(project.getProject_id());
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
+                frameController.getShowProjectsController().updateData();
+                frameController.getTabs().removeTabNewWindow(insertProjectsView);
+            }
+
         }
         if (e.getSource() == insertProjectsView.getReset()) {
             resetInputs();
