@@ -1,22 +1,18 @@
 package excelchaos_view;
 
 import excelchaos_model.*;
+import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 
 import javax.swing.*;
-import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class ShowPersonView extends JPanel {
-    private CustomTable jt;
+    private CustomTable employeeDataTable;
+    private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
     public void init() {
 
         /*File f = new File("src/data");
@@ -64,7 +60,7 @@ public class ShowPersonView extends JPanel {
         String resultData[][] = new String[lines][];
         int currentIndex = 0;
         List<Employee> employees = employeeDataManager.getAllEmployees();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         for (Employee employee : employees){
             Contract contract = contractDataManager.getContract(employee.getId());
             String name = employee.getName();
@@ -92,27 +88,31 @@ public class ShowPersonView extends JPanel {
             String officeNumber = employee.getOffice_number();
             String tuId = employee.getTu_id();
             String status = employee.getStatus();
-            //TODO in Date umwandeln wenn in DB
             Date startDate = contract.getStart_date();
+            String startDateString = dateFormat.format(startDate);
             Date endDate = contract.getEnd_date();
+            String endDateString = dateFormat.format(endDate);
             //TODO füllen wenn vorhanden (contract)
-            String extend = String.valueOf(contract.getScope()); //arbeitsumfang
+            String extend = transformer.formatPercentageToStringForScope(contract.getScope()); //arbeitsumfang
             String payGrade = contract.getPaygrade();
             String payLevel = contract.getPaylevel();
-            String vblStatus = String.valueOf(contract.getVbl_status());
+            String vblStatus;
+            if(contract.getVbl_status()){
+                vblStatus = "Pflichtig";
+            } else vblStatus = "Befreit";
             String shkHourlyRate = contract.getShk_hourly_rate();
             String salaryPlannedUntil = employee.getSalary_planned_until();
 
-            String[] values = {name, surname, street, houseNumber, zipCode, city, additionalAddress, emailPrivate, phonePrivate, phoneTuda,
-                    dateOfBirth, citizenship1, citizenship2, visaExpiration, employeeNumber, transponderNumber, officeNumber, tuId, status, startDate.toString(), endDate.toString(), extend, payGrade, payLevel, vblStatus, shkHourlyRate, salaryPlannedUntil};
+            String[] values = {name, surname, street, houseNumber, additionalAddress, zipCode, city, dateOfBirth,  emailPrivate, phonePrivate, phoneTuda,
+                     citizenship1, citizenship2, visaExpiration, employeeNumber, transponderNumber, officeNumber, tuId, status, startDateString, endDateString, extend, payGrade, payLevel, vblStatus, shkHourlyRate, salaryPlannedUntil};
             resultData[currentIndex] = values;
             currentIndex++;
         }
-        jt = new CustomTable(resultData, columns);
-        jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(jt);
+        employeeDataTable = new CustomTable(resultData, columns);
+        employeeDataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(employeeDataTable);
         tca.adjustColumns();
-        JScrollPane sp = new JScrollPane(jt);
+        JScrollPane sp = new JScrollPane(employeeDataTable);
         sp.setVisible(true);
 
         add(sp);
@@ -121,6 +121,6 @@ public class ShowPersonView extends JPanel {
     }
 
     public CustomTable getTable() {
-        return jt;
+        return employeeDataTable;
     }
 }

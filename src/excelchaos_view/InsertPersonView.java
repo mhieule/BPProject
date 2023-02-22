@@ -12,7 +12,7 @@ public class InsertPersonView extends JPanel {
 
     private JLabel name, vorname, strasse, hausnummer, adresszusatz, plz, stadt, privatEmail, privateTelefonnummer, geburtsdatum,
             nationalityFirst, nationalitySecond, personalnummer, tuid, typeOfJob, visaValidUntil,
-            gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, workStart, workEnd, workScope, payGroupOnHiring, payGradeOnHiring, hiwiTypeOfPayment, vblstate, puffer;
+            gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, workStart, workEnd, workScope, payGroupOnHiring, payLevelOnHiring, hiwiTypeOfPayment, vblstate, puffer;
 
     private JTextField tfName, tfVorname, tfStrasse, tfHausnummer, tfAdresszusatz, tfPLZ, tfStadt, tfPrivatEmail, tfPrivateTelefonnummer,
             tfPersonalnummer, tfTuid, tfGehaltEingeplanntBis, tfTranspondernummer, tfBueronummer,
@@ -21,7 +21,7 @@ public class InsertPersonView extends JPanel {
     private DatePicker tfGeburtsdatum, tfVisaValidUntil, tfWorkStart, tfWorkEnd;
 
 
-    private JComboBox nationalityPickList, nationalityPickList2, typeOfJobPicklist, hiwiTypeOfPaymentList, payGradeList, payGroupList,vblList;
+    private JComboBox nationalityPickList, nationalityPickList2, typeOfJobPicklist, hiwiTypeOfPaymentList, payLevelList, payGroupList,vblList;
     private JCheckBox nationalityCheckBox, visaRequiredCheckBox;
 
     private JButton submit, reset, salary, cancel;
@@ -182,13 +182,13 @@ public class InsertPersonView extends JPanel {
         setConstraintsJComboBox(payGroupList, 24);
         payGroupList.setVisible(false);
 
-        payGradeOnHiring = new JLabel("Gehaltsstufe bei Einstellung");
-        setConstraintsLabel(payGradeOnHiring, 25);
-        payGradeOnHiring.setVisible(false);
-        String[] payGrades = {"Nicht ausgewählt", "1A","1B","1","2","3","4","5","6"};
-        payGradeList = new JComboBox(payGrades);
-        setConstraintsJComboBox(payGradeList,25);
-        payGradeList.setVisible(false);
+        payLevelOnHiring = new JLabel("Gehaltsstufe bei Einstellung");
+        setConstraintsLabel(payLevelOnHiring, 25);
+        payLevelOnHiring.setVisible(false);
+        String[] payLevels = {"Nicht ausgewählt", "1A","1B","1","2","3","4","5","6"};
+        payLevelList = new JComboBox(payLevels);
+        setConstraintsJComboBox(payLevelList,25);
+        payLevelList.setVisible(false);
 
         vblstate = new JLabel("VBL-Status");
         setConstraintsLabel(vblstate,26);
@@ -229,6 +229,7 @@ public class InsertPersonView extends JPanel {
         centerDown.add(rightButtons);
 
         JScrollPane scrollPane = new JScrollPane(centerUp, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         add(scrollPane);
 
         revalidate();
@@ -248,8 +249,8 @@ public class InsertPersonView extends JPanel {
         return payGroupOnHiring;
     }
 
-    public JLabel getPayGradeOnHiring() {
-        return payGradeOnHiring;
+    public JLabel getPayLevelOnHiring() {
+        return payLevelOnHiring;
     }
 
     public JLabel getHiwiTypeOfPayment() {
@@ -396,8 +397,8 @@ public class InsertPersonView extends JPanel {
         return payGroupList;
     }
 
-    public JComboBox getPayGradeList() {
-        return payGradeList;
+    public JComboBox getPayLevelList() {
+        return payLevelList;
     }
 
     public JComboBox getVblList() {

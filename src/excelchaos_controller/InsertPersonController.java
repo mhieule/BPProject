@@ -3,6 +3,7 @@ package excelchaos_controller;
 import excelchaos_model.Contract;
 import excelchaos_model.ContractDataManager;
 import excelchaos_model.Employee;
+import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.InsertPersonView;
 import excelchaos_model.EmployeeDataManager;
 
@@ -19,6 +20,8 @@ public class InsertPersonController implements ActionListener {
     private MainFrameController frameController;
 
     private String addPersonTab = "Person hinzufügen";
+    private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
+
 
     public InsertPersonController(MainFrameController mainFrameController) {
         insertPersonView = new InsertPersonView();
@@ -40,27 +43,27 @@ public class InsertPersonController implements ActionListener {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addPersonTab));
     }
 
-    private void setNationalityCheckboxVisible(){
+    private void setNationalityCheckboxVisible() {
         insertPersonView.getNationalitySecond().setVisible(true);
         insertPersonView.getNationalityPickList2().setVisible(true);
     }
 
-    private void setNationalityCheckboxInVisible(){
+    private void setNationalityCheckboxInVisible() {
         insertPersonView.getNationalitySecond().setVisible(false);
         insertPersonView.getNationalityPickList2().setVisible(false);
     }
 
-    private void setVisRequiredCheckboxVisible(){
+    private void setVisRequiredCheckboxVisible() {
         insertPersonView.getVisaValidUntil().setVisible(true);
         insertPersonView.getTfVisaValidUntil().setVisible(true);
     }
 
-    private void setVisRequiredCheckboxInVisible(){
+    private void setVisRequiredCheckboxInVisible() {
         insertPersonView.getVisaValidUntil().setVisible(false);
         insertPersonView.getTfVisaValidUntil().setVisible(false);
     }
 
-    public void resetInputs(){
+    public void resetInputs() {
         insertPersonView.getTfName().setText(null);
         insertPersonView.getTfVorname().setText(null);
         insertPersonView.getTfStrasse().setText(null);
@@ -89,9 +92,12 @@ public class InsertPersonController implements ActionListener {
         setNationalityCheckboxInVisible();
         setVisRequiredCheckboxInVisible();
         insertPersonView.getPayGroupOnHiring().setVisible(false);
+        insertPersonView.getPayGroupList().setSelectedItem("Nicht ausgewählt");
         insertPersonView.getPayGroupList().setVisible(false);
-        insertPersonView.getPayGradeOnHiring().setVisible(false);
-        insertPersonView.getPayGradeList().setVisible(false);
+        insertPersonView.getPayLevelOnHiring().setVisible(false);
+        insertPersonView.getPayLevelList().setVisible(false);
+        insertPersonView.getPayLevelList().setSelectedItem("Nicht ausgewählt");
+        insertPersonView.getVblList().setSelectedItem("Nicht ausgewählt");
         insertPersonView.getVblList().setVisible(false);
         insertPersonView.getVblstate().setVisible(false);
         insertPersonView.getHiwiTypeOfPayment().setVisible(false);
@@ -104,18 +110,18 @@ public class InsertPersonController implements ActionListener {
     }
 
     //TODO VBL Status Speichern (wenn Feld in DB verfügbar ist)
-    public Employee safeData(){
+    public Employee safeData() {
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         ContractDataManager contractDataManager = new ContractDataManager();
         int id = employeeDataManager.getNextID();
         String surname = insertPersonView.getTfName().getText();
-        String name  = insertPersonView.getTfVorname().getText();
+        String name = insertPersonView.getTfVorname().getText();
         String email_private = insertPersonView.getTfPrivatEmail().getText();
         String phone_private = insertPersonView.getTfPrivateTelefonnummer().getText();
         String citizenship_1 = insertPersonView.getNationalityPickList().getSelectedItem().toString();
         String citizenship_2 = null;
-        if(insertPersonView.getNationalityPickList2().getSelectedItem().toString() != null){
-             citizenship_2 = insertPersonView.getNationalityPickList2().getSelectedItem().toString();
+        if (insertPersonView.getNationalityPickList2().getSelectedItem().toString() != null) {
+            citizenship_2 = insertPersonView.getNationalityPickList2().getSelectedItem().toString();
         }
         String employeeNumber = insertPersonView.getTfPersonalnummer().getText();
         String tu_id = insertPersonView.getTfTuid().getText();
@@ -127,7 +133,7 @@ public class InsertPersonController implements ActionListener {
         String salaryPlannedUntil = insertPersonView.getTfGehaltEingeplanntBis().getText();
         Date visaExpiration = null;
         Calendar calendar = Calendar.getInstance();
-        if(visa_required) {
+        if (visa_required) {
             LocalDate visaExpirationDate = insertPersonView.getTfVisaValidUntil().getDate();
             calendar.set(visaExpirationDate.getYear(), visaExpirationDate.getMonth().getValue(), visaExpirationDate.getDayOfMonth());
             visaExpiration = calendar.getTime();
@@ -142,9 +148,9 @@ public class InsertPersonController implements ActionListener {
         String additional_address = insertPersonView.getTfAdresszusatz().getText();
         String city = insertPersonView.getTfStadt().getText();
         String payGrade = insertPersonView.getPayGroupList().getSelectedItem().toString();
-        String payLevel = insertPersonView.getPayGradeList().getSelectedItem().toString();
+        String payLevel = insertPersonView.getPayLevelList().getSelectedItem().toString();
         boolean vbl = false;
-        if(insertPersonView.getVblList().getSelectedItem().toString().equals("pflichtig")){
+        if (insertPersonView.getVblList().getSelectedItem().toString().equals("Pflichtig")) {
             vbl = true;
         }
         //TODO muss in Datenbank als Date gespeichert werden und nicht als String
@@ -155,13 +161,14 @@ public class InsertPersonController implements ActionListener {
         LocalDate workEndDate = insertPersonView.getTfWorkEnd().getDate();
         calendar.set(workEndDate.getYear(), workEndDate.getMonth().getValue(), workEndDate.getDayOfMonth());
         Date workEnd = calendar.getTime();
+        double scope = transformer.formatStringToPercentageValueForScope(insertPersonView.getTfWorkScope().getText());
 
         Employee newEmployee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city,street);
+                salaryPlannedUntil, visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
         employeeDataManager.addEmployee(newEmployee);
         //TODO shk rate muss noch abgefragt werden
-        Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0, 0, "0", vbl);
+        Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0, scope, "", vbl);
         contractDataManager.addContract(newContract);
         return newEmployee;
     }
@@ -169,16 +176,16 @@ public class InsertPersonController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == insertPersonView.getNationalityCheckBox()) {
-            if (insertPersonView.getNationalityCheckBox().isSelected()){
+            if (insertPersonView.getNationalityCheckBox().isSelected()) {
                 setNationalityCheckboxVisible();
-            }else{
+            } else {
                 setNationalityCheckboxInVisible();
             }
         }
-        if (e.getSource() == insertPersonView.getVisaRequiredCheckBox()){
-            if (insertPersonView.getVisaRequiredCheckBox().isSelected()){
+        if (e.getSource() == insertPersonView.getVisaRequiredCheckBox()) {
+            if (insertPersonView.getVisaRequiredCheckBox().isSelected()) {
                 setVisRequiredCheckboxVisible();
-            }else {
+            } else {
                 setVisRequiredCheckboxInVisible();
             }
         }
@@ -190,7 +197,7 @@ public class InsertPersonController implements ActionListener {
             frameController.getShowPersonalData().updateData();
             frameController.getSalaryListController().updateData();
         }
-        if(e.getSource() == insertPersonView.getSalaryEntry()){
+        if (e.getSource() == insertPersonView.getSalaryEntry()) {
             Employee newEmployee = safeData();
             frameController.getInsertSalaryController().fillFields(newEmployee.getSurname() + " " + newEmployee.getName());
             resetInputs();
@@ -201,30 +208,30 @@ public class InsertPersonController implements ActionListener {
             frameController.getInsertSalaryController().showInsertSalaryView(frameController);
             frameController.getTabs().removeTabNewWindow(insertPersonView);
         }
-        if(e.getSource() == insertPersonView.getReset()){
+        if (e.getSource() == insertPersonView.getReset()) {
             resetInputs();
         }
-        if(e.getSource() == insertPersonView.getCancel()){
+        if (e.getSource() == insertPersonView.getCancel()) {
             resetInputs();
             frameController.getTabs().removeTabNewWindow(insertPersonView);
         }
-        if (e.getSource() == insertPersonView.getTypeOfJobPicklist()){
-            if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("WiMi") || insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("ATM")){
+        if (e.getSource() == insertPersonView.getTypeOfJobPicklist()) {
+            if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("WiMi") || insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("ATM")) {
                 insertPersonView.getPayGroupOnHiring().setVisible(true);
                 insertPersonView.getPayGroupList().setVisible(true);
-                insertPersonView.getPayGradeOnHiring().setVisible(true);
-                insertPersonView.getPayGradeList().setVisible(true);
+                insertPersonView.getPayLevelOnHiring().setVisible(true);
+                insertPersonView.getPayLevelList().setVisible(true);
                 insertPersonView.getVblstate().setVisible(true);
                 insertPersonView.getVblList().setVisible(true);
             } else {
                 insertPersonView.getPayGroupOnHiring().setVisible(false);
                 insertPersonView.getPayGroupList().setVisible(false);
-                insertPersonView.getPayGradeOnHiring().setVisible(false);
-                insertPersonView.getPayGradeList().setVisible(false);
+                insertPersonView.getPayLevelOnHiring().setVisible(false);
+                insertPersonView.getPayLevelList().setVisible(false);
                 insertPersonView.getVblstate().setVisible(false);
                 insertPersonView.getVblList().setVisible(false);
             }
-            if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("SHK")){
+            if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("SHK")) {
                 insertPersonView.getHiwiTypeOfPayment().setVisible(true);
                 insertPersonView.getHiwiTypeOfPaymentList().setVisible(true);
             } else {

@@ -27,6 +27,7 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
         return sideMenu;
     }
 
+    //TODO Nach Nutzerstudie die Gehaltshistorie wieder einfügen
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sideMenu.getArrowButtonWest()) {
