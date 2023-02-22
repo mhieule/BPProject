@@ -107,7 +107,7 @@ public class ProjectFunderManager {
             if (highest == null){
                 id = 1;
             }else{
-                id = highest.getProject_id()+1;
+                id = highest.getProject_funder_id()+1;
             }
         } catch (SQLException e) {
             e.printStackTrace();

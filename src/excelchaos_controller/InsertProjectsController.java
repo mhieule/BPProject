@@ -13,6 +13,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -71,18 +72,16 @@ public class InsertProjectsController implements ActionListener {
             int id = projectManager.getNextID();
             String name = insertProjectsView.getTfName().getText();
 
-            Calendar calendar = Calendar.getInstance();
+
             LocalDate approval = insertProjectsView.getTfApproval().getDate();
-            calendar.set(approval.getYear(), approval.getMonth().getValue(), approval.getDayOfMonth());
-            Date dateOfApproval = calendar.getTime();
 
-            LocalDate start = insertProjectsView.getTfStart().getDate();
-            calendar.set(start.getYear(), start.getMonth().getValue(), start.getDayOfMonth());
-            Date dateOfStart = calendar.getTime();
+            Date dateOfApproval = Date.from(approval.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-            LocalDate duration = insertProjectsView.getTfDuration().getDate();
-            calendar.set(duration.getYear(), duration.getMonth().getValue(), duration.getDayOfMonth());
-            Date endDate = calendar.getTime();
+            LocalDate startDate = insertProjectsView.getTfStart().getDate();
+            Date dateOfStart = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+            LocalDate endLocalDate = insertProjectsView.getTfDuration().getDate();
+            Date endDate = Date.from(endLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
             Project project = new Project(id, name, dateOfStart, dateOfApproval, endDate);
 
@@ -112,7 +111,6 @@ public class InsertProjectsController implements ActionListener {
         ProjectCategoryManager projectCategoryManager = new ProjectCategoryManager();
         JTable categoriesTable = insertProjectsView.getCategoriesTable();
         String[][] tableValues = getTableValues(categoriesTable);
-        System.out.println(tableValues.length);
         ProjectCategory projectCategory;
         StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
         for (int row = 0; row < tableValues.length; row++) {

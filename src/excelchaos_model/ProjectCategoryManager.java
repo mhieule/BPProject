@@ -107,7 +107,7 @@ public class ProjectCategoryManager {
             if (highest == null){
                 id = 1;
             }else{
-                id = highest.getProject_id()+1;
+                id = highest.getCategory_id()+1;
             }
         } catch (SQLException e) {
             e.printStackTrace();

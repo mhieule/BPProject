@@ -132,6 +132,9 @@ public class ProjectParticipationView extends JPanel {
         renderer.setHorizontalAlignment( JLabel.RIGHT );
         TableColumnAdjuster tca = new TableColumnAdjuster(table);
         tca.adjustColumns();
+        table.getColumnModel().getColumn(0).setMinWidth(0);
+        table.getColumnModel().getColumn(0).setMaxWidth(0);
+        table.getColumnModel().getColumn(0).setWidth(0);
         scrollPane = new JScrollPane(table);
         scrollPane.setRowHeaderView(headerTable);
         return scrollPane;
@@ -185,6 +188,9 @@ public class ProjectParticipationView extends JPanel {
         renderer.setHorizontalAlignment( JLabel.RIGHT );
         TableColumnAdjuster tca = new TableColumnAdjuster(table);
         tca.adjustColumns();
+        table.getColumnModel().getColumn(0).setMinWidth(0);
+        table.getColumnModel().getColumn(0).setMaxWidth(0);
+        table.getColumnModel().getColumn(0).setWidth(0);
         scrollPane = new JScrollPane(table);
         scrollPane.setRowHeaderView(headerTable);
         table.setPreferredScrollableViewportSize(table.getPreferredSize());

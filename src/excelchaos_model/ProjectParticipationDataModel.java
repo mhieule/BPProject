@@ -66,7 +66,6 @@ public class ProjectParticipationDataModel {
 
         beginCalendarArrayLength.setTime(start_date);
         finishCalendarArrayLength.setTime(end_date);
-
         beginCalendar.setTime(start_date);
         finishCalendar.setTime(end_date);
 
@@ -80,6 +79,7 @@ public class ProjectParticipationDataModel {
         int index = 1;
         while (beginCalendar.before(finishCalendar)) {
             if (index < arrayLength) {
+                System.out.println(beginCalendar.getTime());
                 months[index] = formatter.format(beginCalendar.getTime());
                 index++;
             }
