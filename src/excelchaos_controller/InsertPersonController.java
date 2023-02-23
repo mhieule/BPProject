@@ -69,6 +69,7 @@ public class InsertPersonController implements ActionListener {
         insertPersonView.getTfVisaValidUntil().setVisible(false);
     }
 
+    //TODO Die Dates Abfangen die null sein können (Jedenfalls für Endabgabe)
     public boolean updateData(int id) {
         boolean hadError;
         Employee employee = employeeDataManager.getEmployee(id);
