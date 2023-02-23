@@ -244,6 +244,32 @@ public class InsertPersonView extends JPanel {
         cancel.addActionListener(l);
     }
 
+    public void markMustBeFilledTextFields(){
+        name.setForeground(Color.RED);
+        vorname.setForeground(Color.RED);
+        privatEmail.setForeground(Color.RED);
+        privateTelefonnummer.setForeground(Color.RED);
+        nationalityFirst.setForeground(Color.RED);
+        personalnummer.setForeground(Color.RED);
+        tuid.setForeground(Color.RED);
+        transpondernummer.setForeground(Color.RED);
+        bueronummer.setForeground(Color.RED);
+        telefonnummerTUDA.setForeground(Color.RED);
+        gehaltEingeplanntBis.setForeground(Color.RED);
+        geburtsdatum.setForeground(Color.RED);
+        hausnummer.setForeground(Color.RED);
+        plz.setForeground(Color.RED);
+        stadt.setForeground(Color.RED);
+        strasse.setForeground(Color.RED);
+        payGroupOnHiring.setForeground(Color.RED);
+        payLevelOnHiring.setForeground(Color.RED);
+        workStart.setForeground(Color.RED);
+        workEnd.setForeground(Color.RED);
+        workScope.setForeground(Color.RED);
+        typeOfJob.setForeground(Color.RED);
+        vblstate.setForeground(Color.RED);
+    }
+
     public JLabel getPayGroupOnHiring() {
         return payGroupOnHiring;
     }

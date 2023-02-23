@@ -8,6 +8,7 @@ import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.InsertPersonView;
 import excelchaos_model.EmployeeDataManager;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -68,7 +69,8 @@ public class InsertPersonController implements ActionListener {
         insertPersonView.getTfVisaValidUntil().setVisible(false);
     }
 
-    public void updateData(int id) {
+    public boolean updateData(int id) {
+        boolean hadError;
         Employee employee = employeeDataManager.getEmployee(id);
         Contract contract = contractDataManager.getContract(id);
 
@@ -115,37 +117,47 @@ public class InsertPersonController implements ActionListener {
         Date workEnd = Date.from(workEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         double scope = transformer.formatStringToPercentageValueForScope(insertPersonView.getTfWorkScope().getText());
 
-        employee.setSurname(surname);
-        employee.setName(name);
-        employee.setEmail_private(email_private);
-        employee.setPhone_private(phone_private);
-        employee.setCitizenship_1(citizenship_1);
-        employee.setCitizenship_2(citizenship_2);
-        employee.setEmployee_number(employeeNumber);
-        employee.setTu_id(tu_id);
-        employee.setVisa_required(visa_required);
-        employee.setStatus(status);
-        employee.setTransponder_number(transponder_number);
-        employee.setOffice_number(office_number);
-        employee.setPhone_tuda(phone_tuda);
-        employee.setSalary_planned_until(salaryPlannedUntil);
-        employee.setVisa_expiration(visaExpiration);
-        employee.setDate_of_birth(dateOfBirth);
-        employee.setHouse_number(houseNumber);
-        employee.setStreet(street);
-        employee.setZip_code(zip_code);
-        employee.setAdditional_address(additional_address);
-        employee.setCity(city);
+        if (surname.equals("") || name.equals("") || email_private.equals("") || phone_private.equals("") || citizenship_1.equals("") || citizenship_2.equals("") || employeeNumber.equals("") || tu_id.equals("")
+                || transponder_number.equals("") || office_number.equals("") || phone_tuda.equals("") || salaryPlannedUntil == null || dateOfBirth == null || houseNumber.equals("") || zip_code.equals("")
+                || city.equals("") || street.equals("") || payGrade.equals("Nicht ausgewählt") || payLevel.equals("Nicht ausgewählt") || workStart == null || workEnd == null) {
+            insertPersonView.markMustBeFilledTextFields();
+            hadError = true;
+        } else {
+            employee.setSurname(surname);
+            employee.setName(name);
+            employee.setEmail_private(email_private);
+            employee.setPhone_private(phone_private);
+            employee.setCitizenship_1(citizenship_1);
+            employee.setCitizenship_2(citizenship_2);
+            employee.setEmployee_number(employeeNumber);
+            employee.setTu_id(tu_id);
+            employee.setVisa_required(visa_required);
+            employee.setStatus(status);
+            employee.setTransponder_number(transponder_number);
+            employee.setOffice_number(office_number);
+            employee.setPhone_tuda(phone_tuda);
+            employee.setSalary_planned_until(salaryPlannedUntil);
+            employee.setVisa_expiration(visaExpiration);
+            employee.setDate_of_birth(dateOfBirth);
+            employee.setHouse_number(houseNumber);
+            employee.setStreet(street);
+            employee.setZip_code(zip_code);
+            employee.setAdditional_address(additional_address);
+            employee.setCity(city);
 
-        contract.setPaygrade(payGrade);
-        contract.setPaylevel(payLevel);
-        contract.setStart_date(workStart);
-        contract.setEnd_date(workEnd);
-        contract.setScope(scope);
-        contract.setVbl_status(vbl);
+            contract.setPaygrade(payGrade);
+            contract.setPaylevel(payLevel);
+            contract.setStart_date(workStart);
+            contract.setEnd_date(workEnd);
+            contract.setScope(scope);
+            contract.setVbl_status(vbl);
 
-        employeeDataManager.updateEmployee(employee);
-        contractDataManager.updateContract(contract);
+            employeeDataManager.updateEmployee(employee);
+            contractDataManager.updateContract(contract);
+            hadError = false;
+        }
+return hadError;
+
     }
 
     public void fillFields(String id) {
@@ -274,17 +286,28 @@ public class InsertPersonController implements ActionListener {
         String transponder_number = insertPersonView.getTfTranspondernummer().getText();
         String office_number = insertPersonView.getTfBueronummer().getText();
         //TODO als Date abfragen und speichern
+
         LocalDate localDate = insertPersonView.getTfSalaryPlannedUntil().getDate();
-        Date salaryPlannedUntil = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date salaryPlannedUntil;
+        if (localDate == null) {
+            salaryPlannedUntil = null;
+        } else {
+            salaryPlannedUntil = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        }
+
         Date visaExpiration = null;
-        Calendar calendar = Calendar.getInstance();
         if (visa_required) {
             LocalDate visaExpirationDate = insertPersonView.getTfVisaValidUntil().getDate();
             visaExpiration = Date.from(visaExpirationDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         }
         String phone_tuda = insertPersonView.getTfTelefonnummerTUDA().getText();
         LocalDate dateOfBirthDate = insertPersonView.getTfGeburtsdatum().getDate();
-        Date dateOfBirth = Date.from(dateOfBirthDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date dateOfBirth;
+        if (dateOfBirthDate == null) {
+            dateOfBirth = null;
+        } else {
+            dateOfBirth = Date.from(dateOfBirthDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        }
         String houseNumber = insertPersonView.getTfHausnummer().getText();
         String street = insertPersonView.getTfStrasse().getText();
         String zip_code = insertPersonView.getTfPLZ().getText();
@@ -297,26 +320,51 @@ public class InsertPersonController implements ActionListener {
             vbl = true;
         }
         LocalDate workStartDate = insertPersonView.getTfWorkStart().getDate();
-        Date workStart = Date.from(workStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date workStart;
+        if (workStartDate == null) {
+            workStart = null;
+        } else {
+            workStart = Date.from(workStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        }
+
         LocalDate workEndDate = insertPersonView.getTfWorkEnd().getDate();
-        Date workEnd = Date.from(workEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        double scope = transformer.formatStringToPercentageValueForScope(insertPersonView.getTfWorkScope().getText());
+        Date workEnd;
+        if (workEndDate == null) {
+            workEnd = null;
+        } else {
+            workEnd = Date.from(workEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        }
+        double scope;
+        if (insertPersonView.getTfWorkScope().getText().equals("")) {
+            scope = 0;
+        } else {
+            scope = transformer.formatStringToPercentageValueForScope(insertPersonView.getTfWorkScope().getText());
+        }
 
-        Employee newEmployee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
-                citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil, visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
-        employeeDataManager.addEmployee(newEmployee);
-        //TODO shk rate muss noch abgefragt werden
+        if (surname.equals("") || name.equals("") || email_private.equals("") || phone_private.equals("") || citizenship_1.equals("") || citizenship_2.equals("") || employeeNumber.equals("") || tu_id.equals("")
+                || transponder_number.equals("") || office_number.equals("") || phone_tuda.equals("") || salaryPlannedUntil == null || dateOfBirth == null || houseNumber.equals("") || zip_code.equals("")
+                || city.equals("") || street.equals("") || payGrade.equals("Nicht ausgewählt") || payLevel.equals("Nicht ausgewählt") || workStart == null || workEnd == null) {
+            insertPersonView.markMustBeFilledTextFields();
+            return null;
+        } else {
+            Employee newEmployee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
+                    citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
+                    salaryPlannedUntil, visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
+            employeeDataManager.addEmployee(newEmployee);
+            //TODO shk rate muss noch abgefragt werden
 
-        Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0, scope, "", vbl);
-        double[] startSalary;
-        startSalary = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(newContract);
-        double regular_cost = startSalary[0];
-        double bonus_cost = startSalary[1]*12;
-        newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, regular_cost, bonus_cost, scope, "", vbl);
-        contractDataManager.addContract(newContract);
-        return newEmployee;
+            Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0, scope, "", vbl);
+            double[] startSalary;
+            startSalary = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(newContract);
+            double regular_cost = startSalary[0];
+            double bonus_cost = startSalary[1] * 12;
+            newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, regular_cost, bonus_cost, scope, "", vbl);
+            contractDataManager.addContract(newContract);
+            return newEmployee;
+        }
+
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -335,10 +383,20 @@ public class InsertPersonController implements ActionListener {
             }
         }
         if (e.getSource() == insertPersonView.getSubmit()) {
-            if(currentlyEditedEmployeeID != 0){
-                updateData(currentlyEditedEmployeeID);
+            Employee checkEmployee = null;
+            boolean test = false;
+            if (currentlyEditedEmployeeID != 0) {
+               test = updateData(currentlyEditedEmployeeID);
+               if(test){
+                   JOptionPane.showConfirmDialog(null,"Bitte füllen Sie die markierten Spalten aus um fortzufahren.","Spalten nicht vollständig ausgefüllt",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
+                   return;
+               }
             } else {
-                safeData();
+                checkEmployee = safeData();
+                if(checkEmployee == null){
+                    JOptionPane.showConfirmDialog(null,"Bitte füllen Sie die markierten Spalten aus um fortzufahren.","Spalten nicht vollständig ausgefüllt",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
             resetInputs();
             insertPersonView.revalidate();
@@ -348,11 +406,20 @@ public class InsertPersonController implements ActionListener {
             frameController.getSalaryListController().updateData(); //TODO Hier müssen wahrscheinlich noch Änderungen gemacht werden
         }
         if (e.getSource() == insertPersonView.getSalaryEntry()) {
-            if(currentlyEditedEmployeeID != 0){
-                updateData(currentlyEditedEmployeeID);
+            boolean test = false;
+            if (currentlyEditedEmployeeID != 0) {
+                test = updateData(currentlyEditedEmployeeID);
+                if(test){
+                    JOptionPane.showConfirmDialog(null,"Bitte füllen Sie die markierten Spalten aus um fortzufahren.","Spalten nicht vollständig ausgefüllt",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 frameController.getInsertSalaryController().fillFields(currentlyEditedEmployeeID);
             } else {
                 Employee newEmployee = safeData();
+                if(newEmployee == null){
+                    JOptionPane.showConfirmDialog(null,"Bitte füllen Sie die markierten Spalten aus um fortzufahren.","Spalten nicht vollständig ausgefüllt",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 frameController.getInsertSalaryController().fillFields(newEmployee.getId());
             }
             resetInputs();      //TODO Auch hier wird es vermutlich noch Änderungen geben müssen
