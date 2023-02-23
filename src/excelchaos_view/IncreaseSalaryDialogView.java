@@ -1,11 +1,14 @@
 package excelchaos_view;
 
-import excelchaos_model.IncreaseSalaryType;
+import com.github.lgooddatepicker.components.DatePicker;
+import excelchaos_model.ContractDataManager;
+import excelchaos_model.EmployeeDataManager;
+import excelchaos_model.IncreaseSalaryOption;
 
-import static excelchaos_model.IncreaseSalaryType.*;
+import static excelchaos_model.IncreaseSalaryOption.*;
 
 import javax.swing.*;
-import javax.swing.table.TableColumn;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -16,79 +19,117 @@ public class IncreaseSalaryDialogView extends JDialog {
     private JPanel buttonPanel;
     private JPanel buttonWestPanel;
     private JPanel buttonEastPanel;
-    private JPanel contentPanel, contentNorthPanel, contentSouthPanel;
+    private JPanel contentPanel, contentNorthPanel;
     private CustomTable table;
 
-    private JRadioButton absolute;
-    private JRadioButton relative;
-    private JRadioButton mixed;
-    private ButtonGroup group;
+    private JRadioButton absoluteRadioButton;
+    private JRadioButton relativeRadioButton;
+    private JRadioButton mixedRadioButton;
+    private ButtonGroup optionRadioButtonGroup, increaseOptionRadioButtonGroup;
 
     private JTextField textFieldAbsolute;
     private JTextField textFieldRelative;
-    private Box boxPanel;
+    private JTextField textFieldComment;
+    private Box payMixedOptionPanel;
     private JTextField mixedAbsolute, mixedRelative;
-    private JRadioButton mixedMin, mixedMax;
-    private ButtonGroup mixedGroup;
+    private JRadioButton mixedMinRadioButton, mixedMaxRadioButton;
+    private ButtonGroup mixedOptionRadioButtonGroup;
+    private JLabel currentSalary, currentBonus, dateQuery, commentQuery, increaseTypeQuery,increaseOptionQuery;
+    private JRadioButton salaryIncreaseRadioButton, bonusRadioButton;
 
+    private DatePicker startDate;
 
-    public void init(CustomTable table){
+    public void init(String name){
 
         this.table=table;
 
         //set some basic properties of the increase salary dialog view
         setLayout(new BorderLayout());
-        setTitle("Gehaltserhöhung");
+        setTitle("Gehaltserhöhung "+name);
 
         //initialize the buttons
         projectButton = new JButton("Projizieren");
         okayButton = new JButton("OK");
         closeButton = new JButton("Abbrechen");
 
-        //init the instruction label
-        //instructionLabel=new JLabel("Zur Gehaltserhöhung bitte die folgende Personalen bestätigen oder abbrechen");
+        //evtl eine eigene Modelle Klasse/Methode
+        EmployeeDataManager employeeDataManager=new EmployeeDataManager();
+        ContractDataManager contractDataManager=new ContractDataManager();
+        currentSalary = new JLabel("");
+        currentBonus = new JLabel("");
+        dateQuery = new JLabel("3. Wählen Sie eine Startdatum: ");
+        commentQuery = new JLabel("4. Kommentar");
+        increaseTypeQuery = new JLabel("1. Erhöhungstyp?");
+        increaseOptionQuery = new JLabel("2. Erhöhungsoption auswählen");
+        currentSalary.setText("Aktuelle Gehaltkosten: "+contractDataManager.getContract(employeeDataManager.getEmployeeByName(name).getId()).getRegular_cost()+" €");
+        currentBonus.setText("Aktuelle Sonderzahlung: "+contractDataManager.getContract(employeeDataManager.getEmployeeByName(name).getId()).getBonus_cost()+" €");
 
 
+        salaryIncreaseRadioButton = new JRadioButton("Normale Gehaltserhöhung");
+        bonusRadioButton = new JRadioButton("Sonderzahlung");
+        increaseOptionRadioButtonGroup = new ButtonGroup();  increaseOptionRadioButtonGroup.add(salaryIncreaseRadioButton); increaseOptionRadioButtonGroup.add(bonusRadioButton);
+        textFieldComment = new JTextField();
+        startDate = new DatePicker();
+        //startDate.setPreferredSize(new Dimension(100,20));
 
         //initialize components for the south content panel (for the radiobuttons)
-        absolute=new JRadioButton("Option 1: Absolut in Euro");
-        relative=new JRadioButton("Option 2: Relativ in %");
-        mixed=new JRadioButton("Option 3: Gemischt");
-        group = new ButtonGroup(); group.add(absolute); group.add(relative); group.add(mixed);
+        absoluteRadioButton =new JRadioButton("Option 1: Absolut in €");
+        relativeRadioButton =new JRadioButton("Option 2: Relativ in %");
+        mixedRadioButton =new JRadioButton("Option 3: Gemischt");
+        optionRadioButtonGroup = new ButtonGroup(); optionRadioButtonGroup.add(absoluteRadioButton); optionRadioButtonGroup.add(relativeRadioButton); optionRadioButtonGroup.add(mixedRadioButton);
         textFieldAbsolute = new JTextField(); textFieldAbsolute.setVisible(false);
         textFieldRelative = new JTextField(); textFieldRelative.setVisible(false);
         mixedAbsolute = new JTextField();
         mixedRelative = new JTextField();
-        mixedMin = new JRadioButton("Minimum aus den beiden");
-        mixedMax = new JRadioButton("Maximum aus den beiden");
-        mixedGroup = new ButtonGroup();
-        mixedGroup.add(mixedMin); mixedGroup.add(mixedMax);
+        mixedMinRadioButton = new JRadioButton("Minimum aus den beiden");
+        mixedMaxRadioButton = new JRadioButton("Maximum aus den beiden");
+        mixedOptionRadioButtonGroup = new ButtonGroup();
+        mixedOptionRadioButtonGroup.add(mixedMinRadioButton); mixedOptionRadioButtonGroup.add(mixedMaxRadioButton);
 
-        boxPanel = Box.createVerticalBox();
-        boxPanel.add(new JLabel("Absolut in Euro:"));
-        boxPanel.add(mixedAbsolute);
-        boxPanel.add(new JLabel("oder relativ in %"));
-        boxPanel.add(mixedRelative);
-        boxPanel.add(mixedMin); boxPanel.add(mixedMax);
-        boxPanel.setVisible(false);
+        payMixedOptionPanel = Box.createVerticalBox();
+        payMixedOptionPanel.add(new JLabel("Absolut in €:"));
+        payMixedOptionPanel.add(mixedAbsolute);
+        payMixedOptionPanel.add(new JLabel("oder relativ in %"));
+        payMixedOptionPanel.add(mixedRelative);
+        payMixedOptionPanel.add(mixedMinRadioButton); payMixedOptionPanel.add(mixedMaxRadioButton);
+        payMixedOptionPanel.setVisible(false);
+        payMixedOptionPanel.setBorder(BorderFactory.createEmptyBorder(10,30,10,30));
 
 
         //initialize, set some properties and components for the panels
         contentPanel = new JPanel(new BorderLayout());
+        Border margin = BorderFactory.createEmptyBorder(10, 30, 10, 30);
+        contentPanel.setBorder(margin);
         contentNorthPanel = new JPanel();
         contentNorthPanel.setLayout(new BoxLayout(contentNorthPanel, 1));
-        contentNorthPanel.add(new JScrollPane(table));
-        contentSouthPanel = new JPanel();
-        contentSouthPanel.setLayout(new BoxLayout(contentSouthPanel, 1));
-        contentSouthPanel.add(absolute);
-        contentSouthPanel.add(textFieldAbsolute);
-        contentSouthPanel.add(relative);
-        contentSouthPanel.add(textFieldRelative);
-        contentSouthPanel.add(mixed);
-        contentSouthPanel.add(boxPanel);
+        contentNorthPanel.add(currentSalary);
+        contentNorthPanel.add(currentBonus);
+        contentNorthPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        contentNorthPanel.add(increaseTypeQuery);
+        contentNorthPanel.add(salaryIncreaseRadioButton);
+        contentNorthPanel.add(bonusRadioButton);
+        contentNorthPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        JPanel datePanel=new JPanel();
+        datePanel.add(startDate);
+
+        contentNorthPanel.add(increaseOptionQuery);
+        contentNorthPanel.add(absoluteRadioButton);
+        contentNorthPanel.add(textFieldAbsolute);
+        contentNorthPanel.add(relativeRadioButton);
+        contentNorthPanel.add(textFieldRelative);
+        contentNorthPanel.add(mixedRadioButton);
+        contentNorthPanel.add(payMixedOptionPanel);
+        contentNorthPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        contentNorthPanel.add(dateQuery);
+        contentNorthPanel.add(datePanel);
+        contentNorthPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        contentNorthPanel.add(commentQuery);
+        contentNorthPanel.add(textFieldComment);
+
 
         contentPanel.add(contentNorthPanel, BorderLayout.CENTER);
-        contentPanel.add(contentSouthPanel, BorderLayout.SOUTH);
+        //contentPanel.add(contentNorthPanel, BorderLayout.SOUTH);
 
         buttonPanel = new JPanel(new BorderLayout());
         buttonWestPanel = new JPanel(new FlowLayout());
@@ -101,33 +142,34 @@ public class IncreaseSalaryDialogView extends JDialog {
 
         //add the panel to the dialog
         //add(instructionLabel, BorderLayout.NORTH);
-        add(new JSeparator(),BorderLayout.CENTER);
+        //add(new JSeparator(),BorderLayout.CENTER);
         add(contentPanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.SOUTH);
 
         //set properties for the dialog
-        setLocationRelativeTo(getParent());
+        setLocation(100,300);
+        //setLocationRelativeTo(getParent());
         setAlwaysOnTop(true);
         setResizable(true);
         setVisible(true);
-        setSize(500,500);
+        setSize(800,650);
 
         addProjectionColumn();
     }
 
     public void addProjectionColumn(){
-        this.table.addColumn(new TableColumn());
-        TableColumn projectedColumn = this.table.getColumnModel().getColumn(table.getColumnCount()-1);
-        projectedColumn.setHeaderValue("Erhöhte Gehalt (init)");
+        //this.table.addColumn(new TableColumn());
+        //TableColumn projectedColumn = this.table.getColumnModel().getColumn(table.getColumnCount()-1);
+        //projectedColumn.setHeaderValue("Erhöhte Gehalt");
     }
 
     public void setActionListener(ActionListener l){
         okayButton.addActionListener(l);
         closeButton.addActionListener(l);
         projectButton.addActionListener(l);
-        absolute.addActionListener(l);
-        relative.addActionListener(l);
-        mixed.addActionListener(l);
+        absoluteRadioButton.addActionListener(l);
+        relativeRadioButton.addActionListener(l);
+        mixedRadioButton.addActionListener(l);
     }
 
     public void setProjectionColumnInvisible(){
@@ -148,7 +190,7 @@ public class IncreaseSalaryDialogView extends JDialog {
         }
     }
 
-    public void setProjectionView(IncreaseSalaryType type){
+    public void setProjectionView(IncreaseSalaryOption type){
         setProjectionColumnVisible();
         for(int i=0; i<table.getRowCount();i++) {
             double currentSalary = Double.parseDouble(String.valueOf(table.getValueAt(i, 5)));
@@ -174,25 +216,46 @@ public class IncreaseSalaryDialogView extends JDialog {
     public void setAbsoluteView(){
         textFieldAbsolute.setVisible(true);
         textFieldRelative.setVisible(false);
-        boxPanel.setVisible(false);
+        payMixedOptionPanel.setVisible(false);
         revalidate();
-        setProjectionColumnInvisible();
+        //setProjectionColumnInvisible();
     }
 
     public void setRelativeView(){
         textFieldAbsolute.setVisible(false);
         textFieldRelative.setVisible(true);
-        boxPanel.setVisible(false);
+        payMixedOptionPanel.setVisible(false);
         revalidate();
-        setProjectionColumnInvisible();
+        //setProjectionColumnInvisible();
     }
 
     public void setMixedView(){
         textFieldAbsolute.setVisible(false);
         textFieldRelative.setVisible(false);
-        boxPanel.setVisible(true);
+        payMixedOptionPanel.setVisible(true);
         revalidate();
-        setProjectionColumnInvisible();
+        //setProjectionColumnInvisible();
+    }
+
+    public void noIncreaseTypeSelected(){
+        JDialog dialog = new JDialog();
+        dialog.add(new JLabel("Keine Erhöhungstyp ausgewählt !"));
+        dialog.setSize(new Dimension(250,100));
+        dialog.setVisible(true);
+    }
+
+    public void noIncreaseOptionSelected() {
+        JDialog dialog = new JDialog();
+        dialog.add(new JLabel("Keine Erhöhungsoption ausgewählt !"));
+        dialog.setSize(new Dimension(300,100));
+        dialog.setVisible(true);
+    }
+
+    public void noMinMaxSelected() {
+        JDialog dialog = new JDialog();
+        dialog.add(new JLabel("Sie haben gemischte Option ausgewählt, bitte Minimum oder Maximum auswählen"));
+        dialog.setSize(new Dimension(500,100));
+        dialog.setVisible(true);
     }
 
     public JButton getCloseButton() {
@@ -203,14 +266,25 @@ public class IncreaseSalaryDialogView extends JDialog {
     }
     public JButton getProjectButton(){return projectButton;}
     public CustomTable getCurrentTable(){return table;}
-    public JRadioButton getAbsolute(){return absolute;}
+    public JRadioButton getAbsoluteRadioButton(){return absoluteRadioButton;}
     public JTextField getTextFieldAbsolute() {return textFieldAbsolute;}
     public JTextField getTextFieldRelative() {return textFieldRelative;}
-    public Box getBoxPanel() {return boxPanel;}
-    public JRadioButton getRelative(){return relative;}
-    public JRadioButton getMixed(){return mixed;}
+    public Box getPayMixedOptionPanel() {return payMixedOptionPanel;}
+    public JRadioButton getRelativeRadioButton(){return relativeRadioButton;}
+    public JRadioButton getMixedRadioButton(){return mixedRadioButton;}
 
-    public JRadioButton getMixedMin() {return mixedMin;}
+    public JRadioButton getMixedMinRadioButton() {return mixedMinRadioButton;}
 
-    public JRadioButton getMixedMax() {return mixedMax;}
+    public JRadioButton getMixedMaxRadioButton() {return mixedMaxRadioButton;}
+
+    public JRadioButton getSalaryIncreaseRadioButton(){return salaryIncreaseRadioButton;}
+
+    public JRadioButton getBonusRadioButton() {return bonusRadioButton;}
+    public DatePicker getStartDate(){return startDate;}
+
+    public JTextField getMixedAbsolute() {return mixedAbsolute;}
+
+    public JTextField getMixedRelative() {return mixedRelative;}
+
+    public JTextField getTextFieldComment() {return textFieldComment;}
 }

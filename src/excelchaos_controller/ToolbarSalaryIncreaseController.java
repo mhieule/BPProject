@@ -11,6 +11,7 @@ public class ToolbarSalaryIncreaseController implements ActionListener {
     private ToolbarSalaryIncreaseView toolbar;
 
     private MainFrameController frameController;
+    private IncreaseSalaryDialogController increaseSalaryDialogController;
 
     public ToolbarSalaryIncreaseController(MainFrameController mainFrameController){
         frameController = mainFrameController;
@@ -21,7 +22,9 @@ public class ToolbarSalaryIncreaseController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if(e.getSource()==toolbar.getDoSalaryIncrease()){
+            increaseSalaryDialogController=new IncreaseSalaryDialogController(frameController, toolbar.getNameComboBox().getSelectedItem().toString());
+        }
     }
 
     public ToolbarSalaryIncreaseView getToolbar() {

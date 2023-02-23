@@ -1,6 +1,6 @@
 package excelchaos_model;
 
-public enum IncreaseSalaryType {
+public enum IncreaseSalaryOption {
     ABSOLUTE,
     RELATIVE,
     MIXED_MIN,

@@ -28,6 +28,8 @@ public class CustomTable extends JTable {
         setAutoCreateRowSorter(true);
         setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         setAutoCheckboxSelection();
+        getColumnModel().getColumn(0).setPreferredWidth(20);
+        getColumnModel().getColumn(0).setMaxWidth(20);
         init();
 
     }
@@ -128,6 +130,7 @@ public class CustomTable extends JTable {
                             //change isSelectDialogOpened to true
                             isSelectDialogOpened=true;
                             JDialog dialog = new JDialog();
+                            dialog.setLocationRelativeTo(dialog.getParent());
                             dialog.addWindowListener(new WindowAdapter() {
                                 /**
                                  * Invoked when a window is in the process of being closed.
