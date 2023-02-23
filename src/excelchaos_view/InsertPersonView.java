@@ -241,6 +241,7 @@ public class InsertPersonView extends JPanel {
         salary.addActionListener(l);
         typeOfJobPicklist.addActionListener(l);
         reset.addActionListener(l);
+        cancel.addActionListener(l);
     }
 
     public JLabel getPayGroupOnHiring() {

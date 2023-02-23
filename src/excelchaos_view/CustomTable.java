@@ -239,6 +239,14 @@ public class CustomTable extends JTable {
             return result;
         }
 
+        public void deselectSelectedRows(){
+            for (int row = 0; row < this.getRowCount(); row++) {
+                if((Boolean) getValueAt(row,0)){
+                    setValueAt(false,row,0);
+                }
+            }
+        }
+
         public String[][] getCurrentSelectedRowsAsArray () {
             int selectedRows = 0;
             for (int row = 0; row < this.getRowCount(); row++) {

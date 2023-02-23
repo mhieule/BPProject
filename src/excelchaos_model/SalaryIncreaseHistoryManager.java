@@ -66,6 +66,17 @@ public class SalaryIncreaseHistoryManager {
         }
     }
 
+    public void  removeAllSalaryIncreaseHistoryForEmployee(int id){
+        try{
+            DeleteBuilder<SalaryIncreaseHistory, Object> builder = salaryIncreaseHistoriesDao.deleteBuilder();
+            builder.where().eq("id", id);
+            builder.delete();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public void removeAllSalaryIncreaseHistories(){
         try {
             TableUtils.clearTable(connectionSource, SalaryIncreaseHistory.class);

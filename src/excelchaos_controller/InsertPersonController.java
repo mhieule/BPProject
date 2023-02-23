@@ -20,7 +20,13 @@ public class InsertPersonController implements ActionListener {
     private MainFrameController frameController;
 
     private String addPersonTab = "Person hinzufügen";
+
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+
+    private ContractDataManager contractDataManager = new ContractDataManager();
     private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
+
+    private int currentlyEditedEmployeeID = 0;
 
 
     public InsertPersonController(MainFrameController mainFrameController) {
@@ -63,13 +69,11 @@ public class InsertPersonController implements ActionListener {
     }
 
     public void updateData(int id) {
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         Employee employee = employeeDataManager.getEmployee(id);
-        ContractDataManager contractDataManager = new ContractDataManager();
         Contract contract = contractDataManager.getContract(id);
 
-        String surname = insertPersonView.getTfName().getText();
-        String name = insertPersonView.getTfVorname().getText();
+        String surname = insertPersonView.getTfVorname().getText();
+        String name = insertPersonView.getTfName().getText();
         String email_private = insertPersonView.getTfPrivatEmail().getText();
         String phone_private = insertPersonView.getTfPrivateTelefonnummer().getText();
         String citizenship_1 = insertPersonView.getNationalityPickList().getSelectedItem().toString();
@@ -145,10 +149,10 @@ public class InsertPersonController implements ActionListener {
     }
 
     public void fillFields(String id) {
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         Employee employee = employeeDataManager.getEmployee(Integer.parseInt(id));
-        insertPersonView.getTfName().setText(employee.getSurname());
-        insertPersonView.getTfVorname().setText(employee.getName());
+        currentlyEditedEmployeeID = employee.getId();
+        insertPersonView.getTfVorname().setText(employee.getSurname());
+        insertPersonView.getTfName().setText(employee.getName());
         insertPersonView.getTfStrasse().setText(employee.getStreet());
         insertPersonView.getTfPrivatEmail().setText(employee.getEmail_private());
         insertPersonView.getTfPrivateTelefonnummer().setText(employee.getPhone_private());
@@ -168,24 +172,23 @@ public class InsertPersonController implements ActionListener {
             insertPersonView.getNationalityCheckBox().setVisible(true);
             insertPersonView.getNationalityCheckBox().setSelected(true);
             insertPersonView.getNationalityPickList2().setSelectedItem(employee.getCitizenship_2());
+            insertPersonView.getNationalityPickList2().setVisible(true);
+            insertPersonView.getNationalitySecond().setVisible(true);
         }
-        //TODO nullpointer exception
         Date date = employee.getVisa_expiration();
         if (date != null) {
             insertPersonView.getTfVisaValidUntil().setDate(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             insertPersonView.getVisaRequiredCheckBox().setSelected(true);
             insertPersonView.getVisaRequiredCheckBox().setVisible(true);
             insertPersonView.getTfVisaValidUntil().setVisible(true);
+            insertPersonView.getVisaValidUntil().setVisible(true);
         }
-        //TODO date.get klappt nicht
         date = employee.getDate_of_birth();
         if (date != null) {
             insertPersonView.getTfGeburtsdatum().setDate(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         }
 
-        ContractDataManager contractDataManager = new ContractDataManager();
         Contract contract = contractDataManager.getContract(Integer.parseInt(id));
-        //TODO typeofjob muss noch gespeichert werden
         insertPersonView.getTypeOfJobPicklist().setSelectedItem(employee.getStatus());
         insertPersonView.getTfWorkScope().setText(transformer.formatPercentageToStringForScope(contract.getScope()));
         insertPersonView.getPayGroupOnHiring().setVisible(true);
@@ -253,12 +256,10 @@ public class InsertPersonController implements ActionListener {
 
     //TODO fallunterscheidung ob neuer employee erstellt wird oder bearbeitet wird
     public Employee safeData() {
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
-        ContractDataManager contractDataManager = new ContractDataManager();
         CalculateSalaryBasedOnPayRateTable calculateSalaryBasedOnPayRateTable = new CalculateSalaryBasedOnPayRateTable();
         int id = employeeDataManager.getNextID();
-        String surname = insertPersonView.getTfName().getText();
-        String name = insertPersonView.getTfVorname().getText();
+        String surname = insertPersonView.getTfVorname().getText();
+        String name = insertPersonView.getTfName().getText();
         String email_private = insertPersonView.getTfPrivatEmail().getText();
         String phone_private = insertPersonView.getTfPrivateTelefonnummer().getText();
         String citizenship_1 = insertPersonView.getNationalityPickList().getSelectedItem().toString();
@@ -314,7 +315,6 @@ public class InsertPersonController implements ActionListener {
         double bonus_cost = startSalary[1]*12;
         newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, regular_cost, bonus_cost, scope, "", vbl);
         contractDataManager.addContract(newContract);
-        updateData(id);
         return newEmployee;
     }
 
@@ -335,20 +335,31 @@ public class InsertPersonController implements ActionListener {
             }
         }
         if (e.getSource() == insertPersonView.getSubmit()) {
-            safeData();
+            if(currentlyEditedEmployeeID != 0){
+                updateData(currentlyEditedEmployeeID);
+            } else {
+                safeData();
+            }
             resetInputs();
             insertPersonView.revalidate();
             insertPersonView.repaint();
-            frameController.getShowPersonalData().updateData();
-            frameController.getSalaryListController().updateData();
+            ShowPersonController showPersonController = frameController.getShowPersonalData();
+            showPersonController.updateData(showPersonController.getEmployeeDataFromDataBase());
+            frameController.getSalaryListController().updateData(); //TODO Hier müssen wahrscheinlich noch Änderungen gemacht werden
         }
         if (e.getSource() == insertPersonView.getSalaryEntry()) {
-            Employee newEmployee = safeData();
-            frameController.getInsertSalaryController().fillFields(newEmployee.getId());
-            resetInputs();
+            if(currentlyEditedEmployeeID != 0){
+                updateData(currentlyEditedEmployeeID);
+                frameController.getInsertSalaryController().fillFields(currentlyEditedEmployeeID);
+            } else {
+                Employee newEmployee = safeData();
+                frameController.getInsertSalaryController().fillFields(newEmployee.getId());
+            }
+            resetInputs();      //TODO Auch hier wird es vermutlich noch Änderungen geben müssen
             insertPersonView.revalidate();
             insertPersonView.repaint();
-            frameController.getShowPersonalData().updateData();
+            ShowPersonController showPersonController = frameController.getShowPersonalData();
+            showPersonController.updateData(showPersonController.getEmployeeDataFromDataBase());
             frameController.getSalaryListController().updateData();
             frameController.getInsertSalaryController().showInsertSalaryView(frameController);
             frameController.getTabs().removeTabNewWindow(insertPersonView);
