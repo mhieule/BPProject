@@ -13,12 +13,12 @@ import java.util.Map;
 
 public class CustomTable extends JTable {
     //This attribute indicates weather the select dialog is already opened
-    boolean isSelectDialogOpened =false;
+    boolean isSelectDialogOpened = false;
 
     //This attribute indicates if a column is visible or it is currently hidden
     Map<Integer, Boolean> columnVisibility = new HashMap<>();
 
-    public CustomTable(String[][] data, String[] header){
+    public CustomTable(String[][] data, String[] header) {
         super(new CustomTableModel(data, header));
         for (int i = 0; i < getColumnCount(); i++) {
             columnVisibility.put(i, true);
@@ -27,28 +27,25 @@ public class CustomTable extends JTable {
         setRowSelectionAllowed(true);
         setAutoCreateRowSorter(true);
         setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        setAutoCheckboxSelection();
-        getColumnModel().getColumn(0).setPreferredWidth(20);
-        getColumnModel().getColumn(0).setMaxWidth(20);
         init();
 
     }
 
     private void setAutoCheckboxSelection() {
-        ListSelectionModel rowSM=getSelectionModel();
+        ListSelectionModel rowSM = getSelectionModel();
         rowSM.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 //Ignore extra messages.
                 if (e.getValueIsAdjusting()) return;
 
-                ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-                if (lsm.isSelectionEmpty()) {
+
+                if (rowSM.isSelectionEmpty()) {
                     System.out.println("No rows are selected.");
                 } else {
-                    int selectedRowStart = lsm.getMinSelectionIndex();
-                    int selectedRowEnd = lsm.getMaxSelectionIndex();
-                    for(int i=selectedRowStart;i<selectedRowEnd+1;i++){
+                    int selectedRowStart = rowSM.getMinSelectionIndex();
+                    int selectedRowEnd = rowSM.getMaxSelectionIndex();
+                    for (int i = selectedRowStart; i < selectedRowEnd + 1; i++) {
                         setValueAt(true, i, 0);
                     }
                 }
@@ -70,7 +67,7 @@ public class CustomTable extends JTable {
      * @version 1.0
      */
 
-    private void init(){
+    private void init() {
         this.getTableHeader().addMouseListener(new MouseAdapter() {
             /**
              * {@inheritDoc}
@@ -80,7 +77,7 @@ public class CustomTable extends JTable {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //super.mouseClicked(e);
-                if(e.getButton()==MouseEvent.BUTTON3){
+                if (e.getButton() == MouseEvent.BUTTON3) {
                     doPop(e);
                 }
             }
@@ -90,12 +87,12 @@ public class CustomTable extends JTable {
                 JPopupMenu popupMenu = new JPopupMenu();
 
                 //create a final instance of MouseEvent e
-                final MouseEvent CLICKED_EVENT=e;
+                final MouseEvent CLICKED_EVENT = e;
 
                 //create all items on the popupmenu
-                JMenuItem copyItem=new JMenuItem("Kopieren");
+                JMenuItem copyItem = new JMenuItem("Kopieren");
                 popupMenu.add(copyItem);
-                JMenuItem pasteItem=new JMenuItem("Einfügen");
+                JMenuItem pasteItem = new JMenuItem("Einfügen");
                 popupMenu.add(pasteItem);
                 JMenuItem hideThisColumnItem = new JMenuItem("Diese Spalte ausblenden");
                 popupMenu.add(hideThisColumnItem);
@@ -103,11 +100,11 @@ public class CustomTable extends JTable {
                 popupMenu.add(hideMultipleColumnsItem);
 
                 //show the popup menu on-click
-                popupMenu.show(e.getComponent(),e.getX(),e.getY());
+                popupMenu.show(e.getComponent(), e.getX(), e.getY());
 
                 //select the column which was clicked on
 
-                int selectedColumn=columnAtPoint(e.getPoint());
+                int selectedColumn = columnAtPoint(e.getPoint());
                 setColumnSelectionInterval(selectedColumn, selectedColumn);
 
                 //add functionality to hideThisColumnItem
@@ -120,17 +117,16 @@ public class CustomTable extends JTable {
                         getColumnModel().getColumn(selectedColumn).setPreferredWidth(0);
                         doLayout();
                     }
-                } );
+                });
 
                 //add functionality to hideMultipleColumnsItem
                 hideMultipleColumnsItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if(!isSelectDialogOpened){
+                        if (!isSelectDialogOpened) {
                             //change isSelectDialogOpened to true
-                            isSelectDialogOpened=true;
+                            isSelectDialogOpened = true;
                             JDialog dialog = new JDialog();
-                            dialog.setLocationRelativeTo(dialog.getParent());
                             dialog.addWindowListener(new WindowAdapter() {
                                 /**
                                  * Invoked when a window is in the process of being closed.
@@ -196,15 +192,16 @@ public class CustomTable extends JTable {
 
     /**
      * The method is used to return the current selected row as a complete table with header to assist tasks involving selecting table rows
+     *
      * @return JTable with header
      */
-    public CustomTable getCurrentSelectedRowAsTable(){
-        DefaultTableModel result=new DefaultTableModel(null, getTableHeaderAsStringArray());
-        for(int i=0;i<this.getRowCount();i++){
+    public CustomTable getCurrentSelectedRowAsTable() {
+        DefaultTableModel result = new DefaultTableModel(null, getTableHeaderAsStringArray());
+        for (int i = 0; i < this.getRowCount(); i++) {
             if ((Boolean) getValueAt(i, 0)) {
-                Object[] rowResult=new Object[getColumnCount()];
-                for(int j=0;j<this.getColumnCount();j++){
-                    rowResult[j]=getValueAt(i,j);
+                Object[] rowResult = new Object[getColumnCount()];
+                for (int j = 0; j < this.getColumnCount(); j++) {
+                    rowResult[j] = getValueAt(i, j);
                 }
                 result.addRow(rowResult);
             }
@@ -214,92 +211,104 @@ public class CustomTable extends JTable {
         return resultTable;
     }
 
-    //TODO Ausgewählte Zeile als Array zurückgeben bzw. mehrere Zeilen als 2D Array zurückgeben
-
-    public String[] getIdsOfCurrentSelectedRows(){
+    public int getNumberOfSelectedRows() {
         int selectedRows = 0;
         for (int row = 0; row < this.getRowCount(); row++) {
-            if((Boolean) getValueAt(row,0)){
+            if ((Boolean) getValueAt(row, 0)) {
                 selectedRows++;
             }
-        }
-        String[] result = new String[selectedRows];
-        int index = 0;
-        for (int row = 0; row < this.getRowCount(); row++) {
-                if((Boolean) getValueAt(row,0)){
-                    result[index] = (String) getValueAt(row,1);
-                    index++;
 
-            }
         }
-        return result;
+        return selectedRows;
     }
 
-    public String[][] getCurrentSelectedRowsAsArray(){
-        int selectedRows = 0;
-        for (int row = 0; row < this.getRowCount(); row++) {
-            if((Boolean) getValueAt(row,0)){
-                selectedRows++;
-            }
-        }
-        String[][] result = new String[selectedRows][this.getColumnCount()];
-        int index = 0;
-        for (int row = 0; row < this.getRowCount(); row++) {
-            for (int column = 0; column < this.getColumnCount(); column++) {
-                if((Boolean) getValueAt(row,0)){
-                    result[index][column] = (String) getValueAt(row,column);
+        //TODO Ausgewählte Zeile als Array zurückgeben bzw. mehrere Zeilen als 2D Array zurückgeben
+
+        public String[] getIdsOfCurrentSelectedRows () {
+            int selectedRows = getNumberOfSelectedRows();
+
+            String[] result = new String[selectedRows];
+            int index = 0;
+            for (int row = 0; row < this.getRowCount(); row++) {
+                if ((Boolean) getValueAt(row, 0)) {
+                    result[index] = (String) getValueAt(row, 1);
                     index++;
+
+                }
+            }
+            return result;
+        }
+
+        public void deselectSelectedRows(){
+            for (int row = 0; row < this.getRowCount(); row++) {
+                if((Boolean) getValueAt(row,0)){
+                    setValueAt(false,row,0);
                 }
             }
         }
-        return result;
-    }
 
-    public boolean isRowCurrentlySelected(){
-        int selectedRows = 0;
-        for (int row = 0; row < this.getRowCount(); row++) {
-            if((Boolean) getValueAt(row,0)){
-                selectedRows++;
+        public String[][] getCurrentSelectedRowsAsArray () {
+            int selectedRows = 0;
+            for (int row = 0; row < this.getRowCount(); row++) {
+                if ((Boolean) getValueAt(row, 0)) {
+                    selectedRows++;
+                }
             }
+            String[][] result = new String[selectedRows][this.getColumnCount()];
+            int index = 0;
+            for (int row = 0; row < this.getRowCount(); row++) {
+                for (int column = 0; column < this.getColumnCount(); column++) {
+                    if ((Boolean) getValueAt(row, 0)) {
+                        result[index][column] = (String) getValueAt(row, column);
+                        index++;
+                    }
+                }
+            }
+            return result;
         }
-        return selectedRows > 0;
-    }
 
-    /**
-     * Same as the method above, this method is used to retrieve one row as a complete table
-     * @param rowIndex the row index indicating the row to be chosen to turn into a table
-     * @return a JTable with header containing only the selected row
-     * @see CustomTable
-     */
-    public JTable getRowAsTable(int rowIndex){
-        DefaultTableModel result=new DefaultTableModel(null, getTableHeaderAsStringArray());
-        Object[] rowResult=new Object[getColumnCount()];
-        for(int j=0;j<this.getColumnCount();j++){
-            rowResult[j]=getValueAt(rowIndex,j);
-
+        public boolean isRowCurrentlySelected () {
+            int selectedRows = 0;
+            for (int row = 0; row < this.getRowCount(); row++) {
+                if ((Boolean) getValueAt(row, 0)) {
+                    selectedRows++;
+                }
+            }
+            return selectedRows > 0;
         }
-        result.addRow(rowResult);
-        return new JTable(result);
-    }
 
+        /**
+         * Same as the method above, this method is used to retrieve one row as a complete table
+         * @param rowIndex the row index indicating the row to be chosen to turn into a table
+         * @return a JTable with header containing only the selected row
+         * @see CustomTable
+         */
+        public JTable getRowAsTable ( int rowIndex){
+            DefaultTableModel result = new DefaultTableModel(null, getTableHeaderAsStringArray());
+            Object[] rowResult = new Object[getColumnCount()];
+            for (int j = 0; j < this.getColumnCount(); j++) {
+                rowResult[j] = getValueAt(rowIndex, j);
 
-    /**This method is used to retrieve the headers of the table colummns.
-     *
-     * @return headers of the table colummns as string array
-     */
-
-
-    public String[] getTableHeaderAsStringArray(){
-        String[] result=new String[getColumnCount()];
-        for(int i=0;i<getColumnCount();i++){
-            result[i]=getColumnName(i);
+            }
+            result.addRow(rowResult);
+            return new JTable(result);
         }
-        return result;
+
+
+        /**This method is used to retrieve the headers of the table colummns.
+         *
+         * @return headers of the table colummns as string array
+         */
+
+
+        public String[] getTableHeaderAsStringArray () {
+            String[] result = new String[getColumnCount()];
+            for (int i = 0; i < getColumnCount(); i++) {
+                result[i] = getColumnName(i);
+            }
+            return result;
+        }
+
     }
-
-
-
-
-}
 
 

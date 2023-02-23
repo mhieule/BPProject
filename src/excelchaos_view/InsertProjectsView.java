@@ -2,9 +2,7 @@ package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.tableeditors.DateTableEditor;
-import com.github.lgooddatepicker.tableeditors.DateTimeTableEditor;
 import excelchaos_model.EmployeeDataManager;
-import excelchaos_model.utility.TableColumnAdjuster;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,7 +10,6 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +24,7 @@ public class InsertProjectsView extends JPanel {
 
     private String[] categoryColumns,funderColumns,participationColumns;
 
-    private JButton submit, reset, cancel;
+    private JButton submitAndReset, submitAndClose, reset, cancel;
 
     private JPanel projectValuesPanel, categoriesPanel, projectFunderPanel, projectParticipationPanel, tablePanel, buttonPanel, leftButtons, rightButtons;
 
@@ -79,7 +76,7 @@ public class InsertProjectsView extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
 
 
-        name = new JLabel("Name");
+        name = new JLabel("Projektname");
         setConstraintsLabel(name, 0);
         tfName = new JTextField();
         setConstraintsTextField(tfName, 0);
@@ -105,8 +102,10 @@ public class InsertProjectsView extends JPanel {
 
         leftButtons = new JPanel(new FlowLayout());
         rightButtons = new JPanel(new FlowLayout());
-        submit = new JButton("Projekt speichern");
-        leftButtons.add(submit);
+        submitAndReset = new JButton("Projekt speichern und Felder zurücksetzen");
+        submitAndClose = new JButton("Projekt speichern und Verlassen");
+        leftButtons.add(submitAndReset);
+        leftButtons.add(submitAndClose);
         buttonPanel.add(leftButtons);
         reset = new JButton("Felder zurücksetzen");
         cancel = new JButton("Abbrechen");
@@ -184,7 +183,8 @@ public class InsertProjectsView extends JPanel {
     }
 
     public void setActionListener(ActionListener l) {
-        submit.addActionListener(l);
+        submitAndReset.addActionListener(l);
+        submitAndClose.addActionListener(l);
         reset.addActionListener(l);
         cancel.addActionListener(l);
     }
@@ -201,8 +201,12 @@ public class InsertProjectsView extends JPanel {
         return participationColumns;
     }
 
-    public JButton getSubmit() {
-        return submit;
+    public JButton getSubmitAndReset() {
+        return submitAndReset;
+    }
+
+    public JButton getSubmitAndClose() {
+        return submitAndClose;
     }
 
     public JButton getReset() {

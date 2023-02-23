@@ -94,6 +94,17 @@ public class ManualSalaryEntryManager {
         }
     }
 
+    public void  removeAllManualSalaryEntryForEmployee(int id){
+        try{
+            DeleteBuilder<ManualSalaryEntry, Object> builder = manualSalaryEntriesDao.deleteBuilder();
+            builder.where().eq("id", id);
+            builder.delete();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     /**
      * Method to remove all manual salary entries from the database
      */
@@ -106,6 +117,8 @@ public class ManualSalaryEntryManager {
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
     }
+
+
 
     /**
      * Method to select all manual salary entries of the employee with the given id from the database

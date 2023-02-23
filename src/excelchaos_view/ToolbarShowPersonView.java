@@ -26,8 +26,10 @@ public class ToolbarShowPersonView extends JToolBar {
         add(insertPerson);
         addSeparator(new Dimension(20,30));
         add(editPerson);
+        editPerson.setEnabled(false);
         addSeparator(new Dimension(20,30));
         add(deletePerson);
+        deletePerson.setEnabled(false);
         addSeparator(new Dimension(20,30));
         add(searchLabel);
         add(searchField);
@@ -35,11 +37,20 @@ public class ToolbarShowPersonView extends JToolBar {
 
     public void setActionListener(ActionListener l) {
         insertPerson.addActionListener(l);
+        editPerson.addActionListener(l);
         deletePerson.addActionListener(l);
     }
 
     public JButton getInsertPerson() {
         return insertPerson;
+    }
+
+    public JButton getEditPerson() {
+        return editPerson;
+    }
+
+    public JButton getDeletePerson() {
+        return deletePerson;
     }
 
     public JTextField getSearchField() {
