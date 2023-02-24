@@ -86,7 +86,7 @@ public class ShowProjectsController implements ActionListener, TableModelListene
         tca.adjustColumns();
         customTableModel.addTableModelListener(this);
         searchAndFilterModel = new SearchAndFilterModel(showProjectsView.getTable(),toolbarShowProjects.getToolbar().getSearchField());
-        //toolbarShowProjects.getToolbar().getEditProject().setEnabled(false);
+        toolbarShowProjects.getToolbar().getEditProject().setEnabled(false);
         toolbarShowProjects.getToolbar().getDeleteProject().setEnabled(false);
         toolbarShowProjects.getToolbar().getCostOverview().setEnabled(false);
     }
@@ -117,15 +117,15 @@ public class ShowProjectsController implements ActionListener, TableModelListene
         int numberOfSelectedRows = showProjectsView.getTable().getNumberOfSelectedRows();
         if (e.getColumn() == 0) {
             if (numberOfSelectedRows == 0) {
-                //toolbarShowProjects.getToolbar().getEditProject().setEnabled(false);
+                toolbarShowProjects.getToolbar().getEditProject().setEnabled(false);
                 toolbarShowProjects.getToolbar().getDeleteProject().setEnabled(false);
                 toolbarShowProjects.getToolbar().getCostOverview().setEnabled(false);
             } else if (numberOfSelectedRows == 1) {
-                //toolbarShowProjects.getToolbar().getEditProject().setEnabled(true);
+                toolbarShowProjects.getToolbar().getEditProject().setEnabled(true);
                 toolbarShowProjects.getToolbar().getDeleteProject().setEnabled(true);
                 toolbarShowProjects.getToolbar().getCostOverview().setEnabled(true);
             } else {
-               // toolbarShowProjects.getToolbar().getEditProject().setEnabled(false);
+                toolbarShowProjects.getToolbar().getEditProject().setEnabled(false);
                 toolbarShowProjects.getToolbar().getDeleteProject().setEnabled(true);
                 toolbarShowProjects.getToolbar().getCostOverview().setEnabled(true);
             }

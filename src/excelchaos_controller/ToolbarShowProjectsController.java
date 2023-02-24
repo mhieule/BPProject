@@ -30,12 +30,12 @@ public class ToolbarShowProjectsController implements ActionListener {
             InsertProjectsController insertProjectsController = new InsertProjectsController(frameController);
             insertProjectsController.showInsertProjectsView(frameController);
         }
-        /*if (e.getSource() == toolbar.getEditProject()) {
+        if (e.getSource() == toolbar.getEditProject()) {
             InsertProjectsController insertProjectsController = new InsertProjectsController(frameController);
             String projectID = showProjectsController.getShowProjectsView().getTable().getIdsOfCurrentSelectedRows()[0];
             insertProjectsController.fillFields(projectID);
             insertProjectsController.showInsertProjectsView(frameController);
-        }*/
+        }
         if (e.getSource() == toolbar.getDeleteProject()) {
             Object[] options = {"Ok", "Abbrechen"};
             int joptionResult = JOptionPane.showOptionDialog(null, "Sind Sie sicher, dass die ausgewählten Projekte gelöscht werden sollen?", "Warnung", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);

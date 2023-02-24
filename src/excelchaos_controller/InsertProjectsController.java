@@ -93,7 +93,9 @@ public class InsertProjectsController implements ActionListener {
             insertProjectsView.getTfDuration().setDate(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         }
         List<ProjectCategory> projectCategoryList = projectCategoryManager.getAllProjectCategoriesForProject(project.getProject_id());
+
         String[][] categoryData = new String[4][projectCategoryList.size()];
+        System.out.println(projectCategoryList.size());
         int categoryIndex = 0;
         for (ProjectCategory projectCategory : projectCategoryList) {
             categoryData[0][categoryIndex] = String.valueOf(projectCategory.getCategory_id());
@@ -106,14 +108,14 @@ public class InsertProjectsController implements ActionListener {
 
         List<ProjectFunder> projectFunderList = projectFunderManager.getAllProjectFundersForProject(project.getProject_id());
 
-        String[][] funderData = new String[5][projectFunderList.size()];
+        String[][] funderData = new String[projectFunderList.size()][5];
         int funderIndex = 0;
         for (ProjectFunder projectFunder : projectFunderList) {
-            funderData[0][funderIndex] = String.valueOf(projectFunder.getProject_funder_id());
-            funderData[1][funderIndex] = String.valueOf(projectFunder.getProject_id());
-            funderData[2][funderIndex] = projectFunder.getProject_funder_name();
-            funderData[3][funderIndex] = projectFunder.getFunding_id();
-            funderData[4][funderIndex] = projectFunder.getProject_number();
+            funderData[funderIndex][0] = String.valueOf(projectFunder.getProject_funder_id());
+            funderData[funderIndex][1] = String.valueOf(projectFunder.getProject_id());
+            funderData[funderIndex][2] = projectFunder.getProject_funder_name();
+            funderData[funderIndex][3] = projectFunder.getFunding_id();
+            funderData[funderIndex][4] = projectFunder.getProject_number();
             funderIndex++;
         }
 
@@ -124,11 +126,10 @@ public class InsertProjectsController implements ActionListener {
         int index = 0;
         for (ProjectParticipation projectParticipation : participationList) {
             participationData[0][index] = String.valueOf(projectParticipation.getProject_id());
-            participationData[1][index] = String.valueOf(projectParticipation.getPerson_id());
-            participationData[2][index] = employeeDataManager.getEmployee(projectParticipation.getProject_id()).getName() + " " + employeeDataManager.getEmployee(projectParticipation.getProject_id()).getSurname();
-            participationData[3][index] = transformer.formatPercentageToStringForScope(projectParticipation.getScope());
+            participationData[1][index] = employeeDataManager.getEmployee(projectParticipation.getPerson_id()).getSurname() + " " + employeeDataManager.getEmployee(projectParticipation.getPerson_id()).getName();
+            participationData[2][index] = transformer.formatPercentageToStringForScope(projectParticipation.getScope());
             date = projectParticipation.getParticipation_period();
-            participationData[4][index] = format.format(date);
+            participationData[3][index] = format.format(date);
             index++;
         }
 
@@ -195,17 +196,17 @@ public class InsertProjectsController implements ActionListener {
                         } else {
                             String categoryName = categoryData[i][2];
                             double approvedFunds = transformer.formatStringToPercentageValueForScope(categoryData[i][3]);
-                            ProjectCategory projectCategory = new ProjectCategory(projectCategoryManager.getNextID(), currentlyEditingProjectId, categoryName, approvedFunds);
+                            ProjectCategory projectCategory = new ProjectCategory(currentlyEditingProjectId, projectCategoryManager.getNextID(), categoryName, approvedFunds);
                             projectCategoryManager.addProjectCategory(projectCategory);
                         }
                     }
 
                     for (int i = 0; i < funderData.length; i++) {
-                        if (funderData != null) {
+                        if (funderData[i][0] != null) {
                             int funderId = Integer.parseInt(funderData[i][0]);
                             String funderName = funderData[i][2];
                             String förderkennzeichen = funderData[i][3];
-                            String projectSign = categoryData[i][4];
+                            String projectSign = funderData[i][4];
                             ProjectFunder update = projectFunderManager.getProjectFunder(funderId);
                             update.setProject_funder_name(funderName);
                             update.setFunding_id(förderkennzeichen);
@@ -214,25 +215,29 @@ public class InsertProjectsController implements ActionListener {
                         } else {
                             String funderName = funderData[i][2];
                             String förderkennzeichen = funderData[i][3];
-                            String projectSign = categoryData[i][4];
-                            ProjectFunder projectFunder = new ProjectFunder(projectFunderManager.getNextID(), currentlyEditingProjectId, funderName, förderkennzeichen, projectSign);
+                            String projectSign = funderData[i][4];
+                            ProjectFunder projectFunder = new ProjectFunder(currentlyEditingProjectId, projectFunderManager.getNextID(), funderName, förderkennzeichen, projectSign);
                             projectFunderManager.addProjectFunder(projectFunder);
                         }
                     }
                     DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
                     for (int i = 0; i < participationData.length; i++) {
-                        int employeeID = employeeDataManager.getEmployeeByName(participationData[i][1]).getId();
-                        participationManager.removeProjectParticipation(currentlyEditingProjectId, employeeID);
-                        double scope = transformer.formatStringToPercentageValueForScope(participationData[i][2]);
-                        Date date;
-                        try {
-                            date = format.parse(participationData[i][3]);
-                        } catch (ParseException ex) {
-                            throw new RuntimeException(ex);
+                        System.out.println(participationData[i][1]);
+                        if(participationData[i][1] != null){
+                            int employeeID = employeeDataManager.getEmployeeByName(participationData[i][1]).getId();
+                            participationManager.removeProjectParticipation(currentlyEditingProjectId, employeeID);
+                            double scope = transformer.formatStringToPercentageValueForScope(participationData[i][2]);
+                            Date date;
+                            try {
+                                date = format.parse(participationData[i][3]);
+                            } catch (ParseException ex) {
+                                throw new RuntimeException(ex);
+                            }
+
+                            ProjectParticipation projectParticipation = new ProjectParticipation(currentlyEditingProjectId, employeeID, scope, date);
+                            participationManager.addProjectParticipation(projectParticipation);
                         }
 
-                        ProjectParticipation projectParticipation = new ProjectParticipation(currentlyEditingProjectId, employeeID, scope, date);
-                        participationManager.addProjectParticipation(projectParticipation);
                     }
 
                     frameController.getShowProjectsController().updateData(frameController.getShowProjectsController().getProjectsDataFromDataBase());
@@ -304,30 +309,27 @@ public class InsertProjectsController implements ActionListener {
                         if (categoryData[i][0] != null) {
                             int categoryId = Integer.parseInt(categoryData[i][0]);
                             String categoryName = categoryData[i][2];
-                            double approvedFunds = transformer.formatStringToPercentageValueForScope(categoryData[i][3]);
+                            double approvedFunds = transformer.transformStringToDouble(categoryData[i][3]);
                             ProjectCategory update = projectCategoryManager.getProject(categoryId);
                             update.setApproved_funds(approvedFunds);
                             update.setCategory_name(categoryName);
                             projectCategoryManager.updateProjectCategory(update);
                         } else {
-                            String categoryName = categoryData[i][2];
-                            System.out.println(categoryData[i][0]);
-                            System.out.println(categoryData[i][1]);
-                            System.out.println(categoryData[i][2]);
-                            System.out.println(categoryData[i][3]);
-
-                            double approvedFunds = transformer.transformStringToDouble(categoryData[i][3]);
-                            ProjectCategory projectCategory = new ProjectCategory(projectCategoryManager.getNextID(), currentlyEditingProjectId, categoryName, approvedFunds);
-                            projectCategoryManager.addProjectCategory(projectCategory);
+                            if (categoryData[i][2] != null && categoryData[i][3] != null) {
+                                String categoryName = categoryData[i][2];
+                                double approvedFunds = transformer.transformStringToDouble(categoryData[i][3]);
+                                ProjectCategory projectCategory = new ProjectCategory(currentlyEditingProjectId, projectCategoryManager.getNextID(), categoryName, approvedFunds);
+                                projectCategoryManager.addProjectCategory(projectCategory);
+                            }
                         }
                     }
 
                     for (int i = 0; i < funderData.length; i++) {
-                        if (funderData != null) {
+                        if (funderData[i][0] != null) {
                             int funderId = Integer.parseInt(funderData[i][0]);
                             String funderName = funderData[i][2];
                             String förderkennzeichen = funderData[i][3];
-                            String projectSign = categoryData[i][4];
+                            String projectSign = funderData[i][4];
                             ProjectFunder update = projectFunderManager.getProjectFunder(funderId);
                             update.setProject_funder_name(funderName);
                             update.setFunding_id(förderkennzeichen);
@@ -336,25 +338,29 @@ public class InsertProjectsController implements ActionListener {
                         } else {
                             String funderName = funderData[i][2];
                             String förderkennzeichen = funderData[i][3];
-                            String projectSign = categoryData[i][4];
-                            ProjectFunder projectFunder = new ProjectFunder(projectFunderManager.getNextID(), currentlyEditingProjectId, funderName, förderkennzeichen, projectSign);
+                            String projectSign = funderData[i][4];
+                            ProjectFunder projectFunder = new ProjectFunder(currentlyEditingProjectId, projectFunderManager.getNextID(), funderName, förderkennzeichen, projectSign);
                             projectFunderManager.addProjectFunder(projectFunder);
                         }
                     }
                     DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
                     for (int i = 0; i < participationData.length; i++) {
-                        int employeeID = employeeDataManager.getEmployeeByName(participationData[i][1]).getId();
-                        participationManager.removeProjectParticipation(currentlyEditingProjectId, employeeID);
-                        double scope = transformer.formatStringToPercentageValueForScope(participationData[i][2]);
-                        Date date;
-                        try {
-                            date = format.parse(participationData[i][3]);
-                        } catch (ParseException ex) {
-                            throw new RuntimeException(ex);
+                        System.out.println(participationData[i][1]);
+                        if(participationData[i][1] != null){
+                            int employeeID = employeeDataManager.getEmployeeByName(participationData[i][1]).getId();
+                            participationManager.removeProjectParticipation(currentlyEditingProjectId, employeeID);
+                            double scope = transformer.formatStringToPercentageValueForScope(participationData[i][2]);
+                            Date date;
+                            try {
+                                date = format.parse(participationData[i][3]);
+                            } catch (ParseException ex) {
+                                throw new RuntimeException(ex);
+                            }
+
+                            ProjectParticipation projectParticipation = new ProjectParticipation(currentlyEditingProjectId, employeeID, scope, date);
+                            participationManager.addProjectParticipation(projectParticipation);
                         }
 
-                        ProjectParticipation projectParticipation = new ProjectParticipation(currentlyEditingProjectId, employeeID, scope, date);
-                        participationManager.addProjectParticipation(projectParticipation);
                     }
 
                     frameController.getShowProjectsController().updateData(frameController.getShowProjectsController().getProjectsDataFromDataBase());
@@ -524,12 +530,12 @@ public class InsertProjectsController implements ActionListener {
         return tableValues;
     }
 
-    private String[][] getUpdatedFunderTableValues(JTable givenTable){
+    private String[][] getUpdatedFunderTableValues(JTable givenTable) {
         String[][] tableValues = new String[givenTable.getRowCount()][givenTable.getColumnCount()];
         for (int row = 0; row < givenTable.getRowCount(); row++) {
             for (int column = 0; column < givenTable.getColumnCount(); column++) {
-                if (givenTable.getValueAt(row, 2) == null || givenTable.getValueAt(row, 2).equals("")|| givenTable.getValueAt(row, 3) == null || givenTable.getValueAt(row, 3).equals("")
-                 || givenTable.getValueAt(row, 4) == null || givenTable.getValueAt(row, 4).equals("")) {
+                if (givenTable.getValueAt(row, 2) == null || givenTable.getValueAt(row, 2).equals("") || givenTable.getValueAt(row, 3) == null || givenTable.getValueAt(row, 3).equals("")
+                        || givenTable.getValueAt(row, 4) == null || givenTable.getValueAt(row, 4).equals("")) {
                     break;
                 }
                 tableValues[row][column] = (String) givenTable.getValueAt(row, column);
@@ -538,20 +544,20 @@ public class InsertProjectsController implements ActionListener {
         return tableValues;
     }
 
-    private String[][] getUpdatedCategoryTableValues(JTable givenTable){
+    private String[][] getUpdatedCategoryTableValues(JTable givenTable) {
         String[][] tableValues = new String[givenTable.getRowCount()][givenTable.getColumnCount()];
         for (int row = 0; row < givenTable.getRowCount(); row++) {
             for (int column = 0; column < givenTable.getColumnCount(); column++) {
-                if (givenTable.getValueAt(row, column) != null || givenTable.getValueAt(row, column).equals("")) {
-                    if(column == 2){
+                if (givenTable.getValueAt(row, column) == null || givenTable.getValueAt(row, column).equals("")) {
+                    if (column == 2) {
                         break;
                     }
-                    if(column == 3){
+                    if (column == 3) {
                         break;
                     }
 
                 }
-                System.out.println(givenTable.getValueAt(row,column) + "Here");
+                System.out.println(givenTable.getValueAt(row, column) + "Here");
                 tableValues[row][column] = (String) givenTable.getValueAt(row, column);
             }
         }
