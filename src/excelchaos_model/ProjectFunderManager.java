@@ -4,11 +4,13 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectFunderManager {
@@ -72,6 +74,21 @@ public class ProjectFunderManager {
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
         return projectFunders;
+    }
+
+
+    public List<ProjectFunder> getAllProjectFundersForProject(int projectId){
+        List<ProjectFunder> projectFunderList = new ArrayList<>();
+        QueryBuilder<ProjectFunder,Integer> queryBuilder = projectFunderDao.queryBuilder();
+        try {
+            queryBuilder.where().eq("project_id",projectId);
+            PreparedQuery<ProjectFunder> preparedQuery = queryBuilder.prepare();
+            projectFunderList = projectFunderDao.query(preparedQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+        return projectFunderList;
     }
 
     public void removeProjectFunder(int id){

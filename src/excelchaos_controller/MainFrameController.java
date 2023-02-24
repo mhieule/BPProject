@@ -21,7 +21,6 @@ public class MainFrameController {
     private SalaryHistoryController salaryHistoryController;
 
     private ShowProjectsController showProjectsController;
-    private InsertProjectsController insertProjectsController;
 
     private ManualSalaryEntryController manualSalaryEntryController;
 
@@ -47,7 +46,6 @@ public class MainFrameController {
         manualSalaryEntryController = new ManualSalaryEntryController(this);
         salaryIncreaseController = new SalaryIncreaseController(this);
         showProjectsController = new ShowProjectsController(this);
-        insertProjectsController = new InsertProjectsController(this);
 
         window.setVisible(true);
     }
@@ -83,10 +81,6 @@ public class MainFrameController {
 
     public ShowProjectsController getShowProjectsController() {
         return showProjectsController;
-    }
-
-    public InsertProjectsController getInsertProjectsController() {
-        return insertProjectsController;
     }
 
     public void setChangeListener (ChangeListener l){
