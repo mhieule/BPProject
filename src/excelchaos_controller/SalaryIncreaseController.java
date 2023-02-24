@@ -4,32 +4,42 @@ import excelchaos_model.*;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.SalaryIncreaseView;
 
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-public class SalaryIncreaseController implements ItemListener {
+public class SalaryIncreaseController implements ItemListener, TableModelListener {
 
     private SalaryIncreaseView salaryIncreaseView;
 
     private ToolbarSalaryIncreaseController toolbarSalaryIncreaseController;
 
+    private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
+
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+
+    private SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = new SalaryIncreaseHistoryManager();
+
     private MainFrameController frameController;
 
     private CustomTableModel customTableModel;
 
-    String columns[] = {"Gültig ab","Neues Gehalt","Kommentar","Sonderzahlung"};
-
+    private String columns[] = {"ID","Gültig ab","Neues Gehalt","Kommentar","Sonderzahlung"};
+    private String nullColumns[] = {"Gültig ab","Neues Gehalt","Kommentar","Sonderzahlung"};
     private String title = "Gehaltserhöhung";
 
     public SalaryIncreaseController(MainFrameController mainFrameController){
         frameController = mainFrameController;
         salaryIncreaseView = new SalaryIncreaseView();
-        toolbarSalaryIncreaseController = new ToolbarSalaryIncreaseController(frameController);
+        toolbarSalaryIncreaseController = new ToolbarSalaryIncreaseController(frameController,this);
         toolbarSalaryIncreaseController.getToolbar().setItemListener(this);
         salaryIncreaseView.init();
         salaryIncreaseView.add(toolbarSalaryIncreaseController.getToolbar(), BorderLayout.NORTH);
@@ -44,18 +54,34 @@ public class SalaryIncreaseController implements ItemListener {
 
     private void createTableWithData(String[][] data) {
         salaryIncreaseView.createTable(data,columns);
+        salaryIncreaseView.getTable().getModel().addTableModelListener(this);
+        salaryIncreaseView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
+        salaryIncreaseView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
+        salaryIncreaseView.getTable().getColumnModel().getColumn(1).setWidth(0);
     }
 
-    private void setTableData(String[][] data) {
+    public void setTableData(String[][] data) {
         customTableModel = new CustomTableModel(data, columns);
         salaryIncreaseView.getTable().setModel(customTableModel);
+        salaryIncreaseView.getTable().getModel().addTableModelListener(this);
+        salaryIncreaseView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
+        salaryIncreaseView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
+        salaryIncreaseView.getTable().getColumnModel().getColumn(1).setWidth(0);
+      //  toolbarSalaryIncreaseController.getToolbar().getEditSalaryEntry().setEnabled(false);
+        toolbarSalaryIncreaseController.getToolbar().getDeleteSalaryEntry().setEnabled(false);
+    }
+
+    public void update(){
+        toolbarSalaryIncreaseController.update();
+        toolbarSalaryIncreaseController.getToolbar().setItemListener(this);
+        salaryIncreaseView.add(toolbarSalaryIncreaseController.getToolbar(), BorderLayout.NORTH);
     }
 
     public String[][] getDataFromDB(Employee temporaryEmployee) {
 
         SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = new SalaryIncreaseHistoryManager();
-        StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         int id = temporaryEmployee.getId();
         int rowCount = salaryIncreaseHistoryManager.getRowCount(id);
         String resultData[][] = new String[rowCount][];
@@ -70,7 +96,7 @@ public class SalaryIncreaseController implements ItemListener {
             if(entry.getIs_additional_payment()){
                 specialPayment = "Ja";
             } else specialPayment = "Nein";
-            String[] values = {usageDate,salary, comment,specialPayment};
+            String[] values = {String.valueOf(id),usageDate,salary, comment,specialPayment};
             resultData[currentIndex] = values;
             currentIndex++;
 
@@ -81,26 +107,74 @@ public class SalaryIncreaseController implements ItemListener {
 
     }
 
+    public void deleteEntries(String[][] dates){
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        Date date;
+        int id = 0;
+        for (int i = 0; i < dates.length; i++) {
+            id = Integer.parseInt(dates[0][0]);
+            try {
+                date = format.parse(dates[i][1]);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            salaryIncreaseHistoryManager.removeSalaryIncreaseHistory(id,date);
+
+        }
+        setTableData(getDataFromDB(employeeDataManager.getEmployee(id)));
+        frameController.getUpdater().salaryUpDate();
+    }
+
     @Override
     public void itemStateChanged(ItemEvent e) {
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
-        if (!((String) e.getItem()).equals("Keine Auswahl")) {
-            Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) e.getItem());
-            String[][] data = getDataFromDB(temporaryEmployee);
-            if (salaryIncreaseView.getTable() == null) {
-                createTableWithData(data);
-                frameController.getTabs().setLabel(title + " " + temporaryEmployee.getSurname()+" " + temporaryEmployee.getName());
+        if(e.getStateChange() == ItemEvent.SELECTED){
+            if(e.getItem().equals("Keine Auswahl")){
+                toolbarSalaryIncreaseController.getToolbar().getDoSalaryIncrease().setEnabled(false);
+              //  toolbarSalaryIncreaseController.getToolbar().getEditSalaryEntry().setEnabled(false);
+                toolbarSalaryIncreaseController.getToolbar().getDeleteSalaryEntry().setEnabled(false);
+                if(salaryIncreaseView.getTable() != null){
+                    salaryIncreaseView.getTable().setModel(new DefaultTableModel(null, nullColumns));
+                    frameController.getTabs().setLabel(title);
+                }
             } else {
-                setTableData(data);
-                frameController.getTabs().setLabel(title + " " + temporaryEmployee.getSurname()+" " + temporaryEmployee.getName());
-            }
-        } else {
-            if(salaryIncreaseView.getTable() != null){
-                salaryIncreaseView.getTable().setModel(new DefaultTableModel(null, columns));
-                frameController.getTabs().setLabel(title);
+                toolbarSalaryIncreaseController.getToolbar().getDoSalaryIncrease().setEnabled(true);
+                EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+                if (!((String) e.getItem()).equals("Keine Auswahl")) {
+                    Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) e.getItem());
+                    String[][] data = getDataFromDB(temporaryEmployee);
+                    if (salaryIncreaseView.getTable() == null) {
+                        createTableWithData(data);
+                        frameController.getTabs().setLabel(title + " " + temporaryEmployee.getSurname() + " " + temporaryEmployee.getName());
+                    } else {
+                        setTableData(data);
+                        frameController.getTabs().setLabel(title + " " + temporaryEmployee.getSurname() + " " + temporaryEmployee.getName());
+                    }
+                }
             }
 
         }
 
+
+    }
+
+    public SalaryIncreaseView getSalaryIncreaseView() {
+        return salaryIncreaseView;
+    }
+
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        int numberOfSelectedRows = salaryIncreaseView.getTable().getNumberOfSelectedRows();
+        if (e.getColumn() == 0) {
+            if(numberOfSelectedRows == 0){
+               // toolbarSalaryIncreaseController.getToolbar().getEditSalaryEntry().setEnabled(false);
+                toolbarSalaryIncreaseController.getToolbar().getDeleteSalaryEntry().setEnabled(false);
+            } else if (numberOfSelectedRows == 1) {
+              //  toolbarSalaryIncreaseController.getToolbar().getEditSalaryEntry().setEnabled(true);
+                toolbarSalaryIncreaseController.getToolbar().getDeleteSalaryEntry().setEnabled(true);
+            } else {
+              //  toolbarSalaryIncreaseController.getToolbar().getEditSalaryEntry().setEnabled(false);
+                toolbarSalaryIncreaseController.getToolbar().getDeleteSalaryEntry().setEnabled(true);
+            }
+        }
     }
 }

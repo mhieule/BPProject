@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 public class IncreaseSalaryDialogView extends JDialog {
     private JButton okayButton;
     private JButton closeButton;
-    private JButton projectButton;
+   // private JButton projectButton;
     private JPanel buttonPanel;
     private JPanel buttonWestPanel;
     private JPanel buttonEastPanel;
@@ -41,14 +41,14 @@ public class IncreaseSalaryDialogView extends JDialog {
 
     public void init(String name){
 
-        this.table=table;
+        this.table= new CustomTable(null);
 
         //set some basic properties of the increase salary dialog view
         setLayout(new BorderLayout());
         setTitle("Gehaltserhöhung "+name);
 
         //initialize the buttons
-        projectButton = new JButton("Projizieren");
+       // projectButton = new JButton("Projizieren");
         okayButton = new JButton("OK");
         closeButton = new JButton("Abbrechen");
 
@@ -134,7 +134,7 @@ public class IncreaseSalaryDialogView extends JDialog {
         buttonPanel = new JPanel(new BorderLayout());
         buttonWestPanel = new JPanel(new FlowLayout());
         buttonEastPanel = new JPanel(new FlowLayout());
-        buttonWestPanel.add(projectButton);
+       // buttonWestPanel.add(projectButton);
         buttonWestPanel.add(okayButton);
         buttonEastPanel.add(closeButton);
         buttonPanel.add(buttonWestPanel, BorderLayout.WEST);
@@ -166,7 +166,7 @@ public class IncreaseSalaryDialogView extends JDialog {
     public void setActionListener(ActionListener l){
         okayButton.addActionListener(l);
         closeButton.addActionListener(l);
-        projectButton.addActionListener(l);
+       // projectButton.addActionListener(l);
         absoluteRadioButton.addActionListener(l);
         relativeRadioButton.addActionListener(l);
         mixedRadioButton.addActionListener(l);
@@ -264,7 +264,7 @@ public class IncreaseSalaryDialogView extends JDialog {
     public JButton getOkayButton() {
         return okayButton;
     }
-    public JButton getProjectButton(){return projectButton;}
+    /*public JButton getProjectButton(){return projectButton;}*/
     public CustomTable getCurrentTable(){return table;}
     public JRadioButton getAbsoluteRadioButton(){return absoluteRadioButton;}
     public JTextField getTextFieldAbsolute() {return textFieldAbsolute;}

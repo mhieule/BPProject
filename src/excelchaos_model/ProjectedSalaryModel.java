@@ -13,6 +13,10 @@ public class ProjectedSalaryModel {
                 payIncreases.add(calendar.getTime());
                 break;
             case "1B":
+                calendar.add(Calendar.MONTH, 6);
+                calendar.add(Calendar.MONTH, 6);
+                payIncreases.add(calendar.getTime());
+                break;
             case "1":
                 calendar.add(Calendar.YEAR, 1);
                 payIncreases.add(calendar.getTime());

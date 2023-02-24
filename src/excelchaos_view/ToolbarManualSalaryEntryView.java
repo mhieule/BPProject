@@ -42,6 +42,9 @@ public class ToolbarManualSalaryEntryView extends JToolBar {
         add(addSalaryEntry);
         add(editSalaryEntry);
         add(deleteSalaryEntry);
+        editSalaryEntry.setEnabled(false);
+        deleteSalaryEntry.setEnabled(false);
+        addSalaryEntry.setEnabled(false);
     }
 
     public void setActionListener(ActionListener l){

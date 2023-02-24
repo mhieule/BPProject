@@ -7,8 +7,7 @@ import excelchaos_model.BackEndUpdates;
 
 public class Main {
     public static void main(String[] args) {
-        BackEndUpdates backEndUpdates = new BackEndUpdates();
-        backEndUpdates.calculationsOnStartUp();
+        BackEndUpdates.calculationsOnStartUp();
         new MainFrameController();
 
     }

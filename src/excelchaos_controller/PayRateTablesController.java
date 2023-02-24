@@ -109,6 +109,7 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
         String revertedTableName = stringEditor.revertToCorrectTableName(tableName);
         manager.removeSalaryTable(revertedTableName);
         updateview();
+        frameController.getUpdater().salaryUpDate();
     }
 
     public void updateview() {

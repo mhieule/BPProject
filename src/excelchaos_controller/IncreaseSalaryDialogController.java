@@ -8,6 +8,7 @@ import excelchaos_view.SalaryListView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -39,9 +40,9 @@ public class IncreaseSalaryDialogController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==increaseSalaryDialogView.getCloseButton()){
             increaseSalaryDialogView.setVisible(false);
-        } else if(e.getSource()==increaseSalaryDialogView.getProjectButton()){
+       /* } else if(e.getSource()==increaseSalaryDialogView.getProjectButton()){
             //instruct the view to add a new column to the current table which contains projected salary after increase
-            increaseSalaryDialogView.setProjectionColumnVisible();
+            increaseSalaryDialogView.setProjectionColumnVisible();*/
             if(increaseSalaryDialogView.getAbsoluteRadioButton().isSelected()){
                 increaseSalaryDialogView.setProjectionView(IncreaseSalaryOption.ABSOLUTE);
             } else if (increaseSalaryDialogView.getRelativeRadioButton().isSelected()){
@@ -70,7 +71,7 @@ public class IncreaseSalaryDialogController implements ActionListener {
                 } else if(increaseSalaryDialogView.getMixedRadioButton().isSelected() && increaseSalaryDialogView.getMixedMaxRadioButton().isSelected()){
                     writeDataToDB(IncreaseSalaryOption.MIXED_MAX);
                 } else {}
-                increaseSalaryDialogView.setVisible(false);
+                increaseSalaryDialogView.dispose();
 
             }
 
@@ -104,7 +105,7 @@ public class IncreaseSalaryDialogController implements ActionListener {
         //New salary calculation
         double finalSalary = 0.0;
         if(option == IncreaseSalaryOption.ABSOLUTE){
-            finalSalary = currentSalary+Double.parseDouble(increaseSalaryDialogView.getTextFieldAbsolute().getText());
+            finalSalary = currentSalary+Double.parseDouble(increaseSalaryDialogView.getTextFieldAbsolute().getText()); //TODO Eingabevalidierung
         } else if(option == IncreaseSalaryOption.RELATIVE){
             finalSalary = currentSalary+Double.parseDouble(increaseSalaryDialogView.getTextFieldRelative().getText())*currentSalary/100;
         } else {
@@ -118,10 +119,8 @@ public class IncreaseSalaryDialogController implements ActionListener {
         }
 
         //Start date transformation
-        Calendar calendar = Calendar.getInstance();
         LocalDate startLocalDate = increaseSalaryDialogView.getStartDate().getDate();
-        calendar.set(startLocalDate.getYear(), startLocalDate.getMonth().getValue(), startLocalDate.getDayOfMonth());
-        Date startDate = calendar.getTime();
+        Date startDate = Date.from(startLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         //Comment
         String comment = increaseSalaryDialogView.getTextFieldComment().getText();
@@ -129,5 +128,8 @@ public class IncreaseSalaryDialogController implements ActionListener {
         //DB write
         SalaryIncreaseHistory salaryIncreaseHistory = new SalaryIncreaseHistory(employeeID, finalSalary, startDate, comment, isBonus);
         salaryIncreaseHistoryManager.addSalaryIncreaseHistory(salaryIncreaseHistory);
+        SalaryIncreaseController salaryIncreaseController = frameController.getSalaryIncreaseController();
+        salaryIncreaseController.setTableData(salaryIncreaseController.getDataFromDB(employeeDataManager.getEmployee(employeeID)));
+        frameController.getUpdater().salaryUpDate();
     }
 }

@@ -77,6 +77,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
             String paygrade = determinePayGrade();
             insertValuesInDatabase(tableName, paygrade, prepareTableForDatabaseInsertion());
             payRateController.updateview();
+            frameController.getUpdater().salaryUpDate();
             frameController.getTabs().removeTabNewWindow(insertPayRateTableView);
 
         }

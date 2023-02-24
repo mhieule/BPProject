@@ -226,6 +226,7 @@ public class ShowPayRateTableController implements ActionListener {
             saveEditedValues();
             frameController.getTabs().removeTabNewWindow(showPayRateTableView);
             payRateTablesController.updateview();
+            frameController.getUpdater().salaryUpDate();
         }
 
     }

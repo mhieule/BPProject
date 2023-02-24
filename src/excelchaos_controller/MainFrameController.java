@@ -1,6 +1,7 @@
 package excelchaos_controller;
 
 import excelchaos_model.BackEndUpdates;
+import excelchaos_model.utility.Updater;
 import excelchaos_view.*;
 
 import javax.swing.*;
@@ -24,9 +25,10 @@ public class MainFrameController {
 
     private ManualSalaryEntryController manualSalaryEntryController;
 
-    private InsertManualSalaryEntryController insertManualSalaryEntryController;
 
     private SalaryIncreaseController salaryIncreaseController;
+
+    private Updater updater;
 
 
     public MainFrameController() {
@@ -34,6 +36,7 @@ public class MainFrameController {
         window.init();
         //window.setActionListener(this);
         //backEndUpdates.calculationsOnStartUp();
+        updater = new Updater(this);
         tabsController = new TabsController(this);
         window.add(tabsController.getTabs());
         sideMenuTables = new SideMenuPanelTablesController(this);
@@ -42,7 +45,6 @@ public class MainFrameController {
         salaryListController = new SalaryListController(this);
         salaryHistoryController = new SalaryHistoryController(this);
         manualSalaryEntryController = new ManualSalaryEntryController(this);
-        insertManualSalaryEntryController = new InsertManualSalaryEntryController(this);
         salaryIncreaseController = new SalaryIncreaseController(this);
         showProjectsController = new ShowProjectsController(this);
         insertProjectsController = new InsertProjectsController(this);
@@ -71,8 +73,8 @@ public class MainFrameController {
         return manualSalaryEntryController;
     }
 
-    public InsertManualSalaryEntryController getInsertManualSalaryEntryController() {
-        return insertManualSalaryEntryController;
+    public Updater getUpdater() {
+        return updater;
     }
 
     public SalaryIncreaseController getSalaryIncreaseController() {

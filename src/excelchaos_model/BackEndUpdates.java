@@ -5,9 +5,9 @@ import excelchaos_model.calculations.SalaryCalculation;
 
 import java.text.ParseException;
 
-public class BackEndUpdates {
+public  class  BackEndUpdates {
 
-    public void calculationsOnStartUp(){
+    public static void calculationsOnStartUp(){
         AutomaticPayLevelIncrease startUpPayLevelIncrease = new AutomaticPayLevelIncrease();
         SalaryCalculation contractSalary = new SalaryCalculation();
 

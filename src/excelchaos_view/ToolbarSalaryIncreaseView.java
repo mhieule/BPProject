@@ -13,7 +13,7 @@ public class ToolbarSalaryIncreaseView extends JToolBar {
 
     private JComboBox nameComboBox;
 
-    private JButton doSalaryIncrease,editSalaryEntry,deleteSalaryEntry;
+    private JButton doSalaryIncrease,deleteSalaryEntry;//,editSalaryEntry; TODO Edit Button implementieren
 
     private JLabel nameLabel = new JLabel("Person auswählen:");
 
@@ -29,7 +29,7 @@ public class ToolbarSalaryIncreaseView extends JToolBar {
         names.addAll(employeeNames);
 
         doSalaryIncrease = new JButton("Eintrag hinzufügen");
-        editSalaryEntry = new JButton("Eintrag bearbeiten");
+     //   editSalaryEntry = new JButton("Eintrag bearbeiten");
         deleteSalaryEntry = new JButton("Eintrag löschen");
         nameComboBox = new JComboBox(names.toArray());
         nameComboBox.setBackground(Color.WHITE);
@@ -39,13 +39,16 @@ public class ToolbarSalaryIncreaseView extends JToolBar {
         add(nameComboBox);
         addSeparator(new Dimension(20,10));
         add(doSalaryIncrease);
-        add(editSalaryEntry);
+       // add(editSalaryEntry);
         add(deleteSalaryEntry);
+     //   editSalaryEntry.setEnabled(false);
+        deleteSalaryEntry.setEnabled(false);
+        doSalaryIncrease.setEnabled(false);
     }
 
     public void setActionListener(ActionListener l){
         doSalaryIncrease.addActionListener(l);
-        editSalaryEntry.addActionListener(l);
+       // editSalaryEntry.addActionListener(l);
         deleteSalaryEntry.addActionListener(l);
     }
 
@@ -60,9 +63,9 @@ public class ToolbarSalaryIncreaseView extends JToolBar {
         return doSalaryIncrease;
     }
 
-    public JButton getEditSalaryEntry() {
+  /*  public JButton getEditSalaryEntry() {
         return editSalaryEntry;
-    }
+    }*/
 
     public JButton getDeleteSalaryEntry() {
         return deleteSalaryEntry;
