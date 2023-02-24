@@ -31,8 +31,8 @@ public class SideMenuPanelTables extends JPanel {
     private JLabel navi, payTextLabel, payRateOpenArrowLabel, payRateCloseArrowLabel,salaryOpenArrowLabel, salaryCloseArrowLabel, salaryTextLabel;
     private BasicArrowButton arrowButtonWest;
 
-    private ImageIcon salaryCloseArrow = new ImageIcon("resources/images/arrow_right_mini.png");
-    private ImageIcon salaryOpenArrow = new ImageIcon("resources/images/arrow_down_mini.png");
+    private ImageIcon salaryCloseArrow = new ImageIcon(getClass().getClassLoader().getResource("images/arrow_right_mini.png"));
+    private ImageIcon salaryOpenArrow = new ImageIcon(getClass().getClassLoader().getResource("images/arrow_down_mini.png"));
 
     private Border raisedetchedBorder;
 

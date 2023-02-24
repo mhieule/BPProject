@@ -172,7 +172,7 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
             }
         };
 
-        icon = new ImageIcon("resources/images/xsymbol.png");
+        icon = new ImageIcon(getClass().getClassLoader().getResource("images/xsymbol.png"));
         buttonSize = new Dimension(icon.getIconWidth(), icon.getIconHeight());
 
     }

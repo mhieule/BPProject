@@ -240,6 +240,11 @@ public class SalaryCalculation {
     }
 
     private LocalDate getLastCurrentPayLevelIncreaseDate(Date workingStartDate, Date currentDate) {
-        return ProjectedSalaryModel.getLastPayLevelIncreaseDate(workingStartDate, currentDate).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        if(ProjectedSalaryModel.getLastPayLevelIncreaseDate(workingStartDate, currentDate).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()== null){
+            return null;
+        } else {
+            return ProjectedSalaryModel.getLastPayLevelIncreaseDate(workingStartDate, currentDate).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+
     }
 }

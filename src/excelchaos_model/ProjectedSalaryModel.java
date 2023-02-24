@@ -46,6 +46,7 @@ public class ProjectedSalaryModel {
                 payIncreases.add(calendar.getTime());
                 break;
         }
+        System.out.println("Test");
         return payIncreases;
     }
 
@@ -91,7 +92,7 @@ public class ProjectedSalaryModel {
         }
         return "6";
     }
-
+    //TODO Debugging angesagt
     public static List<Date> calculateNextPayLevelDate(Date startDate, String currentLevel) {
         List<Date> payIncreases = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
@@ -149,8 +150,9 @@ public class ProjectedSalaryModel {
 
     }
 
+    //TODO Debugging, wirft ganz merkwürkdigen Nullpointer
     public static Date getLastPayLevelIncreaseDate(Date workingStartDate, Date currentDate) {
-        Date lastIncreaseDate = null;
+        Date lastIncreaseDate = workingStartDate;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(workingStartDate);
         List<Date> payLevelChanges = getAllPayLevelChangesForEmployee(workingStartDate);
