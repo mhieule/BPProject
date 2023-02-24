@@ -89,6 +89,17 @@ public class ProjectParticipationManager {
         }
     }
 
+    public void removeProjectParticipationBasedOnProjectId(int projectId){
+        try{
+            DeleteBuilder<ProjectParticipation, Object> builder = projectParticipationsDao.deleteBuilder();
+            builder.where().eq("project_id", projectId);
+            builder.delete();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public void removeAllProjectParticipations(){
         try {
             TableUtils.clearTable(connectionSource, ProjectParticipation.class);

@@ -2,6 +2,7 @@ package excelchaos_controller;
 
 import excelchaos_view.ToolbarShowProjectsView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -36,7 +37,16 @@ public class ToolbarShowProjectsController implements ActionListener {
             insertProjectsController.showInsertProjectsView(frameController);
         }*/
         if (e.getSource() == toolbar.getDeleteProject()) {
-
+            Object[] options = {"Ok", "Abbrechen"};
+            int joptionResult = JOptionPane.showOptionDialog(null, "Sind Sie sicher, dass die ausgewählten Projekte gelöscht werden sollen?", "Warnung", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            if(joptionResult == 0){
+                String[] projectIds = showProjectsController.getShowProjectsView().getTable().getIdsOfCurrentSelectedRows();
+                int[] Ids = new int[projectIds.length];
+                for (int i = 0; i < projectIds.length; i++) {
+                    Ids[i] = Integer.parseInt(projectIds[i]);
+                }
+                showProjectsController.deleteData(Ids);
+            }
         }
         if (e.getSource() == toolbar.getCostOverview()) {
             if (showProjectsController.getShowProjectsView().getTable().isRowCurrentlySelected()) {

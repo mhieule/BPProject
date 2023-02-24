@@ -102,6 +102,17 @@ public class ProjectFunderManager {
         }
     }
 
+    public void removeProjectFunderBasedOnProjectID(int projectId){
+        try {
+            DeleteBuilder<ProjectFunder, Integer> builder = projectFunderDao.deleteBuilder();
+            builder.where().eq("project_id", projectId);
+            builder.delete();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public void removeAllProjectFunder(){
         try {
             TableUtils.clearTable(connectionSource, ProjectFunder.class);

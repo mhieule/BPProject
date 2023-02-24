@@ -18,6 +18,12 @@ public class ShowProjectsController implements ActionListener, TableModelListene
     private ToolbarShowProjectsController toolbarShowProjects;
 
     private ProjectManager projectManager = new ProjectManager();
+
+    private ProjectCategoryManager projectCategoryManager = new ProjectCategoryManager();
+
+    private ProjectFunderManager projectFunderManager = new ProjectFunderManager();
+
+    private ProjectParticipationManager projectParticipationManager = new ProjectParticipationManager();
     private String title = "Projekt Daten";
 
     private String columns[] = {"ID", "Name", "Bewilligungsdatum", "Anfangsdatum", "Enddatum"};
@@ -86,7 +92,13 @@ public class ShowProjectsController implements ActionListener, TableModelListene
     }
 
     public void deleteData(int[] projectIds){
-
+        for (int i = 0; i < projectIds.length; i++) {
+            projectCategoryManager.removeProjectCategoryBasedOnProjectId(projectIds[i]);
+            projectFunderManager.removeProjectFunderBasedOnProjectID(projectIds[i]);
+            projectParticipationManager.removeProjectParticipationBasedOnProjectId(projectIds[i]);
+            projectManager.removeProject(projectIds[i]);
+        }
+        updateData(getProjectsDataFromDataBase());
     }
 
     @Override

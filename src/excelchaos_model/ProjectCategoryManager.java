@@ -101,6 +101,17 @@ public class ProjectCategoryManager {
         }
     }
 
+    public void removeProjectCategoryBasedOnProjectId(int projectID){
+        try{
+            DeleteBuilder<ProjectCategory, Integer> builder = projectCategoriesDao.deleteBuilder();
+            builder.where().eq("project_id", projectID);
+            builder.delete();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
     public void removeAllProjectCategories(){
         try {
             TableUtils.clearTable(connectionSource, ProjectCategory.class);
