@@ -58,7 +58,7 @@ public class ProjectParticipationView extends JPanel {
         JButton addPersonButton = new JButton("Person zum Projekt hinzufügen");
         projectNamePanel.add(addPersonButton);
 
-        projectNamePanel.add(Box.createHorizontalStrut(500));
+        projectNamePanel.add(Box.createHorizontalStrut(100));
         JLabel totalCostLabel = new JLabel("Gesamtpersonalkosten: " + totalCost);
         totalCostLabel.setFont(new Font("Dialog", Font.BOLD, 16));
         projectNamePanel.add(totalCostLabel);
