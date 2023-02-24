@@ -14,132 +14,29 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class SalaryListView extends JPanel {
-    private CustomTable jt;
+    private CustomTable salaryDataTable;
     public void init(){
-//        removeAll();
-//        setLayout(new BorderLayout());
-//        String column[] = {
-//                "Name", "Vorname", "Geburtsdatum", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
-//        };
-//        File f = new File("src/salaryData");
-//        try {
-//            BufferedReader br = new BufferedReader(new FileReader(f));
-//            int lines = 0;
-//            while (br.readLine() != null) lines++;
-//            br.close();
-//            String resultData[][] = new String[lines][];
-//
-//
-//            BufferedReader reader = new BufferedReader(new FileReader(f));
-//            String line = null;
-//            int currentIndex = 0;
-//            while ((line = reader.readLine()) != null) {
-//                String[] values = line.split(",");
-//                resultData[currentIndex] = values;
-//                currentIndex++;
-//            }
-//            jt = new CustomTable(resultData, column);
-//            //jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//            //TableColumnAdjuster tca = new TableColumnAdjuster(jt);
-//            //tca.adjustColumns();
-//            JScrollPane sp = new JScrollPane(jt);
-//            sp.setVisible(true);
-//
-//            add(sp);
-//            revalidate();
-//            repaint();
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-
-        addData();
+        setLayout(new BorderLayout());
     }
 
-    public void addData(){
-        removeAll();
-        setLayout(new BorderLayout());
-
-        String column[] = {
-                "Name", "Vorname", "Geburtsdatum", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
-        };
-        ContractDataManager contractDataManager = new ContractDataManager();
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
-        int lines  = contractDataManager.getRowCount();
-        String resultData[][] = new String[lines][];
-        int currentIndex = 0;
-        List<Contract> contracts = contractDataManager.getAllContracts();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        for (Contract contract : contracts){
-            Employee employee = employeeDataManager.getEmployee(contract.getId());
-
-            String name = employee.getName();
-            String surname = employee.getSurname();
-            String dateOfBirth = dateFormat.format(employee.getDate_of_birth());
-            String group = contract.getPaygrade();
-            String stufe = contract.getPaylevel();
-            String gehalt = Double.toString(contract.getRegular_cost());
-            String sonderzahlungen = Double.toString(contract.getBonus_cost());
-
-            String[] values = {surname, name, dateOfBirth, group, stufe, gehalt, sonderzahlungen};
-            resultData[currentIndex] = values;
-            currentIndex++;
-        }
-
-        jt = new CustomTable(resultData, column);
-        jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(jt);
+    public void createSalaryTable(String [][] tableData, String[] columnNames){
+        salaryDataTable = new CustomTable(tableData,columnNames);
+        salaryDataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        salaryDataTable.getColumnModel().getColumn(1).setMinWidth(0);
+        salaryDataTable.getColumnModel().getColumn(1).setMaxWidth(0);
+        salaryDataTable.getColumnModel().getColumn(1).setWidth(0);
+        CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(salaryDataTable);
         tca.adjustColumns();
-        JScrollPane sp = new JScrollPane(jt);
-        sp.setVisible(true);
+        JScrollPane scrollpane = new JScrollPane(salaryDataTable);
+        scrollpane.setVisible(true);
 
-        add(sp);
+        add(scrollpane);
         revalidate();
         repaint();
     }
 
 
-    public void showPayGradeIncrease(){
-        removeAll();
-        setLayout(new BorderLayout());
-        String column[] = {
-                "Name", "Vorname", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung", "Höherstufung 1 ab", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung",
-                "Höherstufung 2 ab", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
-        };
-        File f = new File("src/moreSalaryData");
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(f));
-            int lines = 0;
-            while (br.readLine() != null) lines++;
-            br.close();
-            String resultData[][] = new String[lines][];
-
-
-            BufferedReader reader = new BufferedReader(new FileReader(f));
-            String line = null;
-            int currentIndex = 0;
-            while ((line = reader.readLine()) != null) {
-                String[] values = line.split(",");
-                resultData[currentIndex] = values;
-                currentIndex++;
-            }
-            jt = new CustomTable(resultData, column);
-            jt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-            TableColumnAdjuster tca = new TableColumnAdjuster(jt);
-            tca.adjustColumns();
-            JScrollPane sp = new JScrollPane(jt);
-            sp.setVisible(true);
-
-            add(sp);
-            revalidate();
-            repaint();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public CustomTable getTable() {
-        return jt;
+        return salaryDataTable;
     }
 }

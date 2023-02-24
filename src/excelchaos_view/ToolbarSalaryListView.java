@@ -31,6 +31,7 @@ public class ToolbarSalaryListView extends JToolBar {
         searchField = new JTextField();
         searchField.setPreferredSize(new Dimension(130,30));
         add(editEntry);
+        editEntry.setEnabled(false);
 
         add(increaseSalary);
         add(showNextPayGrade);
@@ -63,7 +64,7 @@ public class ToolbarSalaryListView extends JToolBar {
         return removeAdditionalSalaryStage;
     }
 
-    public JButton getInsertEntry() {
+    public JButton getEditEntry() {
         return editEntry;
     }
 

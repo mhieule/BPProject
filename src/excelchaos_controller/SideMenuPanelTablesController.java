@@ -27,7 +27,7 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
         return sideMenu;
     }
 
-    //TODO Nach Nutzerstudie die Gehaltshistorie wieder einfügen
+    //TODO Nach Nutzerstudie die Gehaltshistorie und SHK wieder einfügen
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sideMenu.getArrowButtonWest()) {
@@ -52,11 +52,11 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             PayRateTablesController E14Controller = new PayRateTablesController(frameController);
             E14Controller.setTitle("E14 Entgelttabellen");
             E14Controller.showPayRatesView(frameController);
-        } else if (e.getSource() == sideMenu.getShowSHKTables()) {
+        } /*else if (e.getSource() == sideMenu.getShowSHKTables()) {
             PayRateTablesController SHKController = new PayRateTablesController(frameController);
             SHKController.setTitle("SHK Entgelttabellen");
             SHKController.showPayRatesView(frameController);
-        }
+        }*/
     }
 
     @Override

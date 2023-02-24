@@ -18,7 +18,7 @@ public class MainFrameController {
     private ShowPersonController showPersonalData;
     private SalaryListController salaryListController;
     private SalaryHistoryController salaryHistoryController;
-    private InsertSalaryController insertSalaryController;
+
     private ShowProjectsController showProjectsController;
     private InsertProjectsController insertProjectsController;
 
@@ -41,7 +41,6 @@ public class MainFrameController {
         showPersonalData = new ShowPersonController(this);
         salaryListController = new SalaryListController(this);
         salaryHistoryController = new SalaryHistoryController(this);
-        insertSalaryController = new InsertSalaryController(this);
         manualSalaryEntryController = new ManualSalaryEntryController(this);
         insertManualSalaryEntryController = new InsertManualSalaryEntryController(this);
         salaryIncreaseController = new SalaryIncreaseController(this);
@@ -67,10 +66,6 @@ public class MainFrameController {
     }
 
     public SalaryHistoryController getSalaryHistoryController(){return salaryHistoryController;}
-
-    public InsertSalaryController getInsertSalaryController(){
-        return insertSalaryController;
-    }
 
     public ManualSalaryEntryController getManualSalaryEntryController() {
         return manualSalaryEntryController;

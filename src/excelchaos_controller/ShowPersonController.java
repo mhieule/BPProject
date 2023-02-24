@@ -35,7 +35,7 @@ public class ShowPersonController implements TableModelListener {
 
     private SearchAndFilterModel searchAndFilterModel;
 
-    String columns[] = {"ID","Name", "Vorname","Straße","Haunsummer","Adresszusatz", "Postleitzahl","Stadt",
+    private String columns[] = {"ID","Name", "Vorname","Straße","Haunsummer","Adresszusatz", "Postleitzahl","Stadt",
             "Geburtsdatum","E-Mail Privat", "Telefon Privat", "Telefon TUDA",  "Staatsangehörigkeit 1", "Staatsangehörigkeit 2", "Visum Gültigkeit", "Personalnummer", "Transpondernummer", "Büronummer", "TU-ID",
             "Anstellungsart","Beschäftigungsbeginn","Beschäftigungsende", "Beschäftigungsumfgang","Gehaltsklasse","Gehaltsstufe","VBL-Status","SHK Stundensatz", "Gehalt Eingeplant bis"
     };

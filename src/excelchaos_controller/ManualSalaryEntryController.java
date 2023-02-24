@@ -33,9 +33,7 @@ public class ManualSalaryEntryController implements ItemListener {
 
     public void showManualSalaryEntryView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
-            //ActionLogEintrag
             mainFrameController.addTab(title, salaryEntryView);
-            //mainFrameController.setChangeListener(this);
         } else {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(title));
         }
@@ -76,6 +74,10 @@ public class ManualSalaryEntryController implements ItemListener {
         salaryEntryView.getTable().setModel(customTableModel);
     }
 
+    public void update(){
+        toolbarManualSalaryEntry.update();
+    }
+
     @Override
     public void itemStateChanged(ItemEvent e) {
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
@@ -97,5 +99,13 @@ public class ManualSalaryEntryController implements ItemListener {
 
         }
 
+    }
+
+    public ManualSalaryEntryView getSalaryEntryView() {
+        return salaryEntryView;
+    }
+
+    public ToolbarManualSalaryEntryController getToolbarManualSalaryEntry() {
+        return toolbarManualSalaryEntry;
     }
 }

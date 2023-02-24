@@ -27,6 +27,8 @@ public class InsertPersonController implements ActionListener {
     private ContractDataManager contractDataManager = new ContractDataManager();
     private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
 
+    private CalculateSalaryBasedOnPayRateTable calculateSalaryBasedOnPayRateTable = new CalculateSalaryBasedOnPayRateTable();
+
     private int currentlyEditedEmployeeID = 0;
 
 
@@ -69,7 +71,6 @@ public class InsertPersonController implements ActionListener {
         insertPersonView.getTfVisaValidUntil().setVisible(false);
     }
 
-    //TODO Die Dates Abfangen die null sein können (Jedenfalls für Endabgabe)
     public boolean updateData(int id) {
         boolean hadError;
         Employee employee = employeeDataManager.getEmployee(id);
@@ -90,9 +91,13 @@ public class InsertPersonController implements ActionListener {
         String status = insertPersonView.getStatusPicklist().getSelectedItem().toString();
         String transponder_number = insertPersonView.getTfTranspondernummer().getText();
         String office_number = insertPersonView.getTfBueronummer().getText();
-        //TODO als Date abfragen und speichern
         LocalDate localDate = insertPersonView.getTfSalaryPlannedUntil().getDate();
-        Date salaryPlannedUntil = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date salaryPlannedUntil;
+        if (localDate == null) {
+            salaryPlannedUntil = null;
+        } else {
+            salaryPlannedUntil = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        }
         Date visaExpiration = null;
         if (visa_required) {
             LocalDate visaExpirationDate = insertPersonView.getTfVisaValidUntil().getDate();
@@ -100,7 +105,12 @@ public class InsertPersonController implements ActionListener {
         }
         String phone_tuda = insertPersonView.getTfTelefonnummerTUDA().getText();
         LocalDate dateOfBirthDate = insertPersonView.getTfGeburtsdatum().getDate();
-        Date dateOfBirth = Date.from(dateOfBirthDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date dateOfBirth;
+        if (dateOfBirthDate == null) {
+            dateOfBirth = null;
+        } else {
+            dateOfBirth = Date.from(dateOfBirthDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        }
         String houseNumber = insertPersonView.getTfHausnummer().getText();
         String street = insertPersonView.getTfStrasse().getText();
         String zip_code = insertPersonView.getTfPLZ().getText();
@@ -113,9 +123,20 @@ public class InsertPersonController implements ActionListener {
             vbl = true;
         }
         LocalDate workStartDate = insertPersonView.getTfWorkStart().getDate();
-        Date workStart = Date.from(workStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date workStart;
+        if (workStartDate == null) {
+            workStart = null;
+        } else {
+            workStart = Date.from(workStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        }
+
         LocalDate workEndDate = insertPersonView.getTfWorkEnd().getDate();
-        Date workEnd = Date.from(workEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date workEnd;
+        if (workEndDate == null) {
+            workEnd = null;
+        } else {
+            workEnd = Date.from(workEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        }
         double scope = transformer.formatStringToPercentageValueForScope(insertPersonView.getTfWorkScope().getText());
 
         if (surname.equals("") || name.equals("") || email_private.equals("") || phone_private.equals("") || citizenship_1.equals("") || citizenship_2.equals("") || employeeNumber.equals("") || tu_id.equals("")
@@ -152,12 +173,14 @@ public class InsertPersonController implements ActionListener {
             contract.setEnd_date(workEnd);
             contract.setScope(scope);
             contract.setVbl_status(vbl);
-
+            double[] newCost = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(contract);
+            contract.setRegular_cost(newCost[0]);
+            contract.setBonus_cost(newCost[1]*12);
             employeeDataManager.updateEmployee(employee);
             contractDataManager.updateContract(contract);
             hadError = false;
         }
-return hadError;
+        return hadError;
 
     }
 
@@ -225,6 +248,7 @@ return hadError;
     }
 
     public void resetInputs() {
+        currentlyEditedEmployeeID = 0;
         insertPersonView.getTfName().setText(null);
         insertPersonView.getTfVorname().setText(null);
         insertPersonView.getTfStrasse().setText(null);
@@ -269,7 +293,6 @@ return hadError;
 
     //TODO fallunterscheidung ob neuer employee erstellt wird oder bearbeitet wird
     public Employee safeData() {
-        CalculateSalaryBasedOnPayRateTable calculateSalaryBasedOnPayRateTable = new CalculateSalaryBasedOnPayRateTable();
         int id = employeeDataManager.getNextID();
         String surname = insertPersonView.getTfVorname().getText();
         String name = insertPersonView.getTfName().getText();
@@ -387,15 +410,15 @@ return hadError;
             Employee checkEmployee = null;
             boolean test = false;
             if (currentlyEditedEmployeeID != 0) {
-               test = updateData(currentlyEditedEmployeeID);
-               if(test){
-                   JOptionPane.showConfirmDialog(null,"Bitte füllen Sie die markierten Spalten aus um fortzufahren.","Spalten nicht vollständig ausgefüllt",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
-                   return;
-               }
+                test = updateData(currentlyEditedEmployeeID);
+                if (test) {
+                    JOptionPane.showConfirmDialog(null, "Bitte füllen Sie die markierten Spalten aus um fortzufahren.", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             } else {
                 checkEmployee = safeData();
-                if(checkEmployee == null){
-                    JOptionPane.showConfirmDialog(null,"Bitte füllen Sie die markierten Spalten aus um fortzufahren.","Spalten nicht vollständig ausgefüllt",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
+                if (checkEmployee == null) {
+                    JOptionPane.showConfirmDialog(null, "Bitte füllen Sie die markierten Spalten aus um fortzufahren.", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
@@ -404,32 +427,35 @@ return hadError;
             insertPersonView.repaint();
             ShowPersonController showPersonController = frameController.getShowPersonalData();
             showPersonController.updateData(showPersonController.getEmployeeDataFromDataBase());
-            frameController.getSalaryListController().updateData(); //TODO Hier müssen wahrscheinlich noch Änderungen gemacht werden
+            SalaryListController salaryListController = frameController.getSalaryListController();
+            salaryListController.updateData(salaryListController.getSalaryDataFromDataBase());
         }
         if (e.getSource() == insertPersonView.getSalaryEntry()) {
             boolean test = false;
+            InsertSalaryController insertSalaryController = new InsertSalaryController(frameController);
             if (currentlyEditedEmployeeID != 0) {
                 test = updateData(currentlyEditedEmployeeID);
-                if(test){
-                    JOptionPane.showConfirmDialog(null,"Bitte füllen Sie die markierten Spalten aus um fortzufahren.","Spalten nicht vollständig ausgefüllt",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
+                if (test) {
+                    JOptionPane.showConfirmDialog(null, "Bitte füllen Sie die markierten Spalten aus um fortzufahren.", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                frameController.getInsertSalaryController().fillFields(currentlyEditedEmployeeID);
+                insertSalaryController.fillFields(currentlyEditedEmployeeID);
             } else {
                 Employee newEmployee = safeData();
-                if(newEmployee == null){
-                    JOptionPane.showConfirmDialog(null,"Bitte füllen Sie die markierten Spalten aus um fortzufahren.","Spalten nicht vollständig ausgefüllt",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
+                if (newEmployee == null) {
+                    JOptionPane.showConfirmDialog(null, "Bitte füllen Sie die markierten Spalten aus um fortzufahren.", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                frameController.getInsertSalaryController().fillFields(newEmployee.getId());
+                insertSalaryController.fillFields(newEmployee.getId());
             }
-            resetInputs();      //TODO Auch hier wird es vermutlich noch Änderungen geben müssen
+            resetInputs();
             insertPersonView.revalidate();
             insertPersonView.repaint();
             ShowPersonController showPersonController = frameController.getShowPersonalData();
             showPersonController.updateData(showPersonController.getEmployeeDataFromDataBase());
-            frameController.getSalaryListController().updateData();
-            frameController.getInsertSalaryController().showInsertSalaryView(frameController);
+            SalaryListController salaryListController = frameController.getSalaryListController();
+            salaryListController.updateData(salaryListController.getSalaryDataFromDataBase());
+            insertSalaryController.showInsertSalaryView(frameController);
             frameController.getTabs().removeTabNewWindow(insertPersonView);
         }
         if (e.getSource() == insertPersonView.getReset()) {

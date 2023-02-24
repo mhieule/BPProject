@@ -5,17 +5,18 @@ import excelchaos_model.EmployeeDataManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 
 public class InsertSalaryView extends JPanel {
 
-    private JLabel nameList, gruppe, stufe, gehalt, sonderzahlung, puffer;
+    private JLabel nameList, gruppe, stufe, gehalt, sonderzahlung,vblstate, puffer;
 
     private JTextField  tfGehalt, tfSonderzahlung;
 
-    private JComboBox namePickList, plStufe,tfGruppe;
+    private JComboBox namePickList, plStufe,tfGruppe,vblList;
 
-    private JButton submit, reset;
+    private JButton submit, reset ,cancel;
 
     private JPanel centerUp, centerDown, leftButtons, rightButtons;
 
@@ -60,28 +61,36 @@ public class InsertSalaryView extends JPanel {
         plStufe = new JComboBox(payLevel);
         setConstraintsJComboBox(plStufe,2);
 
+        vblstate = new JLabel("VBL-Status");
+        setConstraintsLabel(vblstate,3);
+        String[] vbl = {"Nicht ausgewählt","Pflichtig","Befreit"};
+        vblList = new JComboBox(vbl);
+        setConstraintsJComboBox(vblList,3);
+
         gehalt = new JLabel("Gehalt");
-        setConstraintsLabel(gehalt, 3);
+        setConstraintsLabel(gehalt, 4);
         tfGehalt = new JTextField();
-        setConstraintsTextField(tfGehalt, 3);
+        setConstraintsTextField(tfGehalt, 4);
 
         sonderzahlung = new JLabel("Sonderzahlung");
-        setConstraintsLabel(sonderzahlung, 4);
+        setConstraintsLabel(sonderzahlung, 5);
         tfSonderzahlung = new JTextField();
-        setConstraintsTextField(tfSonderzahlung, 4);
+        setConstraintsTextField(tfSonderzahlung, 5);
 
         puffer = new JLabel(" ");
-        setConstraintsPuffer(puffer,5);
+        setConstraintsPuffer(puffer,6);
 
 
         leftButtons = new JPanel(new FlowLayout());
         rightButtons = new JPanel(new FlowLayout());
-        submit = new JButton("Gehaltseintrag speichern");
+        submit = new JButton("Gehaltseintrag speichern und Verlassen");
         leftButtons.add(submit);
         centerDown.add(leftButtons);
+        cancel = new JButton("Abbrechen");
         reset = new JButton("Felder zurücksetzen");
         centerDown.add(Box.createHorizontalGlue());
         rightButtons.add(reset);
+        rightButtons.add(cancel);
         centerDown.add(rightButtons);
 
         JScrollPane scrollPane = new JScrollPane(centerUp, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -94,6 +103,19 @@ public class InsertSalaryView extends JPanel {
     public void setActionListener(ActionListener l) {
         submit.addActionListener(l);
         reset.addActionListener(l);
+        cancel.addActionListener(l);
+    }
+
+    public void setItemListener(ItemListener l){
+        vblList.addItemListener(l);
+        plStufe.addItemListener(l);
+        tfGruppe.addItemListener(l);
+    }
+
+    public void markMustBeFilledTextFields(){
+        gruppe.setForeground(Color.RED);
+        stufe.setForeground(Color.RED);
+        vblstate.setForeground(Color.RED);
     }
 
 
@@ -117,12 +139,20 @@ public class InsertSalaryView extends JPanel {
         return reset;
     }
 
+    public JButton getCancel() {
+        return cancel;
+    }
+
     public JButton getSubmit() {
         return submit;
     }
 
     public JComboBox getNamePickList() {
         return namePickList;
+    }
+
+    public JComboBox getVblList() {
+        return vblList;
     }
 
     public JTextField getTfGehalt() {

@@ -127,6 +127,7 @@ public class CustomTable extends JTable {
                             //change isSelectDialogOpened to true
                             isSelectDialogOpened = true;
                             JDialog dialog = new JDialog();
+                            dialog.setLocationRelativeTo(dialog.getParent());
                             dialog.addWindowListener(new WindowAdapter() {
                                 /**
                                  * Invoked when a window is in the process of being closed.
@@ -221,9 +222,6 @@ public class CustomTable extends JTable {
         }
         return selectedRows;
     }
-
-        //TODO Ausgewählte Zeile als Array zurückgeben bzw. mehrere Zeilen als 2D Array zurückgeben
-
         public String[] getIdsOfCurrentSelectedRows () {
             int selectedRows = getNumberOfSelectedRows();
 

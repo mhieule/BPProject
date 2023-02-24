@@ -2,6 +2,7 @@ package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import excelchaos_model.CountryModel;
+import excelchaos_model.inputVerifier.WorkScopeVerifier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -170,9 +171,10 @@ public class InsertPersonView extends JPanel {
         workScope = new JLabel("Beschäftigungsumfang");
         setConstraintsLabel(workScope, 23);
         tfWorkScope = new JTextField();
+        tfWorkScope.setInputVerifier(new WorkScopeVerifier());
         setConstraintsTextField(tfWorkScope, 23);
 
-        payGroupOnHiring = new JLabel("Gehaltsklasse bei Einstellung");
+        payGroupOnHiring = new JLabel("Gehaltsklasse");
         setConstraintsLabel(payGroupOnHiring, 24);
         payGroupOnHiring.setVisible(false);
         String[] payGroups = {"Nicht ausgewählt", "E13", "E14"};
@@ -180,7 +182,7 @@ public class InsertPersonView extends JPanel {
         setConstraintsJComboBox(payGroupList, 24);
         payGroupList.setVisible(false);
 
-        payLevelOnHiring = new JLabel("Gehaltsstufe bei Einstellung");
+        payLevelOnHiring = new JLabel("Gehaltsstufe");
         setConstraintsLabel(payLevelOnHiring, 25);
         payLevelOnHiring.setVisible(false);
         String[] payLevels = {"Nicht ausgewählt", "1A","1B","1","2","3","4","5","6"};
@@ -214,7 +216,7 @@ public class InsertPersonView extends JPanel {
 
         leftButtons = new JPanel(new FlowLayout());
         rightButtons = new JPanel(new FlowLayout());
-        submit = new JButton("Person speichern");
+        submit = new JButton("Person speichern und Felder zurücksetzen");
         leftButtons.add(submit);
         salary = new JButton("Person speichern und zur Gehaltseingabe");
         leftButtons.add(salary);

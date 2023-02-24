@@ -21,7 +21,7 @@ public class SideMenuPanelTables extends JPanel {
 
     private JButton showE13Tables;
     private JButton showE14Tables;
-    private JButton showSHKTables;
+    //private JButton showSHKTables;
 
     private JToggleButton payRatesToogleButton;
 
@@ -175,15 +175,15 @@ public class SideMenuPanelTables extends JPanel {
 
         showE13Tables = new JButton("E13 Tabellen");
         showE14Tables = new JButton("E14 Tabellen");
-        showSHKTables = new JButton("SHK Tabellen");
+        //showSHKTables = new JButton("SHK Tabellen");
 
         showE13Tables.setPreferredSize(new Dimension(120, 20));
         showE14Tables.setPreferredSize(new Dimension(120, 20));
-        showSHKTables.setPreferredSize(new Dimension(120, 20));
+        //showSHKTables.setPreferredSize(new Dimension(120, 20));
 
         payRateTableButtonPanel.add(showE13Tables);
         payRateTableButtonPanel.add(showE14Tables);
-        payRateTableButtonPanel.add(showSHKTables);
+        //payRateTableButtonPanel.add(showSHKTables);
         payRateTableButtonPanel.setVisible(false);
 
         payRatePanel.add(payRateTableButtonPanel,BorderLayout.CENTER);
@@ -261,9 +261,9 @@ public class SideMenuPanelTables extends JPanel {
         return showE14Tables;
     }
 
-    public JButton getShowSHKTables() {
-        return showSHKTables;
-    }
+   // public JButton getShowSHKTables() {
+    //    return showSHKTables;
+   // }
 
     public JPanel getCenterpanel() {
         return centerpanel;
@@ -279,7 +279,7 @@ public class SideMenuPanelTables extends JPanel {
         arrowButtonWest.addActionListener(l);
         showE13Tables.addActionListener(l);
         showE14Tables.addActionListener(l);
-        showSHKTables.addActionListener(l);
+       // showSHKTables.addActionListener(l);
     }
     public void setItemListener(ItemListener l){
         payRatesToogleButton.addItemListener(l);

@@ -64,7 +64,7 @@ public class CustomTableColumnAdjuster {
 
         Component c = renderer.getTableCellRendererComponent(table, value,
                 false, false, -1, column);
-        return c.getPreferredSize().width;
+        return c.getPreferredSize().width+10;
     }
 
     // Calculates the width based on the widest cell renderer for the given
@@ -76,7 +76,7 @@ public class CustomTableColumnAdjuster {
             preferredWidth = Math.max(preferredWidth,
                     getCellDataWidth(row, column));
 
-        return preferredWidth;
+        return preferredWidth+10;
     }
 
     // Gets the preferred width for the specified cell

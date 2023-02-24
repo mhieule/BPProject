@@ -21,6 +21,7 @@ public class ShowPayRateTableController implements ActionListener {
 
     private SalaryTableManager manager;
 
+    private PayRateTablesController payRateTablesController;
     private String tableTitle, paygrade;
 
     private final String[] columns13WithAAndB = {
@@ -40,8 +41,9 @@ public class ShowPayRateTableController implements ActionListener {
             "E14 St. 4 VBL-befreit", "E14 St. 4 VBL-pflichtig", "E14 St. 5 VBL-befreit", "E14 St. 5 VBL-pflichtig", "E14 St. 6 VBL-befreit", "E14 St. 6 VBL-pflichtig"
     };
 
-    public ShowPayRateTableController(MainFrameController mainFrameController, SalaryTableManager salaryManager, String tableName, String actualPaygrade) {
+    public ShowPayRateTableController(MainFrameController mainFrameController, SalaryTableManager salaryManager, String tableName, String actualPaygrade,PayRateTablesController payRateTablesController) {
         frameController = mainFrameController;
+        this.payRateTablesController = payRateTablesController;
         manager = salaryManager;
         showPayRateTableView = new ShowPayRateTableView();
         PayRateTableNameStringEditor editor = new PayRateTableNameStringEditor();
@@ -52,14 +54,12 @@ public class ShowPayRateTableController implements ActionListener {
         showPayRateTableView(frameController);
     }
 
+
     public void showPayRateTableView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(tableTitle) == -1) {
-            //SideMenuPanelActionLogView.model.addElement("Einträge anzeigen");
             mainFrameController.addTab(tableTitle, showPayRateTableView);
-            //mainFrameController.setChangeListener(this);
         } else {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(tableTitle));
-            //SideMenuPanelActionLogView.model.addElement("Einträge anzeigen");
         }
     }
 
@@ -157,6 +157,8 @@ public class ShowPayRateTableController implements ActionListener {
     private void saveEditedValues(){
         double[][] values = prepareDatabaseInsertion();
         List<SalaryTable> salaryTables = manager.getSalaryTable(tableTitle);
+        manager.removeSalaryTable(tableTitle);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         int column = 0;
         for (SalaryTable salaryTable : salaryTables) {
             salaryTable.setGrundendgeld(values[0][column]);
@@ -174,13 +176,14 @@ public class ShowPayRateTableController implements ActionListener {
             salaryTable.setJsz_als_monatliche_zulage(values[12][column]);
             salaryTable.setMtl_kosten_mit_jsz(values[13][column]);
             salaryTable.setJaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung(values[14][column]);
+            String tableName = showPayRateTableView.getTfNameOfTable().getText() + "_" +showPayRateTableView.getDatePicker().getDate().format(dateTimeFormatter);
+            salaryTable.setTable_name(tableName);
+            manager.addSalaryTable(salaryTable);
             if (column < showPayRateTableView.getTable().getColumnCount() - 1) {
                 column++;
             } else {
-                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-                String tableName = showPayRateTableView.getTfNameOfTable().getText() + "_" +showPayRateTableView.getDatePicker().getDate().format(dateTimeFormatter);
-                salaryTable.setTable_name(tableName);
-                System.out.println(salaryTable.getTable_name());
+
+
 
                 break;
             }
@@ -206,6 +209,7 @@ public class ShowPayRateTableController implements ActionListener {
             SalaryTable salaryTable = new SalaryTable(tableName,grundentgelt,av_ag_anteil_lfd_entgelt,kv_ag_anteil_lfd_entgelt,zusbei_af_lfd_entgelt,pv_ag_anteil_lfd_entgelt,rv_ag_anteil_lfd_entgelt,sv_umlage_u2,steuern_ag,zv_Sanierungsbeitrag,zv_umlage_allgemein,vbl_wiss_4perc_ag_buchung,mtl_kosten_ohne_jsz,jsz_als_monatliche_zulage,mtl_kosten_mit_jsz,jaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung,grade);
             manager.addSalaryTable(salaryTable);*/
         }
+
     }
 
     private boolean hasAAndB() {
@@ -221,6 +225,7 @@ public class ShowPayRateTableController implements ActionListener {
         } else if (e.getSource() == showPayRateTableView.getSaveAndExit()) {
             saveEditedValues();
             frameController.getTabs().removeTabNewWindow(showPayRateTableView);
+            payRateTablesController.updateview();
         }
 
     }

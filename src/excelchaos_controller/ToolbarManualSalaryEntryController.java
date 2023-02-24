@@ -25,6 +25,12 @@ public class ToolbarManualSalaryEntryController implements ActionListener {
         }
     }
 
+    public void update(){
+        toolbar = new ToolbarManualSalaryEntryView();
+        toolbar.init();
+        toolbar.setActionListener(this);
+    }
+
     public ToolbarManualSalaryEntryView getToolbar() {
         return toolbar;
     }

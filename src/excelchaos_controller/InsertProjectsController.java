@@ -75,7 +75,7 @@ public class InsertProjectsController implements ActionListener {
             LocalDate endLocalDate = insertProjectsView.getTfDuration().getDate();
             Project project = null;
             if(name == null || name.equals("") || approval == null || startDate == null|| endLocalDate == null){
-                JOptionPane.showConfirmDialog(null,"Bitte füllen Sie die Spalten \"Projektname\", \"Bewilligungsdatum\", \"Startdatum\" und \"Enddatum\" aus.","Spalten nicht vollständig ausgefüllt",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showConfirmDialog(null,"Bitte füllen Sie die Felder \"Projektname\", \"Bewilligungsdatum\", \"Startdatum\" und \"Enddatum\" aus.","Spalten nicht vollständig ausgefüllt",JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE);
            } else {
                 Date dateOfApproval = Date.from(approval.atStartOfDay(ZoneId.systemDefault()).toInstant());
                 Date dateOfStart = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
