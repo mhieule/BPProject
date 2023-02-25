@@ -1,6 +1,9 @@
 package excelchaos_model.utility;
 
+import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.Formatter;
+import java.util.Locale;
 
 public class StringAndDoubleTransformationForDatabase {
 
@@ -22,16 +25,15 @@ public class StringAndDoubleTransformationForDatabase {
     public String formatDoubleToString(double valueToFormat,int column) {
         String result;
         Formatter formatter = new Formatter();
+        NumberFormat euroTransformer = NumberFormat.getCurrencyInstance();
+        euroTransformer.setCurrency(Currency.getInstance(Locale.GERMANY));
         if (column == 0) {
             formatter.format("%.3f", valueToFormat);
             result = formatter.toString();
             result = result.replaceAll("\\.", ",");
             result = result.concat("%");
         } else {
-            formatter.format("%.2f", valueToFormat);
-            result = formatter.toString();
-            result = result.replaceAll("\\.", ",");
-            result = result.concat(" €");
+            result = euroTransformer.format(valueToFormat);
 
         }
         return result;
