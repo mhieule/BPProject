@@ -20,10 +20,10 @@ public class SalaryCalculation {
     private ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
 
 
-
     public SalaryCalculation() {
 
     }
+
     //TODO Großflächig Testen insbesondere If Verzweigungen.
     public void determineCurrentSalary() {
         double result = 0;
@@ -105,7 +105,7 @@ public class SalaryCalculation {
     }
 
 
-    public double determineSalaryOfGivenMonth(int employeeId, Date givenDate){
+    public double determineSalaryOfGivenMonth(int employeeId, Date givenDate) {
         double result = 0;
         CalculateSalaryBasedOnPayRateTable calculateSalaryBasedOnPayRateTable = new CalculateSalaryBasedOnPayRateTable();
         Contract contract = contractDataManager.getContract(employeeId);
@@ -113,7 +113,8 @@ public class SalaryCalculation {
         LocalDate currentSalaryIncreaseDate = getLastCurrentSalaryIncreaseDate(employeeId, givenDate);
         LocalDate lastPayLevelIncreaseDate = getLastCurrentPayLevelIncreaseDate(contract.getStart_date(), givenDate);
         AutomaticPayLevelIncrease payLevelIncrease = new AutomaticPayLevelIncrease();
-        contract = payLevelIncrease.performPayLevelIncreaseBasedOnGivenDate(givenDate,contract);
+        contract = payLevelIncrease.performPayLevelIncreaseBasedOnGivenDate(givenDate, contract);
+        LocalDate chosenLocalDate = givenDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         if (currentManualSalaryDate == null && currentSalaryIncreaseDate == null && lastPayLevelIncreaseDate == null) {
             return result;
         }
@@ -122,7 +123,7 @@ public class SalaryCalculation {
             return result;
         }
         if (currentManualSalaryDate == null && currentSalaryIncreaseDate == null && lastPayLevelIncreaseDate != null) {
-            result = calculateSalaryBasedOnPayRateTable.getPayRateTableEntryForWiMiAndATMBasedOnChoosenDate(contract,lastPayLevelIncreaseDate)[0];
+            result = calculateSalaryBasedOnPayRateTable.getPayRateTableEntryForWiMiAndATMBasedOnChoosenDate(contract, chosenLocalDate)[0];
             return result;
         }
         if (currentManualSalaryDate != null && currentSalaryIncreaseDate != null && lastPayLevelIncreaseDate == null) {
@@ -135,7 +136,7 @@ public class SalaryCalculation {
         }
         if (currentManualSalaryDate != null && currentSalaryIncreaseDate == null && lastPayLevelIncreaseDate != null) {
             if (lastPayLevelIncreaseDate.compareTo(currentManualSalaryDate) > 0) {
-                result = calculateSalaryBasedOnPayRateTable.getPayRateTableEntryForWiMiAndATMBasedOnChoosenDate(contract,lastPayLevelIncreaseDate)[0];
+                result = calculateSalaryBasedOnPayRateTable.getPayRateTableEntryForWiMiAndATMBasedOnChoosenDate(contract, chosenLocalDate)[0];
             } else {
                 result = getLastCurrentManualInsertedSalary(employeeId, givenDate);
             }
@@ -145,7 +146,7 @@ public class SalaryCalculation {
             if (currentSalaryIncreaseDate.compareTo(lastPayLevelIncreaseDate) > 0) {
                 result = getLastCurrentSalaryIncrease(employeeId, givenDate);
             } else {
-                result = calculateSalaryBasedOnPayRateTable.getPayRateTableEntryForWiMiAndATMBasedOnChoosenDate(contract,lastPayLevelIncreaseDate)[0];
+                result = calculateSalaryBasedOnPayRateTable.getPayRateTableEntryForWiMiAndATMBasedOnChoosenDate(contract, chosenLocalDate)[0];
             }
             return result;
         }
@@ -154,7 +155,7 @@ public class SalaryCalculation {
                 result = getLastCurrentSalaryIncrease(employeeId, givenDate);
                 return result;
             } else if (lastPayLevelIncreaseDate.compareTo(currentManualSalaryDate) > 0) {
-                result = calculateSalaryBasedOnPayRateTable.getPayRateTableEntryForWiMiAndATMBasedOnChoosenDate(contract,lastPayLevelIncreaseDate)[0];
+                result = calculateSalaryBasedOnPayRateTable.getPayRateTableEntryForWiMiAndATMBasedOnChoosenDate(contract, chosenLocalDate)[0];
                 return result;
             } else {
                 result = getLastCurrentManualInsertedSalary(employeeId, givenDate);
@@ -177,7 +178,7 @@ public class SalaryCalculation {
                 }
             }
         }
-        if(temporaryDate != null){
+        if (temporaryDate != null) {
             lastManualInsertedSalaryDate = temporaryDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         } else lastManualInsertedSalaryDate = null;
 
@@ -213,7 +214,7 @@ public class SalaryCalculation {
                 }
             }
         }
-        if(temporaryDate != null){
+        if (temporaryDate != null) {
             lastSalaryIncreaseDate = temporaryDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         } else lastSalaryIncreaseDate = null;
 
@@ -240,7 +241,7 @@ public class SalaryCalculation {
     }
 
     private LocalDate getLastCurrentPayLevelIncreaseDate(Date workingStartDate, Date currentDate) {
-        if(ProjectedSalaryModel.getLastPayLevelIncreaseDate(workingStartDate, currentDate).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()== null){
+        if (ProjectedSalaryModel.getLastPayLevelIncreaseDate(workingStartDate, currentDate).toInstant().atZone(ZoneId.systemDefault()).toLocalDate() == null) {
             return null;
         } else {
             return ProjectedSalaryModel.getLastPayLevelIncreaseDate(workingStartDate, currentDate).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();

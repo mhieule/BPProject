@@ -73,6 +73,7 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
                 salaryListController.buildPayLevelTableBasedOnChosenDate(salaryProjection.getSalaryProjectionForGivenDate(date));
                 showSalaryStageDialogView.dispose();
                 toolbar.getRemoveAdditionalSalaryStage().setEnabled(true);
+                toolbar.getShowNextPayGrade().setSelected(false);
             } else showSalaryStageDialogView.dispose();
         }
     }

@@ -33,11 +33,11 @@ public class CurrentPayRateTableE14 {
         seperateTableCategories();
     }
 
-    private void seperateTableCategories(){
+    private void seperateTableCategories() {
         int firstIndex = 0;
         int secondIndex = 0;
         for (int index = 0; index < tableNameDateTuple.length; index++) {
-            if(tableNameDateTuple[index].tableName.contains("1A")||tableNameDateTuple[index].tableName.contains("1B")){
+            if (tableNameDateTuple[index].tableName.contains("1A") || tableNameDateTuple[index].tableName.contains("1B")) {
                 payRateTablesWith1AAnd1B[firstIndex] = tableNameDateTuple[index];
                 firstIndex++;
             } else {
@@ -52,7 +52,7 @@ public class CurrentPayRateTableE14 {
         PayRateTableNameDateSeperator seperator = new PayRateTableNameDateSeperator();
         for (int i = 0; i < numberOfTables; i++) {
             tableNameDateTuple[i] = new TableNameDateTuple(tableNames.get(i), seperator.seperateDateAsDate(tableNames.get(i)));
-            if(tableNames.get(i).contains("1A") || tableNames.get(i).contains("1B")){
+            if (tableNames.get(i).contains("1A") || tableNames.get(i).contains("1B")) {
                 numberOfTablesWith1AAnd1B++;
             } else {
                 numberOfTablesWithout1AAnd1B++;
@@ -71,11 +71,11 @@ public class CurrentPayRateTableE14 {
     }
 
     public List<SalaryTable> getPayRateTableBasedOnChosenDateWith1AAnd1BTable(LocalDate date) {
-        return salaryTableManager.getSalaryTable(determinePayRateTableBasedOnChosenDate(date,payRateTablesWith1AAnd1B).tableName);
+        return salaryTableManager.getSalaryTable(determinePayRateTableBasedOnChosenDate(date, payRateTablesWith1AAnd1B).tableName);
     }
 
     public List<SalaryTable> getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(LocalDate date) {
-        return salaryTableManager.getSalaryTable(determinePayRateTableBasedOnChosenDate(date,payRateTablesWithout1AAnd1B).tableName);
+        return salaryTableManager.getSalaryTable(determinePayRateTableBasedOnChosenDate(date, payRateTablesWithout1AAnd1B).tableName);
     }
 
     private TableNameDateTuple determinePayRateTableBasedOnCurrentDate(TableNameDateTuple[] givenTableNamesAndDates) {
@@ -104,7 +104,7 @@ public class CurrentPayRateTableE14 {
         return givenTableNamesAndDates[resultindex];
     }
 
-    private TableNameDateTuple determinePayRateTableBasedOnChosenDate(LocalDate chosenDate , TableNameDateTuple[] givenTableNamesAndDates) {
+    private TableNameDateTuple determinePayRateTableBasedOnChosenDate(LocalDate chosenDate, TableNameDateTuple[] givenTableNamesAndDates) {
         LocalDate currentDate = chosenDate;
         LocalDate lastCheckedDate = null;
         int resultindex = 0;

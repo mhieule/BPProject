@@ -264,29 +264,29 @@ public class CalculateSalaryBasedOnPayRateTable {
     //TODO Großflächig testen
     public double[] getPayRateTableEntryForWiMiAndATMBasedOnChoosenDate(Contract contract, LocalDate choosenDate) {
         double[] result = new double[2];
-        CurrentPayRateTableE13 currentPayRateTableE13 = new CurrentPayRateTableE13();
-        CurrentPayRateTableE14 currentPayRateTableE14 = new CurrentPayRateTableE14();
+        CurrentPayRateTableE13 choosenDatePayRateTableE13 = new CurrentPayRateTableE13();
+        CurrentPayRateTableE14 choosenDatePayRateTableE14 = new CurrentPayRateTableE14();
 
 
         if (contract.getPaygrade().equals("E13")) {
             List<SalaryTable> E13SalaryTableWith1AAnd1B = null;
             List<SalaryTable> E13SalaryTableWithout1AAnd1B = null;
 
-            if (currentPayRateTableE13.getCurrentPayRateWith1AAnd1BTable() == null && currentPayRateTableE13.getCurrentPayRateWithout1AAnd1BTable() == null) {
+            if (choosenDatePayRateTableE13.getPayRateTableBasedOnChosenDateWith1AAnd1BTable(choosenDate) == null && choosenDatePayRateTableE13.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(choosenDate) == null) {
                 result[0] = 0;
                 result[1] = 0;
                 return result;
             }
-            if (currentPayRateTableE13.getCurrentPayRateWith1AAnd1BTable() != null) {
-                E13SalaryTableWith1AAnd1B = currentPayRateTableE13.getPayRateTableBasedOnChosenDateWith1AAnd1BTable(choosenDate);
+            if (choosenDatePayRateTableE13.getPayRateTableBasedOnChosenDateWith1AAnd1BTable(choosenDate) != null) {
+                E13SalaryTableWith1AAnd1B = choosenDatePayRateTableE13.getPayRateTableBasedOnChosenDateWith1AAnd1BTable(choosenDate);
             } else {
                 if (!contract.getPaylevel().equals("1")) {
                     result[0] = 0;
                     result[1] = 0;
                     return result;
                 } else {
-                    if (currentPayRateTableE13.getCurrentPayRateWithout1AAnd1BTable() != null) {
-                        E13SalaryTableWithout1AAnd1B = currentPayRateTableE13.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(choosenDate);
+                    if (choosenDatePayRateTableE13.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(choosenDate) != null) {
+                        E13SalaryTableWithout1AAnd1B = choosenDatePayRateTableE13.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(choosenDate);
                         if (contract.getVbl_status()) {
                             result[0] = E13SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz();
                             result[1] = E13SalaryTableWith1AAnd1B.get(2).getJsz_als_monatliche_zulage();
@@ -301,8 +301,8 @@ public class CalculateSalaryBasedOnPayRateTable {
                     }
                 }
             }
-            if (currentPayRateTableE13.getCurrentPayRateWithout1AAnd1BTable() != null) {
-                E13SalaryTableWithout1AAnd1B = currentPayRateTableE13.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(choosenDate);
+            if (choosenDatePayRateTableE13.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(choosenDate) != null) {
+                E13SalaryTableWithout1AAnd1B = choosenDatePayRateTableE13.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(choosenDate);
             } else {
                 if (contract.getPaylevel().equals("1")) {
                     result[0] = 0;
@@ -389,21 +389,21 @@ public class CalculateSalaryBasedOnPayRateTable {
             List<SalaryTable> E14SalaryTableWith1AAnd1B = null;
             List<SalaryTable> E14SalaryTableWithout1AAnd1B = null;
 
-            if (currentPayRateTableE14.getCurrentPayRateWith1AAnd1BTable() == null && currentPayRateTableE14.getCurrentPayRateWithout1AAnd1BTable() == null) {
+            if (choosenDatePayRateTableE14.getCurrentPayRateWith1AAnd1BTable() == null && choosenDatePayRateTableE14.getCurrentPayRateWithout1AAnd1BTable() == null) {
                 result[0] = 0;
                 result[1] = 0;
                 return result;
             }
-            if (currentPayRateTableE14.getCurrentPayRateWith1AAnd1BTable() != null) {
-                E14SalaryTableWith1AAnd1B = currentPayRateTableE14.getPayRateTableBasedOnChosenDateWith1AAnd1BTable(choosenDate);
+            if (choosenDatePayRateTableE14.getCurrentPayRateWith1AAnd1BTable() != null) {
+                E14SalaryTableWith1AAnd1B = choosenDatePayRateTableE14.getPayRateTableBasedOnChosenDateWith1AAnd1BTable(choosenDate);
             } else {
                 if (!contract.getPaylevel().equals("1")) {
                     result[0] = 0;
                     result[1] = 0;
                     return result;
                 } else {
-                    if (currentPayRateTableE14.getCurrentPayRateWithout1AAnd1BTable() != null) {
-                        E14SalaryTableWithout1AAnd1B = currentPayRateTableE14.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(choosenDate);
+                    if (choosenDatePayRateTableE14.getCurrentPayRateWithout1AAnd1BTable() != null) {
+                        E14SalaryTableWithout1AAnd1B = choosenDatePayRateTableE14.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(choosenDate);
                         if (contract.getVbl_status()) {
                             result[0] = E14SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz();
                             result[1] = E14SalaryTableWith1AAnd1B.get(2).getJsz_als_monatliche_zulage();
@@ -418,8 +418,8 @@ public class CalculateSalaryBasedOnPayRateTable {
                     }
                 }
             }
-            if (currentPayRateTableE14.getCurrentPayRateWithout1AAnd1BTable() != null) {
-                E14SalaryTableWithout1AAnd1B = currentPayRateTableE14.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(choosenDate);
+            if (choosenDatePayRateTableE14.getCurrentPayRateWithout1AAnd1BTable() != null) {
+                E14SalaryTableWithout1AAnd1B = choosenDatePayRateTableE14.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(choosenDate);
             } else {
                 if (contract.getPaylevel().equals("1")) {
                     result[0] = 0;

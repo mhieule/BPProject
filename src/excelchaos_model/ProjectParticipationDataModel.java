@@ -30,7 +30,7 @@ public class ProjectParticipationDataModel {
         }
     }
 
-    public ProjectParticipationDataModel(){
+    public ProjectParticipationDataModel() {
         projectManager = new ProjectManager();
         participationManager = new ProjectParticipationManager();
         employeeDataManager = new EmployeeDataManager();
@@ -74,7 +74,7 @@ public class ProjectParticipationDataModel {
             arrayLength++;
             beginCalendarArrayLength.add(Calendar.MONTH, 1);
         }
-        arrayLength +=1;
+        arrayLength += 1;
         months = new String[arrayLength];
         months[0] = "Namen";
         int index = 1;
@@ -153,7 +153,8 @@ public class ProjectParticipationDataModel {
 
         return personIds;
     }
-    public String[][] getTableData(int projectId, int numOfRows, String[] months,String[] employeeNames) throws ParseException {
+
+    public String[][] getTableData(int projectId, int numOfRows, String[] months, String[] employeeNames) throws ParseException {
         String[][] tableData = new String[numOfRows * 2][months.length];
         DateFormat format = new SimpleDateFormat("MMMM-yyyy");
         int[] personIdsForProject = getPersonIdsForProject(projectId);
@@ -163,23 +164,23 @@ public class ProjectParticipationDataModel {
             projectParticipationsList = participationManager.getProjectParticipationByProjectIDandPersonID(projectId, personIdsForProject[row / 2]);
             projectParticipationsList.sort(new ParticipationSortByDate());
             for (int column = 0; column < months.length; column++) {
-                if(column == 0){
-                    tableData[row][column] = employeeNames[row/2];
+                if (column == 0) {
+                    tableData[row][column] = employeeNames[row / 2];
                     continue;
                 }
                 if ((row % 2) == 0) {
-                    if(column < projectParticipationsList.size()){
-                        tableData[row][column] = transformer.formatPercentageToStringForScope(projectParticipationsList.get(column-1).getScope());
+                    if (column < projectParticipationsList.size()) {
+                        tableData[row][column] = transformer.formatPercentageToStringForScope(projectParticipationsList.get(column - 1).getScope());
                         lastCorrectGivenValue = column;
                     } else {
                         tableData[row][column] = transformer.formatPercentageToStringForScope(projectParticipationsList.get(lastCorrectGivenValue).getScope());
                     }
 
                 } else {
-                    if(column < projectParticipationsList.size()){
-                        tableData[row][column] = transformer.formatDoubleToString(salaryCalculationModel.determineSalaryOfGivenMonth(personIdsForProject[row / 2], format.parse(months[column]))*projectParticipationsList.get(column-1).getScope(), 1);
+                    if (column < projectParticipationsList.size()) {
+                        tableData[row][column] = transformer.formatDoubleToString(salaryCalculationModel.determineSalaryOfGivenMonth(personIdsForProject[row / 2], format.parse(months[column])) * projectParticipationsList.get(column - 1).getScope(), 1);
                     } else {
-                        tableData[row][column] = transformer.formatDoubleToString(salaryCalculationModel.determineSalaryOfGivenMonth(personIdsForProject[row / 2], format.parse(months[column]))*projectParticipationsList.get(lastCorrectGivenValue).getScope(), 1);
+                        tableData[row][column] = transformer.formatDoubleToString(salaryCalculationModel.determineSalaryOfGivenMonth(personIdsForProject[row / 2], format.parse(months[column])) * projectParticipationsList.get(lastCorrectGivenValue).getScope(), 1);
 
                     }
                 }
@@ -202,22 +203,22 @@ public class ProjectParticipationDataModel {
             projectParticipationsList = participationManager.getProjectParticipationByProjectIDandPersonID(projectId, personIdsForProject[row / 2]);
             projectParticipationsList.sort(new ParticipationSortByDate());
             for (int column = 0; column < months.length; column++) {
-                if(column == 0){
+                if (column == 0) {
                     continue;
                 }
                 if ((row % 2) == 0) {
-                    if(column < projectParticipationsList.size()){
-                        sumPersonenMonate[column] += projectParticipationsList.get(column-1).getScope();
+                    if (column < projectParticipationsList.size()) {
+                        sumPersonenMonate[column] += projectParticipationsList.get(column - 1).getScope();
                         lastCorrectGivenValue = column;
                     } else {
                         sumPersonenMonate[column] += projectParticipationsList.get(lastCorrectGivenValue).getScope();
                     }
 
                 } else {
-                    if(column < projectParticipationsList.size()){
-                        monthlyProjectPersonalCost[column] += salaryCalculationModel.determineSalaryOfGivenMonth(personIdsForProject[row / 2], format.parse(months[column]))*projectParticipationsList.get(column-1).getScope();
+                    if (column < projectParticipationsList.size()) {
+                        monthlyProjectPersonalCost[column] += salaryCalculationModel.determineSalaryOfGivenMonth(personIdsForProject[row / 2], format.parse(months[column])) * projectParticipationsList.get(column - 1).getScope();
                     } else {
-                        monthlyProjectPersonalCost[column] += salaryCalculationModel.determineSalaryOfGivenMonth(personIdsForProject[row / 2], format.parse(months[column]))*projectParticipationsList.get(lastCorrectGivenValue).getScope();
+                        monthlyProjectPersonalCost[column] += salaryCalculationModel.determineSalaryOfGivenMonth(personIdsForProject[row / 2], format.parse(months[column])) * projectParticipationsList.get(lastCorrectGivenValue).getScope();
 
                     }
                 }
@@ -228,22 +229,22 @@ public class ProjectParticipationDataModel {
             summedData[0][column] = transformer.formatPercentageToStringForScope(sumPersonenMonate[column]);
         }
         for (int column = 0; column < monthlyProjectPersonalCost.length; column++) {
-            summedData[1][column] = transformer.formatDoubleToString(monthlyProjectPersonalCost[column],1);
+            summedData[1][column] = transformer.formatDoubleToString(monthlyProjectPersonalCost[column], 1);
         }
 
 
         return summedData;
     }
 
-    public String getTotalProjectPersonalCost(){
+    public String getTotalProjectPersonalCost() {
         String totalCost;
         double totalCostNumber = 0;
         for (int i = 0; i < monthlyProjectPersonalCost.length; i++) {
             totalCostNumber += monthlyProjectPersonalCost[i];
         }
-        totalCost = transformer.formatDoubleToString(totalCostNumber,1);
+        totalCost = transformer.formatDoubleToString(totalCostNumber, 1);
         return totalCost;
     }
 
 
-    }
+}

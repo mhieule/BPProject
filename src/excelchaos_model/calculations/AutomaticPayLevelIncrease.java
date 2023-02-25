@@ -49,8 +49,8 @@ public class AutomaticPayLevelIncrease {
 
     }
 
-    public Contract performPayLevelIncreaseBasedOnGivenDate(Date givenDate, Contract contract){
-        contract.setPaylevel(ProjectedSalaryModel.calculatePayLevelBasedOnDate(contract.getStart_date(),contract.getPaylevel(),givenDate));
+    public Contract performPayLevelIncreaseBasedOnGivenDate(Date givenDate, Contract contract) {
+        contract.setPaylevel(ProjectedSalaryModel.calculatePayLevelBasedOnDate(contract.getStart_date(), contract.getPaylevel(), givenDate));
         return contract;
     }
 
