@@ -309,7 +309,7 @@ public class InsertProjectsController implements ActionListener {
                         if (categoryData[i][0] != null) {
                             int categoryId = Integer.parseInt(categoryData[i][0]);
                             String categoryName = categoryData[i][2];
-                            double approvedFunds = transformer.transformStringToDouble(categoryData[i][3]);
+                            double approvedFunds = transformer.formatStringToDouble(categoryData[i][3]);
                             ProjectCategory update = projectCategoryManager.getProject(categoryId);
                             update.setApproved_funds(approvedFunds);
                             update.setCategory_name(categoryName);
@@ -317,7 +317,7 @@ public class InsertProjectsController implements ActionListener {
                         } else {
                             if (categoryData[i][2] != null && categoryData[i][3] != null) {
                                 String categoryName = categoryData[i][2];
-                                double approvedFunds = transformer.transformStringToDouble(categoryData[i][3]);
+                                double approvedFunds = transformer.formatStringToDouble(categoryData[i][3]);
                                 ProjectCategory projectCategory = new ProjectCategory(currentlyEditingProjectId, projectCategoryManager.getNextID(), categoryName, approvedFunds);
                                 projectCategoryManager.addProjectCategory(projectCategory);
                             }
@@ -436,7 +436,7 @@ public class InsertProjectsController implements ActionListener {
         StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
         for (int row = 0; row < tableValues.length; row++) {
             if (tableValues[row][0] != null && tableValues[row][1] != null) {
-                projectCategory = new ProjectCategory(projectId, projectCategoryManager.getNextID(), tableValues[row][0], transformer.transformStringToDouble(tableValues[row][1]));
+                projectCategory = new ProjectCategory(projectId, projectCategoryManager.getNextID(), tableValues[row][0], transformer.formatStringToDouble(tableValues[row][1]));
                 projectCategoryManager.addProjectCategory(projectCategory);
             }
 

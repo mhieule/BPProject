@@ -175,7 +175,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
                     result[row][column] = 0;
                 } else {
                     System.out.println(insertPayRateTableView.getTable().getValueAt(row, column) + "Tabellenwerte");
-                    result[row][column] = converter.transformStringToDouble((String) insertPayRateTableView.getTable().getValueAt(row, column));
+                    result[row][column] = converter.formatStringToDouble((String) insertPayRateTableView.getTable().getValueAt(row, column));
                 }
             }
         }

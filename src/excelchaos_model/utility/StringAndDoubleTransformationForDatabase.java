@@ -1,23 +1,28 @@
 package excelchaos_model.utility;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Currency;
 import java.util.Formatter;
 import java.util.Locale;
 
 public class StringAndDoubleTransformationForDatabase {
 
-    public double transformStringToDouble(String tableValue) {
+    public double formatStringToDouble(String tableValue) {
         String value = tableValue;
+        NumberFormat euroTransformer = NumberFormat.getCurrencyInstance();
+        euroTransformer.setCurrency(Currency.getInstance(Locale.GERMANY));
         double result;
         if (tableValue.contains("%")) {
             value = value.replaceAll("%", "");
         } else {
-            value = value.replaceAll("€","");
-            value = value.replaceAll(" ","");
-            value = value.replaceAll("\\.","");
+            try {
+             result = euroTransformer.parse(tableValue).doubleValue();
+             return result;
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         }
-        value = value.replaceAll(",",".");
         result = Double.parseDouble(value);
         return result;
     }

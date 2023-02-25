@@ -48,7 +48,7 @@ public class InsertProjectsView extends JPanel {
 
         funderColumnWithID = new String[]{"FunderID", "ProjektID", "Name des Projektträgers", "Förderkennzeichen", "Projektnummer der TU Darmstadt"};
 
-        participationColumnsWithID = new String[]{"ProjektID", "Name", "Beschäftigungsumfang", "Datum"};
+        participationColumnsWithID = new String[]{"ProjektID", "Name", "Beschäftigungsumfang", "Arbeitsmonat"};
 
         textFieldConstraints = new GridBagConstraints();
 
@@ -293,7 +293,7 @@ public class InsertProjectsView extends JPanel {
 
         participationLabel = new JLabel("Mitarbeiter");
         participationLabel.setFont(new Font("Dialog", Font.BOLD, 18));
-        participationColumns = new String[]{"Name", "Beschäftigungsumfang", "Datum"};
+        participationColumns = new String[]{"Name", "Beschäftigungsumfang", "Arbeitsmonat"};
         DefaultTableModel participationModel = new DefaultTableModel(null, participationColumns);
         participationModel.setRowCount(10);
         projectParticipationTable = new JTable(participationModel);

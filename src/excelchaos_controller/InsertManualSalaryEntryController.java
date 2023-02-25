@@ -11,7 +11,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 
 public class InsertManualSalaryEntryController implements ActionListener {
@@ -68,7 +67,7 @@ public class InsertManualSalaryEntryController implements ActionListener {
         StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
         Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) insertManualSalaryEntryView.getNamePickList().getSelectedItem());
         int id = temporaryEmployee.getId();
-        double newSalary =  transformer.transformStringToDouble(insertManualSalaryEntryView.getTfNewSalary().getText());
+        double newSalary =  transformer.formatStringToDouble(insertManualSalaryEntryView.getTfNewSalary().getText());
         LocalDate date  = insertManualSalaryEntryView.getDatePicker().getDate();
         Date usageDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
         String comment = insertManualSalaryEntryView.getTfComment().getText();

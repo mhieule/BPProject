@@ -147,7 +147,7 @@ public class ShowPayRateTableController implements ActionListener {
                 if(showPayRateTableView.getTable().getValueAt(row,column) == null){
                     values[row][column] = 0;
                 } else {
-                    values[row][column] = transformer.transformStringToDouble((String) showPayRateTableView.getTable().getValueAt(row,column));
+                    values[row][column] = transformer.formatStringToDouble((String) showPayRateTableView.getTable().getValueAt(row,column));
                 }
             }
         }

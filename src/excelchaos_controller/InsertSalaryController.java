@@ -3,7 +3,6 @@ package excelchaos_controller;
 import excelchaos_model.*;
 import excelchaos_model.calculations.CalculateSalaryBasedOnPayRateTable;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
-import excelchaos_view.InsertPersonView;
 import excelchaos_view.InsertSalaryView;
 
 import javax.swing.*;
@@ -106,10 +105,10 @@ public class InsertSalaryController implements ActionListener, ItemListener {
                 vbl = false;
             }
             if(!insertSalaryView.getTfGehalt().getText().equals("")){
-                gehalt = stringAndDoubleTransformationForDatabase.transformStringToDouble(insertSalaryView.getTfGehalt().getText());
+                gehalt = stringAndDoubleTransformationForDatabase.formatStringToDouble(insertSalaryView.getTfGehalt().getText());
             }
             if(!insertSalaryView.getTfSonderzahlung().getText().equals("")){
-                sonderzahlung = stringAndDoubleTransformationForDatabase.transformStringToDouble(insertSalaryView.getTfSonderzahlung().getText());
+                sonderzahlung = stringAndDoubleTransformationForDatabase.formatStringToDouble(insertSalaryView.getTfSonderzahlung().getText());
             }
 
             if (paygrade.equals("Nicht ausgewählt") || paylevel.equals("Nicht ausgewählt") || vblState.equals("Nicht ausgewählt")) {
