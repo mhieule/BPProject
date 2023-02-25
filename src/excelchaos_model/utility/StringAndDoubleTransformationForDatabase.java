@@ -17,8 +17,11 @@ public class StringAndDoubleTransformationForDatabase {
             value = value.replaceAll("%", "");
         } else {
             try {
-             result = euroTransformer.parse(tableValue).doubleValue();
-             return result;
+                Locale locale = Locale.GERMANY;
+                tableValue = tableValue.replace("€", "");
+                NumberFormat numberFormat = NumberFormat.getInstance(locale);
+                result = numberFormat.parse(tableValue).doubleValue();
+                return result;
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
@@ -27,7 +30,7 @@ public class StringAndDoubleTransformationForDatabase {
         return result;
     }
 
-    public String formatDoubleToString(double valueToFormat,int column) {
+    public String formatDoubleToString(double valueToFormat, int column) {
         String result;
         Formatter formatter = new Formatter();
         NumberFormat euroTransformer = NumberFormat.getCurrencyInstance();
@@ -44,19 +47,19 @@ public class StringAndDoubleTransformationForDatabase {
         return result;
     }
 
-    public double formatStringToPercentageValueForScope(String valueToFormat){
+    public double formatStringToPercentageValueForScope(String valueToFormat) {
         double result;
-        valueToFormat = valueToFormat.replaceAll("%","");
+        valueToFormat = valueToFormat.replaceAll("%", "");
         result = Double.parseDouble(valueToFormat);
-        result = result/100;
+        result = result / 100;
         return result;
     }
 
-    public String formatPercentageToStringForScope(double valueToFormat){
+    public String formatPercentageToStringForScope(double valueToFormat) {
         String result;
-        valueToFormat = valueToFormat*100;
+        valueToFormat = valueToFormat * 100;
         Formatter formatter = new Formatter();
-        formatter.format("%.0f",valueToFormat);
+        formatter.format("%.0f", valueToFormat);
         result = formatter.toString();
         result = result.concat("%");
 

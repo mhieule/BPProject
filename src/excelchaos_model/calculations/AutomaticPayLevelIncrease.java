@@ -31,7 +31,6 @@ public class AutomaticPayLevelIncrease {
     //TODO Großflächig testen
     public void performPayLevelIncrease() {
         Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         int i = 0;
         for (Employee employee : employeeList) {
             if (contractDataManager.getContract(employee.getId()) == null) {

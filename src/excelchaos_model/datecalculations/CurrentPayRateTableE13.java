@@ -128,4 +128,13 @@ public class CurrentPayRateTableE13 {
     }
 
 
+    public LocalDate getActivePayRateTableDateWithAAndB(LocalDate chosenDate) {
+        return determinePayRateTableBasedOnChosenDate(chosenDate, payRateTablesWith1AAnd1B).date;
+    }
+
+    public LocalDate getActivePayRateTableDateWithoutAAndB(LocalDate chosenDate) {
+        return determinePayRateTableBasedOnChosenDate(chosenDate, payRateTablesWithout1AAnd1B).date;
+    }
+
+
 }

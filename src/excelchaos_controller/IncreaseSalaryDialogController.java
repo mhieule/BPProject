@@ -1,10 +1,12 @@
 package excelchaos_controller;
 
 import excelchaos_model.*;
+import excelchaos_model.calculations.SalaryCalculation;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.IncreaseSalaryDialogView;
 import excelchaos_view.SalaryListView;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -20,6 +22,7 @@ public class IncreaseSalaryDialogController implements ActionListener {
     private String employeeName;
     private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
 
+    private SalaryCalculation salaryCalculation = new SalaryCalculation();
 
 
     public IncreaseSalaryDialogController(MainFrameController frameController, String name){
@@ -30,6 +33,8 @@ public class IncreaseSalaryDialogController implements ActionListener {
         increaseSalaryDialogView = new IncreaseSalaryDialogView();
         increaseSalaryDialogView.init(employeeName);
         increaseSalaryDialogView.setActionListener(this);
+        increaseSalaryDialogView.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+
     }
     /**
      * Invoked when an action occurs.
@@ -39,7 +44,7 @@ public class IncreaseSalaryDialogController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==increaseSalaryDialogView.getCloseButton()){
-            increaseSalaryDialogView.setVisible(false);
+            increaseSalaryDialogView.dispose();
        /* } else if(e.getSource()==increaseSalaryDialogView.getProjectButton()){
             //instruct the view to add a new column to the current table which contains projected salary after increase
             increaseSalaryDialogView.setProjectionColumnVisible();*/
@@ -101,16 +106,19 @@ public class IncreaseSalaryDialogController implements ActionListener {
 
         //Salary Increase Type (normal or bonus)
         boolean isBonus = (increaseSalaryDialogView.getBonusRadioButton().isSelected())? true:false;
-
+        //Start date transformation
+        LocalDate startLocalDate = increaseSalaryDialogView.getStartDate().getDate();
+        Date startDate = Date.from(startLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         //New salary calculation
+        double projectedSalary = salaryCalculation.determineSalaryOfGivenMonth(employeeID,startDate);
         double finalSalary = 0.0;
         if(option == IncreaseSalaryOption.ABSOLUTE){
-            finalSalary = currentSalary+Double.parseDouble(increaseSalaryDialogView.getTextFieldAbsolute().getText()); //TODO Eingabevalidierung
+            finalSalary = projectedSalary +Double.parseDouble(increaseSalaryDialogView.getTextFieldAbsolute().getText()); //TODO Eingabevalidierung
         } else if(option == IncreaseSalaryOption.RELATIVE){
-            finalSalary = currentSalary+Double.parseDouble(increaseSalaryDialogView.getTextFieldRelative().getText())*currentSalary/100;
+            finalSalary = projectedSalary+Double.parseDouble(increaseSalaryDialogView.getTextFieldRelative().getText())*projectedSalary/100;
         } else {
-            double finalAbsoluteSalary = currentSalary + Double.parseDouble(increaseSalaryDialogView.getMixedAbsolute().getText());
-            double finalRelativeSalary = currentSalary + Double.parseDouble(increaseSalaryDialogView.getMixedRelative().getText()) * currentSalary / 100;
+            double finalAbsoluteSalary = projectedSalary + Double.parseDouble(increaseSalaryDialogView.getMixedAbsolute().getText());
+            double finalRelativeSalary = projectedSalary + Double.parseDouble(increaseSalaryDialogView.getMixedRelative().getText()) * projectedSalary / 100;
             if(option == IncreaseSalaryOption.MIXED_MIN){
                 finalSalary = Math.min(finalAbsoluteSalary, finalRelativeSalary);
             } else if(option == IncreaseSalaryOption.MIXED_MAX){
@@ -118,9 +126,7 @@ public class IncreaseSalaryDialogController implements ActionListener {
             }
         }
 
-        //Start date transformation
-        LocalDate startLocalDate = increaseSalaryDialogView.getStartDate().getDate();
-        Date startDate = Date.from(startLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
 
         //Comment
         String comment = increaseSalaryDialogView.getTextFieldComment().getText();

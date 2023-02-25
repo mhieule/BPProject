@@ -49,6 +49,7 @@ public class SalaryListController implements TableModelListener {
         salaryListView.add(toolbarSalaryList.getToolbar(),BorderLayout.NORTH);
         SearchAndFilterModel.setUpSearchAndFilterModel(salaryListView.getTable(),toolbarSalaryList.getToolbar());
 
+
     }
 
     public void showSalaryView(MainFrameController mainFrameController){

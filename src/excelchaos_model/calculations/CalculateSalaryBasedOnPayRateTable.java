@@ -504,6 +504,23 @@ public class CalculateSalaryBasedOnPayRateTable {
         }
         return result;
     }
+    //TODO Evtl Abfragen hinzufügen, dass dinge nicht null sind
+    public LocalDate getActivePayRateTableDateBasedOnGivenDate(Contract contract, LocalDate choosenDate){
+        CurrentPayRateTableE13 chosenDatePayRateTableE13 = new CurrentPayRateTableE13();
+        CurrentPayRateTableE14 chosenDatePayRateTableE14 = new CurrentPayRateTableE14();
+        switch (contract.getPaygrade()){
+            case "E13":
+                if(contract.getPaylevel().equals("1")){
+                    return  chosenDatePayRateTableE13.getActivePayRateTableDateWithoutAAndB(choosenDate);
+                } else return chosenDatePayRateTableE13.getActivePayRateTableDateWithAAndB(choosenDate);
+            case "E14":
+                if(contract.getPaylevel().equals("1")){
+                    return  chosenDatePayRateTableE14.getActivePayRateTableDateWithoutAAndB(choosenDate);
+                } else return chosenDatePayRateTableE14.getActivePayRateTableDateWithAAndB(choosenDate);
+        }
+        return null;
+
+    }
 
     public double getPayRateTableEntryForSHK(Employee employee, Contract contract) {
         double result = 0;

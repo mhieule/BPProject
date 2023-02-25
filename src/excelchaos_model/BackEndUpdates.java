@@ -13,9 +13,6 @@ public  class  BackEndUpdates {
 
             startUpPayLevelIncrease.performPayLevelIncrease();
             contractSalary.determineCurrentSalary();
-
-
-
     }
 
     public void updateAll(){
