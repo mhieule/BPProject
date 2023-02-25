@@ -21,7 +21,7 @@ public class ToolbarShowProjectsView extends SearchPanelToolbar {
         insertProject = new JButton("Eintrag hinzufügen");
         editProject = new JButton("Eintrag bearbeiten");
         deleteProject = new JButton("Eintrag löschen");
-        costOverview = new JButton("Kostenübersicht");
+        costOverview = new JButton("Projektplanung anzeigen");
 
         add(insertProject);
         add(editProject);

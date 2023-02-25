@@ -14,21 +14,17 @@ public class PayRateTablesView extends JPanel {
     public void init(){
         setLayout(new BorderLayout());
         centerPanel = new JPanel();
-        centerPanel.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.ipadx = 700;
-        constraints.ipady = 500;
+        centerPanel.setLayout(new GridLayout());
 
         payRateTableList = new JList();
         payRateTableList.setCellRenderer(new PayRateTableListCellRenderer());
         payRateTableList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         payRateTableList.setLayoutOrientation(JList.VERTICAL);
-        payRateTableList.setFixedCellHeight(40);
+        payRateTableList.setFixedCellHeight(35);
         PayRateTableListCellRenderer renderer = (PayRateTableListCellRenderer) payRateTableList.getCellRenderer();
-        renderer.setHorizontalAlignment(SwingConstants.CENTER);
-        renderer.setFont(new Font("Arial",Font.PLAIN,30));
+        renderer.setHorizontalAlignment(SwingConstants.LEFT);
         JScrollPane listScroller = new JScrollPane(payRateTableList);
-        centerPanel.add(listScroller,constraints);
+        centerPanel.add(listScroller);
         add(centerPanel,BorderLayout.CENTER);
 
     }

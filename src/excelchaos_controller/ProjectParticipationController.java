@@ -10,9 +10,11 @@ import java.text.ParseException;
 public class ProjectParticipationController implements ActionListener {
     private ProjectParticipationView participationView;
     private MainFrameController frameController;
-    private String addParticipationTab = "Projektmitarbeit";
+    private String addParticipationTab = "Projektplanung";
 
     private int[] selectedProjectIds;
+
+
 
     private ProjectParticipationDataModel model;
 
@@ -23,6 +25,9 @@ public class ProjectParticipationController implements ActionListener {
         participationView = new ProjectParticipationView();
         participationView.init();
         fillTables();
+        if(selectedProjectIds.length < 2){
+            addParticipationTab = "Projektplanung " + model.getProjectName(Integer.parseInt(selectedProjectIds[0]));
+        }
     }
 
     public void showInsertProjectsView(MainFrameController mainFrameController) {

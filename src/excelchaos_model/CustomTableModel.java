@@ -34,7 +34,7 @@ public class CustomTableModel extends DefaultTableModel implements TableModelLis
     public boolean isCellEditable(int row, int column) {
         if(column==0){
             return true;
-        } else return super.isCellEditable(row, column);
+        } else return false;
     }
 
     /**
