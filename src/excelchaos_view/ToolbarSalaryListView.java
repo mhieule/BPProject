@@ -1,11 +1,15 @@
 package excelchaos_view;
 
+import excelchaos_view.components.SearchPanel;
+import excelchaos_view.components.SearchPanelToolbar;
+import excelchaos_view.layoutmanager.WrapLayout;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 
-public class ToolbarSalaryListView extends JToolBar {
+public class ToolbarSalaryListView extends SearchPanelToolbar {
     private JButton editEntry;
     private JButton increaseSalary;
 
@@ -15,30 +19,28 @@ public class ToolbarSalaryListView extends JToolBar {
 
     private JToggleButton showNextPayGrade;
 
-    private JLabel searchLabel;
-    private JTextField searchField;
+
 
     public void init(){
         setFloatable(false);
         setBackground(Color.WHITE);
-        setLayout(new FlowLayout(FlowLayout.LEFT));
+        setLayout(new WrapLayout(FlowLayout.LEFT));
         editEntry = new JButton("Eintrag bearbeiten");
         increaseSalary = new JButton("Gehaltserhöhung");
         salaryStageOn = new JButton("Gehaltsprojektion");
-        removeAdditionalSalaryStage = new JButton("Gehaltsstufenprojektion ausblenden");
+        removeAdditionalSalaryStage = new JButton("Gehaltsprojektion ausblenden");
         showNextPayGrade = new JToggleButton("Gehaltsstufenerhöhungen anzeigen");
-        searchLabel = new JLabel("Suchen:");
-        searchField = new JTextField();
-        searchField.setPreferredSize(new Dimension(130,30));
+
         add(editEntry);
         editEntry.setEnabled(false);
+        removeAdditionalSalaryStage.setEnabled(false);
 
         add(increaseSalary);
         add(showNextPayGrade);
         add(salaryStageOn);
         add(removeAdditionalSalaryStage);
-        add(searchLabel);
-        add(searchField);
+        setUpSearchPanel();
+
 
     }
 
@@ -68,9 +70,6 @@ public class ToolbarSalaryListView extends JToolBar {
         return editEntry;
     }
 
-    public JTextField getSearchField() {
-        return searchField;
-    }
 
     public JButton getIncreaseSalary(){ return increaseSalary;};
 }

@@ -1,10 +1,13 @@
 package excelchaos_view;
 
+import excelchaos_view.components.SearchPanelToolbar;
+import excelchaos_view.layoutmanager.WrapLayout;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class ToolbarPayRateTablesView extends JToolBar {
+public class ToolbarPayRateTablesView extends SearchPanelToolbar {
     private JButton insertNewPayRateTable;
     private JButton editExistingPayRateTable;
     private JButton deleteExistingPayRateTable;
@@ -12,17 +15,13 @@ public class ToolbarPayRateTablesView extends JToolBar {
     public void init(){
         setFloatable(false);
         setBackground(Color.WHITE);
-        setLayout(new FlowLayout());
+        setLayout(new WrapLayout(FlowLayout.LEFT));
         insertNewPayRateTable = new JButton("Neue Entgelttabelle erstellen");
         editExistingPayRateTable = new JButton("Bestehende Entgelttabelle bearbeiten");
         deleteExistingPayRateTable = new JButton("Bestehende Entgelttabelle löschen");
-        addSeparator(new Dimension(130,30));
         add(insertNewPayRateTable);
-        addSeparator(new Dimension(20,30));
         add(editExistingPayRateTable);
-        addSeparator(new Dimension(20,30));
         add(deleteExistingPayRateTable);
-        addSeparator(new Dimension(20,30));
 
 
     }

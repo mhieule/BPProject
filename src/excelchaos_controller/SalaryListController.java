@@ -40,7 +40,6 @@ public class SalaryListController implements TableModelListener {
 
     private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
 
-    private SearchAndFilterModel searchAndFilterModel;
     public SalaryListController(MainFrameController mainFrameController){
         frameController = mainFrameController;
         salaryListView = new SalaryListView();
@@ -48,7 +47,8 @@ public class SalaryListController implements TableModelListener {
         createTableWithData(getSalaryDataFromDataBase());
         toolbarSalaryList = new ToolbarSalaryListController(frameController, salaryListView,this);
         salaryListView.add(toolbarSalaryList.getToolbar(),BorderLayout.NORTH);
-        searchAndFilterModel = new SearchAndFilterModel(salaryListView.getTable(),toolbarSalaryList.getToolbar().getSearchField());
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryListView.getTable(),toolbarSalaryList.getToolbar());
+
     }
 
     public void showSalaryView(MainFrameController mainFrameController){
@@ -99,7 +99,7 @@ public class SalaryListController implements TableModelListener {
         CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(salaryListView.getTable());
         tca.adjustColumns();
         customTableModel.addTableModelListener(this);
-        searchAndFilterModel = new SearchAndFilterModel(salaryListView.getTable(),toolbarSalaryList.getToolbar().getSearchField());
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryListView.getTable(),toolbarSalaryList.getToolbar());
         toolbarSalaryList.getToolbar().getEditEntry().setEnabled(false);
 
     }
@@ -113,7 +113,7 @@ public class SalaryListController implements TableModelListener {
         CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(salaryListView.getTable());
         tca.adjustColumns();
         customTableModel.addTableModelListener(this);
-        searchAndFilterModel = new SearchAndFilterModel(salaryListView.getTable(),toolbarSalaryList.getToolbar().getSearchField());
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryListView.getTable(),toolbarSalaryList.getToolbar());
         toolbarSalaryList.getToolbar().getEditEntry().setEnabled(false);
     }
 
@@ -126,7 +126,7 @@ public class SalaryListController implements TableModelListener {
         CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(salaryListView.getTable());
         tca.adjustColumns();
         customTableModel.addTableModelListener(this);
-        searchAndFilterModel = new SearchAndFilterModel(salaryListView.getTable(),toolbarSalaryList.getToolbar().getSearchField());
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryListView.getTable(),toolbarSalaryList.getToolbar());
         toolbarSalaryList.getToolbar().getEditEntry().setEnabled(false);
     }
 

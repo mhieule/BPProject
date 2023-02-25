@@ -1,6 +1,8 @@
 package excelchaos_view;
 
 import excelchaos_model.EmployeeDataManager;
+import excelchaos_view.components.SearchPanelToolbar;
+import excelchaos_view.layoutmanager.WrapLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +11,7 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToolbarSalaryIncreaseView extends JToolBar {
+public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
 
     private JComboBox nameComboBox;
 
@@ -20,7 +22,7 @@ public class ToolbarSalaryIncreaseView extends JToolBar {
     public void init(){
         setFloatable(false);
         setBackground(Color.WHITE);
-        setLayout(new FlowLayout(FlowLayout.LEFT));
+        setLayout(new WrapLayout(FlowLayout.LEFT));
 
         EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         ArrayList<String> employeeNames = new ArrayList<String>(List.of(employeeDataManager.getAllEmployeesNameList()));
@@ -41,6 +43,7 @@ public class ToolbarSalaryIncreaseView extends JToolBar {
         add(doSalaryIncrease);
        // add(editSalaryEntry);
         add(deleteSalaryEntry);
+        setUpSearchPanel();
      //   editSalaryEntry.setEnabled(false);
         deleteSalaryEntry.setEnabled(false);
         doSalaryIncrease.setEnabled(false);

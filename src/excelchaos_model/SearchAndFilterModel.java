@@ -1,5 +1,7 @@
 package excelchaos_model;
 
+import excelchaos_view.components.SearchPanelToolbar;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -39,5 +41,9 @@ public class SearchAndFilterModel {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         });
+    }
+
+    public static void setUpSearchAndFilterModel(JTable table, SearchPanelToolbar toolBar){
+        new SearchAndFilterModel(table,toolBar.getSearchPanel().getSearchField());
     }
 }

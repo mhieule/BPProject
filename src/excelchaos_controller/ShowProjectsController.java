@@ -24,11 +24,10 @@ public class ShowProjectsController implements ActionListener, TableModelListene
     private ProjectFunderManager projectFunderManager = new ProjectFunderManager();
 
     private ProjectParticipationManager projectParticipationManager = new ProjectParticipationManager();
-    private String title = "Projekt Daten";
+    private String title = "Projektdaten";
 
     private String columns[] = {"ID", "Name", "Bewilligungsdatum", "Anfangsdatum", "Enddatum"};
 
-    private SearchAndFilterModel searchAndFilterModel;
 
     public ShowProjectsController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
@@ -37,7 +36,7 @@ public class ShowProjectsController implements ActionListener, TableModelListene
         showProjectsView.init();
         createTableWithData(getProjectsDataFromDataBase());
         showProjectsView.add(toolbarShowProjects.getToolbar(), BorderLayout.NORTH);
-        searchAndFilterModel = new SearchAndFilterModel(showProjectsView.getTable(), toolbarShowProjects.getToolbar().getSearchField());
+        SearchAndFilterModel.setUpSearchAndFilterModel(showProjectsView.getTable(),toolbarShowProjects.getToolbar());
     }
 
     public ShowProjectsView getShowProjectsView() {
@@ -85,7 +84,7 @@ public class ShowProjectsController implements ActionListener, TableModelListene
         CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(showProjectsView.getTable());
         tca.adjustColumns();
         customTableModel.addTableModelListener(this);
-        searchAndFilterModel = new SearchAndFilterModel(showProjectsView.getTable(),toolbarShowProjects.getToolbar().getSearchField());
+        SearchAndFilterModel.setUpSearchAndFilterModel(showProjectsView.getTable(),toolbarShowProjects.getToolbar());
         toolbarShowProjects.getToolbar().getEditProject().setEnabled(false);
         toolbarShowProjects.getToolbar().getDeleteProject().setEnabled(false);
         toolbarShowProjects.getToolbar().getCostOverview().setEnabled(false);
@@ -104,12 +103,6 @@ public class ShowProjectsController implements ActionListener, TableModelListene
     @Override
     public void actionPerformed(ActionEvent e) {
 
-    }
-
-
-
-    public ToolbarShowProjectsController getToolbarShowProjects() {
-        return toolbarShowProjects;
     }
 
     @Override

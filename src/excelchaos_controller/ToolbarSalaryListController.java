@@ -5,6 +5,7 @@ import excelchaos_view.SalaryListView;
 import excelchaos_view.ShowSalaryStageDialogView;
 import excelchaos_view.ToolbarSalaryListView;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +25,7 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
 
     private IncreaseSalaryDialogController increaseSalaryDialogController;
 
+
     public ToolbarSalaryListController(MainFrameController mainFrameController, SalaryListView salaryView, SalaryListController salaryController) {
         frameController = mainFrameController;
         salaryListController = salaryController;
@@ -38,6 +40,8 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
         return toolbar;
     }
 
+
+
     //TODO komplett überarbeiten
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -47,16 +51,20 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
             insertSalaryController.fillFields(Integer.parseInt(employeeID));
             insertSalaryController.showInsertSalaryView(frameController);
             toolbar.getShowNextPayGrade().setSelected(false);
+            toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
         } else if (e.getSource() == toolbar.getSalaryStageOn()) {
             showSalaryStageDialogView = new ShowSalaryStageDialogView();
             showSalaryStageDialogView.init();
             showSalaryStageDialogView.setActionListener(this);
         } else if (e.getSource() == toolbar.getRemoveAdditionalSalaryStage()) {
             salaryListController.updateData(salaryListController.getSalaryDataFromDataBase());
+            toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
         } else if (e.getSource() == toolbar.getIncreaseSalary()) {
+            toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
             //increaseSalaryDialogController = new IncreaseSalaryDialogController(frameController);
         } else if (e.getSource() == showSalaryStageDialogView.getCloseButton()) {
             showSalaryStageDialogView.dispose();
+
         } else if (e.getSource() == showSalaryStageDialogView.getOkayButton()) {
             LocalDate localDate = showSalaryStageDialogView.getDatePicker().getDate();
             if(localDate != null){
@@ -64,6 +72,7 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
                 SalaryProjection salaryProjection = new SalaryProjection();
                 salaryListController.buildPayLevelTableBasedOnChosenDate(salaryProjection.getSalaryProjectionForGivenDate(date));
                 showSalaryStageDialogView.dispose();
+                toolbar.getRemoveAdditionalSalaryStage().setEnabled(true);
             } else showSalaryStageDialogView.dispose();
         }
     }
@@ -73,6 +82,7 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
         if (e.getStateChange() == ItemEvent.SELECTED) {
             SalaryProjection salaryProjection = new SalaryProjection();
             salaryListController.buildFuturePayLevelTable(salaryProjection.getNextPayLevelProjection());
+            toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
         } else {
             salaryListController.updateData(salaryListController.getSalaryDataFromDataBase());
         }

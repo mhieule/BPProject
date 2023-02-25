@@ -58,6 +58,7 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
         salaryIncreaseView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
         salaryIncreaseView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
         salaryIncreaseView.getTable().getColumnModel().getColumn(1).setWidth(0);
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryIncreaseView.getTable(),toolbarSalaryIncreaseController.getToolbar());
     }
 
     public void setTableData(String[][] data) {
@@ -68,6 +69,7 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
         salaryIncreaseView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
         salaryIncreaseView.getTable().getColumnModel().getColumn(1).setWidth(0);
       //  toolbarSalaryIncreaseController.getToolbar().getEditSalaryEntry().setEnabled(false);
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryIncreaseView.getTable(),toolbarSalaryIncreaseController.getToolbar());
         toolbarSalaryIncreaseController.getToolbar().getDeleteSalaryEntry().setEnabled(false);
     }
 

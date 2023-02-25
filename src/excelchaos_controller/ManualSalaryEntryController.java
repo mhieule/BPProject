@@ -79,6 +79,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
         salaryEntryView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
         salaryEntryView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
         salaryEntryView.getTable().getColumnModel().getColumn(1).setWidth(0);
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryEntryView.getTable(),toolbarManualSalaryEntry.getToolbar());
     }
 
     public void setTableData(String[][] data) {
@@ -90,6 +91,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
         salaryEntryView.getTable().getColumnModel().getColumn(1).setWidth(0);
         toolbarManualSalaryEntry.getToolbar().getEditSalaryEntry().setEnabled(false);
         toolbarManualSalaryEntry.getToolbar().getDeleteSalaryEntry().setEnabled(false);
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryEntryView.getTable(),toolbarManualSalaryEntry.getToolbar());
 
     }
 

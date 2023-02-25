@@ -48,7 +48,7 @@ public class ShowPersonController implements TableModelListener {
         showPersonView.init();
         createTableWithData(getEmployeeDataFromDataBase());
         showPersonView.add(toolbarShowPerson.getToolbar(),BorderLayout.NORTH);
-        searchAndFilterModel = new SearchAndFilterModel(showPersonView.getTable(),toolbarShowPerson.getToolbar().getSearchField());
+        SearchAndFilterModel.setUpSearchAndFilterModel(showPersonView.getTable(),toolbarShowPerson.getToolbar());
     }
 
     public ShowPersonView getPersonView() {
@@ -133,7 +133,7 @@ public class ShowPersonController implements TableModelListener {
         CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(showPersonView.getTable());
         tca.adjustColumns();
         customTableModel.addTableModelListener(this);
-        searchAndFilterModel = new SearchAndFilterModel(showPersonView.getTable(),toolbarShowPerson.getToolbar().getSearchField());
+        SearchAndFilterModel.setUpSearchAndFilterModel(showPersonView.getTable(),toolbarShowPerson.getToolbar());
         toolbarShowPerson.getToolbar().getEditPerson().setEnabled(false);
         toolbarShowPerson.getToolbar().getDeletePerson().setEnabled(false);
     }
