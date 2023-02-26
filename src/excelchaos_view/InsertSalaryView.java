@@ -72,7 +72,7 @@ public class InsertSalaryView extends JPanel {
         tfGehalt = new JTextField();
         setConstraintsTextField(tfGehalt, 4);
 
-        sonderzahlung = new JLabel("Sonderzahlung");
+        sonderzahlung = new JLabel("Jahressonderzahlung");
         setConstraintsLabel(sonderzahlung, 5);
         tfSonderzahlung = new JTextField();
         setConstraintsTextField(tfSonderzahlung, 5);

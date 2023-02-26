@@ -148,6 +148,7 @@ public class InsertProjectsView extends JPanel {
         DefaultTableModel categoriesModel = new DefaultTableModel(null, categoryColumns);
         categoriesModel.setRowCount(10);
         categoriesTable = new JTable(categoriesModel);
+        categoriesTable.putClientProperty("terminateEditOnFocusLost",Boolean.TRUE);
         JScrollPane categoriesScrollpane = new JScrollPane(categoriesTable);
         categoriesScrollpane.setVisible(true);
         categoriesPanel.add(categoriesScrollpane, BorderLayout.CENTER);
@@ -159,8 +160,8 @@ public class InsertProjectsView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] emptyString = new String[2];
-                emptyString[0] = "";
-                emptyString[1] = "";
+                emptyString[0] = null;
+                emptyString[1] = null;
                 categoriesModel.addRow(emptyString);
             }
         });
@@ -180,12 +181,8 @@ public class InsertProjectsView extends JPanel {
         DefaultTableModel categoriesModel = new DefaultTableModel(null, categoryColumnWithID);
         categoriesModel.setRowCount(10);
         categoriesTable = new JTable(categoriesModel);
-        for (int i = 0; i < data[0].length; i++) {
-            categoriesModel.setValueAt(data[0][i], i, 0);
-            categoriesModel.setValueAt(data[1][i], i, 1);
-            categoriesModel.setValueAt(data[2][i], i, 2);
-            categoriesModel.setValueAt(data[3][i], i, 3);
-        }
+        categoriesTable.putClientProperty("terminateEditOnFocusLost",Boolean.TRUE);
+        categoriesModel.setDataVector(data,categoryColumnWithID);
         categoriesTable.setModel(categoriesModel);
         JScrollPane categoriesScrollpane = new JScrollPane(categoriesTable);
         categoriesScrollpane.setVisible(true);
@@ -198,10 +195,10 @@ public class InsertProjectsView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] emptyString = new String[4];
-                emptyString[0] = "";
-                emptyString[1] = "";
-                emptyString[2] = "";
-                emptyString[3] = "";
+                emptyString[0] = null;
+                emptyString[1] = null;
+                emptyString[2] = null;
+                emptyString[3] = null;
                 categoriesModel.addRow(emptyString);
             }
         });
@@ -221,6 +218,7 @@ public class InsertProjectsView extends JPanel {
         DefaultTableModel funderModel = new DefaultTableModel(null, funderColumns);
         funderModel.setRowCount(10);
         projectFunderTable = new JTable(funderModel);
+        projectFunderTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         JScrollPane funderScrollpane = new JScrollPane(projectFunderTable);
         funderScrollpane.setVisible(true);
         projectFunderPanel.add(funderScrollpane, BorderLayout.CENTER);
@@ -232,9 +230,9 @@ public class InsertProjectsView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] emptyString = new String[3];
-                emptyString[0] = "";
-                emptyString[1] = "";
-                emptyString[2] = "";
+                emptyString[0] = null;
+                emptyString[1] = null;
+                emptyString[2] = null;
                 funderModel.addRow(emptyString);
             }
         });
@@ -253,15 +251,8 @@ public class InsertProjectsView extends JPanel {
         DefaultTableModel funderModel = new DefaultTableModel(null, funderColumnWithID);
         //funderModel.setRowCount(10);
         projectFunderTable = new JTable(funderModel);
+        projectFunderTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         funderModel.setDataVector(data,funderColumnWithID);
-       /* for (int i = 0; i < data[0].length; i++) {
-            System.out.println(i);
-            funderModel.setValueAt(data[0][i], i, 0);
-            funderModel.setValueAt(data[1][i], i, 1);
-            funderModel.setValueAt(data[2][i], i, 2);
-            funderModel.setValueAt(data[3][i], i, 3);
-            funderModel.setValueAt(data[4][i], i, 4);
-        }*/
         projectFunderTable.setModel(funderModel);
         JScrollPane funderScrollpane = new JScrollPane(projectFunderTable);
         funderScrollpane.setVisible(true);
@@ -274,11 +265,11 @@ public class InsertProjectsView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] emptyString = new String[5];
-                emptyString[0] = "";
-                emptyString[1] = "";
-                emptyString[2] = "";
-                emptyString[3] = "";
-                emptyString[4] = "";
+                emptyString[0] = null;
+                emptyString[1] = null;
+                emptyString[2] = null;
+                emptyString[3] = null;
+                emptyString[4] = null;
                 funderModel.addRow(emptyString);
             }
         });
@@ -297,6 +288,7 @@ public class InsertProjectsView extends JPanel {
         DefaultTableModel participationModel = new DefaultTableModel(null, participationColumns);
         participationModel.setRowCount(10);
         projectParticipationTable = new JTable(participationModel);
+        projectParticipationTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         setUpNameSelection(projectParticipationTable);
         setUpDateSelection(projectParticipationTable);
         JScrollPane participationScrollpane = new JScrollPane(projectParticipationTable);
@@ -310,9 +302,9 @@ public class InsertProjectsView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] emptyString = new String[3];
-                emptyString[0] = "";
-                emptyString[1] = "";
-                emptyString[2] = "";
+                emptyString[0] = null;
+                emptyString[1] = null;
+                emptyString[2] = null;
                 participationModel.addRow(emptyString);
             }
         });
@@ -331,6 +323,7 @@ public class InsertProjectsView extends JPanel {
         DefaultTableModel participationModel = new DefaultTableModel(null, participationColumnsWithID);
         participationModel.setRowCount(10);
         projectParticipationTable = new JTable(participationModel);
+        projectParticipationTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         setUpEditNameSelection(projectParticipationTable, data[1]);
         setUpEditDateSelection(projectParticipationTable, data[3]);
         for (int i = 0; i < data[0].length; i++) {
@@ -348,10 +341,10 @@ public class InsertProjectsView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] emptyString = new String[4];
-                emptyString[0] = "";
-                emptyString[1] = "";
-                emptyString[2] = "";
-                emptyString[3] = "";
+                emptyString[0] = null;
+                emptyString[1] = null;
+                emptyString[2] = null;
+                emptyString[3] = null;
                 participationModel.addRow(emptyString);
             }
         });

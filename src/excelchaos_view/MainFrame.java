@@ -65,7 +65,7 @@ public class MainFrame extends JFrame {
         docuMenu.add(docuItem);*/
 
 
-        setTitle("Excelchaos");
+        setTitle("Ein Verwaltungswerkzeug für Fachgebiete");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(true);
         setSize(750, 750);

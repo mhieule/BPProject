@@ -94,14 +94,14 @@ public class InsertProjectsController implements ActionListener {
         }
         List<ProjectCategory> projectCategoryList = projectCategoryManager.getAllProjectCategoriesForProject(project.getProject_id());
 
-        String[][] categoryData = new String[4][projectCategoryList.size()];
+        String[][] categoryData = new String[projectCategoryList.size()][4];
         System.out.println(projectCategoryList.size());
         int categoryIndex = 0;
         for (ProjectCategory projectCategory : projectCategoryList) {
-            categoryData[0][categoryIndex] = String.valueOf(projectCategory.getCategory_id());
-            categoryData[1][categoryIndex] = String.valueOf(projectCategory.getProject_id());
-            categoryData[2][categoryIndex] = projectCategory.getCategory_name();
-            categoryData[3][categoryIndex] = transformer.formatDoubleToString(projectCategory.getApproved_funds(), 1);
+            categoryData[categoryIndex][0] = String.valueOf(projectCategory.getCategory_id());
+            categoryData[categoryIndex][1] = String.valueOf(projectCategory.getProject_id());
+            categoryData[categoryIndex][2] = projectCategory.getCategory_name();
+            categoryData[categoryIndex][3] = transformer.formatDoubleToString(projectCategory.getApproved_funds(), 1);
             categoryIndex++;
         }
 
@@ -194,10 +194,12 @@ public class InsertProjectsController implements ActionListener {
                             update.setCategory_name(categoryName);
                             projectCategoryManager.updateProjectCategory(update);
                         } else {
-                            String categoryName = categoryData[i][2];
-                            double approvedFunds = transformer.formatStringToPercentageValueForScope(categoryData[i][3]);
-                            ProjectCategory projectCategory = new ProjectCategory(currentlyEditingProjectId, projectCategoryManager.getNextID(), categoryName, approvedFunds);
-                            projectCategoryManager.addProjectCategory(projectCategory);
+                            if (categoryData[i][2] != null && categoryData[i][3] != null) {
+                                String categoryName = categoryData[i][2];
+                                double approvedFunds = transformer.formatStringToDouble(categoryData[i][3]);
+                                ProjectCategory projectCategory = new ProjectCategory(currentlyEditingProjectId, projectCategoryManager.getNextID(), categoryName, approvedFunds);
+                                projectCategoryManager.addProjectCategory(projectCategory);
+                            }
                         }
                     }
 
@@ -213,17 +215,19 @@ public class InsertProjectsController implements ActionListener {
                             update.setProject_number(projectSign);
                             projectFunderManager.updateProjectFunder(update);
                         } else {
-                            String funderName = funderData[i][2];
-                            String förderkennzeichen = funderData[i][3];
-                            String projectSign = funderData[i][4];
-                            ProjectFunder projectFunder = new ProjectFunder(currentlyEditingProjectId, projectFunderManager.getNextID(), funderName, förderkennzeichen, projectSign);
-                            projectFunderManager.addProjectFunder(projectFunder);
+                            if (funderData[i][2] != null && funderData[i][3] != null && funderData[i][4] != null) {
+                                String funderName = funderData[i][2];
+                                String förderkennzeichen = funderData[i][3];
+                                String projectSign = funderData[i][4];
+                                ProjectFunder projectFunder = new ProjectFunder(currentlyEditingProjectId, projectFunderManager.getNextID(), funderName, förderkennzeichen, projectSign);
+                                projectFunderManager.addProjectFunder(projectFunder);
+                            }
                         }
                     }
                     DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
                     for (int i = 0; i < participationData.length; i++) {
                         System.out.println(participationData[i][1]);
-                        if(participationData[i][1] != null){
+                        if (participationData[i][1] != null && participationData[i][2] != null && participationData[i][3] != null) {
                             int employeeID = employeeDataManager.getEmployeeByName(participationData[i][1]).getId();
                             participationManager.removeProjectParticipation(currentlyEditingProjectId, employeeID);
                             double scope = transformer.formatStringToPercentageValueForScope(participationData[i][2]);
@@ -336,17 +340,19 @@ public class InsertProjectsController implements ActionListener {
                             update.setProject_number(projectSign);
                             projectFunderManager.updateProjectFunder(update);
                         } else {
-                            String funderName = funderData[i][2];
-                            String förderkennzeichen = funderData[i][3];
-                            String projectSign = funderData[i][4];
-                            ProjectFunder projectFunder = new ProjectFunder(currentlyEditingProjectId, projectFunderManager.getNextID(), funderName, förderkennzeichen, projectSign);
-                            projectFunderManager.addProjectFunder(projectFunder);
+                            if (funderData[i][2] != null && funderData[i][3] != null && funderData[i][4] != null) {
+                                String funderName = funderData[i][2];
+                                String förderkennzeichen = funderData[i][3];
+                                String projectSign = funderData[i][4];
+                                ProjectFunder projectFunder = new ProjectFunder(currentlyEditingProjectId, projectFunderManager.getNextID(), funderName, förderkennzeichen, projectSign);
+                                projectFunderManager.addProjectFunder(projectFunder);
+                            }
                         }
                     }
                     DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
                     for (int i = 0; i < participationData.length; i++) {
                         System.out.println(participationData[i][1]);
-                        if(participationData[i][1] != null){
+                        if (participationData[i][1] != null && participationData[i][2] != null && participationData[i][3] != null) {
                             int employeeID = employeeDataManager.getEmployeeByName(participationData[i][1]).getId();
                             participationManager.removeProjectParticipation(currentlyEditingProjectId, employeeID);
                             double scope = transformer.formatStringToPercentageValueForScope(participationData[i][2]);
@@ -503,13 +509,23 @@ public class InsertProjectsController implements ActionListener {
         for (int row = 0; row < participationTable.getRowCount(); row++) {
             for (int column = 0; column < participationTable.getColumnCount(); column++) {
                 if (participationTable.getValueAt(row, column) == null || participationTable.getValueAt(row, column).equals("")) {
-                    break;
+                    if (column == 1) {
+                        break;
+                    }
+                    if (column == 2) {
+                        break;
+                    }
+                    if(column == 3){
+                        break;
+                    }
                 }
                 if (column == 3) {
-                    LocalDate temporaryDate = (LocalDate) participationTable.getValueAt(row, column);
-                    String temporaryString = temporaryDate.format(dateTimeFormatter);
-                    tableValues[row][column] = temporaryString;
+                        LocalDate temporaryDate = (LocalDate) participationTable.getValueAt(row, column);
+                        String temporaryString = temporaryDate.format(dateTimeFormatter);
+                        tableValues[row][column] = temporaryString;
+
                 } else {
+                    System.out.println(tableValues[row][column]);
                     tableValues[row][column] = (String) participationTable.getValueAt(row, column);
                 }
             }
@@ -534,9 +550,18 @@ public class InsertProjectsController implements ActionListener {
         String[][] tableValues = new String[givenTable.getRowCount()][givenTable.getColumnCount()];
         for (int row = 0; row < givenTable.getRowCount(); row++) {
             for (int column = 0; column < givenTable.getColumnCount(); column++) {
-                if (givenTable.getValueAt(row, 2) == null || givenTable.getValueAt(row, 2).equals("") || givenTable.getValueAt(row, 3) == null || givenTable.getValueAt(row, 3).equals("")
-                        || givenTable.getValueAt(row, 4) == null || givenTable.getValueAt(row, 4).equals("")) {
-                    break;
+                if (givenTable.getValueAt(row, column) == null) {
+                    if (column == 2) {
+                        break;
+                    }
+                    if (column == 3) {
+                        break;
+                    }
+                    if(column == 4){
+                        break;
+                    }
+
+
                 }
                 tableValues[row][column] = (String) givenTable.getValueAt(row, column);
             }
@@ -557,7 +582,6 @@ public class InsertProjectsController implements ActionListener {
                     }
 
                 }
-                System.out.println(givenTable.getValueAt(row, column) + "Here");
                 tableValues[row][column] = (String) givenTable.getValueAt(row, column);
             }
         }
