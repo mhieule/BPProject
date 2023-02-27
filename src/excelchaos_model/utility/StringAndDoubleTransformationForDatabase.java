@@ -65,4 +65,11 @@ public class StringAndDoubleTransformationForDatabase {
 
         return result;
     }
+
+    public String formatDoubleToPersonenMonate(double valueToFormat) {
+        String result;
+        result = String.valueOf(valueToFormat);
+        result = result.replaceAll("\\.", ",");
+        return result;
+    }
 }

@@ -351,7 +351,6 @@ public class InsertProjectsController implements ActionListener {
                     }
                     DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
                     for (int i = 0; i < participationData.length; i++) {
-                        System.out.println(participationData[i][1]);
                         if (participationData[i][1] != null && participationData[i][2] != null && participationData[i][3] != null) {
                             int employeeID = employeeDataManager.getEmployeeByName(participationData[i][1]).getId();
                             participationManager.removeProjectParticipation(currentlyEditingProjectId, employeeID);

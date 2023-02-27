@@ -226,7 +226,7 @@ public class ProjectParticipationDataModel {
         }
         summedData = new String[2][months.length];
         for (int column = 0; column < sumPersonenMonate.length; column++) {
-            summedData[0][column] = transformer.formatPercentageToStringForScope(sumPersonenMonate[column]);
+            summedData[0][column] = transformer.formatDoubleToPersonenMonate(sumPersonenMonate[column]);
         }
         for (int column = 0; column < monthlyProjectPersonalCost.length; column++) {
             summedData[1][column] = transformer.formatDoubleToString(monthlyProjectPersonalCost[column], 1);
