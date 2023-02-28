@@ -52,9 +52,9 @@ public class ToolbarShowPersonController implements ActionListener {
             }
 
 
-        } /*else if (e.getSource() == toolbar.getExportToCSV()) {
+        } else if (e.getSource() == toolbar.getExportToCSV()) {
             CSVExporter.createCSV(showPersonController.getPersonView().getTable(),"Personendaten.csv");
 
-        }*/
+        }
     }
 }

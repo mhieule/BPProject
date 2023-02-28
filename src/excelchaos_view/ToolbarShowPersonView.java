@@ -12,7 +12,7 @@ public class ToolbarShowPersonView extends SearchPanelToolbar {
     private JButton editPerson;
     private JButton deletePerson;
 
-  //  private JButton exportToCSV;
+    private JButton exportToCSV;
 
 
     public void init(){
@@ -22,7 +22,7 @@ public class ToolbarShowPersonView extends SearchPanelToolbar {
         insertPerson = new JButton("Eintrag hinzufügen");
         editPerson = new JButton("Eintrag bearbeiten");
         deletePerson = new JButton("Eintrag löschen");
-       // exportToCSV = new JButton("Daten als CSV exportieren");
+        exportToCSV = new JButton("Daten als CSV exportieren");
 
         add(insertPerson);
         add(editPerson);
@@ -30,7 +30,7 @@ public class ToolbarShowPersonView extends SearchPanelToolbar {
         add(deletePerson);
         deletePerson.setEnabled(false);
         setUpSearchPanel();
-       // add(exportToCSV);
+        add(exportToCSV);
 
     }
 
@@ -38,7 +38,7 @@ public class ToolbarShowPersonView extends SearchPanelToolbar {
         insertPerson.addActionListener(l);
         editPerson.addActionListener(l);
         deletePerson.addActionListener(l);
-      //  exportToCSV.addActionListener(l);
+        exportToCSV.addActionListener(l);
     }
 
     public JButton getInsertPerson() {
@@ -53,7 +53,7 @@ public class ToolbarShowPersonView extends SearchPanelToolbar {
         return deletePerson;
     }
 
-   /* public JButton getExportToCSV() {
+   public JButton getExportToCSV() {
         return exportToCSV;
-    }*/
+    }
 }
