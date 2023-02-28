@@ -77,7 +77,7 @@ public class SalaryListController implements TableModelListener {
             String gehalt = transformer.formatDoubleToString(contract.getRegular_cost(),1);
             String sonderzahlungen = transformer.formatDoubleToString(contract.getBonus_cost(),1);
 
-            String[] values = {id,surname, name, dateOfBirth, group, stufe, gehalt, sonderzahlungen};
+            String[] values = {id, name,surname, dateOfBirth, group, stufe, gehalt, sonderzahlungen};
             resultData[currentIndex] = values;
             currentIndex++;
         }

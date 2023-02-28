@@ -321,7 +321,7 @@ public class InsertProjectsView extends JPanel {
         participationLabel = new JLabel("Mitarbeiter");
         participationLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         DefaultTableModel participationModel = new DefaultTableModel(null, participationColumnsWithID);
-        participationModel.setRowCount(10);
+        participationModel.setRowCount(30); //TODO Debug
         projectParticipationTable = new JTable(participationModel);
         projectParticipationTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         setUpEditNameSelection(projectParticipationTable, data[1]);

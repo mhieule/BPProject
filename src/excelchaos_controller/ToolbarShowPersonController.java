@@ -1,5 +1,6 @@
 package excelchaos_controller;
 
+import excelchaos_model.export.CSVExporter;
 import excelchaos_view.ToolbarShowPersonView;
 
 import javax.swing.*;
@@ -25,6 +26,9 @@ public class ToolbarShowPersonController implements ActionListener {
     }
 
 
+
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toolbar.getInsertPerson()) {
@@ -48,6 +52,9 @@ public class ToolbarShowPersonController implements ActionListener {
             }
 
 
-        }
+        } /*else if (e.getSource() == toolbar.getExportToCSV()) {
+            CSVExporter.createCSV(showPersonController.getPersonView().getTable(),"Personendaten.csv");
+
+        }*/
     }
 }
