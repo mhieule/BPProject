@@ -15,6 +15,8 @@ public class ToolbarSalaryListView extends SearchPanelToolbar {
 
     private JButton salaryStageOn;
 
+    private JButton exportToCSV;
+
     private JButton removeAdditionalSalaryStage;
 
     private JToggleButton showNextPayGrade;
@@ -30,6 +32,7 @@ public class ToolbarSalaryListView extends SearchPanelToolbar {
         salaryStageOn = new JButton("Gehaltsprojektion");
         removeAdditionalSalaryStage = new JButton("Gehaltsprojektion ausblenden");
         showNextPayGrade = new JToggleButton("Gehaltsstufenerhöhungen anzeigen");
+        exportToCSV = new JButton("Daten als CSV exportieren");
 
         add(editEntry);
         editEntry.setEnabled(false);
@@ -40,7 +43,7 @@ public class ToolbarSalaryListView extends SearchPanelToolbar {
         add(salaryStageOn);
         add(removeAdditionalSalaryStage);
         setUpSearchPanel();
-
+        add(exportToCSV);
 
     }
 
@@ -49,6 +52,7 @@ public class ToolbarSalaryListView extends SearchPanelToolbar {
         increaseSalary.addActionListener(l);
         salaryStageOn.addActionListener(l);
         removeAdditionalSalaryStage.addActionListener(l);
+        exportToCSV.addActionListener(l);
     }
     public void setItemListener(ItemListener l){
         showNextPayGrade.addItemListener(l);
@@ -70,6 +74,8 @@ public class ToolbarSalaryListView extends SearchPanelToolbar {
         return editEntry;
     }
 
-
+    public JButton getExportToCSV() {
+        return exportToCSV;
+    }
     public JButton getIncreaseSalary(){ return increaseSalary;};
 }

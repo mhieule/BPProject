@@ -1,6 +1,7 @@
 package excelchaos_controller;
 
 import excelchaos_model.calculations.SalaryProjection;
+import excelchaos_model.export.CSVExporter;
 import excelchaos_view.SalaryListView;
 import excelchaos_view.ShowSalaryStageDialogView;
 import excelchaos_view.ToolbarSalaryListView;
@@ -41,7 +42,6 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
     }
 
 
-
     //TODO komplett überarbeiten
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -62,12 +62,13 @@ public class ToolbarSalaryListController implements ActionListener, ItemListener
         } else if (e.getSource() == toolbar.getIncreaseSalary()) {
             toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
             //increaseSalaryDialogController = new IncreaseSalaryDialogController(frameController);
+        } else if (e.getSource() == toolbar.getExportToCSV()) {
+            CSVExporter.createCSVVariableName(salaryListController.getSalaryListView().getTable());
         } else if (e.getSource() == showSalaryStageDialogView.getCloseButton()) {
             showSalaryStageDialogView.dispose();
-
         } else if (e.getSource() == showSalaryStageDialogView.getOkayButton()) {
             LocalDate localDate = showSalaryStageDialogView.getDatePicker().getDate();
-            if(localDate != null){
+            if (localDate != null) {
                 Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
                 SalaryProjection salaryProjection = new SalaryProjection();
                 salaryListController.buildPayLevelTableBasedOnChosenDate(salaryProjection.getSalaryProjectionForGivenDate(date));
