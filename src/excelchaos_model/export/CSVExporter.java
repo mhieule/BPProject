@@ -7,7 +7,7 @@ import java.util.prefs.Preferences;
 
 public class CSVExporter {
     public static final String LAST_USED_FOLDER = "KeyForLastPath";
-
+    //TODO Genau absprechen welche Formate hier und dann in Excel benötigt werden
     private static boolean writeToCSV(JTable tableToExport,
                                       String pathToExportTo) {
 
@@ -19,7 +19,7 @@ public class CSVExporter {
             for (int i = 0; i < model.getColumnCount(); i++) {
                 if (i == 0 || i == 1) {
                 } else {
-                    csv.write(model.getColumnName(i) + ",");
+                    csv.write(model.getColumnName(i) + ";");
                 }
 
             }
@@ -30,14 +30,13 @@ public class CSVExporter {
                 for (int j = 0; j < model.getColumnCount(); j++) {
                     if (j == 0 || j == 1) {
                     } else if (model.getValueAt(i, j) == null) {
-                        csv.write(",");
-                    } else if (((String) model.getValueAt(i, j)).contains(",") || ((String) model.getValueAt(i, j)).contains(".")) {
-                        String writeValue = (String) model.getValueAt(i, j);
-                        writeValue = "\"" + writeValue + "\"";
-                        writeValue = writeValue + ",";
-                        csv.write(writeValue);
+                        csv.write(";");
+                    } else if (((String)model.getValueAt(i,j)).contains("€")) {
+                        String editString = (String) model.getValueAt(i,j);
+                        editString = editString.replaceAll("€","");
+                        csv.write(editString + ";");
                     } else {
-                        csv.write(model.getValueAt(i, j).toString() + ",");
+                        csv.write(model.getValueAt(i, j).toString() + ";");
                     }
 
                 }

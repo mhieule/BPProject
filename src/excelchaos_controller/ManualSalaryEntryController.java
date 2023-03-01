@@ -126,12 +126,14 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
                 toolbarManualSalaryEntry.getToolbar().getAddSalaryEntry().setEnabled(false);
                 toolbarManualSalaryEntry.getToolbar().getEditSalaryEntry().setEnabled(false);
                 toolbarManualSalaryEntry.getToolbar().getDeleteSalaryEntry().setEnabled(false);
+                toolbarManualSalaryEntry.getToolbar().getExportToCSV().setEnabled(false);
                 if (salaryEntryView.getTable() != null) {
                     salaryEntryView.getTable().setModel(new DefaultTableModel(null, nullColumns));
                     frameController.getTabs().setLabel(title);
                 }
             } else {
                 toolbarManualSalaryEntry.getToolbar().getAddSalaryEntry().setEnabled(true);
+                toolbarManualSalaryEntry.getToolbar().getExportToCSV().setEnabled(true);
                 EmployeeDataManager employeeDataManager = new EmployeeDataManager();
                 Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) e.getItem());
                 String[][] data = getDataFromDB(temporaryEmployee);

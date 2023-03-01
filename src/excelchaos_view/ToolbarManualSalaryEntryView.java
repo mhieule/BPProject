@@ -16,7 +16,7 @@ public class ToolbarManualSalaryEntryView extends SearchPanelToolbar {
 
     private JComboBox nameComboBox;
 
-    private JButton addSalaryEntry,editSalaryEntry,deleteSalaryEntry;
+    private JButton addSalaryEntry,editSalaryEntry,deleteSalaryEntry,exportToCSV;
 
     private JLabel nameLabel = new JLabel("Person auswählen:");
 
@@ -34,6 +34,8 @@ public class ToolbarManualSalaryEntryView extends SearchPanelToolbar {
         addSalaryEntry = new JButton("Eintrag hinzufügen");
         editSalaryEntry = new JButton("Eintrag bearbeiten");
         deleteSalaryEntry = new JButton("Eintrag löschen");
+        exportToCSV = new JButton("Daten als CSV exportieren");
+
         nameComboBox = new JComboBox(names.toArray());
         nameComboBox.setBackground(Color.WHITE);
         nameComboBox.setMaximumRowCount(8);
@@ -45,15 +47,18 @@ public class ToolbarManualSalaryEntryView extends SearchPanelToolbar {
         add(editSalaryEntry);
         add(deleteSalaryEntry);
         setUpSearchPanel();
+        add(exportToCSV);
         editSalaryEntry.setEnabled(false);
         deleteSalaryEntry.setEnabled(false);
         addSalaryEntry.setEnabled(false);
+        exportToCSV.setEnabled(false);
     }
 
     public void setActionListener(ActionListener l){
         addSalaryEntry.addActionListener(l);
         editSalaryEntry.addActionListener(l);
         deleteSalaryEntry.addActionListener(l);
+        exportToCSV.addActionListener(l);
     }
 
     public void setItemListener(ItemListener l){
@@ -74,5 +79,9 @@ public class ToolbarManualSalaryEntryView extends SearchPanelToolbar {
 
     public JButton getDeleteSalaryEntry() {
         return deleteSalaryEntry;
+    }
+
+    public JButton getExportToCSV() {
+        return exportToCSV;
     }
 }
