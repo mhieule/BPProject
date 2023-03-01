@@ -1,6 +1,6 @@
 package excelchaos_model.sorter;
 
-import excelchaos_model.ProjectParticipation;
+import excelchaos_model.database.ProjectParticipation;
 
 import java.util.Comparator;
 

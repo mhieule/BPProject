@@ -2,7 +2,7 @@ package excelchaos_model.utility;
 
 import excelchaos_controller.MainFrameController;
 import excelchaos_model.BackEndUpdates;
-import excelchaos_model.EmployeeDataManager;
+import excelchaos_model.database.EmployeeDataManager;
 
 public class Updater {
     public MainFrameController frameController;

@@ -1,13 +1,9 @@
 package excelchaos_view;
 
-import excelchaos_model.CustomTableColumnAdjuster;
+import excelchaos_view.components.CustomTable;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 public class ManualSalaryEntryView extends JPanel {
 

@@ -3,6 +3,9 @@ package excelchaos_view;
 import com.github.lgooddatepicker.tableeditors.DateTableEditor;
 import excelchaos_model.*;
 import excelchaos_model.calculations.SalaryCalculation;
+import excelchaos_model.database.EmployeeDataManager;
+import excelchaos_model.database.ProjectParticipation;
+import excelchaos_model.database.ProjectParticipationManager;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_model.utility.TableColumnAdjuster;
 

@@ -1,6 +1,6 @@
 package excelchaos_controller;
 
-import excelchaos_model.*;
+import excelchaos_model.database.*;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.SalaryHistoryView;
 

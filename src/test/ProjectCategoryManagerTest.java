@@ -1,5 +1,5 @@
-import excelchaos_model.ProjectCategory;
-import excelchaos_model.ProjectCategoryManager;
+import excelchaos_model.database.ProjectCategory;
+import excelchaos_model.database.ProjectCategoryManager;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

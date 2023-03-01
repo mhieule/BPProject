@@ -1,5 +1,5 @@
-import excelchaos_model.PaygradeIncrease;
-import excelchaos_model.PaygradeIncreaseManager;
+import excelchaos_model.database.PaygradeIncrease;
+import excelchaos_model.database.PaygradeIncreaseManager;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;

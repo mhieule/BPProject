@@ -1,6 +1,7 @@
 package excelchaos_model;
 
 import excelchaos_model.calculations.SalaryCalculation;
+import excelchaos_model.database.*;
 import excelchaos_model.sorter.ParticipationSortByDate;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 

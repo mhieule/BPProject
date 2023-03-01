@@ -1,12 +1,12 @@
 package excelchaos_controller;
 
-import excelchaos_model.Contract;
-import excelchaos_model.ContractDataManager;
-import excelchaos_model.Employee;
+import excelchaos_model.database.Contract;
+import excelchaos_model.database.ContractDataManager;
+import excelchaos_model.database.Employee;
 import excelchaos_model.calculations.CalculateSalaryBasedOnPayRateTable;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.InsertPersonView;
-import excelchaos_model.EmployeeDataManager;
+import excelchaos_model.database.EmployeeDataManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

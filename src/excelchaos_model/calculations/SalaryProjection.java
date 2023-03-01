@@ -1,6 +1,10 @@
 package excelchaos_model.calculations;
 
 import excelchaos_model.*;
+import excelchaos_model.database.Contract;
+import excelchaos_model.database.ContractDataManager;
+import excelchaos_model.database.Employee;
+import excelchaos_model.database.EmployeeDataManager;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 
 import java.text.DateFormat;

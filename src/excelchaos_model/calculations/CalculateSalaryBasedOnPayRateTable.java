@@ -1,8 +1,8 @@
 package excelchaos_model.calculations;
 
-import excelchaos_model.Contract;
-import excelchaos_model.Employee;
-import excelchaos_model.SalaryTable;
+import excelchaos_model.database.Contract;
+import excelchaos_model.database.Employee;
+import excelchaos_model.database.SalaryTable;
 import excelchaos_model.datecalculations.CurrentPayRateTableE13;
 import excelchaos_model.datecalculations.CurrentPayRateTableE14;
 

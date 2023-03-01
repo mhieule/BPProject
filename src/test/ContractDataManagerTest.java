@@ -1,5 +1,5 @@
-import excelchaos_model.Contract;
-import excelchaos_model.ContractDataManager;
+import excelchaos_model.database.Contract;
+import excelchaos_model.database.ContractDataManager;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

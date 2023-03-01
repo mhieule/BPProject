@@ -1,7 +1,7 @@
 package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
-import excelchaos_model.EmployeeDataManager;
+import excelchaos_model.database.EmployeeDataManager;
 
 import javax.swing.*;
 import java.awt.*;

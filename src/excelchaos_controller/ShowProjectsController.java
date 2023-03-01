@@ -1,6 +1,7 @@
 package excelchaos_controller;
 
 import excelchaos_model.*;
+import excelchaos_model.database.*;
 import excelchaos_view.ShowProjectsView;
 
 import javax.swing.event.TableModelEvent;

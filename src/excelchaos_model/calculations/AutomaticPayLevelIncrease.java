@@ -1,10 +1,11 @@
 package excelchaos_model.calculations;
 
 import excelchaos_model.*;
+import excelchaos_model.database.Contract;
+import excelchaos_model.database.ContractDataManager;
+import excelchaos_model.database.Employee;
+import excelchaos_model.database.EmployeeDataManager;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;

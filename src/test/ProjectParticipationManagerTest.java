@@ -1,5 +1,5 @@
-import excelchaos_model.ProjectParticipation;
-import excelchaos_model.ProjectParticipationManager;
+import excelchaos_model.database.ProjectParticipation;
+import excelchaos_model.database.ProjectParticipationManager;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;

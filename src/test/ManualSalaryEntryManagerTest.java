@@ -1,5 +1,5 @@
-import excelchaos_model.ManualSalaryEntry;
-import excelchaos_model.ManualSalaryEntryManager;
+import excelchaos_model.database.ManualSalaryEntry;
+import excelchaos_model.database.ManualSalaryEntryManager;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;

@@ -1,5 +1,5 @@
-import excelchaos_model.SalaryTable;
-import excelchaos_model.SalaryTableManager;
+import excelchaos_model.database.SalaryTable;
+import excelchaos_model.database.SalaryTableManager;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

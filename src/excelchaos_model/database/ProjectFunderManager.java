@@ -1,4 +1,4 @@
-package excelchaos_model;
+package excelchaos_model.database;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -8,19 +8,20 @@ import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import excelchaos_model.database.ProjectFunder;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectCategoryManager {
+public class ProjectFunderManager {
     private ConnectionSource connectionSource;
-    private Dao<ProjectCategory, Integer> projectCategoriesDao;
-    public ProjectCategoryManager(){
+    private Dao<ProjectFunder, Integer> projectFunderDao;
+    public ProjectFunderManager(){
         try{
             String databaseUrl = "jdbc:sqlite:Excelchaos.db";
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
-            this.projectCategoriesDao = DaoManager.createDao(connectionSource, ProjectCategory.class);
+            this.projectFunderDao = DaoManager.createDao(connectionSource, ProjectFunder.class);
         }catch (Exception e){
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
@@ -29,7 +30,7 @@ public class ProjectCategoryManager {
 
     public void createTable(){
         try {
-            TableUtils.createTable(connectionSource, ProjectCategory.class);
+            TableUtils.createTable(connectionSource, ProjectFunder.class);
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
@@ -38,83 +39,84 @@ public class ProjectCategoryManager {
 
     public void deleteTable(){
         try {
-            TableUtils.dropTable(connectionSource, ProjectCategory.class, true);
+            TableUtils.dropTable(connectionSource, ProjectFunder.class, true);
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
     }
 
-    public void addProjectCategory(ProjectCategory projectCategory){
+    public void addProjectFunder(ProjectFunder projectFunder){
         try {
-            projectCategoriesDao.create(projectCategory);
+            projectFunderDao.create(projectFunder);
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
     }
 
-    public ProjectCategory getProject(int id){
-        ProjectCategory projectCategory = null;
+    public ProjectFunder getProjectFunder(int id){
+        ProjectFunder projectFunder = null;
         try {
-            projectCategory = projectCategoriesDao.queryForId(id);
+            projectFunder = projectFunderDao.queryForId(id);
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
-        return projectCategory;
+        return projectFunder;
     }
 
-    public List<ProjectCategory> getAllProjectCategories(){
-        List<ProjectCategory> projectCategories = null;
+    public List<ProjectFunder> getAllProjectFunder(){
+        List<ProjectFunder> projectFunders = null;
         try {
-            projectCategories = projectCategoriesDao.queryForAll();
+            projectFunders = projectFunderDao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
-        return projectCategories;
+        return projectFunders;
     }
 
-    public List<ProjectCategory> getAllProjectCategoriesForProject(int projectId){
-        List<ProjectCategory> projectCategoryList = new ArrayList<>();
-        QueryBuilder<ProjectCategory,Integer> queryBuilder = projectCategoriesDao.queryBuilder();
+
+    public List<ProjectFunder> getAllProjectFundersForProject(int projectId){
+        List<ProjectFunder> projectFunderList = new ArrayList<>();
+        QueryBuilder<ProjectFunder,Integer> queryBuilder = projectFunderDao.queryBuilder();
         try {
             queryBuilder.where().eq("project_id",projectId);
-            PreparedQuery<ProjectCategory> preparedQuery = queryBuilder.prepare();
-            projectCategoryList = projectCategoriesDao.query(preparedQuery);
+            PreparedQuery<ProjectFunder> preparedQuery = queryBuilder.prepare();
+            projectFunderList = projectFunderDao.query(preparedQuery);
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
         }
-        return projectCategoryList;
+        return projectFunderList;
     }
 
-    public void removeProjectCategory(int id){
-        try{
-            DeleteBuilder<ProjectCategory, Integer> builder = projectCategoriesDao.deleteBuilder();
-            builder.where().eq("category_id", id);
-            builder.delete();
-        }catch (SQLException e){
-            e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
-        }
-    }
-
-    public void removeProjectCategoryBasedOnProjectId(int projectID){
-        try{
-            DeleteBuilder<ProjectCategory, Integer> builder = projectCategoriesDao.deleteBuilder();
-            builder.where().eq("project_id", projectID);
-            builder.delete();
-        }catch (SQLException e){
-            e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
-        }
-    }
-
-    public void removeAllProjectCategories(){
+    public void removeProjectFunder(int id){
         try {
-            TableUtils.clearTable(connectionSource, ProjectCategory.class);
+            DeleteBuilder<ProjectFunder, Integer> builder = projectFunderDao.deleteBuilder();
+            builder.where().eq("project_funder_id", id);
+            builder.delete();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
+    public void removeProjectFunderBasedOnProjectID(int projectId){
+        try {
+            DeleteBuilder<ProjectFunder, Integer> builder = projectFunderDao.deleteBuilder();
+            builder.where().eq("project_id", projectId);
+            builder.delete();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+        }
+    }
+
+    public void removeAllProjectFunder(){
+        try {
+            TableUtils.clearTable(connectionSource, ProjectFunder.class);
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());
@@ -122,19 +124,19 @@ public class ProjectCategoryManager {
     }
 
     public int getRowCount(){
-        return getAllProjectCategories().size();
+        return getAllProjectFunder().size();
     }
 
     public int getNextID(){
         int id = 0;
         try {
-            QueryBuilder<ProjectCategory, Integer> builder = projectCategoriesDao.queryBuilder();
-            builder.orderBy("category_id", false);
-            ProjectCategory highest = projectCategoriesDao.queryForFirst(builder.prepare());
+            QueryBuilder<ProjectFunder, Integer> builder = projectFunderDao.queryBuilder();
+            builder.orderBy("project_funder_id", false);
+            ProjectFunder highest = projectFunderDao.queryForFirst(builder.prepare());
             if (highest == null){
                 id = 1;
             }else{
-                id = highest.getCategory_id()+1;
+                id = highest.getProject_funder_id()+1;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -143,9 +145,9 @@ public class ProjectCategoryManager {
         return id;
     }
 
-    public void updateProjectCategory(ProjectCategory projectCategory){
+    public void updateProjectFunder(ProjectFunder projectFunder){
         try {
-            projectCategoriesDao.update(projectCategory);
+            projectFunderDao.update(projectFunder);
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+ ":" + e.getMessage());

@@ -1,6 +1,6 @@
 package excelchaos_controller;
 
-import excelchaos_model.SalaryTableManager;
+import excelchaos_model.database.SalaryTableManager;
 import excelchaos_model.utility.PayRateTableNameDateSeperator;
 import excelchaos_model.utility.PayRateTableNameStringEditor;
 import excelchaos_view.PayRateTablesView;
@@ -8,7 +8,6 @@ import excelchaos_view.PayRateTablesView;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.text.DefaultEditorKit;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

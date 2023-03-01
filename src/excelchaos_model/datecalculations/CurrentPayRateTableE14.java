@@ -1,7 +1,7 @@
 package excelchaos_model.datecalculations;
 
-import excelchaos_model.SalaryTable;
-import excelchaos_model.SalaryTableManager;
+import excelchaos_model.database.SalaryTable;
+import excelchaos_model.database.SalaryTableManager;
 import excelchaos_model.utility.PayRateTableNameDateSeperator;
 import excelchaos_model.utility.TableNameDateTuple;
 

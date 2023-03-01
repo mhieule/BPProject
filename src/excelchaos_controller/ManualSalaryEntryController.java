@@ -1,6 +1,10 @@
 package excelchaos_controller;
 
 import excelchaos_model.*;
+import excelchaos_model.database.Employee;
+import excelchaos_model.database.EmployeeDataManager;
+import excelchaos_model.database.ManualSalaryEntry;
+import excelchaos_model.database.ManualSalaryEntryManager;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.ManualSalaryEntryView;
 

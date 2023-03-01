@@ -1,19 +1,7 @@
 package excelchaos_view;
 
-import excelchaos_model.CustomTableColumnAdjuster;
-import excelchaos_model.Employee;
-import excelchaos_model.EmployeeDataManager;
-
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 public class SalaryHistoryView extends JPanel{
 

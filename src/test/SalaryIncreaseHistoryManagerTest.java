@@ -1,5 +1,5 @@
-import excelchaos_model.SalaryIncreaseHistory;
-import excelchaos_model.SalaryIncreaseHistoryManager;
+import excelchaos_model.database.SalaryIncreaseHistory;
+import excelchaos_model.database.SalaryIncreaseHistoryManager;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;

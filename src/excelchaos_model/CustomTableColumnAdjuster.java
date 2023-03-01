@@ -1,8 +1,7 @@
 package excelchaos_model;
 
-import excelchaos_view.CustomTable;
+import excelchaos_view.components.CustomTable;
 
-import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;

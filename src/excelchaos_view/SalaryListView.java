@@ -1,17 +1,10 @@
 package excelchaos_view;
 
 import excelchaos_model.*;
-import excelchaos_model.utility.TableColumnAdjuster;
+import excelchaos_view.components.CustomTable;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 public class SalaryListView extends JPanel {
     private CustomTable salaryDataTable;

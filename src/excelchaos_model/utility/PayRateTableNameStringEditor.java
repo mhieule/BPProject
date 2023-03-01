@@ -1,7 +1,5 @@
 package excelchaos_model.utility;
 
-import excelchaos_model.SalaryTableManager;
-
 public class PayRateTableNameStringEditor {
 
 

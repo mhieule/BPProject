@@ -1,17 +1,12 @@
 package excelchaos_controller;
 
 import excelchaos_model.*;
+import excelchaos_model.database.*;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.ShowPersonView;
 
-import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;

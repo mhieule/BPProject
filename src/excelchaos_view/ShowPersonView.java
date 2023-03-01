@@ -1,15 +1,10 @@
 package excelchaos_view;
 
 import excelchaos_model.*;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_view.components.CustomTable;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 public class ShowPersonView extends JPanel {
     private CustomTable employeeDataTable;

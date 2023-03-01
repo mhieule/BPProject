@@ -1,4 +1,4 @@
-package excelchaos_model;
+package excelchaos_model.database;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;

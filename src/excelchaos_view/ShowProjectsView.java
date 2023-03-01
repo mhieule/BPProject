@@ -1,12 +1,10 @@
 package excelchaos_view;
 
 import excelchaos_model.*;
+import excelchaos_view.components.CustomTable;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 public class ShowProjectsView extends JPanel {
     private CustomTable projectsTable;

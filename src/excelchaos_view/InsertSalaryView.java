@@ -1,6 +1,6 @@
 package excelchaos_view;
 
-import excelchaos_model.EmployeeDataManager;
+import excelchaos_model.database.EmployeeDataManager;
 
 import javax.swing.*;
 import java.awt.*;

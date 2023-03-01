@@ -1,14 +1,7 @@
 package excelchaos_view;
 
-import excelchaos_controller.TabsController;
-import excelchaos_model.EmployeeDataManager;
-
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 public class MainFrame extends JFrame {
     private JMenuBar menubar;

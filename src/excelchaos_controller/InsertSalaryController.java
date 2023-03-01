@@ -1,7 +1,10 @@
 package excelchaos_controller;
 
-import excelchaos_model.*;
 import excelchaos_model.calculations.CalculateSalaryBasedOnPayRateTable;
+import excelchaos_model.database.Contract;
+import excelchaos_model.database.ContractDataManager;
+import excelchaos_model.database.Employee;
+import excelchaos_model.database.EmployeeDataManager;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.InsertSalaryView;
 

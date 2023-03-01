@@ -1,7 +1,6 @@
-import excelchaos_model.ProjectFunder;
-import excelchaos_model.ProjectFunderManager;
+import excelchaos_model.database.ProjectFunder;
+import excelchaos_model.database.ProjectFunderManager;
 
-import excelchaos_model.ProjectManager;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

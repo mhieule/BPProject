@@ -1,7 +1,8 @@
 package excelchaos_view;
 
+import excelchaos_view.components.CustomTable;
+
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class SalaryIncreaseView extends JPanel {

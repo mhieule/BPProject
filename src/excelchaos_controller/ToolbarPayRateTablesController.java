@@ -1,6 +1,6 @@
 package excelchaos_controller;
 
-import excelchaos_model.SalaryTableManager;
+import excelchaos_model.database.SalaryTableManager;
 import excelchaos_view.ToolbarPayRateTablesView;
 
 import javax.swing.*;

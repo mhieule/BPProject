@@ -1,11 +1,13 @@
 package excelchaos_controller;
 
 import excelchaos_model.*;
+import excelchaos_model.database.Contract;
+import excelchaos_model.database.ContractDataManager;
+import excelchaos_model.database.Employee;
+import excelchaos_model.database.EmployeeDataManager;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.SalaryListView;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.awt.*;

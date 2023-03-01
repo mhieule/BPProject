@@ -1,7 +1,6 @@
 package excelchaos_view;
 
-import excelchaos_model.Employee;
-import excelchaos_model.EmployeeDataManager;
+import excelchaos_model.database.EmployeeDataManager;
 import excelchaos_view.components.SearchPanelToolbar;
 import excelchaos_view.layoutmanager.WrapLayout;
 

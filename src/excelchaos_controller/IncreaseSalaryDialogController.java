@@ -2,6 +2,7 @@ package excelchaos_controller;
 
 import excelchaos_model.*;
 import excelchaos_model.calculations.SalaryCalculation;
+import excelchaos_model.database.*;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.IncreaseSalaryDialogView;
 import excelchaos_view.SalaryListView;
@@ -11,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 
 public class IncreaseSalaryDialogController implements ActionListener {

@@ -1,29 +1,26 @@
-package excelchaos_model;
+package excelchaos_model.database;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
-@DatabaseTable(tableName = "ManualSalaryEntry")
-public class ManualSalaryEntry {
+@DatabaseTable(tableName = "PaygradeIncrease")
+public class PaygradeIncrease {
     @DatabaseField()
     private int id;
     @DatabaseField()
     private double new_salary;
     @DatabaseField()
     private Date start_date;
-    @DatabaseField()
-    private String comment;
 
-    public ManualSalaryEntry(int id, double new_salary, Date start_date, String comment){
+    public PaygradeIncrease(int id, double new_salary, Date start_date){
         this.id = id;
         this.new_salary = new_salary;
         this.start_date = start_date;
-        this.comment = comment;
     }
 
-    public ManualSalaryEntry(){
+    public PaygradeIncrease(){
 
     }
 
@@ -46,12 +43,6 @@ public class ManualSalaryEntry {
     public void setStart_date(Date start_date){
         this.start_date = start_date;
     }
-
-    public String getComment(){
-        return this.comment;
-    }
-
-    public void setComment(String comment){
-        this.comment = comment;
-    }
 }
+
+

@@ -1,6 +1,7 @@
-import excelchaos_model.Employee;
-import excelchaos_model.EmployeeDataManager;
+import excelchaos_model.database.Employee;
+import excelchaos_model.database.EmployeeDataManager;
 import org.junit.jupiter.api.Test;
+
 
 import java.util.Calendar;
 import java.util.Date;

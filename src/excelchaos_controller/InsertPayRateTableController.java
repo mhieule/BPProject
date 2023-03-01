@@ -1,8 +1,8 @@
 package excelchaos_controller;
 
 import excelchaos_model.PayRateTableCalculationModel;
-import excelchaos_model.SalaryTable;
-import excelchaos_model.SalaryTableManager;
+import excelchaos_model.database.SalaryTable;
+import excelchaos_model.database.SalaryTableManager;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.InsertPayRateTableView;
 
