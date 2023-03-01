@@ -1,5 +1,6 @@
 package excelchaos_controller;
 
+import excelchaos_model.export.CSVExporter;
 import excelchaos_view.ToolbarManualSalaryEntryView;
 import excelchaos_view.ToolbarSalaryIncreaseView;
 
@@ -36,6 +37,8 @@ public class ToolbarSalaryIncreaseController implements ActionListener {
             if (joptionResult == 0) {
                 salaryIncreaseController.deleteEntries(salaryIncreaseController.getSalaryIncreaseView().getTable().getCurrentSelectedRowsAsArray());
             }
+        } else if (e.getSource() == toolbar.getExportToCSV()) {
+            CSVExporter.createCSVVariableName(salaryIncreaseController.getSalaryIncreaseView().getTable());
         }
     }
 

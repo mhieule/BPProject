@@ -134,12 +134,14 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
                 toolbarSalaryIncreaseController.getToolbar().getDoSalaryIncrease().setEnabled(false);
               //  toolbarSalaryIncreaseController.getToolbar().getEditSalaryEntry().setEnabled(false);
                 toolbarSalaryIncreaseController.getToolbar().getDeleteSalaryEntry().setEnabled(false);
+                toolbarSalaryIncreaseController.getToolbar().getExportToCSV().setEnabled(false);
                 if(salaryIncreaseView.getTable() != null){
                     salaryIncreaseView.getTable().setModel(new DefaultTableModel(null, nullColumns));
                     frameController.getTabs().setLabel(title);
                 }
             } else {
                 toolbarSalaryIncreaseController.getToolbar().getDoSalaryIncrease().setEnabled(true);
+                toolbarSalaryIncreaseController.getToolbar().getExportToCSV().setEnabled(true);
                 EmployeeDataManager employeeDataManager = new EmployeeDataManager();
                 if (!((String) e.getItem()).equals("Keine Auswahl")) {
                     Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) e.getItem());

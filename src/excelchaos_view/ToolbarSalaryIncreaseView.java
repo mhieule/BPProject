@@ -15,7 +15,7 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
 
     private JComboBox nameComboBox;
 
-    private JButton doSalaryIncrease,deleteSalaryEntry;//,editSalaryEntry; TODO Edit Button implementieren
+    private JButton doSalaryIncrease,deleteSalaryEntry,exportToCSV;//,editSalaryEntry; TODO Edit Button implementieren, Vielleicht auch nicht
 
     private JLabel nameLabel = new JLabel("Person auswählen:");
 
@@ -33,6 +33,7 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
         doSalaryIncrease = new JButton("Eintrag hinzufügen");
      //   editSalaryEntry = new JButton("Eintrag bearbeiten");
         deleteSalaryEntry = new JButton("Eintrag löschen");
+        exportToCSV = new JButton("Daten als CSV exportieren");
         nameComboBox = new JComboBox(names.toArray());
         nameComboBox.setBackground(Color.WHITE);
         nameComboBox.setMaximumRowCount(8);
@@ -44,15 +45,18 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
        // add(editSalaryEntry);
         add(deleteSalaryEntry);
         setUpSearchPanel();
+        add(exportToCSV);
      //   editSalaryEntry.setEnabled(false);
         deleteSalaryEntry.setEnabled(false);
         doSalaryIncrease.setEnabled(false);
+        exportToCSV.setEnabled(false);
     }
 
     public void setActionListener(ActionListener l){
         doSalaryIncrease.addActionListener(l);
        // editSalaryEntry.addActionListener(l);
         deleteSalaryEntry.addActionListener(l);
+        exportToCSV.addActionListener(l);
     }
 
     public void setItemListener(ItemListener l){
@@ -72,5 +76,9 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
 
     public JButton getDeleteSalaryEntry() {
         return deleteSalaryEntry;
+    }
+
+    public JButton getExportToCSV() {
+        return exportToCSV;
     }
 }
