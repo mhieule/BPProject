@@ -16,14 +16,14 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class InsertPersonController implements ActionListener {
+
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+
+    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
     private InsertPersonView insertPersonView;
     private MainFrameController frameController;
 
     private String addPersonTab = "Person hinzufügen";
-
-    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
-
-    private ContractDataManager contractDataManager = new ContractDataManager();
     private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
 
     private CalculateSalaryBasedOnPayRateTable calculateSalaryBasedOnPayRateTable = new CalculateSalaryBasedOnPayRateTable();

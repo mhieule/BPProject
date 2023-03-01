@@ -14,7 +14,7 @@ public class ToolbarShowProjectsView extends SearchPanelToolbar {
     private JButton costOverview;
 
 
-    public void init(){
+    public void init() {
         setFloatable(false);
         setBackground(Color.WHITE);
         setLayout(new WrapLayout(FlowLayout.LEFT));

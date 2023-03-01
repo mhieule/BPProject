@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class PayRateTableNameDateSeperator {
     //Datum wird im Format 01.02.2023 (Tag,Monat,Jahr zurückgegeben)
-    public String seperateDateAsString(String tableName){
+    public String seperateDateAsString(String tableName) {
         String resultDate;
         String[] temporary;
         temporary = tableName.split("_");
@@ -14,7 +14,7 @@ public class PayRateTableNameDateSeperator {
         return resultDate;
     }
 
-    public String seperateName(String tableName){
+    public String seperateName(String tableName) {
         String resultName;
         String[] temporary;
         temporary = tableName.split("_");
@@ -22,12 +22,12 @@ public class PayRateTableNameDateSeperator {
         return resultName;
     }
 
-    public LocalDate seperateDateAsDate(String tableName){
+    public LocalDate seperateDateAsDate(String tableName) {
         LocalDate resultDate;
         String[] temporary;
         temporary = tableName.split("_");
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        resultDate = LocalDate.parse(temporary[1],dateTimeFormatter);
+        resultDate = LocalDate.parse(temporary[1], dateTimeFormatter);
 
         return resultDate;
     }

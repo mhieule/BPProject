@@ -12,7 +12,7 @@ public class ToolbarPayRateTablesController implements ActionListener {
 
     private PayRateTablesController payRateController;
 
-    private SalaryTableManager manager = new SalaryTableManager();
+    private SalaryTableManager salaryTableManager = SalaryTableManager.getInstance();
     private InsertSHKPayRateTableController insertSHKPayRateTableController;
     private PayRateStageTypeDialogController payRateStageTypeDialogController;
 
@@ -39,7 +39,7 @@ public class ToolbarPayRateTablesController implements ActionListener {
             }
 
         } else if (e.getSource() == toolbar.getEditExistingPayRateTable()) {
-            ShowPayRateTableController payRateTableController = new ShowPayRateTableController(frameController, manager, payRateController.getPayRateTablesView().getPayRateTableList().getSelectedValue().toString(), payRateController.getPayGradeFromTitle(),payRateController);
+            ShowPayRateTableController payRateTableController = new ShowPayRateTableController(frameController, salaryTableManager, payRateController.getPayRateTablesView().getPayRateTableList().getSelectedValue().toString(), payRateController.getPayGradeFromTitle(), payRateController);
             payRateTableController.insertValuesInTable();
             payRateController.getPayRateTablesView().getPayRateTableList().clearSelection();
             toolbar.getEditExistingPayRateTable().setEnabled(false);

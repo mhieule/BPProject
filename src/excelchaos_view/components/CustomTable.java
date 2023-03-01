@@ -222,100 +222,103 @@ public class CustomTable extends JTable {
         }
         return selectedRows;
     }
-        public String[] getIdsOfCurrentSelectedRows () {
-            int selectedRows = getNumberOfSelectedRows();
 
-            String[] result = new String[selectedRows];
-            int index = 0;
-            for (int row = 0; row < this.getRowCount(); row++) {
-                if ((Boolean) getValueAt(row, 0)) {
-                    result[index] = (String) getValueAt(row, 1);
-                    index++;
+    public String[] getIdsOfCurrentSelectedRows() {
+        int selectedRows = getNumberOfSelectedRows();
 
-                }
-            }
-            return result;
-        }
+        String[] result = new String[selectedRows];
+        int index = 0;
+        for (int row = 0; row < this.getRowCount(); row++) {
+            if ((Boolean) getValueAt(row, 0)) {
+                result[index] = (String) getValueAt(row, 1);
+                index++;
 
-        public void deselectSelectedRows(){
-            for (int row = 0; row < this.getRowCount(); row++) {
-                if((Boolean) getValueAt(row,0)){
-                    setValueAt(false,row,0);
-                }
             }
         }
-
-        public String[][] getCurrentSelectedRowsAsArray () {
-            int selectedRows = 0;
-            for (int row = 0; row < this.getRowCount(); row++) {
-                if ((Boolean) getValueAt(row, 0)) {
-                    selectedRows++;
-                }
-            }
-            System.out.println(selectedRows);
-            String[][] result = new String[selectedRows][this.getColumnCount()-1];
-            int index = 0;
-            for (int row = 0; row < this.getRowCount(); row++) {
-                for (int column = 1; column < this.getColumnCount(); column++) {
-                    if ((Boolean) getValueAt(row, 0)) {
-                        System.out.println(index);
-                        System.out.println(column-1);
-                        result[index][column-1] = (String) getValueAt(row, column);
-
-                    }
-
-                }
-                if ((Boolean) getValueAt(row, 0)) {
-                    index++;
-                }
-
-
-            }
-            return result;
-        }
-
-        public boolean isRowCurrentlySelected () {
-            int selectedRows = 0;
-            for (int row = 0; row < this.getRowCount(); row++) {
-                if ((Boolean) getValueAt(row, 0)) {
-                    selectedRows++;
-                }
-            }
-            return selectedRows > 0;
-        }
-
-        /**
-         * Same as the method above, this method is used to retrieve one row as a complete table
-         * @param rowIndex the row index indicating the row to be chosen to turn into a table
-         * @return a JTable with header containing only the selected row
-         * @see CustomTable
-         */
-        public JTable getRowAsTable ( int rowIndex){
-            DefaultTableModel result = new DefaultTableModel(null, getTableHeaderAsStringArray());
-            Object[] rowResult = new Object[getColumnCount()];
-            for (int j = 0; j < this.getColumnCount(); j++) {
-                rowResult[j] = getValueAt(rowIndex, j);
-
-            }
-            result.addRow(rowResult);
-            return new JTable(result);
-        }
-
-
-        /**This method is used to retrieve the headers of the table colummns.
-         *
-         * @return headers of the table colummns as string array
-         */
-
-
-        public String[] getTableHeaderAsStringArray () {
-            String[] result = new String[getColumnCount()];
-            for (int i = 0; i < getColumnCount(); i++) {
-                result[i] = getColumnName(i);
-            }
-            return result;
-        }
-
+        return result;
     }
+
+    public void deselectSelectedRows() {
+        for (int row = 0; row < this.getRowCount(); row++) {
+            if ((Boolean) getValueAt(row, 0)) {
+                setValueAt(false, row, 0);
+            }
+        }
+    }
+
+    public String[][] getCurrentSelectedRowsAsArray() {
+        int selectedRows = 0;
+        for (int row = 0; row < this.getRowCount(); row++) {
+            if ((Boolean) getValueAt(row, 0)) {
+                selectedRows++;
+            }
+        }
+        System.out.println(selectedRows);
+        String[][] result = new String[selectedRows][this.getColumnCount() - 1];
+        int index = 0;
+        for (int row = 0; row < this.getRowCount(); row++) {
+            for (int column = 1; column < this.getColumnCount(); column++) {
+                if ((Boolean) getValueAt(row, 0)) {
+                    System.out.println(index);
+                    System.out.println(column - 1);
+                    result[index][column - 1] = (String) getValueAt(row, column);
+
+                }
+
+            }
+            if ((Boolean) getValueAt(row, 0)) {
+                index++;
+            }
+
+
+        }
+        return result;
+    }
+
+    public boolean isRowCurrentlySelected() {
+        int selectedRows = 0;
+        for (int row = 0; row < this.getRowCount(); row++) {
+            if ((Boolean) getValueAt(row, 0)) {
+                selectedRows++;
+            }
+        }
+        return selectedRows > 0;
+    }
+
+    /**
+     * Same as the method above, this method is used to retrieve one row as a complete table
+     *
+     * @param rowIndex the row index indicating the row to be chosen to turn into a table
+     * @return a JTable with header containing only the selected row
+     * @see CustomTable
+     */
+    public JTable getRowAsTable(int rowIndex) {
+        DefaultTableModel result = new DefaultTableModel(null, getTableHeaderAsStringArray());
+        Object[] rowResult = new Object[getColumnCount()];
+        for (int j = 0; j < this.getColumnCount(); j++) {
+            rowResult[j] = getValueAt(rowIndex, j);
+
+        }
+        result.addRow(rowResult);
+        return new JTable(result);
+    }
+
+
+    /**
+     * This method is used to retrieve the headers of the table colummns.
+     *
+     * @return headers of the table colummns as string array
+     */
+
+
+    public String[] getTableHeaderAsStringArray() {
+        String[] result = new String[getColumnCount()];
+        for (int i = 0; i < getColumnCount(); i++) {
+            result[i] = getColumnName(i);
+        }
+        return result;
+    }
+
+}
 
 

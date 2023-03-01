@@ -17,6 +17,10 @@ import java.util.Date;
 public class IncreaseSalaryDialogController implements ActionListener {
     private MainFrameController frameController;
     private IncreaseSalaryDialogView increaseSalaryDialogView;
+
+    private SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = SalaryIncreaseHistoryManager.getInstance();
+    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
     private SalaryListView salaryListView;
     private boolean isProjectedColumnOpened;
     private String employeeName;
@@ -95,9 +99,7 @@ public class IncreaseSalaryDialogController implements ActionListener {
     //TODO migrate to model
     public void writeDataToDB(IncreaseSalaryOption option){
         //DB connection
-        SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = new SalaryIncreaseHistoryManager();
-        ContractDataManager contractDataManager = new ContractDataManager();
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+
         Employee tempEmployee = employeeDataManager.getEmployeeByName(employeeName);
 
         //Information about this employee

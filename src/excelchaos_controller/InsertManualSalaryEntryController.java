@@ -18,6 +18,9 @@ import java.util.Date;
 
 public class InsertManualSalaryEntryController implements ActionListener {
 
+    private ManualSalaryEntryManager manualSalaryEntryManager = ManualSalaryEntryManager.getInstance();
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+
     private String title = "Gehaltseintrag hinzufügen";
 
     private InsertManualSalaryEntryView insertManualSalaryEntryView;
@@ -65,8 +68,6 @@ public class InsertManualSalaryEntryController implements ActionListener {
     }
 
     private void insertEntryInDB(){
-        ManualSalaryEntryManager manager = new ManualSalaryEntryManager();
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
         Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) insertManualSalaryEntryView.getNamePickList().getSelectedItem());
         int id = temporaryEmployee.getId();
@@ -76,9 +77,9 @@ public class InsertManualSalaryEntryController implements ActionListener {
         String comment = insertManualSalaryEntryView.getTfComment().getText();
         ManualSalaryEntry manualSalaryEntry = new ManualSalaryEntry(id,newSalary,usageDate,comment);
         if(currentEditingID != 0){
-            manager.removeManualSalaryEntry(currentEditingID,editingDate);
+            manualSalaryEntryManager.removeManualSalaryEntry(currentEditingID,editingDate);
         }
-        manager.addManualSalaryEntry(manualSalaryEntry);
+        manualSalaryEntryManager.addManualSalaryEntry(manualSalaryEntry);
         insertManualSalaryEntryView.revalidate();
         insertManualSalaryEntryView.repaint();
         ManualSalaryEntryController manualSalaryEntryController = frameController.getManualSalaryEntryController();

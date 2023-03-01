@@ -18,9 +18,14 @@ import java.util.List;
 public class SalaryIncreaseHistoryManager {
     private ConnectionSource connectionSource;
     private Dao<SalaryIncreaseHistory, Object> salaryIncreaseHistoriesDao;
-    public SalaryIncreaseHistoryManager() {
+
+    private static String databaseURL;
+
+    private static SalaryIncreaseHistoryManager salaryIncreaseHistoryManager;
+
+    private SalaryIncreaseHistoryManager() {
         try {
-            String databaseUrl = "jdbc:sqlite:Excelchaos.db";
+            String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
             this.salaryIncreaseHistoriesDao = DaoManager.createDao(connectionSource, SalaryIncreaseHistory.class);
         } catch (Exception e) {
@@ -29,105 +34,118 @@ public class SalaryIncreaseHistoryManager {
         }
     }
 
-    public void createTable(){
+    public void createTable() {
         try {
             TableUtils.createTable(connectionSource, SalaryIncreaseHistory.class);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
-    public void deleteTable(){
+    public void deleteTable() {
         try {
             TableUtils.dropTable(connectionSource, SalaryIncreaseHistory.class, true);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
-    public void addSalaryIncreaseHistory(SalaryIncreaseHistory salaryIncreaseHistory){
+    public void addSalaryIncreaseHistory(SalaryIncreaseHistory salaryIncreaseHistory) {
         try {
             salaryIncreaseHistoriesDao.create(salaryIncreaseHistory);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
-    public void  removeSalaryIncreaseHistory(int id, Date date){
-        try{
+    public void removeSalaryIncreaseHistory(int id, Date date) {
+        try {
             DeleteBuilder<SalaryIncreaseHistory, Object> builder = salaryIncreaseHistoriesDao.deleteBuilder();
             builder.where().eq("id", id).and().eq("start_date", date);
             builder.delete();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
-    public void  removeAllSalaryIncreaseHistoryForEmployee(int id){
-        try{
+    public void removeAllSalaryIncreaseHistoryForEmployee(int id) {
+        try {
             DeleteBuilder<SalaryIncreaseHistory, Object> builder = salaryIncreaseHistoriesDao.deleteBuilder();
             builder.where().eq("id", id);
             builder.delete();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
-    public void removeAllSalaryIncreaseHistories(){
+    public void removeAllSalaryIncreaseHistories() {
         try {
             TableUtils.clearTable(connectionSource, SalaryIncreaseHistory.class);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
-    public List<SalaryIncreaseHistory> getSalaryIncreaseHistory(int id){
+    public List<SalaryIncreaseHistory> getSalaryIncreaseHistory(int id) {
         List<SalaryIncreaseHistory> salaryIncreaseHistoryList = new ArrayList<>();
-        QueryBuilder<SalaryIncreaseHistory,Object> queryBuilder = salaryIncreaseHistoriesDao.queryBuilder();
+        QueryBuilder<SalaryIncreaseHistory, Object> queryBuilder = salaryIncreaseHistoriesDao.queryBuilder();
         try {
-            queryBuilder.where().eq("id",id);
+            queryBuilder.where().eq("id", id);
             PreparedQuery<SalaryIncreaseHistory> preparedQuery = queryBuilder.prepare();
             salaryIncreaseHistoryList = salaryIncreaseHistoriesDao.query(preparedQuery);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
         return salaryIncreaseHistoryList;
     }
 
-    public List<SalaryIncreaseHistory> getSalaryIncreaseHistoryByDate(int id, Date date){
+    public List<SalaryIncreaseHistory> getSalaryIncreaseHistoryByDate(int id, Date date) {
         List<SalaryIncreaseHistory> salaryIncreaseHistoryList = new ArrayList<>();
-        QueryBuilder<SalaryIncreaseHistory,Object> queryBuilder = salaryIncreaseHistoriesDao.queryBuilder();
+        QueryBuilder<SalaryIncreaseHistory, Object> queryBuilder = salaryIncreaseHistoriesDao.queryBuilder();
         try {
-            queryBuilder.where().eq("id",id).and().eq("start_date", date);
+            queryBuilder.where().eq("id", id).and().eq("start_date", date);
             PreparedQuery<SalaryIncreaseHistory> preparedQuery = queryBuilder.prepare();
             salaryIncreaseHistoryList = salaryIncreaseHistoriesDao.query(preparedQuery);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
         return salaryIncreaseHistoryList;
     }
 
-    public List<SalaryIncreaseHistory> getAllSalaryIncreaseHistories(){
+    public List<SalaryIncreaseHistory> getAllSalaryIncreaseHistories() {
         List<SalaryIncreaseHistory> salaryIncreaseHistoryList = new ArrayList<>();
         try {
             salaryIncreaseHistoryList = salaryIncreaseHistoriesDao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
         return salaryIncreaseHistoryList;
     }
 
-    public int getRowCount(int id){
+    public int getRowCount(int id) {
         List<SalaryIncreaseHistory> salaryIncreaseHistoryList = getSalaryIncreaseHistory(id);
         return salaryIncreaseHistoryList.size();
     }
+
+    public static SalaryIncreaseHistoryManager getInstance() {
+        if(salaryIncreaseHistoryManager == null){
+            salaryIncreaseHistoryManager = new SalaryIncreaseHistoryManager();
+        }
+        return salaryIncreaseHistoryManager;
+    }
+
+    public static void setDatabaseURL(String databaseURL) {
+        SalaryIncreaseHistoryManager.databaseURL = databaseURL;
+    }
+
+
 }

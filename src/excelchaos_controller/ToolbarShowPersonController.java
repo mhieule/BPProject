@@ -26,9 +26,6 @@ public class ToolbarShowPersonController implements ActionListener {
     }
 
 
-
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toolbar.getInsertPerson()) {
@@ -42,7 +39,7 @@ public class ToolbarShowPersonController implements ActionListener {
         } else if (e.getSource() == toolbar.getDeletePerson()) {
             Object[] options = {"Ok", "Abbrechen"};
             int joptionResult = JOptionPane.showOptionDialog(null, "Sind Sie sicher, dass die ausgewählten Mitarbeiter gelöscht werden sollen?", "Warnung", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-            if(joptionResult == 0){
+            if (joptionResult == 0) {
                 String[] employeeIds = showPersonController.getPersonView().getTable().getIdsOfCurrentSelectedRows();
                 int[] Ids = new int[employeeIds.length];
                 for (int i = 0; i < employeeIds.length; i++) {
@@ -53,7 +50,7 @@ public class ToolbarShowPersonController implements ActionListener {
 
 
         } else if (e.getSource() == toolbar.getExportToCSV()) {
-            CSVExporter.createCSV(showPersonController.getPersonView().getTable(),"Personendaten.csv");
+            CSVExporter.createCSV(showPersonController.getPersonView().getTable(), "Personendaten.csv");
 
         }
     }

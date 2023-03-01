@@ -193,16 +193,15 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(component.getParent().getParent().getParent().getParent().getParent().getClass() == NewFrame.class){
-                    if(((DnDCloseButtonTabbedPane)component.getParent()).getTabCount() <= 1){
+                if (component.getParent().getParent().getParent().getParent().getParent().getClass() == NewFrame.class) {
+                    if (((DnDCloseButtonTabbedPane) component.getParent()).getTabCount() <= 1) {
                         ((javax.swing.JFrame) component.getParent().getParent().getParent().getParent().getParent()).dispose();
-                    } else if (((DnDCloseButtonTabbedPane)component.getParent()).getTabCount() > 1){
+                    } else if (((DnDCloseButtonTabbedPane) component.getParent()).getTabCount() > 1) {
                         ((DnDCloseButtonTabbedPane) component.getParent()).remove(component);
                     }
                 } else {
                     ((DnDCloseButtonTabbedPane) component.getParent()).remove(component);
                 }
-
 
 
             }
@@ -221,11 +220,12 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
     public void setActionListener(ActionListener l) {
         button.addActionListener(l);
     }
-    public void removeTabNewWindow(Component component){
-        if(component.getParent().getParent().getParent().getParent().getParent().getClass() == NewFrame.class){
-            if(((DnDCloseButtonTabbedPane)component.getParent()).getTabCount() <= 1){
+
+    public void removeTabNewWindow(Component component) {
+        if (component.getParent().getParent().getParent().getParent().getParent().getClass() == NewFrame.class) {
+            if (((DnDCloseButtonTabbedPane) component.getParent()).getTabCount() <= 1) {
                 ((javax.swing.JFrame) component.getParent().getParent().getParent().getParent().getParent()).dispose();
-            } else if (((DnDCloseButtonTabbedPane)component.getParent()).getTabCount() > 1){
+            } else if (((DnDCloseButtonTabbedPane) component.getParent()).getTabCount() > 1) {
                 ((DnDCloseButtonTabbedPane) component.getParent()).remove(component);
             }
         } else {

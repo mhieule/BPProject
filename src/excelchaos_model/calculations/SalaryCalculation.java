@@ -10,13 +10,13 @@ import java.util.Date;
 import java.util.List;
 
 public class SalaryCalculation {
-    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
 
-    private ContractDataManager contractDataManager = new ContractDataManager();
+    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
 
-    private SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = new SalaryIncreaseHistoryManager();
+    private SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = SalaryIncreaseHistoryManager.getInstance();
 
-    private ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
+    private ManualSalaryEntryManager manualSalaryEntryManager = ManualSalaryEntryManager.getInstance();
 
 
     public SalaryCalculation() {
@@ -228,7 +228,7 @@ public class SalaryCalculation {
                     temporaryDate = salaryIncreaseHistoryManager.getSalaryIncreaseHistory(id).get(i).getStart_date();
                     isBonusPayment = salaryIncreaseHistoryManager.getSalaryIncreaseHistory(id).get(i).getIs_additional_payment();
                 } else if (salaryIncreaseHistoryManager.getSalaryIncreaseHistory(id).get(i).getStart_date().compareTo(temporaryDate) > 0) {
-                    if(isBonusPayment){
+                    if (isBonusPayment) {
                         isBonusPayment = salaryIncreaseHistoryManager.getSalaryIncreaseHistory(id).get(i).getIs_additional_payment();
                     } else {
                         lastSalaryIncreaseDateNotBonusPayment = temporaryDate;
@@ -246,7 +246,7 @@ public class SalaryCalculation {
                 cal2.setTime(currentDate);
                 if (cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH)) {
                     lastSalaryIncreaseDate = temporaryDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                } else if (lastSalaryIncreaseDateNotBonusPayment != null){
+                } else if (lastSalaryIncreaseDateNotBonusPayment != null) {
                     lastSalaryIncreaseDate = lastSalaryIncreaseDateNotBonusPayment.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 } else return null;
             } else lastSalaryIncreaseDate = temporaryDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();

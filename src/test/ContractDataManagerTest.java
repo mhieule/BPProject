@@ -10,14 +10,14 @@ public class ContractDataManagerTest {
 
     @Test
     void testRemoveAll(){
-        var manager = new ContractDataManager();
+        var manager = ContractDataManager.getInstance();
         manager.removeAllContracts();
         assertEquals(manager.getAllContracts().size(),0);
     }
 
     @Test
     void testGetValid(){
-        var manager = new ContractDataManager();
+        var manager = ContractDataManager.getInstance();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -42,7 +42,7 @@ public class ContractDataManagerTest {
 
     @Test
     void testGetInvalid(){
-        var manager = new ContractDataManager();
+        var manager = ContractDataManager.getInstance();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -58,7 +58,7 @@ public class ContractDataManagerTest {
 
     @Test
     void testRemoveValid(){
-        var manager = new ContractDataManager();
+        var manager = ContractDataManager.getInstance();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -75,7 +75,7 @@ public class ContractDataManagerTest {
 
     @Test
     void testRemoveInvalid(){
-        var manager = new ContractDataManager();
+        var manager =ContractDataManager.getInstance();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -92,7 +92,7 @@ public class ContractDataManagerTest {
 
     @Test
     void testGetAll(){
-        var manager = new ContractDataManager();
+        var manager = ContractDataManager.getInstance();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -123,7 +123,7 @@ public class ContractDataManagerTest {
 
     @Test
     void testGetRowCoun(){
-        var manager = new ContractDataManager();
+        var manager = ContractDataManager.getInstance();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -140,14 +140,14 @@ public class ContractDataManagerTest {
 
     @Test
     void testGetRowCountEmpty(){
-        var manager = new ContractDataManager();
+        var manager = ContractDataManager.getInstance();
         manager.removeAllContracts();
         assertEquals(manager.getRowCount(), 0);
     }
 
     @Test
     void testUpdateValid(){
-        var manager = new ContractDataManager();
+        var manager = ContractDataManager.getInstance();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -175,7 +175,7 @@ public class ContractDataManagerTest {
 
     @Test
     void testUpdateInvalid(){
-        var manager = new ContractDataManager();
+        var manager = ContractDataManager.getInstance();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);

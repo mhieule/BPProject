@@ -10,29 +10,30 @@ public class CustomTableModel extends DefaultTableModel implements TableModelLis
     private String[][] data;
     private String[] header;
     private boolean[] checkboxValues;
+
     public CustomTableModel(String[][] data, String[] header) {
         super(data, Arrays.copyOf(header, header.length));
-        this.header=header;
-        this.data=data;
+        this.header = header;
+        this.data = data;
 
 
         checkboxValues = new boolean[data.length];
         for (int i = 0; i < data.length; i++) {
-            checkboxValues[i]=false;
+            checkboxValues[i] = false;
         }
 
     }
 
     @Override
     public String getColumnName(int column) {
-        if(column==0) {
+        if (column == 0) {
             return "";
-        } else return header[column-1];
+        } else return header[column - 1];
     }
 
     @Override
     public boolean isCellEditable(int row, int column) {
-        if(column==0){
+        if (column == 0) {
             return true;
         } else return false;
     }
@@ -61,7 +62,7 @@ public class CustomTableModel extends DefaultTableModel implements TableModelLis
      */
     @Override
     public int getColumnCount() {
-        return super.getColumnCount()+1;
+        return super.getColumnCount() + 1;
     }
 
 
@@ -75,24 +76,24 @@ public class CustomTableModel extends DefaultTableModel implements TableModelLis
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if(columnIndex==0){
+        if (columnIndex == 0) {
             return checkboxValues[rowIndex];
         }
-        return super.getValueAt(rowIndex, columnIndex-1);
+        return super.getValueAt(rowIndex, columnIndex - 1);
     }
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        if(columnIndex==0){
-            checkboxValues[rowIndex]=(boolean) aValue;
+        if (columnIndex == 0) {
+            checkboxValues[rowIndex] = (boolean) aValue;
             fireTableCellUpdated(rowIndex, 0);
-        } else super.setValueAt(aValue, rowIndex, columnIndex-1);
+        } else super.setValueAt(aValue, rowIndex, columnIndex - 1);
 
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        if(columnIndex == 0){
+        if (columnIndex == 0) {
             return Boolean.class;
         }
         return super.getColumnClass(columnIndex);
@@ -101,11 +102,11 @@ public class CustomTableModel extends DefaultTableModel implements TableModelLis
 
     @Override
     public void tableChanged(TableModelEvent e) {
-        if(e.getType()== TableModelEvent.UPDATE){
-            int row=e.getFirstRow();
-            int column=e.getColumn();
-            System.out.println("Row and column has been changed at "+row+".."+column);
-            System.out.println("New value "+getValueAt(row, column));
+        if (e.getType() == TableModelEvent.UPDATE) {
+            int row = e.getFirstRow();
+            int column = e.getColumn();
+            System.out.println("Row and column has been changed at " + row + ".." + column);
+            System.out.println("New value " + getValueAt(row, column));
         }
     }
 

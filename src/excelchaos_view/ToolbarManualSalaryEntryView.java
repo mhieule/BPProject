@@ -13,20 +13,22 @@ import java.util.List;
 
 public class ToolbarManualSalaryEntryView extends SearchPanelToolbar {
 
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+
     private JComboBox nameComboBox;
 
-    private JButton addSalaryEntry,editSalaryEntry,deleteSalaryEntry,exportToCSV;
+    private JButton addSalaryEntry, editSalaryEntry, deleteSalaryEntry, exportToCSV;
 
     private JLabel nameLabel = new JLabel("Person auswählen:");
 
-    public void init(){
+    public void init() {
         setFloatable(false);
         setBackground(Color.WHITE);
         setLayout(new WrapLayout(FlowLayout.LEFT));
 
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+
         ArrayList<String> employeeNames = new ArrayList<String>(List.of(employeeDataManager.getAllEmployeesNameList()));
-        ArrayList<String>names = new ArrayList<String>();
+        ArrayList<String> names = new ArrayList<String>();
         names.add("Keine Auswahl");
         names.addAll(employeeNames);
 
@@ -39,9 +41,9 @@ public class ToolbarManualSalaryEntryView extends SearchPanelToolbar {
         nameComboBox.setBackground(Color.WHITE);
         nameComboBox.setMaximumRowCount(8);
         add(nameLabel);
-        addSeparator(new Dimension(5,10));
+        addSeparator(new Dimension(5, 10));
         add(nameComboBox);
-        addSeparator(new Dimension(20,10));
+        addSeparator(new Dimension(20, 10));
         add(addSalaryEntry);
         add(editSalaryEntry);
         add(deleteSalaryEntry);
@@ -53,18 +55,18 @@ public class ToolbarManualSalaryEntryView extends SearchPanelToolbar {
         exportToCSV.setEnabled(false);
     }
 
-    public void setActionListener(ActionListener l){
+    public void setActionListener(ActionListener l) {
         addSalaryEntry.addActionListener(l);
         editSalaryEntry.addActionListener(l);
         deleteSalaryEntry.addActionListener(l);
         exportToCSV.addActionListener(l);
     }
 
-    public void setItemListener(ItemListener l){
+    public void setItemListener(ItemListener l) {
         nameComboBox.addItemListener(l);
     }
 
-    public JComboBox getNameComboBox(){
+    public JComboBox getNameComboBox() {
         return nameComboBox;
     }
 

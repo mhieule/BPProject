@@ -14,17 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ShowProjectsController implements ActionListener, TableModelListener {
+    private ProjectManager projectManager = ProjectManager.getInstance();
+    private ProjectCategoryManager projectCategoryManager = ProjectCategoryManager.getInstance();
+    private ProjectFunderManager projectFunderManager = ProjectFunderManager.getInstance();
+    private ProjectParticipationManager projectParticipationManager = ProjectParticipationManager.getInstance();
     private ShowProjectsView showProjectsView;
     private MainFrameController frameController;
     private ToolbarShowProjectsController toolbarShowProjects;
-
-    private ProjectManager projectManager = new ProjectManager();
-
-    private ProjectCategoryManager projectCategoryManager = new ProjectCategoryManager();
-
-    private ProjectFunderManager projectFunderManager = new ProjectFunderManager();
-
-    private ProjectParticipationManager projectParticipationManager = new ProjectParticipationManager();
     private String title = "Projektdaten";
 
     private String columns[] = {"ID", "Name", "Bewilligungsdatum", "Anfangsdatum", "Enddatum"};
@@ -37,7 +33,7 @@ public class ShowProjectsController implements ActionListener, TableModelListene
         showProjectsView.init();
         createTableWithData(getProjectsDataFromDataBase());
         showProjectsView.add(toolbarShowProjects.getToolbar(), BorderLayout.NORTH);
-        SearchAndFilterModel.setUpSearchAndFilterModel(showProjectsView.getTable(),toolbarShowProjects.getToolbar());
+        SearchAndFilterModel.setUpSearchAndFilterModel(showProjectsView.getTable(), toolbarShowProjects.getToolbar());
     }
 
     public ShowProjectsView getShowProjectsView() {
@@ -76,8 +72,9 @@ public class ShowProjectsController implements ActionListener, TableModelListene
         showProjectsView.createProjectsTable(tableData, columns);
         showProjectsView.getTable().getModel().addTableModelListener(this);
     }
-    public void updateData(String [][] tableData) {
-        CustomTableModel customTableModel = new CustomTableModel(tableData,columns);
+
+    public void updateData(String[][] tableData) {
+        CustomTableModel customTableModel = new CustomTableModel(tableData, columns);
         showProjectsView.getTable().setModel(customTableModel);
         showProjectsView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
         showProjectsView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
@@ -85,13 +82,13 @@ public class ShowProjectsController implements ActionListener, TableModelListene
         CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(showProjectsView.getTable());
         tca.adjustColumns();
         customTableModel.addTableModelListener(this);
-        SearchAndFilterModel.setUpSearchAndFilterModel(showProjectsView.getTable(),toolbarShowProjects.getToolbar());
+        SearchAndFilterModel.setUpSearchAndFilterModel(showProjectsView.getTable(), toolbarShowProjects.getToolbar());
         toolbarShowProjects.getToolbar().getEditProject().setEnabled(false);
         toolbarShowProjects.getToolbar().getDeleteProject().setEnabled(false);
         toolbarShowProjects.getToolbar().getCostOverview().setEnabled(false);
     }
 
-    public void deleteData(int[] projectIds){
+    public void deleteData(int[] projectIds) {
         for (int i = 0; i < projectIds.length; i++) {
             projectCategoryManager.removeProjectCategoryBasedOnProjectId(projectIds[i]);
             projectFunderManager.removeProjectFunderBasedOnProjectID(projectIds[i]);

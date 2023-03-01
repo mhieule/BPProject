@@ -7,14 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ProjectCategoryManagerTest {
     @Test
     void testRemoveAll(){
-        var manager = new ProjectCategoryManager();
+        var manager = ProjectCategoryManager.getInstance();
         manager.removeAllProjectCategories();
         assertEquals(manager.getAllProjectCategories().size(), 0);
     }
 
     @Test
     void testGetValid(){
-        var manager = new ProjectCategoryManager();
+        var manager = ProjectCategoryManager.getInstance();
         manager.removeAllProjectCategories();
         var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
         manager.addProjectCategory(projectCategory);
@@ -27,7 +27,7 @@ public class ProjectCategoryManagerTest {
 
     @Test
     void testGetInvalid(){
-        var manager = new ProjectCategoryManager();
+        var manager = ProjectCategoryManager.getInstance();
         manager.removeAllProjectCategories();
         var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
         manager.addProjectCategory(projectCategory);
@@ -37,7 +37,7 @@ public class ProjectCategoryManagerTest {
 
     @Test
     void testRemoveValid(){
-        var manager = new ProjectCategoryManager();
+        var manager = ProjectCategoryManager.getInstance();
         manager.removeAllProjectCategories();
         var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
         manager.addProjectCategory(projectCategory);
@@ -47,7 +47,7 @@ public class ProjectCategoryManagerTest {
 
     @Test
     void testRemoveInvalid(){
-        var manager = new ProjectCategoryManager();
+        var manager = ProjectCategoryManager.getInstance();
         manager.removeAllProjectCategories();
         var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
         manager.addProjectCategory(projectCategory);
@@ -58,7 +58,7 @@ public class ProjectCategoryManagerTest {
 
     @Test
     void testGetAll(){
-        var manager = new ProjectCategoryManager();
+        var manager = ProjectCategoryManager.getInstance();
         manager.removeAllProjectCategories();
         var projectCategories = new ProjectCategory[10];
         for (int i = 0 ; i < 10; i++){
@@ -77,7 +77,7 @@ public class ProjectCategoryManagerTest {
 
     @Test
     void testGetRowCount(){
-        var manager = new ProjectCategoryManager();
+        var manager =ProjectCategoryManager.getInstance();
         manager.removeAllProjectCategories();
         for (int i = 0 ; i < 10; i++){
             var projectCategory = new ProjectCategory(i, i, "test_1", 420.0);
@@ -88,14 +88,14 @@ public class ProjectCategoryManagerTest {
 
     @Test
     void testGetRowCountEmpty(){
-        var manager = new ProjectCategoryManager();
+        var manager = ProjectCategoryManager.getInstance();
         manager.removeAllProjectCategories();
         assertEquals(manager.getRowCount(), 0);
     }
 
     @Test
     void testUpdateValid(){
-        var manager = new ProjectCategoryManager();
+        var manager = ProjectCategoryManager.getInstance();
         manager.removeAllProjectCategories();
         var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
         manager.addProjectCategory(projectCategory);
@@ -110,7 +110,7 @@ public class ProjectCategoryManagerTest {
 
     @Test
     void testUpdateInvalid(){
-        var manager = new ProjectCategoryManager();
+        var manager = ProjectCategoryManager.getInstance();
         manager.removeAllProjectCategories();
         var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
         manager.addProjectCategory(projectCategory);
@@ -125,7 +125,7 @@ public class ProjectCategoryManagerTest {
 
     @Test
     void testGetNextID(){
-        var manager = new ProjectCategoryManager();
+        var manager = ProjectCategoryManager.getInstance();
         manager.removeAllProjectCategories();
         var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
         manager.addProjectCategory(projectCategory);
@@ -134,7 +134,7 @@ public class ProjectCategoryManagerTest {
 
     @Test
     void testGetNextIDEmpty(){
-        var manager = new ProjectCategoryManager();
+        var manager = ProjectCategoryManager.getInstance();
         manager.removeAllProjectCategories();
         assertEquals(manager.getNextID(), 1);
     }

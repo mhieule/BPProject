@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SalaryTableManagerTest {
     @Test
     void testRemoveAll(){
-        var manager = new SalaryTableManager();
+        var manager = SalaryTableManager.getInstance();
         manager.removeAllTables();
         assertEquals(manager.getAllSalaryTables().size(), 0);
     }
@@ -15,7 +15,7 @@ public class SalaryTableManagerTest {
 
     @Test
     void testGetValid(){
-        var manager = new SalaryTableManager();
+        var manager = SalaryTableManager.getInstance();
         manager.removeAllTables();
         var salaryTable = new SalaryTable("test_01",  0.25, 4.0,
                 2.0, 3.0, 1.9, 1.7, 2.9, 3.1, 6.0, 5.1, 5.2, 5.3, 5.6, 5.7, 6.3, "E13");
@@ -44,7 +44,7 @@ public class SalaryTableManagerTest {
 
     @Test
     void testGetInvalid(){
-        var manager = new SalaryTableManager();
+        var manager = SalaryTableManager.getInstance();
         manager.removeAllTables();
         var salaryTable = new SalaryTable("test_01",  0.25, 4.0,
                 2.0, 3.0, 1.9, 1.7, 2.9, 3.1, 6.0, 5.1, 5.2, 5.3, 5.6, 5.7, 6.3, "E13");
@@ -55,7 +55,7 @@ public class SalaryTableManagerTest {
 
     @Test
     void testRemoveValid(){
-        var manager = new SalaryTableManager();
+        var manager = SalaryTableManager.getInstance();
         manager.removeAllTables();
         var salaryTable = new SalaryTable("test_01",  0.25, 4.0,
                 2.0, 3.0, 1.9, 1.7, 2.9, 3.1, 6.0, 5.1, 5.2, 5.3, 5.6, 5.7, 6.3, "E13");
@@ -67,7 +67,7 @@ public class SalaryTableManagerTest {
 
     @Test
     void testGetAll(){
-        var manager = new SalaryTableManager();
+        var manager = SalaryTableManager.getInstance();
         manager.removeAllTables();
         var salaryTables = new SalaryTable[10];
         for (int i = 0; i < 10; i++){
@@ -102,7 +102,7 @@ public class SalaryTableManagerTest {
 
     @Test
     void testGetNum(){
-        var manager = new SalaryTableManager();
+        var manager = SalaryTableManager.getInstance();
         manager.removeAllTables();
         var salaryTable = new SalaryTable("test_01",  0.25, 4.0,
                 2.0, 3.0, 1.9, 1.7, 2.9, 3.1, 6.0, 5.1, 5.2, 5.3, 5.6, 5.7, 6.3, "E13");
@@ -116,14 +116,14 @@ public class SalaryTableManagerTest {
 
     @Test
     void testGetNumEmpty(){
-        var manager = new SalaryTableManager();
+        var manager =SalaryTableManager.getInstance();
         manager.removeAllTables();
         assertEquals(manager.getNumOfTables("E13"), 0);
     }
 
     @Test
     void testGetDistinct(){
-        var manager = new SalaryTableManager();
+        var manager = SalaryTableManager.getInstance();
         manager.removeAllTables();
         var salaryTable = new SalaryTable("test_01",  0.25, 4.0,
                 2.0, 3.0, 1.9, 1.7, 2.9, 3.1, 6.0, 5.1, 5.2, 5.3, 5.6, 5.7, 6.3, "E13");
@@ -138,7 +138,7 @@ public class SalaryTableManagerTest {
 
     @Test
     void testGetDistinctEmpty(){
-        var manager = new SalaryTableManager();
+        var manager = SalaryTableManager.getInstance();
         manager.removeAllTables();
         assertEquals(manager.getDistinctTableNames("E13").size(), 0);
     }

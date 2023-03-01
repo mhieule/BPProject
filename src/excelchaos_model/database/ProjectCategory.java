@@ -15,38 +15,38 @@ public class ProjectCategory {
     @DatabaseField
     private double approved_funds;
 
-    public ProjectCategory(int project_id, int category_id, String category_name, double approved_funds){
+    public ProjectCategory(int project_id, int category_id, String category_name, double approved_funds) {
         this.project_id = project_id;
         this.category_id = category_id;
         this.category_name = category_name;
         this.approved_funds = approved_funds;
     }
 
-    public ProjectCategory(){
+    public ProjectCategory() {
 
     }
 
-    public int getProject_id(){
+    public int getProject_id() {
         return this.project_id;
     }
 
-    public int getCategory_id(){
+    public int getCategory_id() {
         return this.category_id;
     }
 
-    public String getCategory_name(){
+    public String getCategory_name() {
         return this.category_name;
     }
 
-    public void setCategory_name(String category_name){
+    public void setCategory_name(String category_name) {
         this.category_name = category_name;
     }
 
-    public double getApproved_funds(){
+    public double getApproved_funds() {
         return this.approved_funds;
     }
 
-    public void setApproved_funds(double approved_funds){
+    public void setApproved_funds(double approved_funds) {
         this.approved_funds = approved_funds;
     }
 }

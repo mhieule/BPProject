@@ -21,23 +21,23 @@ import java.util.Date;
 import java.util.List;
 
 public class ManualSalaryEntryController implements ItemListener, TableModelListener {
+
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private ManualSalaryEntryManager manualSalaryEntryManager = ManualSalaryEntryManager.getInstance();
     private ManualSalaryEntryView salaryEntryView;
     private ToolbarManualSalaryEntryController toolbarManualSalaryEntry;
     private MainFrameController frameController;
 
-    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
-    private ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
-
     private CustomTableModel customTableModel;
 
-    private String columns[] = {"ID","Gültig ab", "Gehalt", "Kommentar"};
+    private String columns[] = {"ID", "Gültig ab", "Gehalt", "Kommentar"};
     private String nullColumns[] = {"Gültig ab", "Gehalt", "Kommentar"};
     private String title = "Manuelle Gehaltseinträge";
 
     public ManualSalaryEntryController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         salaryEntryView = new ManualSalaryEntryView();
-        toolbarManualSalaryEntry = new ToolbarManualSalaryEntryController(frameController,this);
+        toolbarManualSalaryEntry = new ToolbarManualSalaryEntryController(frameController, this);
         toolbarManualSalaryEntry.getToolbar().setItemListener(this);
         salaryEntryView.init();
         salaryEntryView.add(toolbarManualSalaryEntry.getToolbar(), BorderLayout.NORTH);
@@ -53,7 +53,6 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
     public String[][] getDataFromDB(Employee temporaryEmployee) {
 
-        ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
         StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         int id = temporaryEmployee.getId();
@@ -66,7 +65,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
             String salary = transformer.formatDoubleToString(entry.getNew_salary(), 1);
             String usageDate = dateFormat.format(entry.getStart_date());
             String comment = entry.getComment();
-            String[] values = {String.valueOf(id),usageDate, salary, comment};
+            String[] values = {String.valueOf(id), usageDate, salary, comment};
             resultData[currentIndex] = values;
             currentIndex++;
 
@@ -83,7 +82,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
         salaryEntryView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
         salaryEntryView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
         salaryEntryView.getTable().getColumnModel().getColumn(1).setWidth(0);
-        SearchAndFilterModel.setUpSearchAndFilterModel(salaryEntryView.getTable(),toolbarManualSalaryEntry.getToolbar());
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryEntryView.getTable(), toolbarManualSalaryEntry.getToolbar());
     }
 
     public void setTableData(String[][] data) {
@@ -95,7 +94,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
         salaryEntryView.getTable().getColumnModel().getColumn(1).setWidth(0);
         toolbarManualSalaryEntry.getToolbar().getEditSalaryEntry().setEnabled(false);
         toolbarManualSalaryEntry.getToolbar().getDeleteSalaryEntry().setEnabled(false);
-        SearchAndFilterModel.setUpSearchAndFilterModel(salaryEntryView.getTable(),toolbarManualSalaryEntry.getToolbar());
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryEntryView.getTable(), toolbarManualSalaryEntry.getToolbar());
 
     }
 
@@ -105,7 +104,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
         salaryEntryView.add(toolbarManualSalaryEntry.getToolbar(), BorderLayout.NORTH);
     }
 
-    public void deleteEntries(String[][] dates){
+    public void deleteEntries(String[][] dates) {
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         Date date;
         int id = 0;
@@ -116,7 +115,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
-            manualSalaryEntryManager.removeManualSalaryEntry(id,date);
+            manualSalaryEntryManager.removeManualSalaryEntry(id, date);
 
         }
         setTableData(getDataFromDB(employeeDataManager.getEmployee(id)));
@@ -138,7 +137,6 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
             } else {
                 toolbarManualSalaryEntry.getToolbar().getAddSalaryEntry().setEnabled(true);
                 toolbarManualSalaryEntry.getToolbar().getExportToCSV().setEnabled(true);
-                EmployeeDataManager employeeDataManager = new EmployeeDataManager();
                 Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) e.getItem());
                 String[][] data = getDataFromDB(temporaryEmployee);
                 if (salaryEntryView.getTable() == null) {
@@ -168,7 +166,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
     public void tableChanged(TableModelEvent e) {
         int numberOfSelectedRows = salaryEntryView.getTable().getNumberOfSelectedRows();
         if (e.getColumn() == 0) {
-            if(numberOfSelectedRows == 0){
+            if (numberOfSelectedRows == 0) {
                 toolbarManualSalaryEntry.getToolbar().getEditSalaryEntry().setEnabled(false);
                 toolbarManualSalaryEntry.getToolbar().getDeleteSalaryEntry().setEnabled(false);
             } else if (numberOfSelectedRows == 1) {

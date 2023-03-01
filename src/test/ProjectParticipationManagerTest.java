@@ -9,14 +9,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ProjectParticipationManagerTest {
     @Test
     void testRemoveAll(){
-        var manager = new ProjectParticipationManager();
+        var manager = ProjectParticipationManager.getInstance();
         manager.removeAllProjectParticipations();
         assertEquals(manager.getAllProjectParticipations().size(), 0);
     }
 
     @Test
     void testGetByProjectIDValid(){
-        var manager = new ProjectParticipationManager();
+        var manager =ProjectParticipationManager.getInstance();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -34,7 +34,7 @@ public class ProjectParticipationManagerTest {
 
     @Test
     void testGetByProjectIDInvalid(){
-        var manager = new ProjectParticipationManager();
+        var manager = ProjectParticipationManager.getInstance();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -48,7 +48,7 @@ public class ProjectParticipationManagerTest {
 
     @Test
     void testGetByPersonIDValid(){
-        var manager = new ProjectParticipationManager();
+        var manager = ProjectParticipationManager.getInstance();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -66,7 +66,7 @@ public class ProjectParticipationManagerTest {
 
     @Test
     void testGetByPersonIDInvalid(){
-        var manager = new ProjectParticipationManager();
+        var manager = ProjectParticipationManager.getInstance();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -79,7 +79,7 @@ public class ProjectParticipationManagerTest {
     }
     @Test
     void testGetByPersonAndProjectIDValid(){
-        var manager = new ProjectParticipationManager();
+        var manager = ProjectParticipationManager.getInstance();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -97,7 +97,7 @@ public class ProjectParticipationManagerTest {
 
     @Test
     void testGetByPersonAndProjectIDInvalid(){
-        var manager = new ProjectParticipationManager();
+        var manager =ProjectParticipationManager.getInstance();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -111,7 +111,7 @@ public class ProjectParticipationManagerTest {
 
     @Test
     void testRemoveValid(){
-        var manager = new ProjectParticipationManager();
+        var manager = ProjectParticipationManager.getInstance();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -126,7 +126,7 @@ public class ProjectParticipationManagerTest {
 
     @Test
     void testRemoveInvalid(){
-        var manager = new ProjectParticipationManager();
+        var manager = ProjectParticipationManager.getInstance();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -141,7 +141,7 @@ public class ProjectParticipationManagerTest {
 
     @Test
     void testGetAll(){
-        var manager = new ProjectParticipationManager();
+        var manager = ProjectParticipationManager.getInstance();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -168,7 +168,7 @@ public class ProjectParticipationManagerTest {
 
     @Test
     void testGetRowCount(){
-        var manager = new ProjectParticipationManager();
+        var manager = ProjectParticipationManager.getInstance();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -186,7 +186,7 @@ public class ProjectParticipationManagerTest {
 
     @Test
     void testGetRowCountEmpty(){
-        var manager = new ProjectParticipationManager();
+        var manager = ProjectParticipationManager.getInstance();
         manager.removeAllProjectParticipations();
         assertEquals(manager.getRowCountByProjectID(5),0);
         assertEquals(manager.getRowCountByPersonID(5),0);

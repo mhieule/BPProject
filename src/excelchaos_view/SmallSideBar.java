@@ -27,19 +27,19 @@ public class SmallSideBar extends JPanel {
         arrowButtonEast.addActionListener(l);
     }
 
-    public void paint(Graphics g){
+    public void paint(Graphics g) {
 
 
         super.paint(g);
-        g.setFont(new Font("Arial",Font.PLAIN,12));
+        g.setFont(new Font("Arial", Font.PLAIN, 12));
         g.setColor(Color.BLACK);
 
         Graphics2D g2d = (Graphics2D) g;
 
         AffineTransform at = new AffineTransform();
-        at.rotate(-Math.PI/2);
+        at.rotate(-Math.PI / 2);
         g2d.setTransform(at);
-        g2d.drawString("Navigationsleiste",-225,17);
+        g2d.drawString("Navigationsleiste", -225, 17);
 
 
     }

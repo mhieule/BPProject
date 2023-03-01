@@ -6,7 +6,7 @@ public class SearchPanelToolbar extends JToolBar {
 
     private SearchPanel searchPanel;
 
-    public void setUpSearchPanel(){
+    public void setUpSearchPanel() {
         searchPanel = new SearchPanel();
         add(searchPanel);
     }
@@ -14,7 +14,6 @@ public class SearchPanelToolbar extends JToolBar {
     public SearchPanel getSearchPanel() {
         return searchPanel;
     }
-
 
 
 }

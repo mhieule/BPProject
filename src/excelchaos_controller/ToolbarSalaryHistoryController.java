@@ -11,19 +11,20 @@ public class ToolbarSalaryHistoryController implements ActionListener {
 
     private MainFrameController frameController;
 
-    public ToolbarSalaryHistoryController(MainFrameController mainFrameController){
+    public ToolbarSalaryHistoryController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         toolbar = new ToolbarSalaryHistoryView();
         toolbar.init();
         toolbar.setActionListener(this);
     }
+
     public ToolbarSalaryHistoryView getToolbar() {
         return toolbar;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == toolbar.getÄnderungen()){
+        if (e.getSource() == toolbar.getÄnderungen()) {
         }
     }
 

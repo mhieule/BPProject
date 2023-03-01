@@ -19,9 +19,9 @@ public class SalaryProjection {
     private SalaryCalculation salaryCalculation = new SalaryCalculation();
     private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
     private CalculateSalaryBasedOnPayRateTable calculateSalaryBasedOnPayRateTable = new CalculateSalaryBasedOnPayRateTable();
-    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
 
-    private ContractDataManager contractDataManager = new ContractDataManager();
+    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
 
 
     public String[][] getNextPayLevelProjection() {

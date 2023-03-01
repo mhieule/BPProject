@@ -16,10 +16,10 @@ public class InsertPersonView extends JPanel {
             gehaltEingeplanntBis, transpondernummer, bueronummer, telefonnummerTUDA, workStart, workEnd, workScope, payGroupOnHiring, payLevelOnHiring, hiwiTypeOfPayment, vblstate, puffer;
 
     private JTextField tfName, tfVorname, tfStrasse, tfHausnummer, tfAdresszusatz, tfPLZ, tfStadt, tfPrivatEmail, tfPrivateTelefonnummer,
-            tfPersonalnummer, tfTuid,  tfTranspondernummer, tfBueronummer,
+            tfPersonalnummer, tfTuid, tfTranspondernummer, tfBueronummer,
             tfTelefonnummerTUDA, tfWorkScope;
 
-    private DatePicker tfGeburtsdatum, tfVisaValidUntil, tfWorkStart, tfWorkEnd,tfSalaryPlannedUntil;
+    private DatePicker tfGeburtsdatum, tfVisaValidUntil, tfWorkStart, tfWorkEnd, tfSalaryPlannedUntil;
 
     private JComboBox nationalityPickList, nationalityPickList2, typeOfJobPicklist, hiwiTypeOfPaymentList, payLevelList, payGroupList, vblList;
 
@@ -44,7 +44,7 @@ public class InsertPersonView extends JPanel {
         constraints.insets = new Insets(30, 25, 0, 50);
         constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 
-        centerDown.setLayout(new BoxLayout(centerDown,BoxLayout.X_AXIS));
+        centerDown.setLayout(new BoxLayout(centerDown, BoxLayout.X_AXIS));
         add(centerUp, BorderLayout.CENTER);
         add(centerDown, BorderLayout.SOUTH);
 
@@ -185,17 +185,17 @@ public class InsertPersonView extends JPanel {
         payLevelOnHiring = new JLabel("Gehaltsstufe");
         setConstraintsLabel(payLevelOnHiring, 25);
         payLevelOnHiring.setVisible(false);
-        String[] payLevels = {"Nicht ausgewählt", "1A","1B","1","2","3","4","5","6"};
+        String[] payLevels = {"Nicht ausgewählt", "1A", "1B", "1", "2", "3", "4", "5", "6"};
         payLevelList = new JComboBox(payLevels);
-        setConstraintsJComboBox(payLevelList,25);
+        setConstraintsJComboBox(payLevelList, 25);
         payLevelList.setVisible(false);
 
         vblstate = new JLabel("VBL-Status");
-        setConstraintsLabel(vblstate,26);
+        setConstraintsLabel(vblstate, 26);
         vblstate.setVisible(false);
-        String[] vbl = {"Nicht ausgewählt","Pflichtig","Befreit"};
+        String[] vbl = {"Nicht ausgewählt", "Pflichtig", "Befreit"};
         vblList = new JComboBox(vbl);
-        setConstraintsJComboBox(vblList,26);
+        setConstraintsJComboBox(vblList, 26);
         vblList.setVisible(false);
 
         hiwiTypeOfPayment = new JLabel("SHK Stundensatz");
@@ -212,7 +212,7 @@ public class InsertPersonView extends JPanel {
         setConstraintsDatePicker(tfSalaryPlannedUntil, 28);
 
         puffer = new JLabel(" ");
-        setConstraintsPuffer(puffer,29);
+        setConstraintsPuffer(puffer, 29);
 
         leftButtons = new JPanel(new FlowLayout());
         rightButtons = new JPanel(new FlowLayout());
@@ -246,7 +246,7 @@ public class InsertPersonView extends JPanel {
         cancel.addActionListener(l);
     }
 
-    public void markMustBeFilledTextFields(){
+    public void markMustBeFilledTextFields() {
         name.setForeground(Color.RED);
         vorname.setForeground(Color.RED);
         privatEmail.setForeground(Color.RED);
@@ -352,7 +352,7 @@ public class InsertPersonView extends JPanel {
         return tfStadt;
     }
 
-    public JTextField getTfStrasse(){
+    public JTextField getTfStrasse() {
         return tfStrasse;
     }
 

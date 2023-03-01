@@ -7,6 +7,7 @@ import java.util.prefs.Preferences;
 
 public class CSVExporter {
     public static final String LAST_USED_FOLDER = "KeyForLastPath";
+
     //TODO Genau absprechen welche Formate hier und dann in Excel benötigt werden
     private static boolean writeToCSV(JTable tableToExport,
                                       String pathToExportTo) {
@@ -31,9 +32,9 @@ public class CSVExporter {
                     if (j == 0 || j == 1) {
                     } else if (model.getValueAt(i, j) == null) {
                         csv.write(";");
-                    } else if (((String)model.getValueAt(i,j)).contains("€")) {
-                        String editString = (String) model.getValueAt(i,j);
-                        editString = editString.replaceAll("€","");
+                    } else if (((String) model.getValueAt(i, j)).contains("€")) {
+                        String editString = (String) model.getValueAt(i, j);
+                        editString = editString.replaceAll("€", "");
                         csv.write(editString + ";");
                     } else {
                         csv.write(model.getValueAt(i, j).toString() + ";");
@@ -55,24 +56,7 @@ public class CSVExporter {
 
     public static void createCSV(JTable tableToExport, String fileName) {
         //TODO Filechooser Deutsche Labels geben
-        UIManager.put("FileChooser.openButtonText", "Öffnen");
-        UIManager.put("FileChooser.cancelButtonText", "Abbrechen");
-        UIManager.put("FileChooser.saveButtonText", "Speichern");
 
-        UIManager.put("FileChooser.cancelButtonToolTipText", "Abbrechen der Auswahl");
-        UIManager.put("FileChooser.saveButtonToolTipText", "Ausgewählte Datei speichern");
-        UIManager.put("FileChooser.openButtonToolTipText", "Ausgewählte Datei öffnen");
-        UIManager.put("FileChooser.upFolderToolTipText", "Eine Ebene höher");
-        UIManager.put("FileChooser.homeFolderToolTipText", "Home");
-        UIManager.put("FileChooser.newFolderToolTipText", "Neuen Ordner erstellen");
-        UIManager.put("FileChooser.listViewButtonToolTipText", "Liste");
-        UIManager.put("FileChooser.detailsViewButtonToolTipText", "Details");
-
-        UIManager.put("FileChooser.lookInLabelText", "Suchen in:");
-        UIManager.put("FileChooser.fileNameLabelText", "Dateiname:");
-        UIManager.put("FileChooser.filesOfTypeLabelText", "Dateityp:");
-
-        UIManager.put("FileChooser.acceptAllFileFilterText", "Alle Dateien (*.*)");
 
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         JFileChooser chooser = new JFileChooser(prefs.get(LAST_USED_FOLDER,
@@ -94,24 +78,6 @@ public class CSVExporter {
 
     public static void createCSVVariableName(JTable tableToExport) {
         //TODO Filechooser Deutsche Labels geben
-        UIManager.put("FileChooser.openButtonText", "Öffnen");
-        UIManager.put("FileChooser.cancelButtonText", "Abbrechen");
-        UIManager.put("FileChooser.saveButtonText", "Speichern");
-
-        UIManager.put("FileChooser.cancelButtonToolTipText", "Abbrechen der Auswahl");
-        UIManager.put("FileChooser.saveButtonToolTipText", "Ausgewählte Datei speichern");
-        UIManager.put("FileChooser.openButtonToolTipText", "Ausgewählte Datei öffnen");
-        UIManager.put("FileChooser.upFolderToolTipText", "Eine Ebene höher");
-        UIManager.put("FileChooser.homeFolderToolTipText", "Home");
-        UIManager.put("FileChooser.newFolderToolTipText", "Neuen Ordner erstellen");
-        UIManager.put("FileChooser.listViewButtonToolTipText", "Liste");
-        UIManager.put("FileChooser.detailsViewButtonToolTipText", "Details");
-
-        UIManager.put("FileChooser.lookInLabelText", "Suchen in:");
-        UIManager.put("FileChooser.fileNameLabelText", "Dateiname:");
-        UIManager.put("FileChooser.filesOfTypeLabelText", "Dateityp:");
-
-        UIManager.put("FileChooser.acceptAllFileFilterText", "Alle Dateien (*.*)");
 
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         JFileChooser chooser = new JFileChooser(prefs.get(LAST_USED_FOLDER,

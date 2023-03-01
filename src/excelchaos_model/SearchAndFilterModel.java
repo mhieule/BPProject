@@ -11,7 +11,7 @@ import javax.swing.table.TableRowSorter;
 public class SearchAndFilterModel {
     private TableRowSorter<TableModel> rowSorter;
 
-    public SearchAndFilterModel(JTable table,JTextField textField){
+    public SearchAndFilterModel(JTable table, JTextField textField) {
         rowSorter = new TableRowSorter<>(table.getModel());
         table.setRowSorter(rowSorter);
         textField.getDocument().addDocumentListener(new DocumentListener() {
@@ -43,7 +43,7 @@ public class SearchAndFilterModel {
         });
     }
 
-    public static void setUpSearchAndFilterModel(JTable table, SearchPanelToolbar toolBar){
-        new SearchAndFilterModel(table,toolBar.getSearchPanel().getSearchField());
+    public static void setUpSearchAndFilterModel(JTable table, SearchPanelToolbar toolBar) {
+        new SearchAndFilterModel(table, toolBar.getSearchPanel().getSearchField());
     }
 }

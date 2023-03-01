@@ -12,7 +12,7 @@ public class ToolbarPayRateTablesView extends SearchPanelToolbar {
     private JButton editExistingPayRateTable;
     private JButton deleteExistingPayRateTable;
 
-    public void init(){
+    public void init() {
         setFloatable(false);
         setBackground(Color.WHITE);
         setLayout(new WrapLayout(FlowLayout.LEFT));
@@ -25,7 +25,8 @@ public class ToolbarPayRateTablesView extends SearchPanelToolbar {
 
 
     }
-    public void setActionListener(ActionListener l){
+
+    public void setActionListener(ActionListener l) {
         insertNewPayRateTable.addActionListener(l);
         editExistingPayRateTable.addActionListener(l);
         deleteExistingPayRateTable.addActionListener(l);

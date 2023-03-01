@@ -9,14 +9,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ManualSalaryEntryManagerTest {
     @Test
     void testRemoveAll(){
-        var manager = new ManualSalaryEntryManager();
+        var manager = ManualSalaryEntryManager.getInstance();
         manager.removeAllManualSalaryEntries();
         assertEquals(manager.getAllManualSalaryEntries().size(), 0);
     }
 
     @Test
     void testGetValid(){
-        var manager = new ManualSalaryEntryManager();
+        var manager = ManualSalaryEntryManager.getInstance();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -35,7 +35,7 @@ public class ManualSalaryEntryManagerTest {
 
     @Test
     void testGetInvalid(){
-        var manager = new ManualSalaryEntryManager();
+        var manager = ManualSalaryEntryManager.getInstance();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -50,7 +50,7 @@ public class ManualSalaryEntryManagerTest {
 
     @Test
     void testGetByDateValid(){
-        var manager = new ManualSalaryEntryManager();
+        var manager = ManualSalaryEntryManager.getInstance();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -69,7 +69,7 @@ public class ManualSalaryEntryManagerTest {
 
     @Test
     void testGetByDateInvalid(){
-        var manager = new ManualSalaryEntryManager();
+        var manager = ManualSalaryEntryManager.getInstance();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -84,7 +84,7 @@ public class ManualSalaryEntryManagerTest {
 
     @Test
     void testRemoveValid(){
-        var manager = new ManualSalaryEntryManager();
+        var manager = ManualSalaryEntryManager.getInstance();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -100,7 +100,7 @@ public class ManualSalaryEntryManagerTest {
 
     @Test
     void testRemoveInvalid(){
-        var manager = new ManualSalaryEntryManager();
+        var manager = ManualSalaryEntryManager.getInstance();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -116,7 +116,7 @@ public class ManualSalaryEntryManagerTest {
 
     @Test
     void testGetAll(){
-        var manager = new ManualSalaryEntryManager();
+        var manager = ManualSalaryEntryManager.getInstance();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -144,7 +144,7 @@ public class ManualSalaryEntryManagerTest {
 
     @Test
     void testGetRowCount(){
-        var manager = new ManualSalaryEntryManager();
+        var manager = ManualSalaryEntryManager.getInstance();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -162,7 +162,7 @@ public class ManualSalaryEntryManagerTest {
 
     @Test
     void testGetRowCountEmpty(){
-        var manager = new ManualSalaryEntryManager();
+        var manager = ManualSalaryEntryManager.getInstance();
         manager.removeAllManualSalaryEntries();
         assertEquals(manager.getRowCount(5), 0);
     }

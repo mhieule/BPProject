@@ -9,18 +9,14 @@ public class ManualSalaryEntryView extends JPanel {
 
     private CustomTable table;
 
-    public void init(){
+    public void init() {
         setLayout(new BorderLayout());
-        //table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        //CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(table);
-        //tca.adjustColumns();
-
 
 
     }
 
-    public void createTable(String[][] data,String[] columnNames){
-        table = new CustomTable(data,columnNames);
+    public void createTable(String[][] data, String[] columnNames) {
+        table = new CustomTable(data, columnNames);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setVisible(true);
 

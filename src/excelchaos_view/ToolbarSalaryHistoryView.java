@@ -13,6 +13,8 @@ import java.util.List;
 
 public class ToolbarSalaryHistoryView extends SearchPanelToolbar {
 
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+
     private JComboBox nameComboBox;
 
     private JButton änderungen;
@@ -26,7 +28,7 @@ public class ToolbarSalaryHistoryView extends SearchPanelToolbar {
 
         nameLabel = new JLabel("Name: ");
 
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+
         ArrayList<String> employeeNames = new ArrayList<String>(List.of(employeeDataManager.getAllEmployeesNameList()));
         ArrayList<String>names = new ArrayList<String>();
         names.add("Keine Auswahl");

@@ -7,19 +7,20 @@ import excelchaos_model.database.EmployeeDataManager;
 public class Updater {
     public MainFrameController frameController;
 
-    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
 
-    public Updater(MainFrameController mainFrameController){
+    public Updater(MainFrameController mainFrameController) {
         frameController = mainFrameController;
     }
 
-    public void nameListUpdate(){
+    public void nameListUpdate() {
         frameController.getManualSalaryEntryController().update();
         frameController.getSalaryIncreaseController().update();
 
     }
+
     //TODO Add SalaryHistorie Update wenn vorhanden
-    public void salaryUpDate(){
+    public void salaryUpDate() {
         BackEndUpdates.calculationsOnStartUp();
         frameController.getSalaryListController().updateData(frameController.getSalaryListController().getSalaryDataFromDataBase());
     }

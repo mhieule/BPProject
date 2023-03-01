@@ -19,8 +19,7 @@ public class TableColumnAdjuster {
      * Constructs a new TableColumnnAdjuster, which specifies this Adjuster's
      * table
      *
-     * @param table
-     *            - this Adjuster's JTable
+     * @param table - this Adjuster's JTable
      */
     public TableColumnAdjuster(JTable table) {
         this.table = table;

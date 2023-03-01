@@ -1,5 +1,6 @@
 import excelchaos_model.database.SalaryIncreaseHistory;
 import excelchaos_model.database.SalaryIncreaseHistoryManager;
+import excelchaos_model.database.SalaryTableManager;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
@@ -9,14 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SalaryIncreaseHistoryManagerTest {
     @Test
     void testRemoveAll(){
-        var manager = new SalaryIncreaseHistoryManager();
+        var manager = SalaryIncreaseHistoryManager.getInstance();
         manager.removeAllSalaryIncreaseHistories();
         assertEquals(manager.getAllSalaryIncreaseHistories().size(), 0);
     }
 
     @Test
     void testGetValid(){
-        var manager = new SalaryIncreaseHistoryManager();
+        var manager = SalaryIncreaseHistoryManager.getInstance();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -37,7 +38,7 @@ public class SalaryIncreaseHistoryManagerTest {
 
     @Test
     void testGetInvalid(){
-        var manager = new SalaryIncreaseHistoryManager();
+        var manager = SalaryIncreaseHistoryManager.getInstance();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -53,7 +54,7 @@ public class SalaryIncreaseHistoryManagerTest {
 
     @Test
     void testGetByDateValid(){
-        var manager = new SalaryIncreaseHistoryManager();
+        var manager = SalaryIncreaseHistoryManager.getInstance();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -74,7 +75,7 @@ public class SalaryIncreaseHistoryManagerTest {
 
     @Test
     void testGetByDateInvalid(){
-        var manager = new SalaryIncreaseHistoryManager();
+        var manager = SalaryIncreaseHistoryManager.getInstance();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -90,7 +91,7 @@ public class SalaryIncreaseHistoryManagerTest {
 
     @Test
     void testRemoveValid(){
-        var manager = new SalaryIncreaseHistoryManager();
+        var manager = SalaryIncreaseHistoryManager.getInstance();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -107,7 +108,7 @@ public class SalaryIncreaseHistoryManagerTest {
 
     @Test
     void testRemoveInvalid(){
-        var manager = new SalaryIncreaseHistoryManager();
+        var manager = SalaryIncreaseHistoryManager.getInstance();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -124,7 +125,7 @@ public class SalaryIncreaseHistoryManagerTest {
 
     @Test
     void testGetAll(){
-        var manager = new SalaryIncreaseHistoryManager();
+        var manager = SalaryIncreaseHistoryManager.getInstance();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -153,7 +154,7 @@ public class SalaryIncreaseHistoryManagerTest {
 
     @Test
     void testGetRowCount(){
-        var manager = new SalaryIncreaseHistoryManager();
+        var manager = SalaryIncreaseHistoryManager.getInstance();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -171,7 +172,7 @@ public class SalaryIncreaseHistoryManagerTest {
 
     @Test
     void testGetRowCountEmpty(){
-        var manager = new SalaryIncreaseHistoryManager();
+        var manager = SalaryIncreaseHistoryManager.getInstance();
         manager.removeAllSalaryIncreaseHistories();
         assertEquals(manager.getRowCount(1), 0);
     }

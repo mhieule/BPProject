@@ -10,8 +10,8 @@ public class PayRateTableListCellRenderer extends DefaultListCellRenderer {
             int index,
             boolean isSelected,
             boolean cellHasFocus) {
-        JLabel label = (JLabel)super.getListCellRendererComponent(
-                list,value,index,isSelected,cellHasFocus);
+        JLabel label = (JLabel) super.getListCellRendererComponent(
+                list, value, index, isSelected, cellHasFocus);
         Font font = new Font("Dialog", Font.PLAIN, 20);
         label.setFont(font);
         label.setBorder(BorderFactory.createMatteBorder(0,

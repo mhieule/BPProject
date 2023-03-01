@@ -15,7 +15,7 @@ public class ToolbarShowPersonView extends SearchPanelToolbar {
     private JButton exportToCSV;
 
 
-    public void init(){
+    public void init() {
         setFloatable(false);
         setBackground(Color.WHITE);
         setLayout(new WrapLayout(FlowLayout.LEFT));
@@ -53,7 +53,7 @@ public class ToolbarShowPersonView extends SearchPanelToolbar {
         return deletePerson;
     }
 
-   public JButton getExportToCSV() {
+    public JButton getExportToCSV() {
         return exportToCSV;
     }
 }

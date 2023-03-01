@@ -21,18 +21,23 @@ public class EmployeeDataManager {
     private ConnectionSource connectionSource;
     private Dao<Employee, Integer> employeesDao;
 
+    private static String databaseURL;
+
+    private static EmployeeDataManager employeeDataManager;
+
     /**
      * Constructor creates database connection and DAO manager
      */
 
-    public EmployeeDataManager(){
-        try{
-            String databaseUrl = "jdbc:sqlite:Excelchaos.db";
+    private EmployeeDataManager() {
+        try {
+            System.out.println(databaseURL);
+            String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
             this.employeesDao = DaoManager.createDao(connectionSource, Employee.class);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
@@ -40,12 +45,12 @@ public class EmployeeDataManager {
      * Method to create the Employee table in the database
      */
 
-    public void createTable(){
+    public void createTable() {
         try {
             TableUtils.createTable(connectionSource, Employee.class);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
@@ -53,58 +58,61 @@ public class EmployeeDataManager {
      * Method to delete the Employee table in the database
      */
 
-    public void deleteTable(){
+    public void deleteTable() {
         try {
             TableUtils.dropTable(connectionSource, Employee.class, true);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
     /**
      * Method to add an Employee to the database
+     *
      * @param employee employee to be added to the database
      */
 
-    public void addEmployee(Employee employee){
+    public void addEmployee(Employee employee) {
         try {
             employeesDao.create(employee);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
     /**
      * Method to select the employee with the given id from the database
+     *
      * @param id id of the employee to be selected
      * @return the employee with the given id
      */
 
-    public Employee getEmployee(int id){
+    public Employee getEmployee(int id) {
         Employee employee = null;
         try {
             employee = employeesDao.queryForId(id);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
         return employee;
     }
 
     /**
      * Method to select an employee with a given name and surname from the database
+     *
      * @param surNameAndName name and surname of the employee to be selected
      * @return the employee with a given name and surname
      */
 
-    public Employee getEmployeeByName(String surNameAndName){
+    public Employee getEmployeeByName(String surNameAndName) {
         Employee employee = null;
         List<Employee> employeeList = getAllEmployees();
-        for (Employee emp: employeeList) {
+        for (Employee emp : employeeList) {
             String name = emp.getSurname() + " " + emp.getName();
-            if(name.equals(surNameAndName)){
+            if (name.equals(surNameAndName)) {
                 employee = emp;
                 return employee;
             }
@@ -114,73 +122,77 @@ public class EmployeeDataManager {
 
     /**
      * Method to select all employees from the databse
+     *
      * @return list of all employees in the database
      */
 
-    public List<Employee> getAllEmployees(){
+    public List<Employee> getAllEmployees() {
         List<Employee> employees = null;
         try {
             employees = employeesDao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
         return employees;
     }
 
     /**
      * Method to generate the next id not in use yet
+     *
      * @return next id not in use yet
      */
 
-    public int getNextID(){
+    public int getNextID() {
         int id = 0;
         try {
             QueryBuilder<Employee, Integer> builder = employeesDao.queryBuilder();
             builder.orderBy("id", false);
             Employee highest = employeesDao.queryForFirst(builder.prepare());
-            if (highest == null){
+            if (highest == null) {
                 id = 1;
-            }else{
-                id = highest.getId()+1;
+            } else {
+                id = highest.getId() + 1;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
         return id;
     }
 
     /**
      * Method to get the total number of rows in the employee table
+     *
      * @return total number of rows in the employee table
      */
 
-    public int getRowCount(){
+    public int getRowCount() {
         long count = 0;
         try {
             QueryBuilder<Employee, Integer> builder = employeesDao.queryBuilder();
             count = builder.countOf();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
-        return (int)count;
+        return (int) count;
     }
 
     /**
      * Method to remove the employee with the given id from the database
+     *
      * @param id id of the employee to be removed
      */
 
-    public void removeEmployee(int id){
+    public void removeEmployee(int id) {
         try {
             DeleteBuilder<Employee, Integer> builder = employeesDao.deleteBuilder();
             builder.where().eq("id", id);
             builder.delete();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
@@ -188,21 +200,22 @@ public class EmployeeDataManager {
      * Method to remove all employees from the database
      */
 
-    public void removeAllEmployees(){
+    public void removeAllEmployees() {
         try {
             TableUtils.clearTable(connectionSource, Employee.class);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
     /**
      * Method to generate a list of all employee names and surnames
+     *
      * @return list of all names and surnames of employees in the database
      */
 
-    public String[] getAllEmployeesNameList(){
+    public String[] getAllEmployeesNameList() {
         List<Employee> employeeList = getAllEmployees();
         String[] names = new String[getRowCount()];
         for (int i = 0; i < names.length; i++) {
@@ -214,15 +227,27 @@ public class EmployeeDataManager {
 
     /**
      * Method to update the given employee in the database
+     *
      * @param employee employee to be updated
      */
 
-    public void updateEmployee(Employee employee){
+    public void updateEmployee(Employee employee) {
         try {
             employeesDao.update(employee);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
+    }
+
+    public static EmployeeDataManager getInstance() {
+        if(employeeDataManager == null){
+            employeeDataManager = new EmployeeDataManager();
+        }
+        return employeeDataManager;
+    }
+
+    public static void setDatabaseURL(String databaseURL) {
+        EmployeeDataManager.databaseURL = databaseURL;
     }
 }

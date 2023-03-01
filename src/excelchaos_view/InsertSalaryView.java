@@ -10,13 +10,15 @@ import java.awt.event.ItemListener;
 
 public class InsertSalaryView extends JPanel {
 
-    private JLabel nameList, gruppe, stufe, gehalt, sonderzahlung,vblstate, puffer;
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
 
-    private JTextField  tfGehalt, tfSonderzahlung;
+    private JLabel nameList, gruppe, stufe, gehalt, sonderzahlung, vblstate, puffer;
 
-    private JComboBox namePickList, plStufe,tfGruppe,vblList;
+    private JTextField tfGehalt, tfSonderzahlung;
 
-    private JButton submit, reset ,cancel;
+    private JComboBox namePickList, plStufe, tfGruppe, vblList;
+
+    private JButton submit, reset, cancel;
 
     private JPanel centerUp, centerDown, leftButtons, rightButtons;
 
@@ -39,7 +41,7 @@ public class InsertSalaryView extends JPanel {
         add(centerUp, BorderLayout.CENTER);
         add(centerDown, BorderLayout.SOUTH);
 
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+
         String[] names = employeeDataManager.getAllEmployeesNameList();
 
         nameList = new JLabel("Name");
@@ -51,21 +53,21 @@ public class InsertSalaryView extends JPanel {
 
         gruppe = new JLabel("Gehaltsklasse");
         setConstraintsLabel(gruppe, 1);
-        String[] payGrade = {"Nicht ausgewählt","E13","E14"};
+        String[] payGrade = {"Nicht ausgewählt", "E13", "E14"};
         tfGruppe = new JComboBox(payGrade);
         setConstraintsJComboBox(tfGruppe, 1);
 
         stufe = new JLabel("Gehaltsstufe");
         setConstraintsLabel(stufe, 2);
-        String[] payLevel = {"Nicht ausgewählt", "1A","1B","1","2","3","4","5","6"};
+        String[] payLevel = {"Nicht ausgewählt", "1A", "1B", "1", "2", "3", "4", "5", "6"};
         plStufe = new JComboBox(payLevel);
-        setConstraintsJComboBox(plStufe,2);
+        setConstraintsJComboBox(plStufe, 2);
 
         vblstate = new JLabel("VBL-Status");
-        setConstraintsLabel(vblstate,3);
-        String[] vbl = {"Nicht ausgewählt","Pflichtig","Befreit"};
+        setConstraintsLabel(vblstate, 3);
+        String[] vbl = {"Nicht ausgewählt", "Pflichtig", "Befreit"};
         vblList = new JComboBox(vbl);
-        setConstraintsJComboBox(vblList,3);
+        setConstraintsJComboBox(vblList, 3);
 
         gehalt = new JLabel("Gehalt");
         setConstraintsLabel(gehalt, 4);
@@ -78,7 +80,7 @@ public class InsertSalaryView extends JPanel {
         setConstraintsTextField(tfSonderzahlung, 5);
 
         puffer = new JLabel(" ");
-        setConstraintsPuffer(puffer,6);
+        setConstraintsPuffer(puffer, 6);
 
 
         leftButtons = new JPanel(new FlowLayout());
@@ -106,13 +108,13 @@ public class InsertSalaryView extends JPanel {
         cancel.addActionListener(l);
     }
 
-    public void setItemListener(ItemListener l){
+    public void setItemListener(ItemListener l) {
         vblList.addItemListener(l);
         plStufe.addItemListener(l);
         tfGruppe.addItemListener(l);
     }
 
-    public void markMustBeFilledTextFields(){
+    public void markMustBeFilledTextFields() {
         gruppe.setForeground(Color.RED);
         stufe.setForeground(Color.RED);
         vblstate.setForeground(Color.RED);
@@ -123,7 +125,7 @@ public class InsertSalaryView extends JPanel {
         return gehalt;
     }
 
-    public JLabel getGruppe(){
+    public JLabel getGruppe() {
         return gruppe;
     }
 
@@ -131,7 +133,7 @@ public class InsertSalaryView extends JPanel {
         return sonderzahlung;
     }
 
-    public JLabel getStufe(){
+    public JLabel getStufe() {
         return stufe;
     }
 

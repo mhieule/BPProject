@@ -7,7 +7,7 @@ public class TableNameDateTuple {
     public final String tableName;
     public final LocalDate date;
 
-    public TableNameDateTuple(String tableName, LocalDate date){
+    public TableNameDateTuple(String tableName, LocalDate date) {
         this.tableName = tableName;
         this.date = date;
     }

@@ -11,20 +11,17 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ProjectParticipationDataModel {
-    private int[] projectIds;
-    private ProjectManager projectManager;
-    private ProjectParticipationManager participationManager;
+    private ProjectManager projectManager = ProjectManager.getInstance();
+    private ProjectParticipationManager projectParticipationManager = ProjectParticipationManager.getInstance();
 
-    private EmployeeDataManager employeeDataManager;
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private int[] projectIds;
     private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
     private SalaryCalculation salaryCalculationModel = new SalaryCalculation();
 
     double[] monthlyProjectPersonalCost;
 
     public ProjectParticipationDataModel(String[] projectIds) {
-        projectManager = new ProjectManager();
-        participationManager = new ProjectParticipationManager();
-        employeeDataManager = new EmployeeDataManager();
         this.projectIds = new int[projectIds.length];
         for (int i = 0; i < this.projectIds.length; i++) {
             this.projectIds[i] = Integer.parseInt(projectIds[i]);
@@ -32,9 +29,6 @@ public class ProjectParticipationDataModel {
     }
 
     public ProjectParticipationDataModel() {
-        projectManager = new ProjectManager();
-        participationManager = new ProjectParticipationManager();
-        employeeDataManager = new EmployeeDataManager();
     }
 
     public int[] getProjectIds() {
@@ -139,7 +133,7 @@ public class ProjectParticipationDataModel {
     private int[] getPersonIdsForProject(int projectId) {
         int[] personIds;
         List<ProjectParticipation> projectParticipationsList = new ArrayList<>();
-        projectParticipationsList = participationManager.getProjectParticipationByProjectID(projectId);
+        projectParticipationsList = projectParticipationManager.getProjectParticipationByProjectID(projectId);
         HashSet<Integer> personIdSet = new HashSet<Integer>();
         for (ProjectParticipation participation : projectParticipationsList) {
             personIdSet.add(participation.getPerson_id());
@@ -162,7 +156,7 @@ public class ProjectParticipationDataModel {
         for (int row = 0; row < tableData.length; row++) {
             int lastCorrectGivenValue = 0;
             List<ProjectParticipation> projectParticipationsList = new ArrayList<>();
-            projectParticipationsList = participationManager.getProjectParticipationByProjectIDandPersonID(projectId, personIdsForProject[row / 2]);
+            projectParticipationsList = projectParticipationManager.getProjectParticipationByProjectIDandPersonID(projectId, personIdsForProject[row / 2]);
             projectParticipationsList.sort(new ParticipationSortByDate());
             for (int column = 0; column < months.length; column++) {
                 if (column == 0) {
@@ -201,7 +195,7 @@ public class ProjectParticipationDataModel {
         int[] personIdsForProject = getPersonIdsForProject(projectId);
         for (int row = 0; row < numOfRows * 2; row++) {
             List<ProjectParticipation> projectParticipationsList = new ArrayList<>();
-            projectParticipationsList = participationManager.getProjectParticipationByProjectIDandPersonID(projectId, personIdsForProject[row / 2]);
+            projectParticipationsList = projectParticipationManager.getProjectParticipationByProjectIDandPersonID(projectId, personIdsForProject[row / 2]);
             projectParticipationsList.sort(new ParticipationSortByDate());
             for (int column = 0; column < months.length; column++) {
                 if (column == 0) {

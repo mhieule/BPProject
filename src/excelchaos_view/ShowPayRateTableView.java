@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 public class ShowPayRateTableView extends JPanel {
     private JPanel topPanel;
 
-    private JLabel nameOfTable,startDate;
+    private JLabel nameOfTable, startDate;
 
     private JLabel wageTypeLongtext;
 
@@ -31,12 +31,13 @@ public class ShowPayRateTableView extends JPanel {
 
     private GridBagConstraints constraints;
 
-    public void init(String [] columns) {
+    public void init(String[] columns) {
         setLayout(new BorderLayout());
         topPanelInit();
         centerPanelInit(columns);
         bottomPanelInit();
     }
+
     private void topPanelInit() {
         topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 15));
@@ -51,6 +52,7 @@ public class ShowPayRateTableView extends JPanel {
         topPanel.add(datePicker);
         add(topPanel, BorderLayout.NORTH);
     }
+
     private void bottomPanelInit() {
         bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
@@ -72,7 +74,8 @@ public class ShowPayRateTableView extends JPanel {
         constraints.weightx = 0.2;
         centerPanel.add(bottomPanel, constraints);
     }
-    private void centerPanelInit(String[] columns){
+
+    private void centerPanelInit(String[] columns) {
         centerPanel = new JPanel();
         GridBagLayout layout = new GridBagLayout();
         centerPanel.setLayout(layout);
@@ -86,9 +89,9 @@ public class ShowPayRateTableView extends JPanel {
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;
         centerPanel.add(wageTypeLongtext, constraints);
-        constraints.ipadx=2000;
-        constraints.ipady=462;
-        centerPanel.add(scrollPane,constraints);
+        constraints.ipadx = 2000;
+        constraints.ipady = 462;
+        centerPanel.add(scrollPane, constraints);
         add(centerPanel, BorderLayout.CENTER);
     }
 
@@ -143,7 +146,7 @@ public class ShowPayRateTableView extends JPanel {
         headerTable.setValueAt("JSZ als monatliche Zulage", 12, 0);
         headerTable.setValueAt("mtl. Kosten mit JSZ", 13, 0);
         headerTable.setValueAt("<html>Jährliche Arbeitgeberbelastung <br>" +
-                "inklusive Jahressonderzahlung</html>",14,0);
+                "inklusive Jahressonderzahlung</html>", 14, 0);
         headerTable.setShowGrid(false);
         headerTable.setPreferredScrollableViewportSize(new Dimension(180, 0));
         headerTable.getColumnModel().getColumn(0).setPreferredWidth(180);
@@ -152,8 +155,8 @@ public class ShowPayRateTableView extends JPanel {
 
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setRowHeight(30);
-        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)table.getDefaultRenderer(Object.class);
-        renderer.setHorizontalAlignment( JLabel.RIGHT );
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) table.getDefaultRenderer(Object.class);
+        renderer.setHorizontalAlignment(JLabel.RIGHT);
         TableColumnAdjuster tca = new TableColumnAdjuster(table);
         tca.adjustColumns();
         scrollPane = new JScrollPane(table);

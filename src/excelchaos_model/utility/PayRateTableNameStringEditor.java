@@ -3,18 +3,16 @@ package excelchaos_model.utility;
 public class PayRateTableNameStringEditor {
 
 
-
-    public String createReadableTableNameForView(String originalName){
+    public String createReadableTableNameForView(String originalName) {
         String tableName;
         String[] temporaryStringArray = originalName.split("_");
         tableName = temporaryStringArray[0] + " " + temporaryStringArray[1];
 
 
-
         return tableName;
     }
 
-    public String revertToCorrectTableName(String tableName){
+    public String revertToCorrectTableName(String tableName) {
         String databaseTableName;
         String toReplace = " ";
         String replacement = "_";
@@ -25,7 +23,7 @@ public class PayRateTableNameStringEditor {
         builder.append(replacement);
         builder.append(tableName.substring(start + toReplace.length()));
 
-        databaseTableName= builder.toString();
+        databaseTableName = builder.toString();
 
         return databaseTableName;
     }

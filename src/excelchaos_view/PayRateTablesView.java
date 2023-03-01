@@ -11,7 +11,8 @@ public class PayRateTablesView extends JPanel {
     private JPanel centerPanel;
 
     private JList payRateTableList;
-    public void init(){
+
+    public void init() {
         setLayout(new BorderLayout());
         centerPanel = new JPanel();
         centerPanel.setLayout(new GridLayout());
@@ -25,7 +26,7 @@ public class PayRateTablesView extends JPanel {
         renderer.setHorizontalAlignment(SwingConstants.LEFT);
         JScrollPane listScroller = new JScrollPane(payRateTableList);
         centerPanel.add(listScroller);
-        add(centerPanel,BorderLayout.CENTER);
+        add(centerPanel, BorderLayout.CENTER);
 
     }
 
@@ -37,7 +38,7 @@ public class PayRateTablesView extends JPanel {
         return payRateTableList;
     }
 
-    public void setMouseListener(MouseAdapter l){
+    public void setMouseListener(MouseAdapter l) {
         payRateTableList.addMouseListener(l);
     }
 }

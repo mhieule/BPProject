@@ -8,18 +8,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ProjectManagerTest {
     @Test
-    void testRemoveAll(){
-        var manager = new ProjectManager();
+    void testRemoveAll() {
+        var manager = ProjectManager.getInstance();
         manager.removeAllProjects();
         assertEquals(manager.getAllProjects().size(), 0);
     }
 
     @Test
-    void testGetValid(){
-        var manager = new ProjectManager();
+    void testGetValid() {
+        var manager = ProjectManager.getInstance();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(1970,12,30);
+        calendar.set(1970, 12, 30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -36,11 +36,11 @@ public class ProjectManagerTest {
     }
 
     @Test
-    void testGetInvalid(){
-        var manager = new ProjectManager();
+    void testGetInvalid() {
+        var manager = ProjectManager.getInstance();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(1970,12,30);
+        calendar.set(1970, 12, 30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -53,11 +53,11 @@ public class ProjectManagerTest {
     }
 
     @Test
-    void testRemoveValid(){
-        var manager = new ProjectManager();
+    void testRemoveValid() {
+        var manager = ProjectManager.getInstance();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(1970,12,30);
+        calendar.set(1970, 12, 30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -71,11 +71,11 @@ public class ProjectManagerTest {
     }
 
     @Test
-    void testRemoveInvalid(){
-        var manager = new ProjectManager();
+    void testRemoveInvalid() {
+        var manager = ProjectManager.getInstance();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(1970,12,30);
+        calendar.set(1970, 12, 30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -89,24 +89,24 @@ public class ProjectManagerTest {
     }
 
     @Test
-    void testGetAll(){
-        var manager = new ProjectManager();
+    void testGetAll() {
+        var manager = ProjectManager.getInstance();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(1970,12,30);
+        calendar.set(1970, 12, 30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         var projects = new Project[10];
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             var project = new Project(i, "test_project", calendar.getTime(), calendar.getTime(),
                     calendar.getTime());
             projects[i] = project;
             manager.addProject(project);
         }
         var recProjects = manager.getAllProjects();
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             assertEquals(projects[i].getProject_id(), recProjects.get(i).getProject_id());
             assertEquals(projects[i].getProject_name(), recProjects.get(i).getProject_name());
             assertEquals(projects[i].getStart_date(), recProjects.get(i).getStart_date());
@@ -116,16 +116,16 @@ public class ProjectManagerTest {
     }
 
     @Test
-    void testGetRowCount(){
-        var manager = new ProjectManager();
+    void testGetRowCount() {
+        var manager = ProjectManager.getInstance();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(1970,12,30);
+        calendar.set(1970, 12, 30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             var project = new Project(i, "test_project", calendar.getTime(), calendar.getTime(),
                     calendar.getTime());
             manager.addProject(project);
@@ -134,18 +134,18 @@ public class ProjectManagerTest {
     }
 
     @Test
-    void testGetRowCountEmpty(){
-        var manager = new ProjectManager();
+    void testGetRowCountEmpty() {
+        var manager = ProjectManager.getInstance();
         manager.removeAllProjects();
         assertEquals(manager.getRowCount(), 0);
     }
 
     @Test
-    void testUpdateValid(){
-        var manager = new ProjectManager();
+    void testUpdateValid() {
+        var manager = ProjectManager.getInstance();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(1970,12,30);
+        calendar.set(1970, 12, 30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -156,7 +156,7 @@ public class ProjectManagerTest {
         var upProject = new Project(1, "update_test", calendar.getTime(), calendar.getTime(),
                 calendar.getTime());
         manager.updateProject(upProject);
-        var recProject= manager.getProject(1);
+        var recProject = manager.getProject(1);
         assertEquals(upProject.getProject_id(), recProject.getProject_id());
         assertEquals(upProject.getProject_name(), recProject.getProject_name());
         assertEquals(upProject.getStart_date(), recProject.getStart_date());
@@ -165,11 +165,11 @@ public class ProjectManagerTest {
     }
 
     @Test
-    void testUpdateInvalid(){
-        var manager = new ProjectManager();
+    void testUpdateInvalid() {
+        var manager = ProjectManager.getInstance();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(1970,12,30);
+        calendar.set(1970, 12, 30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -180,7 +180,7 @@ public class ProjectManagerTest {
         var upProject = new Project(2, "update_test", calendar.getTime(), calendar.getTime(),
                 calendar.getTime());
         manager.updateProject(upProject);
-        var recProject= manager.getProject(1);
+        var recProject = manager.getProject(1);
         assertEquals(project.getProject_id(), recProject.getProject_id());
         assertEquals(project.getProject_name(), recProject.getProject_name());
         assertEquals(project.getStart_date(), recProject.getStart_date());
@@ -189,11 +189,11 @@ public class ProjectManagerTest {
     }
 
     @Test
-    void testGetNextID(){
-        var manager = new ProjectManager();
+    void testGetNextID() {
+        var manager = ProjectManager.getInstance();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(1970,12,30);
+        calendar.set(1970, 12, 30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -205,8 +205,8 @@ public class ProjectManagerTest {
     }
 
     @Test
-    void testGetNextIDEmpty(){
-        var manager = new ProjectManager();
+    void testGetNextIDEmpty() {
+        var manager = ProjectManager.getInstance();
         manager.removeAllProjects();
         assertEquals(manager.getNextID(), 1);
     }

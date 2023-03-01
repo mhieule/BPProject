@@ -29,12 +29,11 @@ public class PayRateTableCalculationModel {
     private BigDecimal[][] roundedResults;
 
 
-
     public PayRateTableCalculationModel() {
 
     }
 
-    public PayRateTableCalculationModel(String[] baseMoney, String[] percentages,String[] bonusMoney) {
+    public PayRateTableCalculationModel(String[] baseMoney, String[] percentages, String[] bonusMoney) {
         stringMoneyValues = baseMoney;
         stringBonusMoneyValues = bonusMoney;
         stringPercentageValues = percentages;
@@ -107,22 +106,22 @@ public class PayRateTableCalculationModel {
         }
     }
 
-    public void calculateMonthlyCostWithYearBonus(){
-        for(int i = 0; i< monthlyCostWithYearBonus.length;i++){
+    public void calculateMonthlyCostWithYearBonus() {
+        for (int i = 0; i < monthlyCostWithYearBonus.length; i++) {
             monthlyCostWithYearBonus[i] = monthlyCostWithoutYearBonus[i].add(bonusMoneyValues[i]);
         }
     }
 
-    public void calculateLastRow(){
+    public void calculateLastRow() {
         lastRow = new BigDecimal[monthlyCostWithYearBonus.length];
         BigDecimal multiplicand = new BigDecimal(12);
-        for (int i = 0; i < lastRow.length; i++){
+        for (int i = 0; i < lastRow.length; i++) {
             lastRow[i] = monthlyCostWithYearBonus[i].multiply(multiplicand);
             lastRow[i] = lastRow[i].setScale(2, RoundingMode.HALF_EVEN);
         }
     }
 
-    public String[] convertLastRowResultsToString(){
+    public String[] convertLastRowResultsToString() {
         String[] stringResult = new String[lastRow.length];
         for (int i = 0; i < monthlyCostWithoutYearBonus.length; i++) {
             stringResult[i] = lastRow[i].toString();
@@ -144,10 +143,10 @@ public class PayRateTableCalculationModel {
         return stringResult;
     }
 
-    public String[] convertMonthlyCostWithYearBonusToString(){
+    public String[] convertMonthlyCostWithYearBonusToString() {
         monthlyCostWithYearBonusRounded = new BigDecimal[monthlyCostWithYearBonus.length];
         String[] stringResult = new String[monthlyCostWithYearBonus.length];
-        for (int i = 0; i < monthlyCostWithYearBonus.length; i++){
+        for (int i = 0; i < monthlyCostWithYearBonus.length; i++) {
             monthlyCostWithYearBonusRounded[i] = monthlyCostWithYearBonus[i].setScale(2, RoundingMode.HALF_EVEN);
             stringResult[i] = monthlyCostWithYearBonusRounded[i].toString();
             stringResult[i] = stringResult[i].replaceAll("\\.", ",");
@@ -172,7 +171,7 @@ public class PayRateTableCalculationModel {
         String[] resultString;
         String[] temporaryString;
         //text = text.replaceAll("\\s+", "");
-        if(text.contains("%")){
+        if (text.contains("%")) {
             temporaryString = text.split("(?<=%)");
             resultList.add(temporaryString[0]);
             resultString = temporaryString[1].split("(?<=€)");

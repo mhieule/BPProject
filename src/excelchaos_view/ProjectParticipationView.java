@@ -30,16 +30,16 @@ import static javax.swing.BorderFactory.createEmptyBorder;
 
 public class ProjectParticipationView extends JPanel {
 
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+
+    private ProjectParticipationManager participationManager = ProjectParticipationManager.getInstance();
+
     private SalaryCalculation salaryCalculation = new SalaryCalculation();
 
 
     private JPanel mainPanel;
 
     private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
-
-    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
-
-    private ProjectParticipationManager participationManager = new ProjectParticipationManager();
 
 
     private ProjectParticipationDataModel projectParticipationDataModel = new ProjectParticipationDataModel();
@@ -567,43 +567,6 @@ public class ProjectParticipationView extends JPanel {
         participationDialog.setVisible(true);
 
 
-    }
-
-    private void setUpDateSelection(JTable table) {
-        TableColumn dateColumn = table.getColumnModel().getColumn(2);
-        table.setDefaultEditor(LocalDate.class, new DateTableEditor());
-        table.setDefaultRenderer(LocalDate.class, new DateTableEditor());
-        dateColumn.setCellEditor(table.getDefaultEditor(LocalDate.class));
-        dateColumn.setCellRenderer(table.getDefaultRenderer(LocalDate.class));
-    }
-
-    private void setUpNameSelection(JTable table) {
-        TableColumn nameColumn = table.getColumnModel().getColumn(0);
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
-        ArrayList<String> employeeNames = new ArrayList<String>(List.of(employeeDataManager.getAllEmployeesNameList()));
-        JComboBox nameCombobox = new JComboBox(employeeNames.toArray());
-        nameCombobox.setBackground(Color.WHITE);
-        nameColumn.setCellEditor(new DefaultCellEditor(nameCombobox));
-    }
-
-    private String[][] getParticipationTableValues(JTable participationTable) {
-        String[][] tableValues = new String[participationTable.getRowCount()][participationTable.getColumnCount()];
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        for (int row = 0; row < participationTable.getRowCount(); row++) {
-            for (int column = 0; column < participationTable.getColumnCount(); column++) {
-                if (participationTable.getValueAt(row, column) == null || participationTable.getValueAt(row, column).equals("")) {
-                    break;
-                }
-                if (column == 2) {
-                    LocalDate temporaryDate = (LocalDate) participationTable.getValueAt(row, column);
-                    String temporaryString = temporaryDate.format(dateTimeFormatter);
-                    tableValues[row][column] = temporaryString;
-                } else {
-                    tableValues[row][column] = (String) participationTable.getValueAt(row, column);
-                }
-            }
-        }
-        return tableValues;
     }
 
 

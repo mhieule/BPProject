@@ -17,6 +17,7 @@ import java.util.List;
 
 
 public class InsertProjectsView extends JPanel {
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
 
     private JLabel name, approval, start, duration, puffer, categoryLabel, funderLabel, participationLabel;
 
@@ -148,7 +149,7 @@ public class InsertProjectsView extends JPanel {
         DefaultTableModel categoriesModel = new DefaultTableModel(null, categoryColumns);
         categoriesModel.setRowCount(10);
         categoriesTable = new JTable(categoriesModel);
-        categoriesTable.putClientProperty("terminateEditOnFocusLost",Boolean.TRUE);
+        categoriesTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         JScrollPane categoriesScrollpane = new JScrollPane(categoriesTable);
         categoriesScrollpane.setVisible(true);
         categoriesPanel.add(categoriesScrollpane, BorderLayout.CENTER);
@@ -181,8 +182,8 @@ public class InsertProjectsView extends JPanel {
         DefaultTableModel categoriesModel = new DefaultTableModel(null, categoryColumnWithID);
         categoriesModel.setRowCount(10);
         categoriesTable = new JTable(categoriesModel);
-        categoriesTable.putClientProperty("terminateEditOnFocusLost",Boolean.TRUE);
-        categoriesModel.setDataVector(data,categoryColumnWithID);
+        categoriesTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+        categoriesModel.setDataVector(data, categoryColumnWithID);
         categoriesTable.setModel(categoriesModel);
         JScrollPane categoriesScrollpane = new JScrollPane(categoriesTable);
         categoriesScrollpane.setVisible(true);
@@ -252,7 +253,7 @@ public class InsertProjectsView extends JPanel {
         //funderModel.setRowCount(10);
         projectFunderTable = new JTable(funderModel);
         projectFunderTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
-        funderModel.setDataVector(data,funderColumnWithID);
+        funderModel.setDataVector(data, funderColumnWithID);
         projectFunderTable.setModel(funderModel);
         JScrollPane funderScrollpane = new JScrollPane(projectFunderTable);
         funderScrollpane.setVisible(true);
@@ -354,7 +355,7 @@ public class InsertProjectsView extends JPanel {
 
     public void setUpEditNameSelection(JTable table, String[] names) {
         TableColumn nameColumn = table.getColumnModel().getColumn(1);
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+
         ArrayList<String> employeeNames = new ArrayList<String>();
         employeeNames.add("");
         employeeNames.addAll(List.of(employeeDataManager.getAllEmployeesNameList()));
@@ -364,7 +365,7 @@ public class InsertProjectsView extends JPanel {
         nameColumn.setCellEditor(defaultCellEditor);
 
         for (int i = 0; i < names.length; i++) {
-            table.setValueAt(names[i],i,1);
+            table.setValueAt(names[i], i, 1);
         }
     }
 
@@ -385,7 +386,6 @@ public class InsertProjectsView extends JPanel {
 
     public void setUpNameSelection(JTable table) {
         TableColumn nameColumn = table.getColumnModel().getColumn(0);
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         ArrayList<String> employeeNames = new ArrayList<String>();
         employeeNames.add("");
         employeeNames.addAll(List.of(employeeDataManager.getAllEmployeesNameList()));

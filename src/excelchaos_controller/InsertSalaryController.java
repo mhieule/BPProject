@@ -15,12 +15,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 public class InsertSalaryController implements ActionListener, ItemListener {
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
     private InsertSalaryView insertSalaryView;
     private MainFrameController frameController;
-
-    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
-    private ContractDataManager contractDataManager = new ContractDataManager();
-
     private int currentlyEditingContractID = 0;
     private int backUpNumber = 0;
 
@@ -107,10 +105,10 @@ public class InsertSalaryController implements ActionListener, ItemListener {
             if (vblState.equals("Befreit")) {
                 vbl = false;
             }
-            if(!insertSalaryView.getTfGehalt().getText().equals("")){
+            if (!insertSalaryView.getTfGehalt().getText().equals("")) {
                 gehalt = stringAndDoubleTransformationForDatabase.formatStringToDouble(insertSalaryView.getTfGehalt().getText());
             }
-            if(!insertSalaryView.getTfSonderzahlung().getText().equals("")){
+            if (!insertSalaryView.getTfSonderzahlung().getText().equals("")) {
                 sonderzahlung = stringAndDoubleTransformationForDatabase.formatStringToDouble(insertSalaryView.getTfSonderzahlung().getText());
             }
 

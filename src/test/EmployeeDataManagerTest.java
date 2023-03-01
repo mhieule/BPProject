@@ -13,13 +13,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class EmployeeDataManagerTest {
     @Test
     void testRemoveAll(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         assertEquals(manager.getAllEmployees().size(),0);
     }
     @Test
     void testGetValid(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -75,7 +75,7 @@ public class EmployeeDataManagerTest {
     }
     @Test
     void testGetValidNoVisa(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -132,7 +132,7 @@ public class EmployeeDataManagerTest {
 
     @Test
     void testGetInvalid(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -171,7 +171,7 @@ public class EmployeeDataManagerTest {
     }
     @Test
     void testRemoveValid(){
-        var manager = new EmployeeDataManager();
+        var manager =EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -212,7 +212,7 @@ public class EmployeeDataManagerTest {
 
     @Test
     void testRemoveInvalid(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -252,7 +252,7 @@ public class EmployeeDataManagerTest {
 
     @Test
     void testGetAll(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         String surname = "Surname1";
         String name  = "Name1";
@@ -313,7 +313,7 @@ public class EmployeeDataManagerTest {
     }
     @Test
     void testGetNextID(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -351,13 +351,13 @@ public class EmployeeDataManagerTest {
     }
     @Test
     void testGetNextIDEmpty(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         assertEquals(manager.getNextID(),1);
     }
     @Test
     void testGetRowCount(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         String surname = "Surname1";
         String name  = "Name1";
@@ -397,14 +397,14 @@ public class EmployeeDataManagerTest {
 
     @Test
     void testGetRowCountEmpty(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         assertEquals(manager.getRowCount(),0);
     }
 
     @Test
     void testUpdateEmployeeValid(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -464,7 +464,7 @@ public class EmployeeDataManagerTest {
     }
     @Test
     void testUpdateEmployeeInvalid(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -525,7 +525,7 @@ public class EmployeeDataManagerTest {
     }
     @Test
     void testGetEmployeeByNameValid(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -582,7 +582,7 @@ public class EmployeeDataManagerTest {
 
     @Test
     void testGetEmployeeByNameInvalid(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -622,7 +622,7 @@ public class EmployeeDataManagerTest {
 
     @Test
     void testGetAllEmployeesNamesList(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         String surname = "Surname1";
         String name  = "Name1";
@@ -667,7 +667,7 @@ public class EmployeeDataManagerTest {
 
     @Test
     void testGetAllEmployeesNamesListEmpty(){
-        var manager = new EmployeeDataManager();
+        var manager = EmployeeDataManager.getInstance();
         manager.removeAllEmployees();
         String[] namesList = manager.getAllEmployeesNameList();
         assertEquals(namesList.length, 0);

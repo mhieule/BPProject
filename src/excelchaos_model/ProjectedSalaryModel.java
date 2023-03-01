@@ -53,45 +53,46 @@ public class ProjectedSalaryModel {
     public static String calculatePayLevelBasedOnDate(Date workStartDate, String currentLevel, Date givenDate) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(workStartDate);
-        calendar.add(Calendar.MONTH,6);
+        calendar.add(Calendar.MONTH, 6);
         Date level1B = calendar.getTime();
-        calendar.add(Calendar.MONTH,6);
+        calendar.add(Calendar.MONTH, 6);
         Date level2 = calendar.getTime();
-        calendar.add(Calendar.YEAR,2);
+        calendar.add(Calendar.YEAR, 2);
         Date level3 = calendar.getTime();
-        calendar.add(Calendar.YEAR,3);
+        calendar.add(Calendar.YEAR, 3);
         Date level4 = calendar.getTime();
-        calendar.add(Calendar.YEAR,4);
+        calendar.add(Calendar.YEAR, 4);
         Date level5 = calendar.getTime();
-        calendar.add(Calendar.YEAR,5);
+        calendar.add(Calendar.YEAR, 5);
         Date level6 = calendar.getTime();
         calendar.setTime(workStartDate);
 
 
-        if(givenDate.compareTo(level1B) < 0){
-            if(!currentLevel.equals("1")){
+        if (givenDate.compareTo(level1B) < 0) {
+            if (!currentLevel.equals("1")) {
                 return "1A";
             } else return "1";
         }
-        if(givenDate.compareTo(level2) < 0){
-            if(!currentLevel.equals("1")){
+        if (givenDate.compareTo(level2) < 0) {
+            if (!currentLevel.equals("1")) {
                 return "1B";
             } else return "1";
         }
-        if(givenDate.compareTo(level3) < 0){
+        if (givenDate.compareTo(level3) < 0) {
             return "2";
         }
-        if(givenDate.compareTo(level4) < 0){
+        if (givenDate.compareTo(level4) < 0) {
             return "3";
         }
-        if(givenDate.compareTo(level5) < 0){
+        if (givenDate.compareTo(level5) < 0) {
             return "4";
         }
-        if (givenDate.compareTo(level6) < 0){
+        if (givenDate.compareTo(level6) < 0) {
             return "5";
         }
         return "6";
     }
+
     //TODO Debugging angesagt
     public static List<Date> calculateNextPayLevelDate(Date startDate, String currentLevel) {
         List<Date> payIncreases = new ArrayList<>();

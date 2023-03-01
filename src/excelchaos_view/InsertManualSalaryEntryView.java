@@ -9,9 +9,10 @@ import java.awt.event.ActionListener;
 import java.time.*;
 
 public class InsertManualSalaryEntryView extends JPanel {
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
     private JLabel nameList, newSalaryLabel, usageDateLabel, commentLabel, puffer;
 
-    private JTextField tfNewSalary,tfComment;
+    private JTextField tfNewSalary, tfComment;
 
     private DatePicker datePicker;
 
@@ -40,7 +41,6 @@ public class InsertManualSalaryEntryView extends JPanel {
         add(centerUp, BorderLayout.CENTER);
         add(centerDown, BorderLayout.SOUTH);
 
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         String[] names = employeeDataManager.getAllEmployeesNameList();
 
         nameList = new JLabel("Name");
@@ -53,17 +53,15 @@ public class InsertManualSalaryEntryView extends JPanel {
 
         usageDateLabel = new JLabel("Gültig ab");
         setConstraintsLabel(usageDateLabel, 1);
-        datePicker =  new DatePicker();
-        LocalDate localDate = LocalDate.of(Year.now().getValue(),YearMonth.now().getMonth().getValue(),1);
+        datePicker = new DatePicker();
+        LocalDate localDate = LocalDate.of(Year.now().getValue(), YearMonth.now().getMonth().getValue(), 1);
         datePicker.setDate(localDate);
-        setConstraintsDatePicker(datePicker,1);
+        setConstraintsDatePicker(datePicker, 1);
 
         newSalaryLabel = new JLabel("Neuer Gehaltseintrag");
         setConstraintsLabel(newSalaryLabel, 2);
         tfNewSalary = new JTextField();
         setConstraintsTextField(tfNewSalary, 2);
-
-
 
 
         commentLabel = new JLabel("Kommentar");
@@ -73,7 +71,7 @@ public class InsertManualSalaryEntryView extends JPanel {
 
 
         puffer = new JLabel(" ");
-        setConstraintsPuffer(puffer,5);
+        setConstraintsPuffer(puffer, 5);
 
 
         leftButtons = new JPanel(new FlowLayout());
@@ -116,7 +114,7 @@ public class InsertManualSalaryEntryView extends JPanel {
         return commentLabel;
     }
 
-    public JLabel getNewSalaryLabel(){
+    public JLabel getNewSalaryLabel() {
         return newSalaryLabel;
     }
 
@@ -124,7 +122,7 @@ public class InsertManualSalaryEntryView extends JPanel {
         return datePicker;
     }
 
-    public JLabel getUsageDateLabel(){
+    public JLabel getUsageDateLabel() {
         return usageDateLabel;
     }
 

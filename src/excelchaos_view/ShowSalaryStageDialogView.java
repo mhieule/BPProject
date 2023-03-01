@@ -27,27 +27,25 @@ public class ShowSalaryStageDialogView extends JDialog {
         datePicker.setDateToToday();
 
 
-
         datePanel = new JPanel();
-        //datePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         datePanel.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 0;
-        datePanel.add(dateLabel,constraints);
+        datePanel.add(dateLabel, constraints);
         constraints.gridy = 1;
         constraints.insets.bottom = 10;
         constraints.insets.top = 10;
-        datePanel.add(datePicker,constraints);
+        datePanel.add(datePicker, constraints);
 
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.add(okayButton);
         buttonPanel.add(closeButton);
-        add(buttonPanel,BorderLayout.SOUTH);
+        add(buttonPanel, BorderLayout.SOUTH);
 
 
-        add(datePanel,BorderLayout.CENTER);
+        add(datePanel, BorderLayout.CENTER);
 
         setSize(new Dimension(300, 200));
         setLocationRelativeTo(getParent());
@@ -56,7 +54,8 @@ public class ShowSalaryStageDialogView extends JDialog {
         setVisible(true);
 
     }
-    public void setActionListener(ActionListener l){
+
+    public void setActionListener(ActionListener l) {
         okayButton.addActionListener(l);
         closeButton.addActionListener(l);
     }

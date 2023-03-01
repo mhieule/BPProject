@@ -18,19 +18,20 @@ import java.util.Date;
 import java.util.List;
 
 public class InsertProjectsController implements ActionListener {
+    private ProjectManager projectManager = ProjectManager.getInstance();
+    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+
+    private ProjectCategoryManager projectCategoryManager = ProjectCategoryManager.getInstance();
+
+    private ProjectFunderManager projectFunderManager = ProjectFunderManager.getInstance();
+
+    private ProjectParticipationManager projectParticipationManager = ProjectParticipationManager.getInstance();
     private InsertProjectsView insertProjectsView;
     private MainFrameController frameController;
 
-    private ProjectManager projectManager = new ProjectManager();
+
     private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
 
-    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
-
-    private ProjectCategoryManager projectCategoryManager = new ProjectCategoryManager();
-
-    private ProjectFunderManager projectFunderManager = new ProjectFunderManager();
-
-    private ProjectParticipationManager participationManager = new ProjectParticipationManager();
 
     private int currentlyEditingProjectId = 0;
 
@@ -120,7 +121,7 @@ public class InsertProjectsController implements ActionListener {
         }
 
 
-        List<ProjectParticipation> participationList = participationManager.getProjectParticipationByProjectID(project.getProject_id());
+        List<ProjectParticipation> participationList = projectParticipationManager.getProjectParticipationByProjectID(project.getProject_id());
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         String[][] participationData = new String[5][participationList.size()];
         int index = 0;
@@ -229,7 +230,7 @@ public class InsertProjectsController implements ActionListener {
                         System.out.println(participationData[i][1]);
                         if (participationData[i][1] != null && participationData[i][2] != null && participationData[i][3] != null) {
                             int employeeID = employeeDataManager.getEmployeeByName(participationData[i][1]).getId();
-                            participationManager.removeProjectParticipation(currentlyEditingProjectId, employeeID);
+                            projectParticipationManager.removeProjectParticipation(currentlyEditingProjectId, employeeID);
                             double scope = transformer.formatStringToPercentageValueForScope(participationData[i][2]);
                             Date date;
                             try {
@@ -239,7 +240,7 @@ public class InsertProjectsController implements ActionListener {
                             }
 
                             ProjectParticipation projectParticipation = new ProjectParticipation(currentlyEditingProjectId, employeeID, scope, date);
-                            participationManager.addProjectParticipation(projectParticipation);
+                            projectParticipationManager.addProjectParticipation(projectParticipation);
                         }
 
                     }
@@ -353,7 +354,7 @@ public class InsertProjectsController implements ActionListener {
                     for (int i = 0; i < participationData.length; i++) {
                         if (participationData[i][1] != null && participationData[i][2] != null && participationData[i][3] != null) {
                             int employeeID = employeeDataManager.getEmployeeByName(participationData[i][1]).getId();
-                            participationManager.removeProjectParticipation(currentlyEditingProjectId, employeeID);
+                            projectParticipationManager.removeProjectParticipation(currentlyEditingProjectId, employeeID);
                             double scope = transformer.formatStringToPercentageValueForScope(participationData[i][2]);
                             Date date;
                             try {
@@ -363,7 +364,7 @@ public class InsertProjectsController implements ActionListener {
                             }
 
                             ProjectParticipation projectParticipation = new ProjectParticipation(currentlyEditingProjectId, employeeID, scope, date);
-                            participationManager.addProjectParticipation(projectParticipation);
+                            projectParticipationManager.addProjectParticipation(projectParticipation);
                         }
 
                     }
@@ -375,8 +376,6 @@ public class InsertProjectsController implements ActionListener {
                 }
             } else {
 
-
-                ProjectManager projectManager = new ProjectManager();
 
                 int id = projectManager.getNextID();
                 String name = insertProjectsView.getTfName().getText();
@@ -434,7 +433,6 @@ public class InsertProjectsController implements ActionListener {
 
 
     private void insertCategoryValuesDB(int projectId) {
-        ProjectCategoryManager projectCategoryManager = new ProjectCategoryManager();
         JTable categoriesTable = insertProjectsView.getCategoriesTable();
         String[][] tableValues = getTableValues(categoriesTable);
         ProjectCategory projectCategory;
@@ -449,7 +447,6 @@ public class InsertProjectsController implements ActionListener {
     }
 
     private void insertFunderValuesDB(int projectId) {
-        ProjectFunderManager projectFunderManager = new ProjectFunderManager();
         JTable funderTable = insertProjectsView.getProjectFunderTable();
         String[][] tableValues = getTableValues(funderTable);
         ProjectFunder projectFunder;
@@ -464,8 +461,6 @@ public class InsertProjectsController implements ActionListener {
 
     //TODO Wenn nur für einen Monat der Beschäftigungsumfang eingetragen wurde, dann erstelle automatisch für alle weiteren. Wenn mehrere dann erstelle wenn welche fehlen für den letzten Monat die verbleibenden Einträge
     private void insertParticipationValuesDB(int projectId) throws ParseException {
-        ProjectParticipationManager projectParticipationManager = new ProjectParticipationManager();
-        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
         JTable participationTable = insertProjectsView.getProjectParticipationTable();
         String[][] tableValues = getParticipationTableValues(participationTable);
         ProjectParticipation projectParticipation;
@@ -514,14 +509,14 @@ public class InsertProjectsController implements ActionListener {
                     if (column == 2) {
                         break;
                     }
-                    if(column == 3){
+                    if (column == 3) {
                         break;
                     }
                 }
                 if (column == 3) {
-                        LocalDate temporaryDate = (LocalDate) participationTable.getValueAt(row, column);
-                        String temporaryString = temporaryDate.format(dateTimeFormatter);
-                        tableValues[row][column] = temporaryString;
+                    LocalDate temporaryDate = (LocalDate) participationTable.getValueAt(row, column);
+                    String temporaryString = temporaryDate.format(dateTimeFormatter);
+                    tableValues[row][column] = temporaryString;
 
                 } else {
                     System.out.println(tableValues[row][column]);
@@ -556,7 +551,7 @@ public class InsertProjectsController implements ActionListener {
                     if (column == 3) {
                         break;
                     }
-                    if(column == 4){
+                    if (column == 4) {
                         break;
                     }
 

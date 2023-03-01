@@ -6,6 +6,7 @@ import javax.swing.*;
 
 public class WorkScopeVerifier extends InputVerifier {
     StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
+
     @Override
     public boolean verify(JComponent input) {
         String text = ((JTextField) input).getText();
@@ -14,11 +15,11 @@ public class WorkScopeVerifier extends InputVerifier {
         } else if (text.matches("\\d{1}") || text.matches("\\d{2}")) {
             ((JTextField) input).setText(text + "%");
             return true;
-        } else if (text.matches("\\d{1}?%")||text.matches("\\d{2}?%")) {
+        } else if (text.matches("\\d{1}?%") || text.matches("\\d{2}?%")) {
             return true;
         } else if (text.matches("\\d{3}")) {
             double testDouble = Double.parseDouble(text);
-            if(testDouble > 100){
+            if (testDouble > 100) {
                 JOptionPane.showConfirmDialog(null, "Der Beschäftigungsumfang darf nicht größer als 100% sein. Bitte passen Sie den Wert an.", "Beschäftigungsumfang zu groß", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 return false;
             } else {
@@ -26,7 +27,7 @@ public class WorkScopeVerifier extends InputVerifier {
                 return true;
             }
         } else if (text.matches("\\d{3}?%")) {
-            if(transformer.formatStringToPercentageValueForScope(text) > 1){
+            if (transformer.formatStringToPercentageValueForScope(text) > 1) {
                 JOptionPane.showConfirmDialog(null, "Der Beschäftigungsumfang darf nicht größer als 100% sein. Bitte passen Sie den Wert an.", "Beschäftigungsumfang zu groß", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 return false;
             } else {

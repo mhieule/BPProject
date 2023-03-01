@@ -33,9 +33,8 @@ public class PayRateStageTypeDialogView extends JDialog {
         buttonPanel.add(okayButton);
         buttonPanel.add(closeButton);
 
-        add(buttonPanel,BorderLayout.SOUTH);
-        add(pickPanel,BorderLayout.CENTER);
-
+        add(buttonPanel, BorderLayout.SOUTH);
+        add(pickPanel, BorderLayout.CENTER);
 
 
         setSize(new Dimension(300, 200));
@@ -56,7 +55,8 @@ public class PayRateStageTypeDialogView extends JDialog {
     public JComboBox getStageTypeSelecter() {
         return stageTypeSelecter;
     }
-    public void setActionListener(ActionListener l){
+
+    public void setActionListener(ActionListener l) {
         okayButton.addActionListener(l);
         closeButton.addActionListener(l);
     }

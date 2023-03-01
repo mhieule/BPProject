@@ -16,9 +16,13 @@ public class ProjectManager {
     private ConnectionSource connectionSource;
     private Dao<Project, Integer> projectDao;
 
-    public ProjectManager() {
+    private static String databaseURL;
+
+    private static ProjectManager projectManager;
+
+    private ProjectManager() {
         try {
-            String databaseUrl = "jdbc:sqlite:Excelchaos.db";
+            String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
             this.projectDao = DaoManager.createDao(connectionSource, Project.class);
         } catch (Exception e) {
@@ -27,111 +31,122 @@ public class ProjectManager {
         }
     }
 
-    public void createTable(){
+    public void createTable() {
         try {
             TableUtils.createTable(connectionSource, Project.class);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
-    public void deleteTable(){
+    public void deleteTable() {
         try {
             TableUtils.dropTable(connectionSource, Project.class, true);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
-    public void addProject(Project project){
+    public void addProject(Project project) {
         try {
             projectDao.create(project);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
-    public Project getProject(int id){
+    public Project getProject(int id) {
         Project project = null;
         try {
             project = projectDao.queryForId(id);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
         return project;
     }
 
-    public List<Project> getAllProjects(){
+    public List<Project> getAllProjects() {
         List<Project> projects = null;
         try {
             projects = projectDao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
         return projects;
     }
 
-    public void removeProject(int id){
-        try{
+    public void removeProject(int id) {
+        try {
             DeleteBuilder<Project, Integer> builder = projectDao.deleteBuilder();
             builder.where().eq("project_id", id);
             builder.delete();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
-    public void removeAllProjects(){
+    public void removeAllProjects() {
         try {
             TableUtils.clearTable(connectionSource, Project.class);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
-    public void updateProject(Project project){
+    public void updateProject(Project project) {
         try {
             projectDao.update(project);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
 
-    public int getNextID(){
+    public int getNextID() {
         int id = 0;
         try {
             QueryBuilder<Project, Integer> builder = projectDao.queryBuilder();
             builder.orderBy("project_id", false);
             Project highest = projectDao.queryForFirst(builder.prepare());
-            if (highest == null){
+            if (highest == null) {
                 id = 1;
-            }else{
-                id = highest.getProject_id()+1;
+            } else {
+                id = highest.getProject_id() + 1;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
         return id;
     }
 
-    public int getRowCount(){
+    public int getRowCount() {
         int rowCount = 0;
         try {
             QueryBuilder<Project, Integer> builder = projectDao.queryBuilder();
             rowCount = (int) builder.countOf();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+ ":" + e.getMessage());
+            System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
         return rowCount;
+    }
+
+    public static ProjectManager getInstance() {
+        if(projectManager == null){
+            projectManager = new ProjectManager();
+        }
+        return projectManager;
+    }
+
+    public static void setDatabaseURL(String databaseURL) {
+        ProjectManager.databaseURL = databaseURL;
     }
 }

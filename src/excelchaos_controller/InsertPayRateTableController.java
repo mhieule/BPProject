@@ -20,6 +20,8 @@ import java.time.format.DateTimeFormatter;
 
 public class InsertPayRateTableController extends MouseAdapter implements ActionListener {
 
+    private SalaryTableManager salaryTableManager = SalaryTableManager.getInstance();
+
     private InsertPayRateTableView insertPayRateTableView;
     private MainFrameController frameController;
     private String title;
@@ -183,7 +185,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
     }
 
     private void insertValuesInDatabase(String name, String paygrade, double[][] values) {
-        SalaryTableManager manager = new SalaryTableManager();
+
         for (int column = 0; column < values[0].length; column++) {
             String tableName = name;
             double grundentgelt = values[0][column];
@@ -204,7 +206,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
             String grade = paygrade;
 
             SalaryTable salaryTable = new SalaryTable(tableName, grundentgelt, av_ag_anteil_lfd_entgelt, kv_ag_anteil_lfd_entgelt, zusbei_af_lfd_entgelt, pv_ag_anteil_lfd_entgelt, rv_ag_anteil_lfd_entgelt, sv_umlage_u2, steuern_ag, zv_Sanierungsbeitrag, zv_umlage_allgemein, vbl_wiss_4perc_ag_buchung, mtl_kosten_ohne_jsz, jsz_als_monatliche_zulage, mtl_kosten_mit_jsz, jaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung, grade);
-            manager.addSalaryTable(salaryTable);
+            salaryTableManager.addSalaryTable(salaryTable);
         }
     }
 

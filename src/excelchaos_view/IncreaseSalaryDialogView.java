@@ -14,8 +14,13 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class IncreaseSalaryDialogView extends JDialog {
+
+    private EmployeeDataManager employeeDataManager=EmployeeDataManager.getInstance();
+    private ContractDataManager contractDataManager=ContractDataManager.getInstance();
     private JButton okayButton;
     private JButton closeButton;
+
+
    // private JButton projectButton;
     private JPanel buttonPanel;
     private JPanel buttonWestPanel;
@@ -54,8 +59,7 @@ public class IncreaseSalaryDialogView extends JDialog {
         closeButton = new JButton("Abbrechen");
 
         //evtl eine eigene Modelle Klasse/Methode
-        EmployeeDataManager employeeDataManager=new EmployeeDataManager();
-        ContractDataManager contractDataManager=new ContractDataManager();
+
         currentSalary = new JLabel("");
         currentBonus = new JLabel("");
         dateQuery = new JLabel("3. Wählen Sie eine Startdatum: ");

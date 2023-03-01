@@ -29,7 +29,7 @@ public class Contract {
     private boolean vbl_status;
 
     public Contract(int id, String paygrade, String paylevel, Date start_date, Date end_date, double regular_cost,
-                    double bonus_cost, double scope, String shk_hourly_rate, boolean vbl_status){
+                    double bonus_cost, double scope, String shk_hourly_rate, boolean vbl_status) {
         this.id = id;
         this.paygrade = paygrade;
         this.paylevel = paylevel;
@@ -42,79 +42,79 @@ public class Contract {
         this.vbl_status = vbl_status;
     }
 
-    public Contract(){
+    public Contract() {
 
     }
 
-    public int getId(){
+    public int getId() {
         return this.id;
     }
 
-    public String getPaygrade(){
+    public String getPaygrade() {
         return this.paygrade;
     }
 
-    public void setPaygrade(String paygrade){
+    public void setPaygrade(String paygrade) {
         this.paygrade = paygrade;
     }
 
-    public String getPaylevel(){
+    public String getPaylevel() {
         return this.paylevel;
     }
 
-    public void setPaylevel(String paylevel){
+    public void setPaylevel(String paylevel) {
         this.paylevel = paylevel;
     }
 
-    public Date getStart_date(){
+    public Date getStart_date() {
         return this.start_date;
     }
 
-    public void setStart_date(Date start_date){
+    public void setStart_date(Date start_date) {
         this.start_date = start_date;
     }
 
-    public Date getEnd_date(){
+    public Date getEnd_date() {
         return this.end_date;
     }
 
-    public void setEnd_date(Date end_date){
+    public void setEnd_date(Date end_date) {
         this.end_date = end_date;
     }
 
-    public double getRegular_cost(){
+    public double getRegular_cost() {
         return this.regular_cost;
     }
 
-    public void setRegular_cost(double regular_cost){
+    public void setRegular_cost(double regular_cost) {
         this.regular_cost = regular_cost;
     }
 
-    public double getBonus_cost(){
+    public double getBonus_cost() {
         return this.bonus_cost;
     }
 
-    public void setBonus_cost(double bonus_cost){
+    public void setBonus_cost(double bonus_cost) {
         this.bonus_cost = bonus_cost;
     }
 
-    public void setScope(double scope){
+    public void setScope(double scope) {
         this.scope = scope;
     }
 
-    public double getScope(){
+    public double getScope() {
         return this.scope;
     }
 
-    public void setShk_hourly_rate(String shk_hourly_rate){
+    public void setShk_hourly_rate(String shk_hourly_rate) {
         this.shk_hourly_rate = shk_hourly_rate;
     }
 
-    public String getShk_hourly_rate(){
+    public String getShk_hourly_rate() {
         return this.shk_hourly_rate;
     }
 
-    public void setVbl_status(boolean vbl_status){
+    public void setVbl_status(boolean vbl_status) {
         this.vbl_status = vbl_status;
     }
 

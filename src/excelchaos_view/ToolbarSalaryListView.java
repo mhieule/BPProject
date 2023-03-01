@@ -22,8 +22,7 @@ public class ToolbarSalaryListView extends SearchPanelToolbar {
     private JToggleButton showNextPayGrade;
 
 
-
-    public void init(){
+    public void init() {
         setFloatable(false);
         setBackground(Color.WHITE);
         setLayout(new WrapLayout(FlowLayout.LEFT));
@@ -47,14 +46,15 @@ public class ToolbarSalaryListView extends SearchPanelToolbar {
 
     }
 
-    public void setActionListener(ActionListener l){
+    public void setActionListener(ActionListener l) {
         editEntry.addActionListener(l);
         increaseSalary.addActionListener(l);
         salaryStageOn.addActionListener(l);
         removeAdditionalSalaryStage.addActionListener(l);
         exportToCSV.addActionListener(l);
     }
-    public void setItemListener(ItemListener l){
+
+    public void setItemListener(ItemListener l) {
         showNextPayGrade.addItemListener(l);
     }
 
@@ -77,5 +77,10 @@ public class ToolbarSalaryListView extends SearchPanelToolbar {
     public JButton getExportToCSV() {
         return exportToCSV;
     }
-    public JButton getIncreaseSalary(){ return increaseSalary;};
+
+    public JButton getIncreaseSalary() {
+        return increaseSalary;
+    }
+
+    ;
 }

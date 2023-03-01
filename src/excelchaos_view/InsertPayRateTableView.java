@@ -17,7 +17,7 @@ import java.time.YearMonth;
 public class InsertPayRateTableView extends JPanel {
     private JPanel topPanel;
 
-    private JLabel nameOfTable,startDate;
+    private JLabel nameOfTable, startDate;
 
     private JLabel wageTypeLongtext;
 
@@ -61,7 +61,7 @@ public class InsertPayRateTableView extends JPanel {
         tfNameOfTable = new JTextField();
         tfNameOfTable.setPreferredSize(new Dimension(250, 30));
         datePicker = new DatePicker();
-        LocalDate localDate = LocalDate.of(Year.now().getValue(), YearMonth.now().getMonth().getValue(),1);
+        LocalDate localDate = LocalDate.of(Year.now().getValue(), YearMonth.now().getMonth().getValue(), 1);
         datePicker.setDate(localDate);
         topPanel.add(nameOfTable);
         topPanel.add(tfNameOfTable);
@@ -185,10 +185,9 @@ public class InsertPayRateTableView extends JPanel {
                 final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 if ((row == 0 || row == 12) && column != 0) {
                     c.setBackground(new Color(181, 237, 133));
-                } else if(column == 0 && (row != 0 && row!=11 && row!=12 && row !=13 && row != 14)){
+                } else if (column == 0 && (row != 0 && row != 11 && row != 12 && row != 13 && row != 14)) {
                     c.setBackground(new Color(181, 237, 133));
-                }
-                else if (column!=0) {
+                } else if (column != 0) {
                     c.setBackground(new Color(181, 237, 133));
                 } else {
                     c.setBackground(Color.white);
@@ -247,8 +246,8 @@ public class InsertPayRateTableView extends JPanel {
         headerTable.getColumnModel().getColumn(0).setCellRenderer(new MultiLineTableCellRenderer());
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setRowHeight(30);
-        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)table.getDefaultRenderer(Object.class);
-        renderer.setHorizontalAlignment( JLabel.RIGHT );
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) table.getDefaultRenderer(Object.class);
+        renderer.setHorizontalAlignment(JLabel.RIGHT);
         TableColumnAdjuster tca = new TableColumnAdjuster(table);
         tca.adjustColumns();
         scrollPane = new JScrollPane(table);
@@ -256,7 +255,7 @@ public class InsertPayRateTableView extends JPanel {
 
     }
 
-    public void setMouseListener(MouseAdapter l){
+    public void setMouseListener(MouseAdapter l) {
         table.addMouseListener(l);
     }
 

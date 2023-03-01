@@ -18,19 +18,17 @@ import java.util.Comparator;
 import java.util.Vector;
 
 public class PayRateTablesController extends MouseAdapter implements ListSelectionListener {
+
+    private SalaryTableManager salaryTableManager = SalaryTableManager.getInstance();
     private PayRateTablesView payRateTablesView;
     private MainFrameController frameController;
     private ToolbarPayRateTablesController toolbarPayRateTables;
     private String title;
     PayRateTableNameStringEditor stringEditor = new PayRateTableNameStringEditor();
 
-    private SalaryTableManager manager;
 
     public PayRateTablesController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
-        manager = new SalaryTableManager();
-
-
     }
 
 
@@ -67,12 +65,12 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
         String paygrade = getPayGradeFromTitle(); //PayGrade ist Gruppe/Klasse
         PayRateTableNameDateSeperator payRateTableNameDateSeperator = new PayRateTableNameDateSeperator();
 
-        int numberOfTables = manager.getNumOfTables(paygrade);
+        int numberOfTables = salaryTableManager.getNumOfTables(paygrade);
         String[] tableNames = new String[numberOfTables];
         Vector<String> stringVector = new Vector<>();
         for (int i = 0; i < numberOfTables; i++) {
 
-            tableNames[i] = manager.getDistinctTableNames(paygrade).get(i);
+            tableNames[i] = salaryTableManager.getDistinctTableNames(paygrade).get(i);
             stringVector.add(tableNames[i]);
 
         }
@@ -85,7 +83,7 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
             }
         });
         Vector<String> presentVector = new Vector<>();
-        for (String string : stringVector){
+        for (String string : stringVector) {
             presentVector.add(stringEditor.createReadableTableNameForView(string));
         }
         payRateTablesView.getPayRateTableList().setListData(presentVector);
@@ -104,9 +102,9 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
         return result;
     }
 
-    public void deletePayRateTable(String tableName){
+    public void deletePayRateTable(String tableName) {
         String revertedTableName = stringEditor.revertToCorrectTableName(tableName);
-        manager.removeSalaryTable(revertedTableName);
+        salaryTableManager.removeSalaryTable(revertedTableName);
         updateview();
         frameController.getUpdater().salaryUpDate();
     }
@@ -116,7 +114,6 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
     }
 
 
-
     @Override
     public void mouseClicked(MouseEvent e) {
         JList list = (JList) e.getSource();
@@ -124,7 +121,7 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
         if (SwingUtilities.isLeftMouseButton(e)) {
             if (e.getClickCount() == 2) {
                 if (r != null && r.contains(e.getPoint())) {
-                    ShowPayRateTableController payRateTableController = new ShowPayRateTableController(frameController, manager, (String) list.getSelectedValue(), getPayGradeFromTitle(),this);
+                    ShowPayRateTableController payRateTableController = new ShowPayRateTableController(frameController, salaryTableManager, (String) list.getSelectedValue(), getPayGradeFromTitle(), this);
                     payRateTableController.insertValuesInTable();
                 }
             }
@@ -161,7 +158,7 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
                     openItem.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            ShowPayRateTableController payRateTableController = new ShowPayRateTableController(frameController, manager, (String) list.getSelectedValue(), getPayGradeFromTitle(),PayRateTablesController.this);
+                            ShowPayRateTableController payRateTableController = new ShowPayRateTableController(frameController, salaryTableManager, (String) list.getSelectedValue(), getPayGradeFromTitle(), PayRateTablesController.this);
                             payRateTableController.insertValuesInTable();
                         }
                     });
@@ -174,9 +171,9 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-        if(e.getValueIsAdjusting()){
-            if(lsm.getSelectedItemsCount() == 0){
+        ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+        if (e.getValueIsAdjusting()) {
+            if (lsm.getSelectedItemsCount() == 0) {
                 toolbarPayRateTables.getToolbar().getEditExistingPayRateTable().setEnabled(false);
                 toolbarPayRateTables.getToolbar().getDeleteExistingPayRateTable().setEnabled(false);
             } else {
