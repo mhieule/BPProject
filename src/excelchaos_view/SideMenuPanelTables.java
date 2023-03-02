@@ -179,7 +179,7 @@ public class SideMenuPanelTables extends JPanel {
 
         showE13Tables = new JButton("E13 Tabellen");
         showE14Tables = new JButton("E14 Tabellen");
-        showSHKTables = new JButton("SHK Tabellen");
+        showSHKTables = new JButton("SHK Tabelle");
 
         showE13Tables.setPreferredSize(new Dimension(120, 20));
         showE14Tables.setPreferredSize(new Dimension(120, 20));

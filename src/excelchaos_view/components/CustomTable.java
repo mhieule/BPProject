@@ -253,14 +253,11 @@ public class CustomTable extends JTable {
                 selectedRows++;
             }
         }
-        System.out.println(selectedRows);
         String[][] result = new String[selectedRows][this.getColumnCount() - 1];
         int index = 0;
         for (int row = 0; row < this.getRowCount(); row++) {
             for (int column = 1; column < this.getColumnCount(); column++) {
                 if ((Boolean) getValueAt(row, 0)) {
-                    System.out.println(index);
-                    System.out.println(column - 1);
                     result[index][column - 1] = (String) getValueAt(row, column);
 
                 }

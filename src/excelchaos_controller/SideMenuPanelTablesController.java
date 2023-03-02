@@ -55,9 +55,7 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             E14Controller.setTitle("E14 Entgelttabellen");
             E14Controller.showPayRatesView(frameController);
         } else if (e.getSource() == sideMenu.getShowSHKTables()) {
-            PayRateTablesController SHKController = new PayRateTablesController(frameController);
-            SHKController.setTitle("SHK Entgelttabellen");
-            SHKController.showPayRatesView(frameController);
+            frameController.getShowSHKTableController().showSHKTableView(frameController);
         } else if (e.getSource() == sideMenu.getCreateSnapshot()) {
             StartUp.createSnapshot();
             JOptionPane.showConfirmDialog(null, "Snapshot wurde erfolgreich erstellt.", "Aktion war erfolgreich!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);

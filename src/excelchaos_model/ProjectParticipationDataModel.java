@@ -156,7 +156,7 @@ public class ProjectParticipationDataModel {
         for (int row = 0; row < tableData.length; row++) {
             int lastCorrectGivenValue = 0;
             List<ProjectParticipation> projectParticipationsList = new ArrayList<>();
-            projectParticipationsList = projectParticipationManager.getProjectParticipationByProjectIDandPersonID(projectId, personIdsForProject[row / 2]);
+            projectParticipationsList = projectParticipationManager.getProjectParticipationByProjectIDAndPersonID(projectId, personIdsForProject[row / 2]);
             projectParticipationsList.sort(new ParticipationSortByDate());
             for (int column = 0; column < months.length; column++) {
                 if (column == 0) {
@@ -195,7 +195,7 @@ public class ProjectParticipationDataModel {
         int[] personIdsForProject = getPersonIdsForProject(projectId);
         for (int row = 0; row < numOfRows * 2; row++) {
             List<ProjectParticipation> projectParticipationsList = new ArrayList<>();
-            projectParticipationsList = projectParticipationManager.getProjectParticipationByProjectIDandPersonID(projectId, personIdsForProject[row / 2]);
+            projectParticipationsList = projectParticipationManager.getProjectParticipationByProjectIDAndPersonID(projectId, personIdsForProject[row / 2]);
             projectParticipationsList.sort(new ParticipationSortByDate());
             for (int column = 0; column < months.length; column++) {
                 if (column == 0) {

@@ -8,7 +8,6 @@ import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import excelchaos_model.database.ProjectParticipation;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -129,7 +128,7 @@ public class ProjectParticipationManager {
         return projectParticipationList;
     }
 
-    public List<ProjectParticipation> getProjectParticipationByProjectIDandPersonID(int project_id, int person_id) {
+    public List<ProjectParticipation> getProjectParticipationByProjectIDAndPersonID(int project_id, int person_id) {
         List<ProjectParticipation> projectParticipationList = new ArrayList<>();
         QueryBuilder<ProjectParticipation, Object> queryBuilder = projectParticipationsDao.queryBuilder();
         try {

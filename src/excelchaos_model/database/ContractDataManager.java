@@ -32,7 +32,6 @@ public class ContractDataManager {
      * Constructor creates database connection and DAO manager
      */
     private ContractDataManager() {
-        Preferences preferences = Preferences.userRoot().node(CSVExporter.class.getName());
         try {
             String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);

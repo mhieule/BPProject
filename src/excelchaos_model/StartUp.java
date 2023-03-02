@@ -162,5 +162,6 @@ public class StartUp {
         ProjectCategoryManager.setDatabaseURL(currentDBPath);
         ProjectFunderManager.setDatabaseURL(currentDBPath);
         ProjectParticipationManager.setDatabaseURL(currentDBPath);
+        SHKSalaryTableManager.setDatabaseURL(currentDBPath);
     }
 }

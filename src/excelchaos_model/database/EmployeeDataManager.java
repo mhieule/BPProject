@@ -31,7 +31,6 @@ public class EmployeeDataManager {
 
     private EmployeeDataManager() {
         try {
-            System.out.println(databaseURL);
             String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
             this.employeesDao = DaoManager.createDao(connectionSource, Employee.class);

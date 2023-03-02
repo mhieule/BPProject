@@ -1,5 +1,6 @@
 package excelchaos_model.utility;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Currency;
@@ -71,5 +72,25 @@ public class StringAndDoubleTransformationForDatabase {
         result = String.valueOf(valueToFormat);
         result = result.replaceAll("\\.", ",");
         return result;
+    }
+
+
+    public static String formatBigDecimalCurrencyToString(BigDecimal valueToFormat) {
+        NumberFormat euroTransformer = NumberFormat.getCurrencyInstance();
+        euroTransformer.setCurrency(Currency.getInstance(Locale.GERMANY));
+        return euroTransformer.format(valueToFormat);
+    }
+
+    public static BigDecimal formatStringToBigDecimalCurrency(String tableValue) {
+        Number number;
+        try {
+            Locale locale = Locale.GERMANY;
+            tableValue = tableValue.replace("€", "");
+            NumberFormat numberFormat = NumberFormat.getInstance(locale);
+            number = numberFormat.parse(tableValue).doubleValue();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return new BigDecimal(number.toString());
     }
 }

@@ -19,13 +19,10 @@ public class MainFrameController {
     private ShowPersonController showPersonalData;
     private SalaryListController salaryListController;
     private SalaryHistoryController salaryHistoryController;
-
     private ShowProjectsController showProjectsController;
-
     private ManualSalaryEntryController manualSalaryEntryController;
-
-
     private SalaryIncreaseController salaryIncreaseController;
+    private ShowSHKTableController showSHKTableController;
 
     private Updater updater;
 
@@ -46,6 +43,7 @@ public class MainFrameController {
         manualSalaryEntryController = new ManualSalaryEntryController(this);
         salaryIncreaseController = new SalaryIncreaseController(this);
         showProjectsController = new ShowProjectsController(this);
+        showSHKTableController = new ShowSHKTableController(this);
 
         window.setVisible(true);
     }
@@ -83,8 +81,8 @@ public class MainFrameController {
         return showProjectsController;
     }
 
-    public void setChangeListener (ChangeListener l){
-        tabsController.getTabs().addChangeListener(l);
+    public ShowSHKTableController getShowSHKTableController() {
+        return showSHKTableController;
     }
 
     public TabsController getTabsController() {

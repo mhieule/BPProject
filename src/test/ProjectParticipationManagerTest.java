@@ -88,7 +88,7 @@ public class ProjectParticipationManagerTest {
         calendar.set(Calendar.SECOND, 0);
         var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
         manager.addProjectParticipation(projectParticipation);
-        var recProjectParticipation = manager.getProjectParticipationByProjectIDandPersonID(1, 1).get(0);
+        var recProjectParticipation = manager.getProjectParticipationByProjectIDAndPersonID(1, 1).get(0);
         assertEquals(projectParticipation.getParticipation_period(), recProjectParticipation.getParticipation_period());
         assertEquals(projectParticipation.getProject_id(), recProjectParticipation.getProject_id());
         assertEquals(projectParticipation.getPerson_id(), recProjectParticipation.getPerson_id());
@@ -106,7 +106,7 @@ public class ProjectParticipationManagerTest {
         calendar.set(Calendar.SECOND, 0);
         var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
         manager.addProjectParticipation(projectParticipation);
-        assertEquals(manager.getProjectParticipationByProjectIDandPersonID(2, 2).size(), 0);
+        assertEquals(manager.getProjectParticipationByProjectIDAndPersonID(2, 2).size(), 0);
     }
 
     @Test
@@ -121,7 +121,7 @@ public class ProjectParticipationManagerTest {
         var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
         manager.addProjectParticipation(projectParticipation);
         manager.removeProjectParticipation(1, 1);
-        assertEquals(manager.getProjectParticipationByProjectIDandPersonID(1 ,1).size(), 0);
+        assertEquals(manager.getProjectParticipationByProjectIDAndPersonID(1 ,1).size(), 0);
     }
 
     @Test
@@ -136,7 +136,7 @@ public class ProjectParticipationManagerTest {
         var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
         manager.addProjectParticipation(projectParticipation);
         manager.removeProjectParticipation(2, 1);
-        assertEquals(manager.getProjectParticipationByProjectIDandPersonID(1 ,1).size(), 1);
+        assertEquals(manager.getProjectParticipationByProjectIDAndPersonID(1 ,1).size(), 1);
     }
 
     @Test
