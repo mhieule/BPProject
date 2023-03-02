@@ -23,7 +23,7 @@ public class StartUp {
     public static final String SnapShotFolderChosen = "KeyForSnapShotPathAlreadyChosen";
 
 
-    private static String chooseDatabasePath() {
+    public static String chooseDatabasePath() {
         UIManager.put("FileChooser.openButtonText", "Öffnen");
         UIManager.put("FileChooser.cancelButtonText", "Abbrechen");
         UIManager.put("FileChooser.saveButtonText", "Speichern");
@@ -57,7 +57,7 @@ public class StartUp {
         } else return null;
     }
 
-    private static String selectSnapshotFolder() {
+    public static String selectSnapshotFolder() {
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         JFileChooser snapShotFolderChooser = new JFileChooser(prefs.get(LAST_USED_SNAPSHOT_FOLDER,
                 new File(".").getAbsolutePath()));
@@ -92,6 +92,26 @@ public class StartUp {
             throw new RuntimeException(e);
         }
     }
+
+    public static void createSnapshot(){
+        Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
+        String currentDBPath = prefs.get(LAST_USED_DATABASE,
+                new File(".").getAbsolutePath());
+        String snapShotFolderPath = prefs.get(LAST_USED_SNAPSHOT_FOLDER,
+                new File(".").getAbsolutePath());
+        File databaseExists = new File(currentDBPath);
+        if(!databaseExists.exists() && !databaseExists.isDirectory()) {
+            currentDBPath = chooseDatabasePath();
+            prefs.put(DatabaseAlreadyChosen, "true");
+        }
+        File snapShotFolderExists = new File(snapShotFolderPath);
+        if(!snapShotFolderExists.exists() && !snapShotFolderExists.isDirectory()){
+            snapShotFolderPath = selectSnapshotFolder();
+            prefs.put(SnapShotFolderChosen, "true");
+        }
+        createSnapshotOfCurrentDatabase(currentDBPath,snapShotFolderPath);
+    }
+
 
     public static void performStartUp() {
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
@@ -132,7 +152,7 @@ public class StartUp {
             prefs.put(SnapShotFolderChosen, "true");
         }
 
-        //createSnapshotOfCurrentDatabase(currentDBPath, snapShotFolderPath);
+        //createSnapshotOfCurrentDatabase(currentDBPath, snapShotFolderPath); //TODO Wenn Snapshots durchgeführt werden sollen den Kommentar wieder entfernen.
         ContractDataManager.setDatabaseURL(currentDBPath);
         EmployeeDataManager.setDatabaseURL(currentDBPath);
         ManualSalaryEntryManager.setDatabaseURL(currentDBPath);
@@ -142,8 +162,5 @@ public class StartUp {
         ProjectCategoryManager.setDatabaseURL(currentDBPath);
         ProjectFunderManager.setDatabaseURL(currentDBPath);
         ProjectParticipationManager.setDatabaseURL(currentDBPath);
-
-
-
     }
 }

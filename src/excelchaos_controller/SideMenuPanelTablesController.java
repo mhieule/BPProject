@@ -1,7 +1,9 @@
 package excelchaos_controller;
 
+import excelchaos_model.StartUp;
 import excelchaos_view.SideMenuPanelTables;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,8 +44,8 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             frameController.getManualSalaryEntryController().showManualSalaryEntryView(frameController);
         } else if (e.getSource() == sideMenu.getSalaryIncrease()) {
             frameController.getSalaryIncreaseController().showManualSalaryEntryView(frameController);
-//        } else if (e.getSource() == sideMenu.getGehaltshistorie()) {
-//            frameController.getSalaryHistoryController().showSalaryHistoryView(frameController);
+        } else if (e.getSource() == sideMenu.getGehaltshistorie()) {
+            frameController.getSalaryHistoryController().showSalaryHistoryView(frameController);
         } else if (e.getSource() == sideMenu.getShowE13Tables()) {
             PayRateTablesController E13Controller = new PayRateTablesController(frameController);
             E13Controller.setTitle("E13 Entgelttabellen");
@@ -52,22 +54,33 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             PayRateTablesController E14Controller = new PayRateTablesController(frameController);
             E14Controller.setTitle("E14 Entgelttabellen");
             E14Controller.showPayRatesView(frameController);
-        } /*else if (e.getSource() == sideMenu.getShowSHKTables()) {
+        } else if (e.getSource() == sideMenu.getShowSHKTables()) {
             PayRateTablesController SHKController = new PayRateTablesController(frameController);
             SHKController.setTitle("SHK Entgelttabellen");
             SHKController.showPayRatesView(frameController);
-        }*/
+        } else if (e.getSource() == sideMenu.getCreateSnapshot()) {
+            StartUp.createSnapshot();
+            JOptionPane.showConfirmDialog(null, "Snapshot wurde erfolgreich erstellt.", "Aktion war erfolgreich!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        } else if (e.getSource() == sideMenu.getChangeSnapShotSaveFolder()) {
+            StartUp.selectSnapshotFolder();
+        } else if (e.getSource() == sideMenu.getChangeUsedDatabaseAndCloseApplication()) {
+            StartUp.chooseDatabasePath();
+            JOptionPane.showConfirmDialog(null, "Die Datenbank wurde erfolgreich geändert. Bitte starten Sie die Anwendung erneut.", "Aktion war erfolgreich!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
+        }
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED && e.getSource() == sideMenu.getPayRates()) {
+            sideMenu.getPayRatePanel().setPreferredSize(new Dimension(150,120));
             sideMenu.getPayRateTableButtonPanel().setVisible(true);
             sideMenu.getPayRateToggleButtonPanel().setBorder(null);
             sideMenu.getPayRateToggleButtonPanel().setPreferredSize(new Dimension(150, 35));
             sideMenu.getPayRatePanel().setBorder(sideMenu.getRaisedetchedBorder());
             sideMenu.payRateOpenArrowLabelVisible();
         } else if (e.getStateChange() == ItemEvent.DESELECTED && e.getSource() == sideMenu.getPayRates()) {
+            sideMenu.getPayRatePanel().setPreferredSize(new Dimension(150,45));
             sideMenu.getPayRateTableButtonPanel().setVisible(false);
             sideMenu.getPayRatePanel().setBorder(null);
             sideMenu.getPayRateToggleButtonPanel().setBorder(sideMenu.getRaisedetchedBorder());
@@ -87,6 +100,20 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             sideMenu.getSalaryToggleButtonPanel().setBorder(sideMenu.getRaisedetchedBorder());
             sideMenu.getSalaryToggleButtonPanel().setPreferredSize(new Dimension(150, 45));
             sideMenu.salaryCloseArrowLabelVisible();
+        } else if (e.getStateChange() == ItemEvent.SELECTED && e.getSource() == sideMenu.getDatabaseOperationsToggleButton()) {
+            sideMenu.getDatabaseOperationPanel().setPreferredSize(new Dimension(150,135));
+            sideMenu.getDatabaseOperationButtonPanel().setVisible(true);
+            sideMenu.getDataBaseOperationToggleButtonPanel().setBorder(null);
+            sideMenu.getDataBaseOperationToggleButtonPanel().setPreferredSize(new Dimension(150,35));
+            sideMenu.getDatabaseOperationPanel().setBorder(sideMenu.getRaisedetchedBorder());
+            sideMenu.databaseOperationOpenArrowLabelVisible();
+        } else if (e.getStateChange() == ItemEvent.DESELECTED && e.getSource() == sideMenu.getDatabaseOperationsToggleButton()) {
+            sideMenu.getDatabaseOperationPanel().setPreferredSize(new Dimension(150, 45));
+            sideMenu.getDatabaseOperationButtonPanel().setVisible(false);
+            sideMenu.getDatabaseOperationPanel().setBorder(null);
+            sideMenu.getDataBaseOperationToggleButtonPanel().setBorder(sideMenu.getRaisedetchedBorder());
+            sideMenu.getDataBaseOperationToggleButtonPanel().setPreferredSize(new Dimension(150, 45));
+            sideMenu.databaseOperationCloseArrowLabelVisible();
         }
     }
 

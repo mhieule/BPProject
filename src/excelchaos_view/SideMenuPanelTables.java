@@ -12,27 +12,28 @@ public class SideMenuPanelTables extends JPanel {
     private JButton personenliste;
     private JButton projektliste;
     private JButton gehaltsliste;
-//    private JButton inventarliste;
-//    private JButton gehaltshistorie;
-
+    private JButton gehaltshistorie;
     private JButton salaryIncrease;
-
     private JButton manualSalary;
-
     private JButton showE13Tables;
     private JButton showE14Tables;
-    //private JButton showSHKTables;
+    private JButton showSHKTables;
 
+    private JButton createSnapshot;
+    private JButton changeSnapShotSaveFolder;
+    private JButton changeUsedDatabaseAndCloseApplication;
     private JToggleButton payRatesToogleButton;
-
     private JToggleButton salaryToggleButton;
+    private JToggleButton databaseOperationsToggleButton;
+    private JPanel topPanel, centerpanel;
 
-    private JPanel topPanel, centerpanel, payRatePanel, salaryPanel, payRateToggleButtonPanel, payRateTableButtonPanel, salaryToggleButtonPanel, salaryTableButtonPanel;
-    private JLabel navi, payTextLabel, payRateOpenArrowLabel, payRateCloseArrowLabel, salaryOpenArrowLabel, salaryCloseArrowLabel, salaryTextLabel;
+    private JPanel databaseOperationPanel, dataBaseOperationToggleButtonPanel, databaseOperationButtonPanel;
+    private JPanel salaryPanel, salaryToggleButtonPanel, salaryTableButtonPanel;
+    private JPanel payRatePanel, payRateToggleButtonPanel, payRateTableButtonPanel;
+    private JLabel navi, payRateTextLabel, payRateOpenArrowLabel, payRateCloseArrowLabel, salaryOpenArrowLabel, salaryCloseArrowLabel, salaryTextLabel, databaseOperationTextLabel, databaseOperationOpenArrowLabel, databaseOperationCloseArrowLabel;
     private BasicArrowButton arrowButtonWest;
-
-    private ImageIcon salaryCloseArrow = new ImageIcon(getClass().getClassLoader().getResource("images/arrow_right_mini.png"));
-    private ImageIcon salaryOpenArrow = new ImageIcon(getClass().getClassLoader().getResource("images/arrow_down_mini.png"));
+    private ImageIcon CloseArrow = new ImageIcon(getClass().getClassLoader().getResource("images/arrow_right_mini.png"));
+    private ImageIcon OpenArrow = new ImageIcon(getClass().getClassLoader().getResource("images/arrow_down_mini.png"));
 
     private Border raisedetchedBorder;
 
@@ -43,11 +44,9 @@ public class SideMenuPanelTables extends JPanel {
     public void init() {
         personenliste = new JButton("Personenliste");
         projektliste = new JButton("Projektliste");
-//        inventarliste = new JButton("Inventarliste");
 
         personenliste.setPreferredSize(new Dimension(RegularButtonWidth, RegularButtonHeigt));
         projektliste.setPreferredSize(new Dimension(RegularButtonWidth, RegularButtonHeigt));
-//        inventarliste.setPreferredSize(new Dimension(RegularButtonWidth, RegularButtonHeigt));
 
 
         arrowButtonWest = new BasicArrowButton(BasicArrowButton.WEST);
@@ -59,22 +58,18 @@ public class SideMenuPanelTables extends JPanel {
         topPanel.add(navi);
         topPanel.add(arrowButtonWest);
         add(topPanel, BorderLayout.PAGE_START);
-        centerpanel.setPreferredSize(new Dimension(150, 500));
+        centerpanel.setPreferredSize(new Dimension(150, 550));
         centerpanel.add(personenliste);
         centerpanel.add(projektliste);
 
-        //centerpanel.add(payRates);
         initSalaryExpander();
         centerpanel.add(salaryPanel);
-//        centerpanel.add(inventarliste);
         initPayRateExpander();
         centerpanel.add(payRatePanel);
-        //centerpanel.add(showE13Tables);
-        //centerpanel.add(showE14Tables);
-        //centerpanel.add(showSHKTables);
-        //centerpanel.add(collapsablePanel);
+        initDatabaseOperationExpander();
+        centerpanel.add(databaseOperationPanel);
+
         add(centerpanel, BorderLayout.CENTER);
-        // setBackground(Color.white);
 
         setPreferredSize(new Dimension(150, 100));
 
@@ -101,6 +96,16 @@ public class SideMenuPanelTables extends JPanel {
         salaryOpenArrowLabel.setVisible(true);
     }
 
+    public void databaseOperationCloseArrowLabelVisible() {
+        databaseOperationOpenArrowLabel.setVisible(false);
+        databaseOperationCloseArrowLabel.setVisible(true);
+    }
+
+    public void databaseOperationOpenArrowLabelVisible() {
+        databaseOperationCloseArrowLabel.setVisible(false);
+        databaseOperationOpenArrowLabel.setVisible(true);
+    }
+
     private void initSalaryExpander() {
         salaryPanel = new JPanel();
         salaryToggleButtonPanel = new JPanel();
@@ -111,15 +116,15 @@ public class SideMenuPanelTables extends JPanel {
         salaryToggleButtonPanel.setBorder(raisedetchedBorder);
         salaryPanel.setLayout(new BorderLayout());
         salaryPanel.setPreferredSize(new Dimension(150, 45));
-        salaryCloseArrowLabel = new JLabel(salaryCloseArrow);
-        salaryOpenArrowLabel = new JLabel(salaryOpenArrow);
+        salaryCloseArrowLabel = new JLabel(CloseArrow);
+        salaryOpenArrowLabel = new JLabel(OpenArrow);
         salaryTextLabel = new JLabel("Gehälter");
         salaryToggleButton = new JToggleButton();
         salaryToggleButton.setPreferredSize(new Dimension(RegularButtonWidth, 30));
         salaryToggleButton.setLayout(new BoxLayout(salaryToggleButton, BoxLayout.X_AXIS));
-        salaryToggleButton.add(Box.createHorizontalStrut(10));
+        salaryToggleButton.add(Box.createHorizontalStrut(20));
         salaryToggleButton.add(salaryTextLabel);
-        salaryToggleButton.add(Box.createHorizontalStrut(25));
+        salaryToggleButton.add(Box.createHorizontalStrut(15));
         salaryToggleButton.add(salaryCloseArrowLabel);
         salaryCloseArrowLabelVisible();
         salaryToggleButton.add(salaryOpenArrowLabel);
@@ -129,17 +134,17 @@ public class SideMenuPanelTables extends JPanel {
         gehaltsliste = new JButton("Gehaltsprojektion");
         manualSalary = new JButton("Manuelle Einträge");
         salaryIncrease = new JButton("Gehaltserhöhung");
-//        gehaltshistorie = new JButton("Gehaltshistorie");
+        gehaltshistorie = new JButton("Gehaltshistorie");
 
         gehaltsliste.setPreferredSize(new Dimension(140, RegularButtonHeigt));
         manualSalary.setPreferredSize(new Dimension(140, RegularButtonHeigt));
         salaryIncrease.setPreferredSize(new Dimension(140, RegularButtonHeigt));
-//        gehaltshistorie.setPreferredSize(new Dimension(140, RegularButtonHeigt));
+        gehaltshistorie.setPreferredSize(new Dimension(140, RegularButtonHeigt));
 
         salaryTableButtonPanel.add(gehaltsliste);
         salaryTableButtonPanel.add(manualSalary);
         salaryTableButtonPanel.add(salaryIncrease);
-//        salaryTableButtonPanel.add(gehaltshistorie);
+        salaryTableButtonPanel.add(gehaltshistorie);
 
         salaryTableButtonPanel.setVisible(false);
         salaryPanel.add(salaryTableButtonPanel, BorderLayout.CENTER);
@@ -155,15 +160,15 @@ public class SideMenuPanelTables extends JPanel {
         payRateToggleButtonPanel.setBorder(raisedetchedBorder);
         //payRatePanel.setLayout(new BoxLayout(payRatePanel,BoxLayout.Y_AXIS));
         payRatePanel.setLayout(new BorderLayout());
-        payRatePanel.setPreferredSize(new Dimension(150, 120));
+        payRatePanel.setPreferredSize(new Dimension(150, 45));
 
-        payRateCloseArrowLabel = new JLabel(salaryCloseArrow);
-        payRateOpenArrowLabel = new JLabel(salaryOpenArrow);
-        payTextLabel = new JLabel("Entgelttabellen");
+        payRateCloseArrowLabel = new JLabel(CloseArrow);
+        payRateOpenArrowLabel = new JLabel(OpenArrow);
+        payRateTextLabel = new JLabel("Entgelttabellen");
         payRatesToogleButton = new JToggleButton();
         payRatesToogleButton.setPreferredSize(new Dimension(RegularButtonWidth, 30));
         payRatesToogleButton.setLayout(new BoxLayout(payRatesToogleButton, BoxLayout.X_AXIS));
-        payRatesToogleButton.add(payTextLabel);
+        payRatesToogleButton.add(payRateTextLabel);
         payRatesToogleButton.add(payRateCloseArrowLabel);
         payRateCloseArrowLabelVisible();
         payRatesToogleButton.add(payRateOpenArrowLabel);
@@ -174,18 +179,64 @@ public class SideMenuPanelTables extends JPanel {
 
         showE13Tables = new JButton("E13 Tabellen");
         showE14Tables = new JButton("E14 Tabellen");
-        //showSHKTables = new JButton("SHK Tabellen");
+        showSHKTables = new JButton("SHK Tabellen");
 
         showE13Tables.setPreferredSize(new Dimension(120, 20));
         showE14Tables.setPreferredSize(new Dimension(120, 20));
-        //showSHKTables.setPreferredSize(new Dimension(120, 20));
+        showSHKTables.setPreferredSize(new Dimension(120, 20));
 
         payRateTableButtonPanel.add(showE13Tables);
         payRateTableButtonPanel.add(showE14Tables);
-        //payRateTableButtonPanel.add(showSHKTables);
+        payRateTableButtonPanel.add(showSHKTables);
         payRateTableButtonPanel.setVisible(false);
 
         payRatePanel.add(payRateTableButtonPanel, BorderLayout.CENTER);
+    }
+
+    private void initDatabaseOperationExpander() {
+        databaseOperationPanel = new JPanel();
+        dataBaseOperationToggleButtonPanel = new JPanel();
+        databaseOperationButtonPanel = new JPanel();
+        raisedetchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+        dataBaseOperationToggleButtonPanel.setPreferredSize(new Dimension(150, 45));
+        databaseOperationButtonPanel.setPreferredSize(new Dimension(150, 60));
+        dataBaseOperationToggleButtonPanel.setBorder(raisedetchedBorder);
+        databaseOperationPanel.setLayout(new BorderLayout());
+        databaseOperationPanel.setPreferredSize(new Dimension(150, 45));
+
+        databaseOperationCloseArrowLabel = new JLabel(CloseArrow);
+        databaseOperationOpenArrowLabel = new JLabel(OpenArrow);
+        databaseOperationTextLabel = new JLabel("Datenbank");
+        databaseOperationsToggleButton = new JToggleButton();
+        databaseOperationsToggleButton.setPreferredSize(new Dimension(RegularButtonWidth, 30));
+        databaseOperationsToggleButton.setLayout(new BoxLayout(databaseOperationsToggleButton, BoxLayout.X_AXIS));
+        databaseOperationsToggleButton.add(Box.createHorizontalStrut(10));
+        databaseOperationsToggleButton.add(databaseOperationTextLabel);
+        databaseOperationsToggleButton.add(Box.createHorizontalStrut(13));
+        databaseOperationsToggleButton.add(databaseOperationCloseArrowLabel);
+        databaseOperationCloseArrowLabelVisible();
+        databaseOperationsToggleButton.add(databaseOperationOpenArrowLabel);
+
+        dataBaseOperationToggleButtonPanel.add(databaseOperationsToggleButton);
+        databaseOperationPanel.add(dataBaseOperationToggleButtonPanel, BorderLayout.NORTH);
+
+        createSnapshot = new JButton("Snapshot erstellen");
+        changeSnapShotSaveFolder = new JButton("Speicherort ändern");
+
+        changeUsedDatabaseAndCloseApplication = new JButton("Datenbank ändern");
+
+        createSnapshot.setPreferredSize(new Dimension(140,RegularButtonHeigt));
+        createSnapshot.setMargin(new Insets(2,7,2,7));
+        changeSnapShotSaveFolder.setPreferredSize(new Dimension(140, RegularButtonHeigt));
+        changeSnapShotSaveFolder.setMargin(new Insets(2,7,2,7));
+        changeUsedDatabaseAndCloseApplication.setPreferredSize(new Dimension(140, RegularButtonHeigt));
+
+        databaseOperationButtonPanel.add(createSnapshot);
+        databaseOperationButtonPanel.add(changeSnapShotSaveFolder);
+        databaseOperationButtonPanel.add(changeUsedDatabaseAndCloseApplication);
+        databaseOperationButtonPanel.setVisible(false);
+
+        databaseOperationPanel.add(databaseOperationButtonPanel, BorderLayout.CENTER);
     }
 
     public JPanel getPayRateToggleButtonPanel() {
@@ -220,9 +271,9 @@ public class SideMenuPanelTables extends JPanel {
         return gehaltsliste;
     }
 
-//    public JButton getGehaltshistorie() {
-//        return gehaltshistorie;
-//    }
+    public JButton getGehaltshistorie() {
+        return gehaltshistorie;
+    }
 
     public JToggleButton getPayRates() {
         return payRatesToogleButton;
@@ -238,6 +289,10 @@ public class SideMenuPanelTables extends JPanel {
 
     public JPanel getSalaryPanel() {
         return salaryPanel;
+    }
+
+    public JButton getCreateSnapshot() {
+        return createSnapshot;
     }
 
     public JToggleButton getSalaryToggleButton() {
@@ -260,12 +315,37 @@ public class SideMenuPanelTables extends JPanel {
         return showE14Tables;
     }
 
-    // public JButton getShowSHKTables() {
-    //    return showSHKTables;
-    // }
+    public JButton getShowSHKTables() {
+        return showSHKTables;
+    }
 
     public JPanel getCenterpanel() {
         return centerpanel;
+    }
+
+    public JButton getChangeSnapShotSaveFolder() {
+        return changeSnapShotSaveFolder;
+    }
+
+    public JButton getChangeUsedDatabaseAndCloseApplication() {
+        return changeUsedDatabaseAndCloseApplication;
+    }
+
+    public JPanel getDatabaseOperationButtonPanel() {
+        return databaseOperationButtonPanel;
+    }
+
+    public JPanel getDatabaseOperationPanel() {
+        return databaseOperationPanel;
+    }
+
+
+    public JPanel getDataBaseOperationToggleButtonPanel() {
+        return dataBaseOperationToggleButtonPanel;
+    }
+
+    public JToggleButton getDatabaseOperationsToggleButton() {
+        return databaseOperationsToggleButton;
     }
 
     public void setActionListener(ActionListener l) {
@@ -274,16 +354,20 @@ public class SideMenuPanelTables extends JPanel {
         gehaltsliste.addActionListener(l);
         manualSalary.addActionListener(l);
         salaryIncrease.addActionListener(l);
-//        gehaltshistorie.addActionListener(l);
+        gehaltshistorie.addActionListener(l);
         arrowButtonWest.addActionListener(l);
         showE13Tables.addActionListener(l);
         showE14Tables.addActionListener(l);
-        // showSHKTables.addActionListener(l);
+        showSHKTables.addActionListener(l);
+        createSnapshot.addActionListener(l);
+        changeSnapShotSaveFolder.addActionListener(l);
+        changeUsedDatabaseAndCloseApplication.addActionListener(l);
     }
 
     public void setItemListener(ItemListener l) {
         payRatesToogleButton.addItemListener(l);
         salaryToggleButton.addItemListener(l);
+        databaseOperationsToggleButton.addItemListener(l);
     }
 
 }
