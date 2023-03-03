@@ -4,6 +4,8 @@ import excelchaos_model.database.Contract;
 import excelchaos_model.database.ContractDataManager;
 import excelchaos_model.database.Employee;
 import excelchaos_model.calculations.CalculateSalaryBasedOnPayRateTable;
+import excelchaos_model.inputVerifier.WorkScopeSHKVerifier;
+import excelchaos_model.inputVerifier.WorkScopeVerifier;
 import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
 import excelchaos_view.InsertPersonView;
 import excelchaos_model.database.EmployeeDataManager;
@@ -71,7 +73,6 @@ public class InsertPersonController implements ActionListener {
     }
 
     public boolean updateData(int id) {
-        boolean hadError;
         Employee employee = employeeDataManager.getEmployee(id);
         Contract contract = contractDataManager.getContract(id);
 
@@ -115,6 +116,9 @@ public class InsertPersonController implements ActionListener {
         String zip_code = insertPersonView.getTfPLZ().getText();
         String additional_address = insertPersonView.getTfAdresszusatz().getText();
         String city = insertPersonView.getTfStadt().getText();
+
+        String typeOfJob = insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString();
+        String hiwiTypeOfPayment = insertPersonView.getHiwiTypeOfPaymentList().getSelectedItem().toString();
         String payGrade = insertPersonView.getPayGroupList().getSelectedItem().toString();
         String payLevel = insertPersonView.getPayLevelList().getSelectedItem().toString();
         boolean vbl = false;
@@ -138,48 +142,73 @@ public class InsertPersonController implements ActionListener {
         }
         double scope = transformer.formatStringToPercentageValueForScope(insertPersonView.getTfWorkScope().getText());
 
-        if (surname.equals("") || name.equals("") || email_private.equals("") || phone_private.equals("") || citizenship_1.equals("") || citizenship_2.equals("") || employeeNumber.equals("") || tu_id.equals("")
-                || transponder_number.equals("") || office_number.equals("") || phone_tuda.equals("") || salaryPlannedUntil == null || dateOfBirth == null || houseNumber.equals("") || zip_code.equals("")
-                || city.equals("") || street.equals("") || payGrade.equals("Nicht ausgewählt") || payLevel.equals("Nicht ausgewählt") || workStart == null || workEnd == null) {
+        if (surname.equals("") || name.equals("") || salaryPlannedUntil == null || workStart == null || workEnd == null || typeOfJob.equals("Nicht ausgewählt")) {
             insertPersonView.markMustBeFilledTextFields();
-            hadError = true;
-        } else {
-            employee.setSurname(surname);
-            employee.setName(name);
-            employee.setEmail_private(email_private);
-            employee.setPhone_private(phone_private);
-            employee.setCitizenship_1(citizenship_1);
-            employee.setCitizenship_2(citizenship_2);
-            employee.setEmployee_number(employeeNumber);
-            employee.setTu_id(tu_id);
-            employee.setVisa_required(visa_required);
-            employee.setStatus(status);
-            employee.setTransponder_number(transponder_number);
-            employee.setOffice_number(office_number);
-            employee.setPhone_tuda(phone_tuda);
-            employee.setSalary_planned_until(salaryPlannedUntil);
-            employee.setVisa_expiration(visaExpiration);
-            employee.setDate_of_birth(dateOfBirth);
-            employee.setHouse_number(houseNumber);
-            employee.setStreet(street);
-            employee.setZip_code(zip_code);
-            employee.setAdditional_address(additional_address);
-            employee.setCity(city);
-
-            contract.setPaygrade(payGrade);
-            contract.setPaylevel(payLevel);
-            contract.setStart_date(workStart);
-            contract.setEnd_date(workEnd);
-            contract.setScope(scope);
-            contract.setVbl_status(vbl);
-            double[] newCost = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(contract);
-            contract.setRegular_cost(newCost[0]);
-            contract.setBonus_cost(newCost[1]*12);
-            employeeDataManager.updateEmployee(employee);
-            contractDataManager.updateContract(contract);
-            hadError = false;
+            return true;
         }
-        return hadError;
+        if (typeOfJob.equals("SHK")) {
+            if (hiwiTypeOfPayment.equals("Nicht ausgewählt")) {
+                insertPersonView.markMustBeFilledTextFields();
+                return true;
+            }
+        }
+        if (typeOfJob.equals("WiMi") || typeOfJob.equals("ATM")) {
+            if (payGrade.equals("Nicht ausgewählt") || payLevel.equals("Nicht ausgewählt") || insertPersonView.getVblList().getSelectedItem().toString().equals("Nicht ausgewählt")) {
+                insertPersonView.markMustBeFilledTextFields();
+                return true;
+            }
+
+        }
+
+        employee.setSurname(surname);
+        employee.setName(name);
+        employee.setEmail_private(email_private);
+        employee.setPhone_private(phone_private);
+        employee.setCitizenship_1(citizenship_1);
+        employee.setCitizenship_2(citizenship_2);
+        employee.setEmployee_number(employeeNumber);
+        employee.setTu_id(tu_id);
+        employee.setVisa_required(visa_required);
+        employee.setStatus(status);
+        employee.setTransponder_number(transponder_number);
+        employee.setOffice_number(office_number);
+        employee.setPhone_tuda(phone_tuda);
+        employee.setSalary_planned_until(salaryPlannedUntil);
+        employee.setVisa_expiration(visaExpiration);
+        employee.setDate_of_birth(dateOfBirth);
+        employee.setHouse_number(houseNumber);
+        employee.setStreet(street);
+        employee.setZip_code(zip_code);
+        employee.setAdditional_address(additional_address);
+        employee.setCity(city);
+
+        if(hiwiTypeOfPayment.equals("Nicht ausgewählt")){
+            hiwiTypeOfPayment = "";
+        }
+
+        if(payGrade.equals("Nicht ausgewählt")){
+            payGrade = "";
+        }
+
+        if(payLevel.equals("Nicht ausgewählt")){
+            payLevel = "";
+        }
+
+        employee.setStatus(typeOfJob);
+        contract.setPaygrade(payGrade);
+        contract.setPaylevel(payLevel);
+        contract.setStart_date(workStart);
+        contract.setEnd_date(workEnd);
+        contract.setShk_hourly_rate(hiwiTypeOfPayment);
+        contract.setScope(scope);
+        contract.setVbl_status(vbl); //TODO Unterscheidung bei der Berechnung SHK und Rest und an aktuelles Gehalt anpassen also nicht anhand der PayRateTable berechnen
+        double[] newCost = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(contract);
+        contract.setRegular_cost(newCost[0]);
+        contract.setBonus_cost(newCost[1] * 12);
+        employeeDataManager.updateEmployee(employee);
+        contractDataManager.updateContract(contract);
+
+        return false;
 
     }
 
@@ -225,21 +254,26 @@ public class InsertPersonController implements ActionListener {
 
         Contract contract = contractDataManager.getContract(Integer.parseInt(id));
         insertPersonView.getTypeOfJobPicklist().setSelectedItem(employee.getStatus());
-        insertPersonView.getTfWorkScope().setText(transformer.formatPercentageToStringForScope(contract.getScope()));
-        insertPersonView.getPayGroupOnHiring().setVisible(true);
-        insertPersonView.getPayGroupList().setSelectedItem(contract.getPaygrade());
-        insertPersonView.getPayGroupList().setVisible(true);
-        insertPersonView.getPayLevelOnHiring().setVisible(true);
-        insertPersonView.getPayLevelList().setVisible(true);
-        insertPersonView.getPayLevelList().setSelectedItem(contract.getPaylevel());
-        insertPersonView.getVblList().setSelectedItem("Befreit");
-        if (contract.getVbl_status()) {
-            insertPersonView.getVblList().setSelectedItem("Pflichtig");
+        if (employee.getStatus().equals("SHK")) {
+            insertPersonView.getHiwiTypeOfPayment().setVisible(true);
+            insertPersonView.getHiwiTypeOfPaymentList().setVisible(true);
+            insertPersonView.getHiwiTypeOfPaymentList().setSelectedItem(contract.getShk_hourly_rate());
+        } else {
+            insertPersonView.getTfWorkScope().setText(transformer.formatPercentageToStringForScope(contract.getScope()));
+            insertPersonView.getPayGroupOnHiring().setVisible(true);
+            insertPersonView.getPayGroupList().setSelectedItem(contract.getPaygrade());
+            insertPersonView.getPayGroupList().setVisible(true);
+            insertPersonView.getPayLevelOnHiring().setVisible(true);
+            insertPersonView.getPayLevelList().setVisible(true);
+            insertPersonView.getPayLevelList().setSelectedItem(contract.getPaylevel());
+            insertPersonView.getVblList().setSelectedItem("Befreit");
+            if (contract.getVbl_status()) {
+                insertPersonView.getVblList().setSelectedItem("Pflichtig");
+            }
+            insertPersonView.getVblList().setVisible(true);
+            insertPersonView.getVblstate().setVisible(true);
         }
-        insertPersonView.getVblList().setVisible(true);
-        insertPersonView.getVblstate().setVisible(true);
-        insertPersonView.getHiwiTypeOfPayment().setVisible(true);
-        insertPersonView.getHiwiTypeOfPaymentList().setVisible(true);
+
         date = contract.getStart_date();
         insertPersonView.getTfWorkStart().setDate(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         date = contract.getEnd_date();
@@ -280,6 +314,7 @@ public class InsertPersonController implements ActionListener {
         insertPersonView.getPayLevelList().setVisible(false);
         insertPersonView.getPayLevelList().setSelectedItem("Nicht ausgewählt");
         insertPersonView.getVblList().setSelectedItem("Nicht ausgewählt");
+        insertPersonView.getHiwiTypeOfPaymentList().setSelectedItem("Nicht ausgewählt");
         insertPersonView.getVblList().setVisible(false);
         insertPersonView.getVblstate().setVisible(false);
         insertPersonView.getHiwiTypeOfPayment().setVisible(false);
@@ -336,8 +371,10 @@ public class InsertPersonController implements ActionListener {
         String zip_code = insertPersonView.getTfPLZ().getText();
         String additional_address = insertPersonView.getTfAdresszusatz().getText();
         String city = insertPersonView.getTfStadt().getText();
+        String typeOfJob = insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString();
         String payGrade = insertPersonView.getPayGroupList().getSelectedItem().toString();
         String payLevel = insertPersonView.getPayLevelList().getSelectedItem().toString();
+        String hiwiTypeOfPayment = insertPersonView.getHiwiTypeOfPaymentList().getSelectedItem().toString();
         boolean vbl = false;
         if (insertPersonView.getVblList().getSelectedItem().toString().equals("Pflichtig")) {
             vbl = true;
@@ -364,27 +401,51 @@ public class InsertPersonController implements ActionListener {
             scope = transformer.formatStringToPercentageValueForScope(insertPersonView.getTfWorkScope().getText());
         }
 
-        if (surname.equals("") || name.equals("") || email_private.equals("") || phone_private.equals("") || citizenship_1.equals("") || citizenship_2.equals("") || employeeNumber.equals("") || tu_id.equals("")
-                || transponder_number.equals("") || office_number.equals("") || phone_tuda.equals("") || salaryPlannedUntil == null || dateOfBirth == null || houseNumber.equals("") || zip_code.equals("")
-                || city.equals("") || street.equals("") || payGrade.equals("Nicht ausgewählt") || payLevel.equals("Nicht ausgewählt") || workStart == null || workEnd == null) {
+        if (surname.equals("") || name.equals("") || salaryPlannedUntil == null || workStart == null || workEnd == null || typeOfJob.equals("Nicht ausgewählt")) {
             insertPersonView.markMustBeFilledTextFields();
             return null;
-        } else {
-            Employee newEmployee = new Employee(id,  name,surname, email_private, phone_private, citizenship_1,
-                    citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                    salaryPlannedUntil, visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
-            employeeDataManager.addEmployee(newEmployee);
-            //TODO shk rate muss noch abgefragt werden
-
-            Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0, scope, "", vbl);
-            double[] startSalary;
-            startSalary = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(newContract);
-            double regular_cost = startSalary[0];
-            double bonus_cost = startSalary[1] * 12;
-            newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, regular_cost, bonus_cost, scope, "", vbl);
-            contractDataManager.addContract(newContract);
-            return newEmployee;
         }
+        if(typeOfJob.equals("SHK")){
+            if(hiwiTypeOfPayment.equals("Nicht ausgewählt")){
+                insertPersonView.markMustBeFilledTextFields();
+                return null;
+            }
+        }
+        if(typeOfJob.equals("WiMi")||typeOfJob.equals("ATM")){
+            if(payGrade.equals("Nicht ausgewählt") || payLevel.equals("Nicht ausgewählt") || insertPersonView.getVblList().getSelectedItem().toString().equals("Nicht ausgewählt")){
+                insertPersonView.markMustBeFilledTextFields();
+                return null;
+            }
+
+        }
+
+
+        Employee newEmployee = new Employee(id, name, surname, email_private, phone_private, citizenship_1,
+                citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
+                salaryPlannedUntil, visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
+        employeeDataManager.addEmployee(newEmployee);
+
+        if(hiwiTypeOfPayment.equals("Nicht ausgewählt")){
+            hiwiTypeOfPayment = "";
+        }
+
+        if(payGrade.equals("Nicht ausgewählt")){
+            payGrade = "";
+        }
+
+        if(payLevel.equals("Nicht ausgewählt")){
+            payLevel = "";
+        }
+
+        Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0, scope, hiwiTypeOfPayment, vbl);
+        double[] startSalary;
+        startSalary = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(newContract);
+        double regular_cost = startSalary[0]; //TODO Berechnung für SHK ändern
+        double bonus_cost = startSalary[1] * 12;
+        newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, regular_cost, bonus_cost, scope, hiwiTypeOfPayment, vbl);
+        contractDataManager.addContract(newContract);
+        return newEmployee;
+
 
     }
 
@@ -467,13 +528,28 @@ public class InsertPersonController implements ActionListener {
             frameController.getTabs().removeTabNewWindow(insertPersonView);
         }
         if (e.getSource() == insertPersonView.getTypeOfJobPicklist()) {
+            if(insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("Nicht ausgewählt")){
+                insertPersonView.getTfWorkScope().setInputVerifier(null);
+                insertPersonView.getTfWorkScope().setText(null);
+                insertPersonView.getPayGroupOnHiring().setVisible(false);
+                insertPersonView.getPayGroupList().setVisible(false);
+                insertPersonView.getPayLevelOnHiring().setVisible(false);
+                insertPersonView.getPayLevelList().setVisible(false);
+                insertPersonView.getVblstate().setVisible(false);
+                insertPersonView.getVblList().setVisible(false);
+                insertPersonView.getHiwiTypeOfPayment().setVisible(false);
+                insertPersonView.getHiwiTypeOfPaymentList().setVisible(false);
+            }
             if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("WiMi") || insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("ATM")) {
+                insertPersonView.getTfWorkScope().setInputVerifier(null);
+                insertPersonView.getTfWorkScope().setText(null);
                 insertPersonView.getPayGroupOnHiring().setVisible(true);
                 insertPersonView.getPayGroupList().setVisible(true);
                 insertPersonView.getPayLevelOnHiring().setVisible(true);
                 insertPersonView.getPayLevelList().setVisible(true);
                 insertPersonView.getVblstate().setVisible(true);
                 insertPersonView.getVblList().setVisible(true);
+                insertPersonView.getTfWorkScope().setInputVerifier(new WorkScopeVerifier());
             } else {
                 insertPersonView.getPayGroupOnHiring().setVisible(false);
                 insertPersonView.getPayGroupList().setVisible(false);
@@ -483,8 +559,11 @@ public class InsertPersonController implements ActionListener {
                 insertPersonView.getVblList().setVisible(false);
             }
             if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("SHK")) {
+                insertPersonView.getTfWorkScope().setInputVerifier(null);
+                insertPersonView.getTfWorkScope().setText(null);
                 insertPersonView.getHiwiTypeOfPayment().setVisible(true);
                 insertPersonView.getHiwiTypeOfPaymentList().setVisible(true);
+                insertPersonView.getTfWorkScope().setInputVerifier(new WorkScopeSHKVerifier());
             } else {
                 insertPersonView.getHiwiTypeOfPayment().setVisible(false);
                 insertPersonView.getHiwiTypeOfPaymentList().setVisible(false);

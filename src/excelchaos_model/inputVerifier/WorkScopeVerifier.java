@@ -11,6 +11,7 @@ public class WorkScopeVerifier extends InputVerifier {
     public boolean verify(JComponent input) {
         String text = ((JTextField) input).getText();
         if (text.matches("")) {
+            ((JTextField) input).setText("0"+ "%");
             return true;
         } else if (text.matches("\\d{1}") || text.matches("\\d{2}")) {
             ((JTextField) input).setText(text + "%");

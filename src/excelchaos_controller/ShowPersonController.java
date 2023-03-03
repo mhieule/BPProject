@@ -87,24 +87,28 @@ public class ShowPersonController implements TableModelListener {
             String transponderNumber = employee.getTransponder_number();
             String officeNumber = employee.getOffice_number();
             String tuId = employee.getTu_id();
-            String status = employee.getStatus();
+            String typeOfJob = employee.getStatus();
             Date startDate = contract.getStart_date();
             String startDateString = dateFormat.format(startDate);
             Date endDate = contract.getEnd_date();
             String endDateString = dateFormat.format(endDate);
-            String extend = transformer.formatPercentageToStringForScope(contract.getScope()); //arbeitsumfang
+            String workScope = transformer.formatPercentageToStringForScope(contract.getScope()); //TODO Workscope anpassen wenn SHK
             String payGrade = contract.getPaygrade();
             String payLevel = contract.getPaylevel();
             String vblStatus;
+            String shkHourlyRate = contract.getShk_hourly_rate();
             if (contract.getVbl_status()) {
                 vblStatus = "Pflichtig";
             } else vblStatus = "Befreit";
-            String shkHourlyRate = contract.getShk_hourly_rate();
+            if(typeOfJob.equals("SHK")){
+                vblStatus = "";
+            }
+
             Date salaryPlannedUntil = employee.getSalary_planned_until();
             String salaryPlannedUntilString = dateFormat.format(salaryPlannedUntil);
 
             String[] values = {id, name, surname, street, houseNumber, additionalAddress, zipCode, city, dateOfBirth, emailPrivate, phonePrivate, phoneTuda,
-                    citizenship1, citizenship2, visaExpiration, employeeNumber, transponderNumber, officeNumber, tuId, status, startDateString, endDateString, extend, payGrade, payLevel, vblStatus, shkHourlyRate, salaryPlannedUntilString};
+                    citizenship1, citizenship2, visaExpiration, employeeNumber, transponderNumber, officeNumber, tuId, typeOfJob, startDateString, endDateString, workScope, payGrade, payLevel, vblStatus, shkHourlyRate, salaryPlannedUntilString};
             resultData[currentIndex] = values;
             currentIndex++;
         }

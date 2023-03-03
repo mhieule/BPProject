@@ -154,7 +154,7 @@ public class InsertPersonView extends JPanel {
 
         typeOfJob = new JLabel("Art der Anstellung");
         setConstraintsLabel(typeOfJob, 20);
-        String[] statusArray = {"Nicht ausgewählt", "WiMi", "ATM"}; //TODO SHK Wieder hinzufügen (Wurde für Nutzungsstudie rausgenommen)
+        String[] statusArray = {"Nicht ausgewählt", "WiMi", "ATM", "SHK"};
         typeOfJobPicklist = new JComboBox(statusArray);
         setConstraintsJComboBox(typeOfJobPicklist, 20);
 
@@ -171,7 +171,6 @@ public class InsertPersonView extends JPanel {
         workScope = new JLabel("Beschäftigungsumfang");
         setConstraintsLabel(workScope, 23);
         tfWorkScope = new JTextField();
-        tfWorkScope.setInputVerifier(new WorkScopeVerifier());
         setConstraintsTextField(tfWorkScope, 23);
 
         payGroupOnHiring = new JLabel("Gehaltsklasse");
@@ -249,20 +248,7 @@ public class InsertPersonView extends JPanel {
     public void markMustBeFilledTextFields() {
         name.setForeground(Color.RED);
         vorname.setForeground(Color.RED);
-        privatEmail.setForeground(Color.RED);
-        privateTelefonnummer.setForeground(Color.RED);
-        nationalityFirst.setForeground(Color.RED);
-        personalnummer.setForeground(Color.RED);
-        tuid.setForeground(Color.RED);
-        transpondernummer.setForeground(Color.RED);
-        bueronummer.setForeground(Color.RED);
-        telefonnummerTUDA.setForeground(Color.RED);
         gehaltEingeplanntBis.setForeground(Color.RED);
-        geburtsdatum.setForeground(Color.RED);
-        hausnummer.setForeground(Color.RED);
-        plz.setForeground(Color.RED);
-        stadt.setForeground(Color.RED);
-        strasse.setForeground(Color.RED);
         payGroupOnHiring.setForeground(Color.RED);
         payLevelOnHiring.setForeground(Color.RED);
         workStart.setForeground(Color.RED);
@@ -270,6 +256,7 @@ public class InsertPersonView extends JPanel {
         workScope.setForeground(Color.RED);
         typeOfJob.setForeground(Color.RED);
         vblstate.setForeground(Color.RED);
+        hiwiTypeOfPayment.setForeground(Color.RED);
     }
 
     public JLabel getPayGroupOnHiring() {

@@ -24,6 +24,7 @@ public class SalaryCalculation {
     }
 
     //TODO Großflächig Testen insbesondere If Verzweigungen.
+    //TODO
     public void determineCurrentSalary() {
         double result = 0;
         Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -115,6 +116,7 @@ public class SalaryCalculation {
         contract = payLevelIncrease.performPayLevelIncreaseBasedOnGivenDate(givenDate, contract);
         LocalDate chosenLocalDate = givenDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate payRateTableChangeDate = calculateSalaryBasedOnPayRateTable.getActivePayRateTableDateBasedOnGivenDate(contract, chosenLocalDate);
+
         if (currentManualSalaryDate == null && currentSalaryIncreaseDate == null && lastPayLevelIncreaseDate == null) {
             return result;
         }

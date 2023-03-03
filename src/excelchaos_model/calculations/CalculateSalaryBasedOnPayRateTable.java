@@ -1,11 +1,11 @@
 package excelchaos_model.calculations;
 
-import excelchaos_model.database.Contract;
-import excelchaos_model.database.Employee;
-import excelchaos_model.database.SalaryTable;
+import excelchaos_model.database.*;
 import excelchaos_model.datecalculations.CurrentPayRateTableE13;
 import excelchaos_model.datecalculations.CurrentPayRateTableE14;
+import excelchaos_model.datecalculations.CurrentPayRateTableSHK;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -506,26 +506,44 @@ public class CalculateSalaryBasedOnPayRateTable {
     }
 
     //TODO Evtl Abfragen hinzufügen, dass dinge nicht null sind
-    public LocalDate getActivePayRateTableDateBasedOnGivenDate(Contract contract, LocalDate choosenDate) {
+    public LocalDate getActivePayRateTableDateBasedOnGivenDate(Contract contract, LocalDate chosenDate) {
         CurrentPayRateTableE13 chosenDatePayRateTableE13 = new CurrentPayRateTableE13();
         CurrentPayRateTableE14 chosenDatePayRateTableE14 = new CurrentPayRateTableE14();
         switch (contract.getPaygrade()) {
             case "E13":
                 if (contract.getPaylevel().equals("1")) {
-                    return chosenDatePayRateTableE13.getActivePayRateTableDateWithoutAAndB(choosenDate);
-                } else return chosenDatePayRateTableE13.getActivePayRateTableDateWithAAndB(choosenDate);
+                    return chosenDatePayRateTableE13.getActivePayRateTableDateWithoutAAndB(chosenDate);
+                } else return chosenDatePayRateTableE13.getActivePayRateTableDateWithAAndB(chosenDate);
             case "E14":
                 if (contract.getPaylevel().equals("1")) {
-                    return chosenDatePayRateTableE14.getActivePayRateTableDateWithoutAAndB(choosenDate);
-                } else return chosenDatePayRateTableE14.getActivePayRateTableDateWithAAndB(choosenDate);
+                    return chosenDatePayRateTableE14.getActivePayRateTableDateWithoutAAndB(chosenDate);
+                } else return chosenDatePayRateTableE14.getActivePayRateTableDateWithAAndB(chosenDate);
         }
         return null;
 
     }
 
-    public double getPayRateTableEntryForSHK(Employee employee, Contract contract) {
-        double result = 0;
+    public BigDecimal getCurrentPayRateTableEntryForSHK(Contract contract) {
+        CurrentPayRateTableSHK currentPayRateTableSHK = new CurrentPayRateTableSHK();
+        int currentSHKEntryId = currentPayRateTableSHK.getCurrentSHKPayRates();
+        SHKSalaryEntry currentEntry = SHKSalaryTableManager.getInstance().getSHKSalaryEntry(currentSHKEntryId);
+        return switch (contract.getShk_hourly_rate()) {
+            case "SHK Basisvergütung" -> currentEntry.getBasePayRate();
+            case "SHK erhöhter Stundensatz" -> currentEntry.getExtendedPayRate();
+            case "WHK" -> currentEntry.getWHKPayRate();
+            default -> null;
+        };
+    }
 
-        return result;
+    public BigDecimal getPayRateTableEntryForSHKBasedOnChosenDate(Contract contract, LocalDate chosenDate){
+        CurrentPayRateTableSHK currentPayRateTableSHK = new CurrentPayRateTableSHK();
+        int SHKEntryId = currentPayRateTableSHK.getSHKPayRatesBasedOnChosenDate(chosenDate);
+        SHKSalaryEntry currentEntry = SHKSalaryTableManager.getInstance().getSHKSalaryEntry(SHKEntryId);
+        return switch (contract.getShk_hourly_rate()) {
+            case "SHK Basisvergütung" -> currentEntry.getBasePayRate();
+            case "SHK erhöhter Stundensatz" -> currentEntry.getExtendedPayRate();
+            case "WHK" -> currentEntry.getWHKPayRate();
+            default -> null;
+        };
     }
 }

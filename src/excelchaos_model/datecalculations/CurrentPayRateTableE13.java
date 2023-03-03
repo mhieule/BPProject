@@ -80,18 +80,17 @@ public class CurrentPayRateTableE13 {
 
     private TableNameDateTuple determinePayRateTableBasedOnCurrentDate(TableNameDateTuple[] givenTableNamesAndDates) {
         LocalDate currentDate = LocalDate.now();
-        LocalDate lastCheckedDate = null;
+        LocalDate currentlyValidDate = null;
         int resultindex = 0;
         for (int i = 0; i < givenTableNamesAndDates.length; i++) {
             if (currentDate.compareTo(givenTableNamesAndDates[i].date) >= 0) {
-                if (lastCheckedDate == null) {
-                    lastCheckedDate = givenTableNamesAndDates[i].date;
+                if (currentlyValidDate == null) {
+                    currentlyValidDate = givenTableNamesAndDates[i].date;
                     resultindex = i;
                 } else {
-                    if (givenTableNamesAndDates[i].date.compareTo(lastCheckedDate) > 0) {
+                    if (givenTableNamesAndDates[i].date.compareTo(currentlyValidDate) > 0) {
                         resultindex = i;
-                    } else {
-                        lastCheckedDate = givenTableNamesAndDates[i].date;
+                        currentlyValidDate = givenTableNamesAndDates[i].date;
                     }
                 }
 
@@ -106,18 +105,17 @@ public class CurrentPayRateTableE13 {
     }
 
     private TableNameDateTuple determinePayRateTableBasedOnChosenDate(LocalDate chosenDate, TableNameDateTuple[] givenTableNamesAndDates) {
-        LocalDate lastCheckedDate = null;
+        LocalDate currentlyValidDate = null;
         int resultindex = 0;
         for (int i = 0; i < givenTableNamesAndDates.length; i++) {
             if (chosenDate.compareTo(givenTableNamesAndDates[i].date) >= 0) {
-                if (lastCheckedDate == null) {
-                    lastCheckedDate = givenTableNamesAndDates[i].date;
+                if (currentlyValidDate == null) {
+                    currentlyValidDate = givenTableNamesAndDates[i].date;
                     resultindex = i;
                 } else {
-                    if (givenTableNamesAndDates[i].date.compareTo(lastCheckedDate) > 0) {
+                    if (givenTableNamesAndDates[i].date.compareTo(currentlyValidDate) > 0) {
                         resultindex = i;
-                    } else {
-                        lastCheckedDate = givenTableNamesAndDates[i].date;
+                        currentlyValidDate = givenTableNamesAndDates[i].date;
                     }
                 }
             } else if (chosenDate.compareTo(givenTableNamesAndDates[i].date) < 0) {
