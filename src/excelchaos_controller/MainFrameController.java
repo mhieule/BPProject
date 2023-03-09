@@ -18,7 +18,7 @@ public class MainFrameController {
     private SideMenuPanelTablesController sideMenuTables;
     private ShowPersonController showPersonalData;
     private SalaryListController salaryListController;
-    private SalaryHistoryController salaryHistoryController;
+   // private SalaryHistoryController salaryHistoryController;
     private ShowProjectsController showProjectsController;
     private ManualSalaryEntryController manualSalaryEntryController;
     private SalaryIncreaseController salaryIncreaseController;
@@ -39,7 +39,7 @@ public class MainFrameController {
         //sideMenuActionLog = new SideMenuPanelActionLogController(this);
         showPersonalData = new ShowPersonController(this);
         salaryListController = new SalaryListController(this);
-        salaryHistoryController = new SalaryHistoryController(this);
+        //salaryHistoryController = new SalaryHistoryController(this);
         manualSalaryEntryController = new ManualSalaryEntryController(this);
         salaryIncreaseController = new SalaryIncreaseController(this);
         showProjectsController = new ShowProjectsController(this);
@@ -63,7 +63,7 @@ public class MainFrameController {
         return salaryListController;
     }
 
-    public SalaryHistoryController getSalaryHistoryController(){return salaryHistoryController;}
+   /* public SalaryHistoryController getSalaryHistoryController(){return salaryHistoryController;}*/
 
     public ManualSalaryEntryController getManualSalaryEntryController() {
         return manualSalaryEntryController;
