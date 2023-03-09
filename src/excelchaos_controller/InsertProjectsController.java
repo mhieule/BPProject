@@ -1,13 +1,14 @@
 package excelchaos_controller;
 
 import excelchaos_model.database.*;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.InsertProjectsView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,9 +29,6 @@ public class InsertProjectsController implements ActionListener {
     private ProjectParticipationManager projectParticipationManager = ProjectParticipationManager.getInstance();
     private InsertProjectsView insertProjectsView;
     private MainFrameController frameController;
-
-
-    private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
 
 
     private int currentlyEditingProjectId = 0;
@@ -102,7 +100,7 @@ public class InsertProjectsController implements ActionListener {
             categoryData[categoryIndex][0] = String.valueOf(projectCategory.getCategory_id());
             categoryData[categoryIndex][1] = String.valueOf(projectCategory.getProject_id());
             categoryData[categoryIndex][2] = projectCategory.getCategory_name();
-            categoryData[categoryIndex][3] = transformer.formatDoubleToString(projectCategory.getApproved_funds(), 1);
+            categoryData[categoryIndex][3] = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(projectCategory.getApproved_funds());
             categoryIndex++;
         }
 
@@ -128,7 +126,7 @@ public class InsertProjectsController implements ActionListener {
         for (ProjectParticipation projectParticipation : participationList) {
             participationData[0][index] = String.valueOf(projectParticipation.getProject_id());
             participationData[1][index] = employeeDataManager.getEmployee(projectParticipation.getPerson_id()).getSurname() + " " + employeeDataManager.getEmployee(projectParticipation.getPerson_id()).getName();
-            participationData[2][index] = transformer.formatPercentageToStringForScope(projectParticipation.getScope());
+            participationData[2][index] = StringAndBigDecimalFormatter.formatPercentageToStringForScope(projectParticipation.getScope());
             date = projectParticipation.getParticipation_period();
             participationData[3][index] = format.format(date);
             index++;
@@ -189,7 +187,7 @@ public class InsertProjectsController implements ActionListener {
                         if (categoryData[i][0] != null) {
                             int categoryId = Integer.parseInt(categoryData[i][0]);
                             String categoryName = categoryData[i][2];
-                            double approvedFunds = transformer.formatStringToPercentageValueForScope(categoryData[i][3]);
+                            BigDecimal approvedFunds = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(categoryData[i][3]);
                             ProjectCategory update = projectCategoryManager.getProject(categoryId);
                             update.setApproved_funds(approvedFunds);
                             update.setCategory_name(categoryName);
@@ -197,7 +195,7 @@ public class InsertProjectsController implements ActionListener {
                         } else {
                             if (categoryData[i][2] != null && categoryData[i][3] != null) {
                                 String categoryName = categoryData[i][2];
-                                double approvedFunds = transformer.formatStringToDouble(categoryData[i][3]);
+                                BigDecimal approvedFunds = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(categoryData[i][3]);
                                 ProjectCategory projectCategory = new ProjectCategory(currentlyEditingProjectId, projectCategoryManager.getNextID(), categoryName, approvedFunds);
                                 projectCategoryManager.addProjectCategory(projectCategory);
                             }
@@ -231,7 +229,7 @@ public class InsertProjectsController implements ActionListener {
                         if (participationData[i][1] != null && participationData[i][2] != null && participationData[i][3] != null) {
                             int employeeID = employeeDataManager.getEmployeeByName(participationData[i][1]).getId();
                             projectParticipationManager.removeProjectParticipation(currentlyEditingProjectId, employeeID);
-                            double scope = transformer.formatStringToPercentageValueForScope(participationData[i][2]);
+                            BigDecimal scope = StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(participationData[i][2]);
                             Date date;
                             try {
                                 date = format.parse(participationData[i][3]);
@@ -314,7 +312,7 @@ public class InsertProjectsController implements ActionListener {
                         if (categoryData[i][0] != null) {
                             int categoryId = Integer.parseInt(categoryData[i][0]);
                             String categoryName = categoryData[i][2];
-                            double approvedFunds = transformer.formatStringToDouble(categoryData[i][3]);
+                            BigDecimal approvedFunds = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(categoryData[i][3]);
                             ProjectCategory update = projectCategoryManager.getProject(categoryId);
                             update.setApproved_funds(approvedFunds);
                             update.setCategory_name(categoryName);
@@ -322,7 +320,7 @@ public class InsertProjectsController implements ActionListener {
                         } else {
                             if (categoryData[i][2] != null && categoryData[i][3] != null) {
                                 String categoryName = categoryData[i][2];
-                                double approvedFunds = transformer.formatStringToDouble(categoryData[i][3]);
+                                BigDecimal approvedFunds = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(categoryData[i][3]);
                                 ProjectCategory projectCategory = new ProjectCategory(currentlyEditingProjectId, projectCategoryManager.getNextID(), categoryName, approvedFunds);
                                 projectCategoryManager.addProjectCategory(projectCategory);
                             }
@@ -355,7 +353,7 @@ public class InsertProjectsController implements ActionListener {
                         if (participationData[i][1] != null && participationData[i][2] != null && participationData[i][3] != null) {
                             int employeeID = employeeDataManager.getEmployeeByName(participationData[i][1]).getId();
                             projectParticipationManager.removeProjectParticipation(currentlyEditingProjectId, employeeID);
-                            double scope = transformer.formatStringToPercentageValueForScope(participationData[i][2]);
+                            BigDecimal scope = StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(participationData[i][2]);
                             Date date;
                             try {
                                 date = format.parse(participationData[i][3]);
@@ -436,10 +434,10 @@ public class InsertProjectsController implements ActionListener {
         JTable categoriesTable = insertProjectsView.getCategoriesTable();
         String[][] tableValues = getTableValues(categoriesTable);
         ProjectCategory projectCategory;
-        StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
+        StringAndBigDecimalFormatter transformer = new StringAndBigDecimalFormatter();
         for (int row = 0; row < tableValues.length; row++) {
             if (tableValues[row][0] != null && tableValues[row][1] != null) {
-                projectCategory = new ProjectCategory(projectId, projectCategoryManager.getNextID(), tableValues[row][0], transformer.formatStringToDouble(tableValues[row][1]));
+                projectCategory = new ProjectCategory(projectId, projectCategoryManager.getNextID(), tableValues[row][0], StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(tableValues[row][1]));
                 projectCategoryManager.addProjectCategory(projectCategory);
             }
 
@@ -464,7 +462,7 @@ public class InsertProjectsController implements ActionListener {
         JTable participationTable = insertProjectsView.getProjectParticipationTable();
         String[][] tableValues = getParticipationTableValues(participationTable);
         ProjectParticipation projectParticipation;
-        StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
+        StringAndBigDecimalFormatter transformer = new StringAndBigDecimalFormatter();
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         for (int row = 0; row < tableValues.length; row++) {  //TODO Umwandlungsmethoden für SHK Angestellte implementieren
             if (tableValues[row][0] != null && tableValues[row][1] != null && tableValues[row][2] != null) {

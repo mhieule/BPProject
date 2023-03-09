@@ -1,13 +1,14 @@
 package excelchaos_model.utility;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Currency;
 import java.util.Formatter;
 import java.util.Locale;
 
-public class StringAndDoubleTransformationForDatabase {
+public class StringAndBigDecimalFormatter {
 
     public double formatStringToDouble(String tableValue) {
         String value = tableValue;
@@ -31,7 +32,7 @@ public class StringAndDoubleTransformationForDatabase {
         return result;
     }
 
-    public String formatDoubleToString(double valueToFormat, int column) {
+    public static String formatBigDecimalToStringPayRateTable(BigDecimal valueToFormat, int column) {
         String result;
         Formatter formatter = new Formatter();
         NumberFormat euroTransformer = NumberFormat.getCurrencyInstance();
@@ -48,17 +49,24 @@ public class StringAndDoubleTransformationForDatabase {
         return result;
     }
 
-    public double formatStringToPercentageValueForScope(String valueToFormat) {
-        double result;
+    public static BigDecimal formatStringToPercentageValueForScope(String valueToFormat) {
+        BigDecimal result;
+
+        DecimalFormat decimalFormat = new DecimalFormat();
+        decimalFormat.setParseBigDecimal(true);
+        Number temporary = null;
         valueToFormat = valueToFormat.replaceAll("%", "");
-        result = Double.parseDouble(valueToFormat);
-        result = result / 100;
+        try {
+            temporary = decimalFormat.parse(valueToFormat);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        result = new BigDecimal(temporary.toString());
         return result;
     }
 
-    public String formatPercentageToStringForScope(double valueToFormat) {
+    public static String formatPercentageToStringForScope(BigDecimal valueToFormat) {
         String result;
-        valueToFormat = valueToFormat * 100;
         Formatter formatter = new Formatter();
         formatter.format("%.0f", valueToFormat);
         result = formatter.toString();
@@ -67,7 +75,8 @@ public class StringAndDoubleTransformationForDatabase {
         return result;
     }
 
-    public String formatDoubleToPersonenMonate(double valueToFormat) {
+
+    public static String formatBigDecimalToPersonenMonate(BigDecimal valueToFormat){
         String result;
         result = String.valueOf(valueToFormat);
         result = result.replaceAll("\\.", ",");

@@ -1,7 +1,7 @@
 package excelchaos_controller;
 
 import excelchaos_model.database.*;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.SalaryHistoryView;
 
 import javax.swing.*;
@@ -16,7 +16,7 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class SalaryHistoryController implements ItemListener {
+/*public class SalaryHistoryController implements ItemListener {
     private ManualSalaryEntryManager manualSalaryEntryManager = ManualSalaryEntryManager.getInstance();
     private ContractDataManager contractDataManager = ContractDataManager.getInstance();
     private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
@@ -62,7 +62,7 @@ public class SalaryHistoryController implements ItemListener {
 
     public String[][] getDataFromDB(Employee temporaryEmployee) {
         LocalDate[] months = getMonths(temporaryEmployee);
-        StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
+        StringAndBigDecimalFormatter transformer = new StringAndBigDecimalFormatter();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
@@ -137,4 +137,4 @@ public class SalaryHistoryController implements ItemListener {
 
         }
     }
-}
+}*/

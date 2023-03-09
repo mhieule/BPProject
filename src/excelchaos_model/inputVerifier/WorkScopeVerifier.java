@@ -1,11 +1,12 @@
 package excelchaos_model.inputVerifier;
 
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 
 import javax.swing.*;
+import java.math.BigDecimal;
 
 public class WorkScopeVerifier extends InputVerifier {
-    StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
+    StringAndBigDecimalFormatter transformer = new StringAndBigDecimalFormatter();
 
     @Override
     public boolean verify(JComponent input) {
@@ -28,7 +29,7 @@ public class WorkScopeVerifier extends InputVerifier {
                 return true;
             }
         } else if (text.matches("\\d{3}?%")) {
-            if (transformer.formatStringToPercentageValueForScope(text) > 1) {
+            if (StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(text).compareTo(new BigDecimal(100)) >0 ) {
                 JOptionPane.showConfirmDialog(null, "Der Beschäftigungsumfang darf nicht größer als 100% sein. Bitte passen Sie den Wert an.", "Beschäftigungsumfang zu groß", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 return false;
             } else {

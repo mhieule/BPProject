@@ -3,7 +3,7 @@ package excelchaos_controller;
 
 import excelchaos_model.database.SHKSalaryEntry;
 import excelchaos_model.database.SHKSalaryTableManager;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.InsertSHKEntryView;
 
 import java.awt.event.ActionEvent;
@@ -56,9 +56,9 @@ public class InsertSHKEntryController implements ActionListener {
     private void insertEntryInDB(){
         LocalDate localDate = insertSHKEntryView.getDatePicker().getDate();
         Date validationDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        BigDecimal basePayRate = StringAndDoubleTransformationForDatabase.formatStringToBigDecimalCurrency(insertSHKEntryView.getBasePayRateTextfield().getText());
-        BigDecimal extendedPayRate = StringAndDoubleTransformationForDatabase.formatStringToBigDecimalCurrency(insertSHKEntryView.getExtendedPayRateTextField().getText());
-        BigDecimal whkPayRate = StringAndDoubleTransformationForDatabase.formatStringToBigDecimalCurrency(insertSHKEntryView.getWHKPayRateTextfield().getText());
+        BigDecimal basePayRate = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertSHKEntryView.getBasePayRateTextfield().getText());
+        BigDecimal extendedPayRate = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertSHKEntryView.getExtendedPayRateTextField().getText());
+        BigDecimal whkPayRate = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertSHKEntryView.getWHKPayRateTextfield().getText());
         if(currentEditingID != 0){
             SHKSalaryEntry updateEntry = shkSalaryTableManager.getSHKSalaryEntry(currentEditingID);
             updateEntry.setValidationDate(validationDate);

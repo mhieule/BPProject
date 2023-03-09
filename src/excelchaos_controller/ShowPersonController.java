@@ -2,7 +2,7 @@ package excelchaos_controller;
 
 import excelchaos_model.*;
 import excelchaos_model.database.*;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.ShowPersonView;
 
 import javax.swing.event.*;
@@ -24,7 +24,7 @@ public class ShowPersonController implements TableModelListener {
     private MainFrameController frameController;
     private ToolbarShowPersonController toolbarShowPerson;
 
-    private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
+    private StringAndBigDecimalFormatter transformer = new StringAndBigDecimalFormatter();
     private String title = "Personalstammdaten";
 
     private String columns[] = {"ID", "Name", "Vorname", "Straße", "Haunsummer", "Adresszusatz", "Postleitzahl", "Stadt",

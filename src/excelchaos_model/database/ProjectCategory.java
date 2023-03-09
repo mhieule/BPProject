@@ -4,6 +4,8 @@ package excelchaos_model.database;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.math.BigDecimal;
+
 @DatabaseTable(tableName = "ProjectCategory")
 public class ProjectCategory {
     @DatabaseField
@@ -13,9 +15,9 @@ public class ProjectCategory {
     @DatabaseField
     private String category_name;
     @DatabaseField
-    private double approved_funds;
+    private BigDecimal approved_funds;
 
-    public ProjectCategory(int project_id, int category_id, String category_name, double approved_funds) {
+    public ProjectCategory(int project_id, int category_id, String category_name, BigDecimal approved_funds) {
         this.project_id = project_id;
         this.category_id = category_id;
         this.category_name = category_name;
@@ -42,11 +44,11 @@ public class ProjectCategory {
         this.category_name = category_name;
     }
 
-    public double getApproved_funds() {
+    public BigDecimal getApproved_funds() {
         return this.approved_funds;
     }
 
-    public void setApproved_funds(double approved_funds) {
+    public void setApproved_funds(BigDecimal approved_funds) {
         this.approved_funds = approved_funds;
     }
 }

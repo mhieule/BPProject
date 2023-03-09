@@ -5,18 +5,14 @@ import excelchaos_model.CustomTableModel;
 import excelchaos_model.SearchAndFilterModel;
 import excelchaos_model.database.SHKSalaryEntry;
 import excelchaos_model.database.SHKSalaryTableManager;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.ShowSHKTableView;
 
-import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ShowSHKTableController implements TableModelListener {
@@ -63,9 +59,9 @@ public class ShowSHKTableController implements TableModelListener {
         for (SHKSalaryEntry entry : shkSalaryEntries){
             String id = String.valueOf(entry.getId());
             String validationDate = dateFormat.format(entry.getValidationDate());
-            String basePayRate = StringAndDoubleTransformationForDatabase.formatBigDecimalCurrencyToString(entry.getBasePayRate());
-            String extendedPayRate = StringAndDoubleTransformationForDatabase.formatBigDecimalCurrencyToString(entry.getExtendedPayRate());
-            String whkPayRate = StringAndDoubleTransformationForDatabase.formatBigDecimalCurrencyToString(entry.getWHKPayRate());
+            String basePayRate = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(entry.getBasePayRate());
+            String extendedPayRate = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(entry.getExtendedPayRate());
+            String whkPayRate = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(entry.getWHKPayRate());
 
             String[] values = {id,validationDate,basePayRate,extendedPayRate,whkPayRate};
             resultData[currentIndex] = values;

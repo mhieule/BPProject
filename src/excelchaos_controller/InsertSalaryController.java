@@ -1,11 +1,11 @@
 package excelchaos_controller;
 
-import excelchaos_model.calculations.CalculateSalaryBasedOnPayRateTable;
+import excelchaos_model.calculations.SalaryTableLookUp;
 import excelchaos_model.database.Contract;
 import excelchaos_model.database.ContractDataManager;
 import excelchaos_model.database.Employee;
 import excelchaos_model.database.EmployeeDataManager;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.InsertSalaryView;
 
 import javax.swing.*;
@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.math.BigDecimal;
 
 public class InsertSalaryController implements ActionListener, ItemListener {
     private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
@@ -22,9 +23,8 @@ public class InsertSalaryController implements ActionListener, ItemListener {
     private int currentlyEditingContractID = 0;
     private int backUpNumber = 0;
 
-    StringAndDoubleTransformationForDatabase stringAndDoubleTransformationForDatabase = new StringAndDoubleTransformationForDatabase();
+    private SalaryTableLookUp salaryTableLookUp = new SalaryTableLookUp();
 
-    private CalculateSalaryBasedOnPayRateTable calculateSalaryBasedOnPayRateTable = new CalculateSalaryBasedOnPayRateTable();
 
     private String addSalaryTab = "Gehaltseintrag bearbeiten";
 
@@ -66,8 +66,8 @@ public class InsertSalaryController implements ActionListener, ItemListener {
         } else {
             insertSalaryView.getVblList().setSelectedItem("Befreit");
         }
-        String salary = stringAndDoubleTransformationForDatabase.formatDoubleToString(contract.getRegular_cost(), 1);
-        String extraCost = stringAndDoubleTransformationForDatabase.formatDoubleToString(contract.getBonus_cost(), 1);
+        String salary = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getRegular_cost());
+        String extraCost = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getBonus_cost());
         insertSalaryView.getTfGehalt().setText(salary);
         insertSalaryView.getTfSonderzahlung().setText(extraCost);
     }
@@ -90,8 +90,8 @@ public class InsertSalaryController implements ActionListener, ItemListener {
             String paylevel = null;
             String vblState = null;
             boolean vbl = true;
-            double gehalt = 0;
-            double sonderzahlung = 0;
+            BigDecimal gehalt =  new BigDecimal(0);
+            BigDecimal sonderzahlung = new BigDecimal(0);
             if (backUpNumber != 0) {
                 employee = employeeDataManager.getEmployee(backUpNumber);
             } else {
@@ -106,10 +106,10 @@ public class InsertSalaryController implements ActionListener, ItemListener {
                 vbl = false;
             }
             if (!insertSalaryView.getTfGehalt().getText().equals("")) {
-                gehalt = stringAndDoubleTransformationForDatabase.formatStringToDouble(insertSalaryView.getTfGehalt().getText());
+                gehalt = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertSalaryView.getTfGehalt().getText());
             }
             if (!insertSalaryView.getTfSonderzahlung().getText().equals("")) {
-                sonderzahlung = stringAndDoubleTransformationForDatabase.formatStringToDouble(insertSalaryView.getTfSonderzahlung().getText());
+                sonderzahlung = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertSalaryView.getTfSonderzahlung().getText());
             }
 
             if (paygrade.equals("Nicht ausgewählt") || paylevel.equals("Nicht ausgewählt") || vblState.equals("Nicht ausgewählt")) {
@@ -158,10 +158,10 @@ public class InsertSalaryController implements ActionListener, ItemListener {
                 }
                 Contract contract = contractDataManager.getContract(currentlyEditingContractID);
                 Contract calcContract = new Contract(currentlyEditingContractID, (String) insertSalaryView.getTfGruppe().getSelectedItem(),
-                        (String) insertSalaryView.getPlStufe().getSelectedItem(), contract.getStart_date(), contract.getEnd_date(), 0, 0, contract.getScope(), "", vbl);
-                double[] newCost = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(calcContract);
-                insertSalaryView.getTfGehalt().setText(stringAndDoubleTransformationForDatabase.formatDoubleToString(newCost[0], 1));
-                insertSalaryView.getTfSonderzahlung().setText(stringAndDoubleTransformationForDatabase.formatDoubleToString(newCost[1] * 12, 1));
+                        (String) insertSalaryView.getPlStufe().getSelectedItem(), contract.getStart_date(), contract.getEnd_date(), new BigDecimal(0), new BigDecimal(0), contract.getScope(), "", vbl);
+                BigDecimal[] newCost = salaryTableLookUp.getCurrentPayRateTableEntry(calcContract);
+                insertSalaryView.getTfGehalt().setText(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(newCost[0]));
+                insertSalaryView.getTfSonderzahlung().setText(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(newCost[1] .multiply(new BigDecimal(12))));
             }
 
         }

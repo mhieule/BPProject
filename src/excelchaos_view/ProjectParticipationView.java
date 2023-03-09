@@ -1,12 +1,11 @@
 package excelchaos_view;
 
-import com.github.lgooddatepicker.tableeditors.DateTableEditor;
 import excelchaos_model.*;
-import excelchaos_model.calculations.SalaryCalculation;
+import excelchaos_model.calculations.NewAndImprovedSalaryCalculation;
 import excelchaos_model.database.EmployeeDataManager;
 import excelchaos_model.database.ProjectParticipation;
 import excelchaos_model.database.ProjectParticipationManager;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_model.utility.TableColumnAdjuster;
 
 import javax.swing.*;
@@ -14,15 +13,13 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
@@ -34,12 +31,10 @@ public class ProjectParticipationView extends JPanel {
 
     private ProjectParticipationManager participationManager = ProjectParticipationManager.getInstance();
 
-    private SalaryCalculation salaryCalculation = new SalaryCalculation();
+    private NewAndImprovedSalaryCalculation salaryCalculation = new NewAndImprovedSalaryCalculation();
 
 
     private JPanel mainPanel;
-
-    private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
 
 
     private ProjectParticipationDataModel projectParticipationDataModel = new ProjectParticipationDataModel();
@@ -106,28 +101,27 @@ public class ProjectParticipationView extends JPanel {
                     } catch (ParseException ex) {
                         throw new RuntimeException(ex);
                     }
-                    double salaryChange = salaryCalculation.determineSalaryOfGivenMonth(employeeDataManager.getEmployeeByName((String) rowsMainTable.getValueAt(e.getFirstRow() / 2, 0)).getId(), date);
-                    System.out.println(e.getFirstRow());
-                    salaryChange = salaryChange * transformer.formatStringToPercentageValueForScope((String) mainTable.getValueAt(e.getFirstRow(), e.getColumn()));
-                    mainTable.setValueAt(transformer.formatDoubleToString(salaryChange, 1), e.getFirstRow() + 1, e.getColumn());
+                    BigDecimal salaryChange = salaryCalculation.projectSalaryToGivenMonth(employeeDataManager.getEmployeeByName((String) rowsMainTable.getValueAt(e.getFirstRow() / 2, 0)).getId(), date);
+                    salaryChange = salaryChange.multiply(StringAndBigDecimalFormatter.formatStringToPercentageValueForScope((String) mainTable.getValueAt(e.getFirstRow(), e.getColumn())));
+                    mainTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(salaryChange), e.getFirstRow() + 1, e.getColumn());
 
-                    double sumPersonenMonate = 0;
-                    double sumCostPerMonth = 0;
+                    BigDecimal sumPersonenMonate = new BigDecimal(0);
+                    BigDecimal sumCostPerMonth = new BigDecimal(0);
                     for (int row = 0; row < mainTable.getRowCount(); row++) {
                         if (row % 2 == 0) {
-                            sumPersonenMonate += transformer.formatStringToPercentageValueForScope((String) mainTable.getValueAt(row, e.getColumn()));
+                            sumPersonenMonate = sumPersonenMonate.add(StringAndBigDecimalFormatter.formatStringToPercentageValueForScope((String) mainTable.getValueAt(row, e.getColumn())));
                         } else {
-                            sumCostPerMonth += transformer.formatStringToDouble((String) mainTable.getValueAt(row, e.getColumn()));
+                            sumCostPerMonth = sumCostPerMonth.add(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String) mainTable.getValueAt(row, e.getColumn())));
                         }
                     }
-                    sumTable.setValueAt(transformer.formatDoubleToPersonenMonate(sumPersonenMonate), 0, e.getColumn());
-                    sumTable.setValueAt(transformer.formatDoubleToString(sumCostPerMonth, 1), 1, e.getColumn());
+                    sumTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToPersonenMonate(sumPersonenMonate), 0, e.getColumn());
+                    sumTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(sumCostPerMonth), 1, e.getColumn());
 
-                    double newTotalCost = 0;
+                    BigDecimal newTotalCost = new BigDecimal(0);
                     for (int column = 0; column < sumTable.getColumnCount(); column++) {
-                        newTotalCost += transformer.formatStringToDouble((String) sumTable.getValueAt(1, column));
+                        newTotalCost = newTotalCost.add(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String) sumTable.getValueAt(1, column)));
                     }
-                    totalCostLabel.setText("Gesamtpersonalkosten: " + transformer.formatDoubleToString(newTotalCost, 1));
+                    totalCostLabel.setText("Gesamtpersonalkosten: " + StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(newTotalCost));
                 }
             }
         });
@@ -145,7 +139,7 @@ public class ProjectParticipationView extends JPanel {
                         participationManager.removeProjectParticipation(projectId, employeeID);
                         for (int column = 0; column < mainTable.getColumnCount(); column++) {
                             if (column != 0) {
-                                double scope = transformer.formatStringToPercentageValueForScope((String) mainTable.getValueAt(row, column));
+                                BigDecimal scope = StringAndBigDecimalFormatter.formatStringToPercentageValueForScope((String) mainTable.getValueAt(row, column));
                                 Date date;
                                 try {
                                     date = format.parse(mainTable.getColumnName(column));
@@ -468,27 +462,27 @@ public class ProjectParticipationView extends JPanel {
                             } catch (ParseException ex) {
                                 throw new RuntimeException(ex);
                             }
-                            double salaryChange = salaryCalculation.determineSalaryOfGivenMonth(employeeDataManager.getEmployeeByName((String) newRowsMainTable.getValueAt(e.getFirstRow() / 2, 0)).getId(), date);
-                            salaryChange = salaryChange * transformer.formatStringToPercentageValueForScope((String) newMainTable.getValueAt(e.getFirstRow(), e.getColumn()));
-                            newMainTable.setValueAt(transformer.formatDoubleToString(salaryChange, 1), e.getFirstRow() + 1, e.getColumn());
+                            BigDecimal salaryChange = salaryCalculation.projectSalaryToGivenMonth(employeeDataManager.getEmployeeByName((String) newRowsMainTable.getValueAt(e.getFirstRow() / 2, 0)).getId(), date);
+                            salaryChange = salaryChange.multiply( StringAndBigDecimalFormatter.formatStringToPercentageValueForScope((String) newMainTable.getValueAt(e.getFirstRow(), e.getColumn())));
+                            newMainTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(salaryChange), e.getFirstRow() + 1, e.getColumn());
 
-                            double sumPersonenMonate = 0;
-                            double sumCostPerMonth = 0;
+                            BigDecimal sumPersonenMonate = new BigDecimal(0);
+                            BigDecimal sumCostPerMonth = new BigDecimal(0);
                             for (int row = 0; row < newMainTable.getRowCount(); row++) {
                                 if (row % 2 == 0) {
-                                    sumPersonenMonate += transformer.formatStringToPercentageValueForScope((String) newMainTable.getValueAt(row, e.getColumn()));
+                                    sumPersonenMonate = sumPersonenMonate.add(StringAndBigDecimalFormatter.formatStringToPercentageValueForScope((String) newMainTable.getValueAt(row, e.getColumn())));
                                 } else {
-                                    sumCostPerMonth += transformer.formatStringToDouble((String) newMainTable.getValueAt(row, e.getColumn()));
+                                    sumCostPerMonth = sumCostPerMonth.add(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String) newMainTable.getValueAt(row, e.getColumn())));
                                 }
                             }
-                            newSumTable.setValueAt(transformer.formatDoubleToPersonenMonate(sumPersonenMonate), 0, e.getColumn());
-                            newSumTable.setValueAt(transformer.formatDoubleToString(sumCostPerMonth, 1), 1, e.getColumn());
+                            newSumTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToPersonenMonate(sumPersonenMonate), 0, e.getColumn());
+                            newSumTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(sumCostPerMonth), 1, e.getColumn());
 
-                            double newTotalCost = 0;
+                            BigDecimal newTotalCost = new BigDecimal(0);
                             for (int column = 0; column < newSumTable.getColumnCount(); column++) {
-                                newTotalCost += transformer.formatStringToDouble((String) newSumTable.getValueAt(1, column));
+                                newTotalCost = newTotalCost.add(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String) newSumTable.getValueAt(1, column)));
                             }
-                            totalCostLabel.setText("Gesamtpersonalkosten: " + transformer.formatDoubleToString(newTotalCost, 1));
+                            totalCostLabel.setText("Gesamtpersonalkosten: " + StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(newTotalCost));
                         }
 
                     }
@@ -511,7 +505,7 @@ public class ProjectParticipationView extends JPanel {
                                 participationManager.removeProjectParticipation(projectId, employeeID);
                                 for (int column = 0; column < newMainTable.getColumnCount(); column++) {
                                     if (column != 0) {
-                                        double scope = transformer.formatStringToPercentageValueForScope((String) newMainTable.getValueAt(row, column));
+                                        BigDecimal scope = StringAndBigDecimalFormatter.formatStringToPercentageValueForScope((String) newMainTable.getValueAt(row, column));
                                         Date date;
                                         try {
                                             date = format.parse(newMainTable.getColumnName(column));

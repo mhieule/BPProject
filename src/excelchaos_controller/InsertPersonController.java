@@ -1,18 +1,19 @@
 package excelchaos_controller;
 
+import excelchaos_model.calculations.SalaryTableLookUp;
 import excelchaos_model.database.Contract;
 import excelchaos_model.database.ContractDataManager;
 import excelchaos_model.database.Employee;
-import excelchaos_model.calculations.CalculateSalaryBasedOnPayRateTable;
 import excelchaos_model.inputVerifier.WorkScopeSHKVerifier;
 import excelchaos_model.inputVerifier.WorkScopeVerifier;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.InsertPersonView;
 import excelchaos_model.database.EmployeeDataManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -26,9 +27,8 @@ public class InsertPersonController implements ActionListener {
     private MainFrameController frameController;
 
     private String addPersonTab = "Person hinzufügen";
-    private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
 
-    private CalculateSalaryBasedOnPayRateTable calculateSalaryBasedOnPayRateTable = new CalculateSalaryBasedOnPayRateTable();
+    private SalaryTableLookUp salaryTableLookUp = new SalaryTableLookUp();
 
     private int currentlyEditedEmployeeID = 0;
 
@@ -140,7 +140,7 @@ public class InsertPersonController implements ActionListener {
         } else {
             workEnd = Date.from(workEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         }
-        double scope = transformer.formatStringToPercentageValueForScope(insertPersonView.getTfWorkScope().getText());
+        BigDecimal scope = StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(insertPersonView.getTfWorkScope().getText());
 
         if (surname.equals("") || name.equals("") || salaryPlannedUntil == null || workStart == null || workEnd == null || typeOfJob.equals("Nicht ausgewählt")) {
             insertPersonView.markMustBeFilledTextFields();
@@ -202,9 +202,9 @@ public class InsertPersonController implements ActionListener {
         contract.setShk_hourly_rate(hiwiTypeOfPayment);
         contract.setScope(scope);
         contract.setVbl_status(vbl); //TODO Unterscheidung bei der Berechnung SHK und Rest und an aktuelles Gehalt anpassen also nicht anhand der PayRateTable berechnen
-        double[] newCost = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(contract);
+        BigDecimal[] newCost = salaryTableLookUp.getCurrentPayRateTableEntry(contract);
         contract.setRegular_cost(newCost[0]);
-        contract.setBonus_cost(newCost[1] * 12);
+        contract.setBonus_cost(newCost[1].multiply(new BigDecimal(12)));
         employeeDataManager.updateEmployee(employee);
         contractDataManager.updateContract(contract);
 
@@ -259,7 +259,7 @@ public class InsertPersonController implements ActionListener {
             insertPersonView.getHiwiTypeOfPaymentList().setVisible(true);
             insertPersonView.getHiwiTypeOfPaymentList().setSelectedItem(contract.getShk_hourly_rate());
         } else {
-            insertPersonView.getTfWorkScope().setText(transformer.formatPercentageToStringForScope(contract.getScope()));
+            insertPersonView.getTfWorkScope().setText(StringAndBigDecimalFormatter.formatPercentageToStringForScope(contract.getScope()));
             insertPersonView.getPayGroupOnHiring().setVisible(true);
             insertPersonView.getPayGroupList().setSelectedItem(contract.getPaygrade());
             insertPersonView.getPayGroupList().setVisible(true);
@@ -394,11 +394,11 @@ public class InsertPersonController implements ActionListener {
         } else {
             workEnd = Date.from(workEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         }
-        double scope;
+        BigDecimal scope;
         if (insertPersonView.getTfWorkScope().getText().equals("")) {
-            scope = 0;
+            scope = new BigDecimal(0);
         } else {
-            scope = transformer.formatStringToPercentageValueForScope(insertPersonView.getTfWorkScope().getText());
+            scope = StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(insertPersonView.getTfWorkScope().getText());
         }
 
         if (surname.equals("") || name.equals("") || salaryPlannedUntil == null || workStart == null || workEnd == null || typeOfJob.equals("Nicht ausgewählt")) {
@@ -437,11 +437,11 @@ public class InsertPersonController implements ActionListener {
             payLevel = "";
         }
 
-        Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, 0, 0, scope, hiwiTypeOfPayment, vbl);
-        double[] startSalary;
-        startSalary = calculateSalaryBasedOnPayRateTable.getCurrentPayRateTableEntryForWiMiAndATM(newContract);
-        double regular_cost = startSalary[0]; //TODO Berechnung für SHK ändern
-        double bonus_cost = startSalary[1] * 12;
+        Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, new BigDecimal(0), new BigDecimal(0), scope, hiwiTypeOfPayment, vbl);
+        BigDecimal[] startSalary;
+        startSalary = salaryTableLookUp.getCurrentPayRateTableEntry(newContract);
+        BigDecimal regular_cost = startSalary[0]; //TODO Berechnung für SHK ändern
+        BigDecimal bonus_cost = startSalary[1].multiply(new BigDecimal(12));
         newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, regular_cost, bonus_cost, scope, hiwiTypeOfPayment, vbl);
         contractDataManager.addContract(newContract);
         return newEmployee;

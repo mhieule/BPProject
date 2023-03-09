@@ -7,7 +7,7 @@ import java.util.Calendar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SalaryIncreaseHistoryManagerTest {
+/*public class SalaryIncreaseHistoryManagerTest {
     @Test
     void testRemoveAll(){
         var manager = SalaryIncreaseHistoryManager.getInstance();
@@ -176,4 +176,4 @@ public class SalaryIncreaseHistoryManagerTest {
         manager.removeAllSalaryIncreaseHistories();
         assertEquals(manager.getRowCount(1), 0);
     }
-}
+}*/

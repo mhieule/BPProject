@@ -5,7 +5,7 @@ import excelchaos_model.database.Employee;
 import excelchaos_model.database.EmployeeDataManager;
 import excelchaos_model.database.SalaryIncreaseHistory;
 import excelchaos_model.database.SalaryIncreaseHistoryManager;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.SalaryIncreaseView;
 
 import javax.swing.event.TableModelEvent;
@@ -29,8 +29,6 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
     private SalaryIncreaseView salaryIncreaseView;
 
     private ToolbarSalaryIncreaseController toolbarSalaryIncreaseController;
-
-    private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
 
     private MainFrameController frameController;
 
@@ -93,7 +91,7 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
 
         List<SalaryIncreaseHistory> salaryIncreaseHistory = salaryIncreaseHistoryManager.getSalaryIncreaseHistory(id);
         for (SalaryIncreaseHistory entry : salaryIncreaseHistory) {
-            String salary = transformer.formatDoubleToString(entry.getNew_salary(), 1);
+            String salary = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(entry.getNew_salary());
             String usageDate = dateFormat.format(entry.getStart_date());
             String comment = entry.getComment();
             String specialPayment;

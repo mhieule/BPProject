@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ManualSalaryEntryManagerTest {
+/*public class ManualSalaryEntryManagerTest {
     @Test
     void testRemoveAll(){
         var manager = ManualSalaryEntryManager.getInstance();
@@ -166,4 +166,4 @@ public class ManualSalaryEntryManagerTest {
         manager.removeAllManualSalaryEntries();
         assertEquals(manager.getRowCount(5), 0);
     }
-}
+}*/

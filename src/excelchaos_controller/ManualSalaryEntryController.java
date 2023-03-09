@@ -5,7 +5,7 @@ import excelchaos_model.database.Employee;
 import excelchaos_model.database.EmployeeDataManager;
 import excelchaos_model.database.ManualSalaryEntry;
 import excelchaos_model.database.ManualSalaryEntryManager;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.ManualSalaryEntryView;
 
 import javax.swing.event.TableModelEvent;
@@ -52,8 +52,6 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
     }
 
     public String[][] getDataFromDB(Employee temporaryEmployee) {
-
-        StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         int id = temporaryEmployee.getId();
         int rowCount = manualSalaryEntryManager.getRowCount(id);
@@ -62,7 +60,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
         List<ManualSalaryEntry> manualSalaryEntryList = manualSalaryEntryManager.getManualSalaryEntry(id);
         for (ManualSalaryEntry entry : manualSalaryEntryList) {
-            String salary = transformer.formatDoubleToString(entry.getNew_salary(), 1);
+            String salary = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(entry.getNew_salary());
             String usageDate = dateFormat.format(entry.getStart_date());
             String comment = entry.getComment();
             String[] values = {String.valueOf(id), usageDate, salary, comment};

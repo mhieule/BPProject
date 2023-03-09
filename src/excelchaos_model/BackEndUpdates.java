@@ -1,7 +1,7 @@
 package excelchaos_model;
 
 import excelchaos_model.calculations.AutomaticPayLevelIncrease;
-import excelchaos_model.calculations.SalaryCalculation;
+import excelchaos_model.calculations.NewAndImprovedSalaryCalculation;
 import excelchaos_model.database.ContractDataManager;
 
 import java.text.ParseException;
@@ -10,10 +10,10 @@ public class BackEndUpdates {
 
     public static void calculationsOnStartUp() {
         AutomaticPayLevelIncrease startUpPayLevelIncrease = new AutomaticPayLevelIncrease();
-        SalaryCalculation contractSalary = new SalaryCalculation();
+        NewAndImprovedSalaryCalculation newAndImprovedSalaryCalculation = new NewAndImprovedSalaryCalculation();
 
         startUpPayLevelIncrease.performPayLevelIncrease();
-        contractSalary.determineCurrentSalary();
+        newAndImprovedSalaryCalculation.updateCurrentSalaries();
     }
 
     public void updateAll() {

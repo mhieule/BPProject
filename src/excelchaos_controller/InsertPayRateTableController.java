@@ -3,7 +3,7 @@ package excelchaos_controller;
 import excelchaos_model.PayRateTableCalculationModel;
 import excelchaos_model.database.SalaryTable;
 import excelchaos_model.database.SalaryTableManager;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.InsertPayRateTableView;
 
 import javax.swing.*;
@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 
 public class InsertPayRateTableController extends MouseAdapter implements ActionListener {
@@ -167,42 +168,39 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
     }
 
 
-    private double[][] prepareTableForDatabaseInsertion() {
-        double[][] result = new double[insertPayRateTableView.getTable().getRowCount()][insertPayRateTableView.getTable().getRowCount()];
-        StringAndDoubleTransformationForDatabase converter = new StringAndDoubleTransformationForDatabase();
+    private BigDecimal[][] prepareTableForDatabaseInsertion() {
+        BigDecimal[][] result = new BigDecimal[insertPayRateTableView.getTable().getRowCount()][insertPayRateTableView.getTable().getRowCount()];
         for (int row = 0; row < insertPayRateTableView.getTable().getRowCount(); row++) {
             for (int column = 0; column < insertPayRateTableView.getTable().getColumnCount(); column++) {
                 if (insertPayRateTableView.getTable().getValueAt(row, column) == null || insertPayRateTableView.getTable().getValueAt(row, column).equals("")) {
-                    System.out.println(insertPayRateTableView.getTable().getValueAt(row, column) + "Nullwerte");
-                    result[row][column] = 0;
+                    result[row][column] = new BigDecimal(0);
                 } else {
-                    System.out.println(insertPayRateTableView.getTable().getValueAt(row, column) + "Tabellenwerte");
-                    result[row][column] = converter.formatStringToDouble((String) insertPayRateTableView.getTable().getValueAt(row, column));
+                    result[row][column] = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String) insertPayRateTableView.getTable().getValueAt(row, column));
                 }
             }
         }
         return result;
     }
 
-    private void insertValuesInDatabase(String name, String paygrade, double[][] values) {
+    private void insertValuesInDatabase(String name, String paygrade, BigDecimal[][] values) {
 
         for (int column = 0; column < values[0].length; column++) {
             String tableName = name;
-            double grundentgelt = values[0][column];
-            double av_ag_anteil_lfd_entgelt = values[1][column];
-            double kv_ag_anteil_lfd_entgelt = values[2][column];
-            double zusbei_af_lfd_entgelt = values[3][column];
-            double pv_ag_anteil_lfd_entgelt = values[4][column];
-            double rv_ag_anteil_lfd_entgelt = values[5][column];
-            double sv_umlage_u2 = values[6][column];
-            double steuern_ag = values[7][column];
-            double zv_Sanierungsbeitrag = values[8][column];
-            double zv_umlage_allgemein = values[9][column];
-            double vbl_wiss_4perc_ag_buchung = values[10][column];
-            double mtl_kosten_ohne_jsz = values[11][column];
-            double jsz_als_monatliche_zulage = values[12][column];
-            double mtl_kosten_mit_jsz = values[13][column];
-            double jaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung = values[14][column];
+            BigDecimal grundentgelt = values[0][column];
+            BigDecimal av_ag_anteil_lfd_entgelt = values[1][column];
+            BigDecimal kv_ag_anteil_lfd_entgelt = values[2][column];
+            BigDecimal zusbei_af_lfd_entgelt = values[3][column];
+            BigDecimal pv_ag_anteil_lfd_entgelt = values[4][column];
+            BigDecimal rv_ag_anteil_lfd_entgelt = values[5][column];
+            BigDecimal sv_umlage_u2 = values[6][column];
+            BigDecimal steuern_ag = values[7][column];
+            BigDecimal zv_Sanierungsbeitrag = values[8][column];
+            BigDecimal zv_umlage_allgemein = values[9][column];
+            BigDecimal vbl_wiss_4perc_ag_buchung = values[10][column];
+            BigDecimal mtl_kosten_ohne_jsz = values[11][column];
+            BigDecimal jsz_als_monatliche_zulage = values[12][column];
+            BigDecimal mtl_kosten_mit_jsz = values[13][column];
+            BigDecimal jaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung = values[14][column];
             String grade = paygrade;
 
             SalaryTable salaryTable = new SalaryTable(tableName, grundentgelt, av_ag_anteil_lfd_entgelt, kv_ag_anteil_lfd_entgelt, zusbei_af_lfd_entgelt, pv_ag_anteil_lfd_entgelt, rv_ag_anteil_lfd_entgelt, sv_umlage_u2, steuern_ag, zv_Sanierungsbeitrag, zv_umlage_allgemein, vbl_wiss_4perc_ag_buchung, mtl_kosten_ohne_jsz, jsz_als_monatliche_zulage, mtl_kosten_mit_jsz, jaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung, grade);
@@ -215,10 +213,9 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
         String result;
         if (title.contains("E13")) {
             result = "E13";
-            return result;
         } else {
             result = "E14";
-            return result;
         }
+        return result;
     }
 }

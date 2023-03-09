@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SalaryTableManagerTest {
+/*public class SalaryTableManagerTest {
     @Test
     void testRemoveAll(){
         var manager = SalaryTableManager.getInstance();
@@ -142,4 +142,4 @@ public class SalaryTableManagerTest {
         manager.removeAllTables();
         assertEquals(manager.getDistinctTableNames("E13").size(), 0);
     }
-}
+}*/

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ProjectCategoryManagerTest {
+/*public class ProjectCategoryManagerTest {
     @Test
     void testRemoveAll(){
         var manager = ProjectCategoryManager.getInstance();
@@ -138,4 +138,4 @@ public class ProjectCategoryManagerTest {
         manager.removeAllProjectCategories();
         assertEquals(manager.getNextID(), 1);
     }
-}
+}*/

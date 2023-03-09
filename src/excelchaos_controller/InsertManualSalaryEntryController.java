@@ -4,11 +4,12 @@ import excelchaos_model.database.Employee;
 import excelchaos_model.database.EmployeeDataManager;
 import excelchaos_model.database.ManualSalaryEntry;
 import excelchaos_model.database.ManualSalaryEntryManager;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.InsertManualSalaryEntryView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -68,10 +69,9 @@ public class InsertManualSalaryEntryController implements ActionListener {
     }
 
     private void insertEntryInDB(){
-        StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
         Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) insertManualSalaryEntryView.getNamePickList().getSelectedItem());
         int id = temporaryEmployee.getId();
-        double newSalary =  transformer.formatStringToDouble(insertManualSalaryEntryView.getTfNewSalary().getText());
+        BigDecimal newSalary =  StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertManualSalaryEntryView.getTfNewSalary().getText()); //TODO Testen
         LocalDate date  = insertManualSalaryEntryView.getDatePicker().getDate();
         Date usageDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
         String comment = insertManualSalaryEntryView.getTfComment().getText();

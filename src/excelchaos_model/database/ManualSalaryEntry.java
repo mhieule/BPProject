@@ -3,6 +3,7 @@ package excelchaos_model.database;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @DatabaseTable(tableName = "ManualSalaryEntry")
@@ -10,13 +11,13 @@ public class ManualSalaryEntry {
     @DatabaseField()
     private int id;
     @DatabaseField()
-    private double new_salary;
+    private BigDecimal new_salary;
     @DatabaseField()
     private Date start_date;
     @DatabaseField()
     private String comment;
 
-    public ManualSalaryEntry(int id, double new_salary, Date start_date, String comment) {
+    public ManualSalaryEntry(int id, BigDecimal new_salary, Date start_date, String comment) {
         this.id = id;
         this.new_salary = new_salary;
         this.start_date = start_date;
@@ -31,11 +32,11 @@ public class ManualSalaryEntry {
         return this.id;
     }
 
-    public double getNew_salary() {
+    public BigDecimal getNew_salary() {
         return this.new_salary;
     }
 
-    public void setNew_salary(double new_salary) {
+    public void setNew_salary(BigDecimal new_salary) {
         this.new_salary = new_salary;
     }
 

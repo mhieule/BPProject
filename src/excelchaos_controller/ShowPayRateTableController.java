@@ -2,13 +2,14 @@ package excelchaos_controller;
 
 import excelchaos_model.database.SalaryTable;
 import excelchaos_model.database.SalaryTableManager;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_model.utility.PayRateTableNameDateSeperator;
 import excelchaos_model.utility.PayRateTableNameStringEditor;
 import excelchaos_view.ShowPayRateTableView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -83,44 +84,43 @@ public class ShowPayRateTableController implements ActionListener {
         }
     }
 
-    public void insertValuesInTable() {
-        StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
+    public void insertValuesInTable() { //TODO Hier wird eine Methode im Transformer benötigt, die wenn die Spalte Null ist Prozentzahlen ausgibt
         List<SalaryTable> salaryTables = manager.getSalaryTable(tableTitle);
         int column = 0;
         int row = 0;
         // columncount = 13, rowCount = 15
         for (SalaryTable salaryTable : salaryTables) {
-            if (salaryTable.getGrundendgeld() == 0) {
+            if (salaryTable.getGrundendgeld().compareTo(new BigDecimal(0)) == 0) {
                 showPayRateTableView.getTable().setValueAt(null, 0, column);
-            } else showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getGrundendgeld(),column), 0, column);
-            showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getAv_ag_anteil_lfd_entgelt(),column), 1, column);
-            showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getKv_ag_anteil_lfd_entgelt(),column), 2, column);
-            showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getZusbei_af_lfd_entgelt(),column), 3, column);
-            showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getPv_ag_anteil_lfd_entgelt(),column), 4, column);
-            showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getRv_ag_anteil_lfd_entgelt(),column), 5, column);
-            showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getSv_umlage_u2(),column), 6, column);
-            showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getSteuern_ag(),column), 7, column);
-            if (salaryTable.getZv_Sanierungsbeitrag() == 0) {
+            } else showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getGrundendgeld(),column), 0, column);
+            showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getAv_ag_anteil_lfd_entgelt(),column), 1, column);
+            showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getKv_ag_anteil_lfd_entgelt(),column), 2, column);
+            showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getZusbei_af_lfd_entgelt(),column), 3, column);
+            showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getPv_ag_anteil_lfd_entgelt(),column), 4, column);
+            showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getRv_ag_anteil_lfd_entgelt(),column), 5, column);
+            showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getSv_umlage_u2(),column), 6, column);
+            showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getSteuern_ag(),column), 7, column);
+            if (salaryTable.getZv_Sanierungsbeitrag().compareTo(new BigDecimal(0)) == 0) {
                 showPayRateTableView.getTable().setValueAt(null, 8, column);
-            } else showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getZv_Sanierungsbeitrag(),column), 8, column);
-            if (salaryTable.getZv_umlage_allgemein() == 0) {
+            } else showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getZv_Sanierungsbeitrag(),column), 8, column);
+            if (salaryTable.getZv_umlage_allgemein().compareTo(new BigDecimal(0)) == 0) {
                 showPayRateTableView.getTable().setValueAt(null, 9, column);
-            } else showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getZv_umlage_allgemein(),column), 9, column);
-            if (salaryTable.getVbl_wiss_4perc_ag_buchung() == 0) {
+            } else showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getZv_umlage_allgemein(),column), 9, column);
+            if (salaryTable.getVbl_wiss_4perc_ag_buchung().compareTo(new BigDecimal(0)) == 0) {
                 showPayRateTableView.getTable().setValueAt(null, 10, column);
-            } else showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getVbl_wiss_4perc_ag_buchung(),column), 10, column);
-            if (salaryTable.getMtl_kosten_ohne_jsz() == 0) {
+            } else showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getVbl_wiss_4perc_ag_buchung(),column), 10, column);
+            if (salaryTable.getMtl_kosten_ohne_jsz().compareTo(new BigDecimal(0)) == 0) {
                 showPayRateTableView.getTable().setValueAt(null, 11, column);
-            } else showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getMtl_kosten_ohne_jsz(),column), 11, column);
-            if (salaryTable.getJsz_als_monatliche_zulage() == 0) {
+            } else showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getMtl_kosten_ohne_jsz(),column), 11, column);
+            if (salaryTable.getJsz_als_monatliche_zulage().compareTo(new BigDecimal(0)) == 0) {
                 showPayRateTableView.getTable().setValueAt(null, 12, column);
-            } else showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getJsz_als_monatliche_zulage(),column), 12, column);
-            if (salaryTable.getMtl_kosten_mit_jsz() == 0) {
+            } else showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getJsz_als_monatliche_zulage(),column), 12, column);
+            if (salaryTable.getMtl_kosten_mit_jsz().compareTo(new BigDecimal(0)) == 0) {
                 showPayRateTableView.getTable().setValueAt(null, 13, column);
-            } else showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getMtl_kosten_mit_jsz(),column), 13, column);
-            if (salaryTable.getJaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung() == 0) {
+            } else showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getMtl_kosten_mit_jsz(),column), 13, column);
+            if (salaryTable.getJaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung().compareTo(new BigDecimal(0)) == 0) {
                 showPayRateTableView.getTable().setValueAt(null, 14, column);
-            } else showPayRateTableView.getTable().setValueAt(transformer.formatDoubleToString(salaryTable.getJaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung(),column), 14, column);
+            } else showPayRateTableView.getTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getJaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung(),column), 14, column);
             if (column < showPayRateTableView.getTable().getColumnCount() - 1) {
                 column++;
             } else {
@@ -139,15 +139,14 @@ public class ShowPayRateTableController implements ActionListener {
         }
     }
 
-    private double[][] prepareDatabaseInsertion(){
-        StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
-        double[][] values = new double[showPayRateTableView.getTable().getRowCount()][showPayRateTableView.getTable().getColumnCount()];
+    private BigDecimal[][] prepareDatabaseInsertion(){
+        BigDecimal[][] values = new BigDecimal[showPayRateTableView.getTable().getRowCount()][showPayRateTableView.getTable().getColumnCount()];
         for (int row = 0; row < showPayRateTableView.getTable().getRowCount(); row++){
             for (int column = 0; column < showPayRateTableView.getTable().getColumnCount(); column++) {
                 if(showPayRateTableView.getTable().getValueAt(row,column) == null){
-                    values[row][column] = 0;
+                    values[row][column] = new BigDecimal(0);
                 } else {
-                    values[row][column] = transformer.formatStringToDouble((String) showPayRateTableView.getTable().getValueAt(row,column));
+                    values[row][column] = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String) showPayRateTableView.getTable().getValueAt(row,column));
                 }
             }
         }
@@ -155,7 +154,7 @@ public class ShowPayRateTableController implements ActionListener {
     }
 
     private void saveEditedValues(){
-        double[][] values = prepareDatabaseInsertion();
+        BigDecimal[][] values = prepareDatabaseInsertion();
         List<SalaryTable> salaryTables = manager.getSalaryTable(tableTitle);
         manager.removeSalaryTable(tableTitle);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");

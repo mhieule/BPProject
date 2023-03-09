@@ -5,7 +5,7 @@ import excelchaos_model.database.Contract;
 import excelchaos_model.database.ContractDataManager;
 import excelchaos_model.database.Employee;
 import excelchaos_model.database.EmployeeDataManager;
-import excelchaos_model.utility.StringAndDoubleTransformationForDatabase;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.SalaryListView;
 
 import javax.swing.event.TableModelEvent;
@@ -39,7 +39,7 @@ public class SalaryListController implements TableModelListener {
             "Gehaltskosten zum gewählten Zeitpunkt", "Jahressonderzahlung"
     };
 
-    private StringAndDoubleTransformationForDatabase transformer = new StringAndDoubleTransformationForDatabase();
+    private StringAndBigDecimalFormatter transformer = new StringAndBigDecimalFormatter();
 
     public SalaryListController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
@@ -75,8 +75,8 @@ public class SalaryListController implements TableModelListener {
             String dateOfBirth = dateFormat.format(employee.getDate_of_birth());
             String group = contract.getPaygrade();
             String stufe = contract.getPaylevel();
-            String gehalt = transformer.formatDoubleToString(contract.getRegular_cost(), 1);
-            String sonderzahlungen = transformer.formatDoubleToString(contract.getBonus_cost(), 1);
+            String gehalt = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getRegular_cost());
+            String sonderzahlungen = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getBonus_cost());
 
             String[] values = {id, name, surname, dateOfBirth, group, stufe, gehalt, sonderzahlungen};
             resultData[currentIndex] = values;

@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-public class CalculateSalaryBasedOnPayRateTable {
+/*public class CalculateSalaryBasedOnPayRateTable {
 
 
     //TODO Großflächig testen
@@ -546,4 +546,4 @@ public class CalculateSalaryBasedOnPayRateTable {
             default -> null;
         };
     }
-}
+}*/

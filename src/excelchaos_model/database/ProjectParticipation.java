@@ -3,6 +3,7 @@ package excelchaos_model.database;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @DatabaseTable(tableName = "ProjectParticipation")
@@ -12,11 +13,11 @@ public class ProjectParticipation {
     @DatabaseField
     private int person_id;
     @DatabaseField
-    private double scope;
+    private BigDecimal scope;
     @DatabaseField
     private Date participation_period;
 
-    public ProjectParticipation(int project_id, int person_id, double scope, Date participation_period) {
+    public ProjectParticipation(int project_id, int person_id, BigDecimal scope, Date participation_period) {
         this.project_id = project_id;
         this.person_id = person_id;
         this.scope = scope;
@@ -35,11 +36,11 @@ public class ProjectParticipation {
         return this.person_id;
     }
 
-    public double getScope() {
+    public BigDecimal getScope() {
         return this.scope;
     }
 
-    public void setScope(double scope) {
+    public void setScope(BigDecimal scope) {
         this.scope = scope;
     }
 
