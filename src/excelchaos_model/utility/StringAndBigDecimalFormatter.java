@@ -1,6 +1,7 @@
 package excelchaos_model.utility;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -10,27 +11,6 @@ import java.util.Locale;
 
 public class StringAndBigDecimalFormatter {
 
-    public double formatStringToDouble(String tableValue) {
-        String value = tableValue;
-        NumberFormat euroTransformer = NumberFormat.getCurrencyInstance();
-        euroTransformer.setCurrency(Currency.getInstance(Locale.GERMANY));
-        double result;
-        if (tableValue.contains("%")) {
-            value = value.replaceAll("%", "");
-        } else {
-            try {
-                Locale locale = Locale.GERMANY;
-                tableValue = tableValue.replace("€", "");
-                NumberFormat numberFormat = NumberFormat.getInstance(locale);
-                result = numberFormat.parse(tableValue).doubleValue();
-                return result;
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        result = Double.parseDouble(value);
-        return result;
-    }
 
     public static String formatBigDecimalToStringPayRateTable(BigDecimal valueToFormat, int column) {
         String result;
@@ -49,23 +29,8 @@ public class StringAndBigDecimalFormatter {
         return result;
     }
 
-    public static BigDecimal formatStringToPercentageValueForScope(String valueToFormat) {
-        BigDecimal result;
-
-        DecimalFormat decimalFormat = new DecimalFormat();
-        decimalFormat.setParseBigDecimal(true);
-        Number temporary = null;
-        valueToFormat = valueToFormat.replaceAll("%", "");
-        try {
-            temporary = decimalFormat.parse(valueToFormat);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        result = new BigDecimal(temporary.toString());
-        return result;
-    }
-
     public static String formatPercentageToStringForScope(BigDecimal valueToFormat) {
+        valueToFormat = valueToFormat.multiply(new BigDecimal(100));
         String result;
         Formatter formatter = new Formatter();
         formatter.format("%.0f", valueToFormat);
@@ -90,13 +55,29 @@ public class StringAndBigDecimalFormatter {
         return euroTransformer.format(valueToFormat);
     }
 
-    public static BigDecimal formatStringToBigDecimalCurrency(String tableValue) {
+    public static BigDecimal formatStringToPercentageValueForScope(String valueToFormat) {
+        BigDecimal result;
+        valueToFormat = valueToFormat.replaceAll("%", "");
+        valueToFormat = valueToFormat.replaceAll(",",".");
+        result = new BigDecimal(valueToFormat);
+        result = result.divide(new BigDecimal(100),2,RoundingMode.HALF_EVEN);
+        return result;
+    }
+
+
+
+    public static BigDecimal formatStringToBigDecimalCurrency(String valueToFormat) {
+        if(valueToFormat.contains("%")){
+            valueToFormat = valueToFormat.replaceAll("%","");
+            valueToFormat = valueToFormat.replaceAll(",",".");
+            return new BigDecimal(valueToFormat);
+        }
         Number number;
         try {
             Locale locale = Locale.GERMANY;
-            tableValue = tableValue.replace("€", "");
+            valueToFormat = valueToFormat.replace("€", "");
             NumberFormat numberFormat = NumberFormat.getInstance(locale);
-            number = numberFormat.parse(tableValue).doubleValue();
+            number = numberFormat.parse(valueToFormat).doubleValue();
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

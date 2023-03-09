@@ -20,7 +20,7 @@ public class ProjectParticipationDataModel {
 
     private NewAndImprovedSalaryCalculation salaryCalculation = new NewAndImprovedSalaryCalculation();
 
-    BigDecimal[] monthlyProjectPersonalCost;
+    private BigDecimal[] monthlyProjectPersonalCost;
 
     public ProjectParticipationDataModel(String[] projectIds) {
         this.projectIds = new int[projectIds.length];
@@ -191,6 +191,10 @@ public class ProjectParticipationDataModel {
         String[][] summedData;
         BigDecimal[] sumPersonenMonate = new BigDecimal[months.length];
         monthlyProjectPersonalCost = new BigDecimal[months.length];
+        for (int i = 0; i < sumPersonenMonate.length; i++) {
+            sumPersonenMonate[i] = new BigDecimal(0);
+            monthlyProjectPersonalCost[i] = new BigDecimal(0);
+        }
         int lastCorrectGivenValue = 0;
         DateFormat format = new SimpleDateFormat("MMMM-yyyy");
         int[] personIdsForProject = getPersonIdsForProject(projectId);

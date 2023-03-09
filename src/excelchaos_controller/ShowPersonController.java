@@ -24,7 +24,6 @@ public class ShowPersonController implements TableModelListener {
     private MainFrameController frameController;
     private ToolbarShowPersonController toolbarShowPerson;
 
-    private StringAndBigDecimalFormatter transformer = new StringAndBigDecimalFormatter();
     private String title = "Personalstammdaten";
 
     private String columns[] = {"ID", "Name", "Vorname", "Straße", "Haunsummer", "Adresszusatz", "Postleitzahl", "Stadt",
@@ -92,7 +91,7 @@ public class ShowPersonController implements TableModelListener {
             String startDateString = dateFormat.format(startDate);
             Date endDate = contract.getEnd_date();
             String endDateString = dateFormat.format(endDate);
-            String workScope = transformer.formatPercentageToStringForScope(contract.getScope()); //TODO Workscope anpassen wenn SHK
+            String workScope = StringAndBigDecimalFormatter.formatPercentageToStringForScope(contract.getScope()); //TODO Workscope anpassen wenn SHK
             String payGrade = contract.getPaygrade();
             String payLevel = contract.getPaylevel();
             String vblStatus;
