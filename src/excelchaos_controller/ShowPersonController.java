@@ -70,7 +70,12 @@ public class ShowPersonController implements TableModelListener {
             String additionalAddress = employee.getAdditional_address();
             String zipCode = employee.getZip_code();
             String city = employee.getCity();
-            String dateOfBirth = dateFormat.format(employee.getDate_of_birth());
+            String dateOfBirth;
+            if(employee.getDate_of_birth() == null){
+                dateOfBirth = "";
+            }else {
+                dateOfBirth = dateFormat.format(employee.getDate_of_birth());
+            }
             String emailPrivate = employee.getEmail_private();
             String phonePrivate = employee.getPhone_private();
             String phoneTuda = employee.getPhone_tuda();

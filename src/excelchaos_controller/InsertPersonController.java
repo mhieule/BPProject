@@ -533,12 +533,16 @@ public class InsertPersonController implements ActionListener {
                 insertPersonView.getTfWorkScope().setText(null);
                 insertPersonView.getPayGroupOnHiring().setVisible(false);
                 insertPersonView.getPayGroupList().setVisible(false);
+                insertPersonView.getPayGroupList().setSelectedItem("Nicht ausgewählt");
                 insertPersonView.getPayLevelOnHiring().setVisible(false);
                 insertPersonView.getPayLevelList().setVisible(false);
+                insertPersonView.getPayLevelList().setSelectedItem("Nicht ausgewählt");
                 insertPersonView.getVblstate().setVisible(false);
                 insertPersonView.getVblList().setVisible(false);
+                insertPersonView.getVblList().setSelectedItem("Nicht ausgewählt");
                 insertPersonView.getHiwiTypeOfPayment().setVisible(false);
                 insertPersonView.getHiwiTypeOfPaymentList().setVisible(false);
+                insertPersonView.getHiwiTypeOfPaymentList().setSelectedItem("Nicht ausgewählt");
             }
             if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("WiMi") || insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("ATM")) {
                 insertPersonView.getTfWorkScope().setInputVerifier(null);
@@ -549,6 +553,7 @@ public class InsertPersonController implements ActionListener {
                 insertPersonView.getPayLevelList().setVisible(true);
                 insertPersonView.getVblstate().setVisible(true);
                 insertPersonView.getVblList().setVisible(true);
+                insertPersonView.getHiwiTypeOfPaymentList().setSelectedItem("Nicht ausgewählt");
                 insertPersonView.getTfWorkScope().setInputVerifier(new WorkScopeVerifier());
             } else {
                 insertPersonView.getPayGroupOnHiring().setVisible(false);
@@ -563,6 +568,9 @@ public class InsertPersonController implements ActionListener {
                 insertPersonView.getTfWorkScope().setText(null);
                 insertPersonView.getHiwiTypeOfPayment().setVisible(true);
                 insertPersonView.getHiwiTypeOfPaymentList().setVisible(true);
+                insertPersonView.getPayGroupList().setSelectedItem("Nicht ausgewählt");
+                insertPersonView.getPayLevelList().setSelectedItem("Nicht ausgewählt");
+                insertPersonView.getVblList().setSelectedItem("Nicht ausgewählt");
                 insertPersonView.getTfWorkScope().setInputVerifier(new WorkScopeSHKVerifier());
             } else {
                 insertPersonView.getHiwiTypeOfPayment().setVisible(false);

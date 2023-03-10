@@ -72,7 +72,12 @@ public class SalaryListController implements TableModelListener {
             String id = String.valueOf(employee.getId());
             String name = employee.getName();
             String surname = employee.getSurname();
-            String dateOfBirth = dateFormat.format(employee.getDate_of_birth());
+            String dateOfBirth;
+            if(employee.getDate_of_birth() == null){
+                dateOfBirth = "";
+            }else {
+                dateOfBirth = dateFormat.format(employee.getDate_of_birth());
+            }
             String group = contract.getPaygrade();
             String stufe = contract.getPaylevel();
             String gehalt = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getRegular_cost());

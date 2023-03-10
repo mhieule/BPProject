@@ -322,7 +322,7 @@ public class InsertProjectsView extends JPanel {
         participationLabel = new JLabel("Mitarbeiter");
         participationLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         DefaultTableModel participationModel = new DefaultTableModel(null, participationColumnsWithID);
-        participationModel.setRowCount(30); //TODO Debug
+        participationModel.setRowCount(data[1].length);
         projectParticipationTable = new JTable(participationModel);
         projectParticipationTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         setUpEditNameSelection(projectParticipationTable, data[1]);
@@ -378,7 +378,6 @@ public class InsertProjectsView extends JPanel {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate date;
         for (int i = 0; i < dates.length; i++) {
-            System.out.println(dates[i]);
             date = LocalDate.parse(dates[i], formatter);
             table.setValueAt(date, i, 3);
         }

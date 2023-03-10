@@ -34,7 +34,9 @@ public class ProjectParticipationView extends JPanel {
     private NewAndImprovedSalaryCalculation salaryCalculation = new NewAndImprovedSalaryCalculation();
 
 
-    private JPanel mainPanel;
+    private JPanel mainPanel, projectParticipationSumPanel;
+
+    private JTable participationSumTable, participationSumHeaderTable;
 
 
     private ProjectParticipationDataModel projectParticipationDataModel = new ProjectParticipationDataModel();
@@ -44,6 +46,7 @@ public class ProjectParticipationView extends JPanel {
 
         setLayout(new BorderLayout());
         mainPanel = new JPanel();
+
         JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.setVisible(true);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
@@ -51,6 +54,68 @@ public class ProjectParticipationView extends JPanel {
         GridLayout gridLayout = new GridLayout(0, 1, 0, 10);
         mainPanel.setLayout(gridLayout);
 
+
+
+    }
+
+    public void setUpParticipationSumPanel(String[] employeeNames, String[] months, String[][] tableData){
+        projectParticipationSumPanel = new JPanel();
+        projectParticipationSumPanel.setLayout(new FlowLayout());
+        DefaultTableModel participationSumTableModel = new DefaultTableModel(tableData, months);
+        participationSumTable = new JTable(participationSumTableModel){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        participationSumTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        TableColumnAdjuster tca = new TableColumnAdjuster(participationSumTable);
+        tca.adjustColumns();
+        participationSumHeaderTable = setParticipationSumHeaderTable(participationSumTable,employeeNames);
+        JScrollPane participationSumPane = new JScrollPane(participationSumTable);
+        participationSumPane.setRowHeaderView(participationSumHeaderTable);
+        participationSumPane.setPreferredSize(new Dimension(participationSumTable.getPreferredSize().width,participationSumTable.getRowHeight()*6));
+        projectParticipationSumPanel.add(participationSumPane);
+        add(projectParticipationSumPanel,BorderLayout.SOUTH);
+    }
+
+    private JTable setParticipationSumHeaderTable(JTable table, String[] rows){
+        DefaultTableModel model = new DefaultTableModel() {
+
+            @Override
+            public int getColumnCount() {
+                return 1;
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int col) {
+                return false;
+            }
+
+            @Override
+            public int getRowCount() {
+                return table.getRowCount();
+            }
+
+            @Override
+            public Class<?> getColumnClass(int colNum) {
+                switch (colNum) {
+                    case 0:
+                        return String.class;
+                    default:
+                        return super.getColumnClass(colNum);
+                }
+            }
+        };
+        JTable headerTable = new JTable(model);
+        for (int row = 0; row < rows.length; row++) {
+            headerTable.setValueAt(rows[row], row, 0);
+        }
+        headerTable.setShowGrid(false);
+        headerTable.setPreferredScrollableViewportSize(new Dimension(180, 0));
+        headerTable.getColumnModel().getColumn(0).setPreferredWidth(180);
+        headerTable.getColumnModel().getColumn(0).setCellRenderer(new MultiLineTableCellRenderer());
+        return headerTable;
     }
 
     public void setUpProjectPanel(String projectName, String[] monthColumns, String[] nameRows, String[][] tableData, String[][] summedTableData, String totalCost, int projectId) {
@@ -167,9 +232,7 @@ public class ProjectParticipationView extends JPanel {
         mainPanel.add(projectPanel);
     }
 
-    public void setUpTotalWorkPanel(String[] monthColumnsForAllProjects, String[] summedWork, String[] namesInSelectedProjects) {
 
-    }
 
     public JTable initMainTableRows(JTable table, String[] rows) {
         DefaultTableModel model = new DefaultTableModel() {
@@ -201,7 +264,6 @@ public class ProjectParticipationView extends JPanel {
         };
         JTable headerTable = new JTable(model);
         for (int row = 0; row < rows.length; row++) {
-            System.out.println(rows[row]);
             headerTable.setValueAt(rows[row], row, 0);
         }
         headerTable.setShowGrid(false);

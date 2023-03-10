@@ -22,11 +22,20 @@ public class ProjectParticipationDataModel {
 
     private BigDecimal[] monthlyProjectPersonalCost;
 
+    private HashSet<String> allShownMonths;
+
+    private HashSet<String> allShownEmployeeNames;
+
+    private HashMap<String, BigDecimal> fullParticipations;
+
     public ProjectParticipationDataModel(String[] projectIds) {
         this.projectIds = new int[projectIds.length];
         for (int i = 0; i < this.projectIds.length; i++) {
             this.projectIds[i] = Integer.parseInt(projectIds[i]);
         }
+        allShownMonths = new HashSet<>();
+        allShownEmployeeNames = new HashSet<>();
+        fullParticipations = new HashMap<String, BigDecimal>();
     }
 
     public ProjectParticipationDataModel() {
@@ -76,8 +85,8 @@ public class ProjectParticipationDataModel {
         int index = 1;
         while (beginCalendar.before(finishCalendar)) {
             if (index < arrayLength) {
-                System.out.println(beginCalendar.getTime());
                 months[index] = formatter.format(beginCalendar.getTime());
+                allShownMonths.add(months[index]);
                 index++;
             }
             beginCalendar.add(Calendar.MONTH, 1);
@@ -94,6 +103,7 @@ public class ProjectParticipationDataModel {
         names = new String[employeeIds.length];
         for (int i = 0; i < employeeIds.length; i++) {
             names[i] = employeeDataManager.getEmployee(employeeIds[i]).getSurname() + " " + employeeDataManager.getEmployee(employeeIds[i]).getName();
+            allShownEmployeeNames.add(names[i]);
         }
         /*int arrayLength = 0;
         int oldemployeeId = -1;
@@ -167,9 +177,15 @@ public class ProjectParticipationDataModel {
                 if ((row % 2) == 0) {
                     if (column < projectParticipationsList.size()) {
                         tableData[row][column] = StringAndBigDecimalFormatter.formatPercentageToStringForScope(projectParticipationsList.get(column - 1).getScope());
+                        List<ProjectParticipation> finalProjectParticipationsList = projectParticipationsList;
+                        int finalColumn = column;
+                        fullParticipations.compute(employeeNames[row/2] + " " + months[column],(key, val) -> val.add(finalProjectParticipationsList.get(finalColumn -1).getScope()));
                         lastCorrectGivenValue = column;
                     } else {
                         tableData[row][column] = StringAndBigDecimalFormatter.formatPercentageToStringForScope(projectParticipationsList.get(lastCorrectGivenValue).getScope());
+                        List<ProjectParticipation> finalProjectParticipationsList1 = projectParticipationsList;
+                        int finalLastCorrectGivenValue = lastCorrectGivenValue;
+                        fullParticipations.compute(employeeNames[row/2] + " " + months[column],(key, val) -> val.add(finalProjectParticipationsList1.get(finalLastCorrectGivenValue).getScope()));
                     }
 
                 } else {
@@ -244,6 +260,69 @@ public class ProjectParticipationDataModel {
         }
         totalCost = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(totalCostNumber);
         return totalCost;
+    }
+
+    private ArrayList<String> transformAllMonthsToSortedList() {
+        ArrayList<String> allMonthsList = new ArrayList<String>(allShownMonths);
+        allMonthsList.sort(new Comparator<String>() {
+            DateFormat format = new SimpleDateFormat("MMMM-yyyy");
+
+            @Override
+            public int compare(String firstDate, String secondDate) {
+                try {
+                    return format.parse(firstDate).compareTo(format.parse(secondDate));
+                } catch (ParseException e) {
+                    throw new IllegalArgumentException(e);
+                }
+            }
+        });
+        return allMonthsList;
+    }
+
+    private ArrayList<String> transformAllEmployeeNamesToList() {
+        ArrayList<String> allNamesList = new ArrayList<String>(allShownEmployeeNames);
+        return allNamesList;
+    }
+
+    public void setUpParticipationHashMap(){
+        ArrayList<String> allNamesList = transformAllEmployeeNamesToList();
+        ArrayList<String> allMonthsList = transformAllMonthsToSortedList();
+
+        for(String name : allNamesList){
+            for (String month : allMonthsList){
+                fullParticipations.put(name + " " + month,new BigDecimal(0));
+            }
+        }
+    }
+
+    public String[][] getTotalParticipationOfSelectedProjectsForEmployees(){
+        ArrayList<String> allNamesList = transformAllEmployeeNamesToList();
+        ArrayList<String> allMonthsList = transformAllMonthsToSortedList();
+        String[][] resultArray = new String[allNamesList.size()][allMonthsList.size()];
+        for (int name = 0; name < resultArray.length; name++) {
+            for (int month = 0; month < resultArray[0].length; month++) {
+                resultArray[name][month] = StringAndBigDecimalFormatter.formatPercentageToStringForScope(fullParticipations.get(allNamesList.get(name) + " " + allMonthsList.get(month)));
+            }
+        }
+        return resultArray;
+    }
+
+    public String[] getRuntimeInMonthsForAllProjects() {
+        ArrayList<String> allMonthsList = transformAllMonthsToSortedList();
+        String[] allMonthsArray = new String[allMonthsList.size()];
+        for (int index = 0; index < allMonthsArray.length; index++) {
+            allMonthsArray[index] = allMonthsList.get(index);
+        }
+        return allMonthsArray;
+    }
+
+    public String[] getAllEmployeesNamesForSelectedProjects() {
+        String[] allEmployeeNamesArray = new String[allShownEmployeeNames.size()];
+        for (int index = 0; index < allEmployeeNamesArray.length; index++) {
+            allEmployeeNamesArray[index] = (String) allShownEmployeeNames.toArray()[index];
+        }
+
+        return allEmployeeNamesArray;
     }
 
 

@@ -40,10 +40,18 @@ public class ProjectParticipationController implements ActionListener {
 
     public void fillTables(){
         for (int projectId = 0; projectId < selectedProjectIds.length; projectId++) {
+            model.getProjectRunTimeInMonths(selectedProjectIds[projectId]);
+            model.getPersonNamesForProject(selectedProjectIds[projectId]);
+        }
+        model.setUpParticipationHashMap();
+        for (int projectId = 0; projectId < selectedProjectIds.length; projectId++) {
             String projectName = model.getProjectName(selectedProjectIds[projectId]);
             String[] monthColumns = model.getProjectRunTimeInMonths(selectedProjectIds[projectId]);
             String[] involvedEmployees = model.getPersonNamesForProject(selectedProjectIds[projectId]);
             try {
+                if(projectId == 0){
+
+                }
                 String[][] tableData = model.getTableData(selectedProjectIds[projectId],involvedEmployees.length,monthColumns,involvedEmployees);
                 String[][] summedTableData = model.getSummedTableData(selectedProjectIds[projectId],involvedEmployees.length,monthColumns);
                 String totalCost = model.getTotalProjectPersonalCost();
@@ -53,6 +61,12 @@ public class ProjectParticipationController implements ActionListener {
             }
 
         }
+
+        String[] allEmployeeNames = model.getAllEmployeesNamesForSelectedProjects();
+        String[] allMonths = model.getRuntimeInMonthsForAllProjects();
+        String[][] participationSum = model.getTotalParticipationOfSelectedProjectsForEmployees();
+        participationView.setUpParticipationSumPanel(allEmployeeNames,allMonths,participationSum);
+
     }
 
     @Override
