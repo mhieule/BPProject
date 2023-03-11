@@ -1,11 +1,10 @@
 package excelchaos_view;
 
-import excelchaos_model.PayRateTableListCellRenderer;
+import excelchaos_view.components.TableCellRenderer.PayRateTableListCellRenderer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
 
 public class PayRateTablesView extends JPanel {
     private JPanel centerPanel;

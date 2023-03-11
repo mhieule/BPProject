@@ -2,44 +2,42 @@ package excelchaos_controller;
 
 import excelchaos_model.*;
 import excelchaos_model.database.*;
-import excelchaos_model.utility.StringAndBigDecimalFormatter;
+import excelchaos_model.datamodel.EmployeeDataAccess;
+import excelchaos_model.datamodel.EmployeeDataDeleter;
+import excelchaos_model.export.CSVExporter;
 import excelchaos_view.ShowPersonView;
+import excelchaos_view.ToolbarShowPersonView;
 
+import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class ShowPersonController implements TableModelListener {
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
-    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
-    private ProjectParticipationManager projectParticipationManager = ProjectParticipationManager.getInstance();
+public class ShowPersonController implements ActionListener, TableModelListener {
 
-    private ManualSalaryEntryManager manualSalaryEntryManager = ManualSalaryEntryManager.getInstance();
-
-    private SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = SalaryIncreaseHistoryManager.getInstance();
+    private EmployeeDataAccess employeeDataModel;
+    private EmployeeDataDeleter employeeDataDeleter;
     private ShowPersonView showPersonView;
-    private MainFrameController frameController;
-    private ToolbarShowPersonController toolbarShowPerson;
+    private ToolbarShowPersonView toolbar;
+    private MainFrameController mainFrameController;
 
     private String title = "Personalstammdaten";
 
-    private String columns[] = {"ID", "Name", "Vorname", "Straße", "Haunsummer", "Adresszusatz", "Postleitzahl", "Stadt",
-            "Geburtsdatum", "E-Mail Privat", "Telefon Privat", "Telefon TUDA", "Staatsangehörigkeit 1", "Staatsangehörigkeit 2", "Visum Gültigkeit", "Personalnummer", "Transpondernummer", "Büronummer", "TU-ID",
-            "Anstellungsart", "Beschäftigungsbeginn", "Beschäftigungsende", "Beschäftigungsumfgang", "Gehaltsklasse", "Gehaltsstufe", "VBL-Status", "SHK Stundensatz", "Gehalt Eingeplant bis"
-    };
-
 
     public ShowPersonController(MainFrameController mainFrameController) {
-        frameController = mainFrameController;
+        this.mainFrameController = mainFrameController;
+        employeeDataModel = new EmployeeDataAccess();
+        employeeDataDeleter = new EmployeeDataDeleter();
         showPersonView = new ShowPersonView();
-        toolbarShowPerson = new ToolbarShowPersonController(frameController, this);
+        toolbar = new ToolbarShowPersonView();
         showPersonView.init();
-        createTableWithData(getEmployeeDataFromDataBase());
-        showPersonView.add(toolbarShowPerson.getToolbar(), BorderLayout.NORTH);
-        SearchAndFilterModel.setUpSearchAndFilterModel(showPersonView.getTable(), toolbarShowPerson.getToolbar());
+        toolbar.init();
+        toolbar.setActionListener(this);
+        showPersonView.createTableWithData(employeeDataModel.getEmployeeDataFromDataBase());
+        showPersonView.getTable().getModel().addTableModelListener(this);
+        showPersonView.add(toolbar, BorderLayout.NORTH);
+        SearchAndFilterModel.setUpSearchAndFilterModel(showPersonView.getTable(), toolbar);
     }
 
     public ShowPersonView getPersonView() {
@@ -54,120 +52,67 @@ public class ShowPersonController implements TableModelListener {
         }
     }
 
-    public String[][] getEmployeeDataFromDataBase() {
-        int lines = employeeDataManager.getRowCount();
-        String resultData[][] = new String[lines][];
-        int currentIndex = 0;
-        List<Employee> employees = employeeDataManager.getAllEmployees();
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        for (Employee employee : employees) {
-            Contract contract = contractDataManager.getContract(employee.getId());
-            String id = String.valueOf(employee.getId());
-            String name = employee.getName();
-            String surname = employee.getSurname();
-            String street = employee.getStreet();
-            String houseNumber = employee.getHouse_number();
-            String additionalAddress = employee.getAdditional_address();
-            String zipCode = employee.getZip_code();
-            String city = employee.getCity();
-            String dateOfBirth;
-            if(employee.getDate_of_birth() == null){
-                dateOfBirth = "";
-            }else {
-                dateOfBirth = dateFormat.format(employee.getDate_of_birth());
-            }
-            String emailPrivate = employee.getEmail_private();
-            String phonePrivate = employee.getPhone_private();
-            String phoneTuda = employee.getPhone_tuda();
-            String citizenship1 = employee.getCitizenship_1();
-            String citizenship2 = employee.getCitizenship_2();
-            String visaExpiration;
-            if (employee.getVisa_expiration() != null) {
-                visaExpiration = dateFormat.format(employee.getVisa_expiration());
-            } else {
-                visaExpiration = null;
-            }
-            String employeeNumber = employee.getEmployee_number();
-            String transponderNumber = employee.getTransponder_number();
-            String officeNumber = employee.getOffice_number();
-            String tuId = employee.getTu_id();
-            String typeOfJob = employee.getStatus();
-            Date startDate = contract.getStart_date();
-            String startDateString = dateFormat.format(startDate);
-            Date endDate = contract.getEnd_date();
-            String endDateString = dateFormat.format(endDate);
-            String workScope = StringAndBigDecimalFormatter.formatPercentageToStringForScope(contract.getScope()); //TODO Workscope anpassen wenn SHK
-            String payGrade = contract.getPaygrade();
-            String payLevel = contract.getPaylevel();
-            String vblStatus;
-            String shkHourlyRate = contract.getShk_hourly_rate();
-            if (contract.getVbl_status()) {
-                vblStatus = "Pflichtig";
-            } else vblStatus = "Befreit";
-            if(typeOfJob.equals("SHK")){
-                vblStatus = "";
-            }
 
-            Date salaryPlannedUntil = employee.getSalary_planned_until();
-            String salaryPlannedUntilString = dateFormat.format(salaryPlannedUntil);
 
-            String[] values = {id, name, surname, street, houseNumber, additionalAddress, zipCode, city, dateOfBirth, emailPrivate, phonePrivate, phoneTuda,
-                    citizenship1, citizenship2, visaExpiration, employeeNumber, transponderNumber, officeNumber, tuId, typeOfJob, startDateString, endDateString, workScope, payGrade, payLevel, vblStatus, shkHourlyRate, salaryPlannedUntilString};
-            resultData[currentIndex] = values;
-            currentIndex++;
-        }
-        return resultData;
-    }
 
-    private void createTableWithData(String[][] tableData) {
-        showPersonView.createEmployeeTable(tableData, columns);
+
+    public void updateData() {
+        showPersonView.updateTable(employeeDataModel.getEmployeeDataFromDataBase());
         showPersonView.getTable().getModel().addTableModelListener(this);
-    }
-
-    public void updateData(String[][] tableData) {
-        CustomTableModel customTableModel = new CustomTableModel(tableData, columns);
-        showPersonView.getTable().setModel(customTableModel);
-        showPersonView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
-        showPersonView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
-        showPersonView.getTable().getColumnModel().getColumn(1).setWidth(0);
-        CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(showPersonView.getTable());
-        tca.adjustColumns();
-        customTableModel.addTableModelListener(this);
-        SearchAndFilterModel.setUpSearchAndFilterModel(showPersonView.getTable(), toolbarShowPerson.getToolbar());
-        toolbarShowPerson.getToolbar().getEditPerson().setEnabled(false);
-        toolbarShowPerson.getToolbar().getDeletePerson().setEnabled(false);
+        SearchAndFilterModel.setUpSearchAndFilterModel(showPersonView.getTable(),toolbar);
+        toolbar.getEditPerson().setEnabled(false);
+        toolbar.getDeletePerson().setEnabled(false);
     }
 
     public void deleteData(int[] employeeIds) {
-        for (int i = 0; i < employeeIds.length; i++) {
-            employeeDataManager.removeEmployee(employeeIds[i]);
-            contractDataManager.removeContract(employeeIds[i]);
-            manualSalaryEntryManager.removeAllManualSalaryEntryForEmployee(employeeIds[i]);
-            salaryIncreaseHistoryManager.removeAllSalaryIncreaseHistoryForEmployee(employeeIds[i]);
-            projectParticipationManager.removeProjectParticipationBasedOnEmployeeId(employeeIds[i]);
-        }
-        updateData(getEmployeeDataFromDataBase());
+        employeeDataDeleter.deleteData(employeeIds);
+        updateData();
     }
 
-
-    public ToolbarShowPersonController getToolbarShowPerson() {
-        return toolbarShowPerson;
-    }
 
     @Override
     public void tableChanged(TableModelEvent e) {
         int numberOfSelectedRows = showPersonView.getTable().getNumberOfSelectedRows();
         if (e.getColumn() == 0) {
             if (numberOfSelectedRows == 0) {
-                toolbarShowPerson.getToolbar().getEditPerson().setEnabled(false);
-                toolbarShowPerson.getToolbar().getDeletePerson().setEnabled(false);
+                toolbar.getEditPerson().setEnabled(false);
+                toolbar.getDeletePerson().setEnabled(false);
             } else if (numberOfSelectedRows == 1) {
-                toolbarShowPerson.getToolbar().getEditPerson().setEnabled(true);
-                toolbarShowPerson.getToolbar().getDeletePerson().setEnabled(true);
+                toolbar.getEditPerson().setEnabled(true);
+                toolbar.getDeletePerson().setEnabled(true);
             } else {
-                toolbarShowPerson.getToolbar().getEditPerson().setEnabled(false);
-                toolbarShowPerson.getToolbar().getDeletePerson().setEnabled(true);
+                toolbar.getEditPerson().setEnabled(false);
+                toolbar.getDeletePerson().setEnabled(true);
             }
+
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == toolbar.getInsertPerson()) {
+            InsertPersonController insertPersonController = new InsertPersonController(mainFrameController);
+            insertPersonController.showInsertPersonView(mainFrameController);
+        } else if (e.getSource() == toolbar.getEditPerson()) {
+            InsertPersonController insertPersonController = new InsertPersonController(mainFrameController);
+            String employeeID = showPersonView.getTable().getIdsOfCurrentSelectedRows()[0];
+            insertPersonController.fillFields(employeeID);
+            insertPersonController.showInsertPersonView(mainFrameController);
+        } else if (e.getSource() == toolbar.getDeletePerson()) {
+            Object[] options = {"Ok", "Abbrechen"};
+            int joptionResult = JOptionPane.showOptionDialog(null, "Sind Sie sicher, dass die ausgewählten Mitarbeiter gelöscht werden sollen?", "Warnung", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            if (joptionResult == 0) {
+                String[] employeeIds = showPersonView.getTable().getIdsOfCurrentSelectedRows();
+                int[] Ids = new int[employeeIds.length];
+                for (int i = 0; i < employeeIds.length; i++) {
+                    Ids[i] = Integer.parseInt(employeeIds[i]);
+                }
+                deleteData(Ids);
+            }
+
+
+        } else if (e.getSource() == toolbar.getExportToCSV()) {
+            CSVExporter.createCSV(showPersonView.getTable(), "Personendaten.csv");
 
         }
     }

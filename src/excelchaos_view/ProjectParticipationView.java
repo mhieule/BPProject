@@ -7,6 +7,7 @@ import excelchaos_model.database.ProjectParticipation;
 import excelchaos_model.database.ProjectParticipationManager;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_model.utility.TableColumnAdjuster;
+import excelchaos_view.components.TableCellRenderer.MultiLineTableCellRenderer;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;

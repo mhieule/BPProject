@@ -2,13 +2,13 @@ package excelchaos_controller;
 
 import excelchaos_model.calculations.SalaryTableLookUp;
 import excelchaos_model.database.Contract;
-import excelchaos_model.database.ContractDataManager;
 import excelchaos_model.database.Employee;
+import excelchaos_model.datamodel.EmployeeDataAccess;
+import excelchaos_model.datamodel.EmployeeDataInserter;
 import excelchaos_model.inputVerifier.WorkScopeSHKVerifier;
 import excelchaos_model.inputVerifier.WorkScopeVerifier;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.InsertPersonView;
-import excelchaos_model.database.EmployeeDataManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,11 +20,10 @@ import java.util.Date;
 
 public class InsertPersonController implements ActionListener {
 
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
-
-    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
+    private EmployeeDataAccess employeeDataAccess;
+    private EmployeeDataInserter employeeDataInserter;
     private InsertPersonView insertPersonView;
-    private MainFrameController frameController;
+    private MainFrameController mainFrameController;
 
     private String addPersonTab = "Person hinzufügen";
 
@@ -34,14 +33,13 @@ public class InsertPersonController implements ActionListener {
 
 
     public InsertPersonController(MainFrameController mainFrameController) {
+        this.mainFrameController = mainFrameController;
+        employeeDataAccess = new EmployeeDataAccess();
+        employeeDataInserter = new EmployeeDataInserter();
         insertPersonView = new InsertPersonView();
         insertPersonView.init();
         insertPersonView.setActionListener(this);
-        frameController = mainFrameController;
-    }
 
-    public InsertPersonView getInsertPersonView() {
-        return insertPersonView;
     }
 
     public void showInsertPersonView(MainFrameController mainFrameController) {
@@ -72,9 +70,8 @@ public class InsertPersonController implements ActionListener {
         insertPersonView.getTfVisaValidUntil().setVisible(false);
     }
 
-    public boolean updateData(int id) {
-        Employee employee = employeeDataManager.getEmployee(id);
-        Contract contract = contractDataManager.getContract(id);
+   /* public boolean updateData(int id) {
+
 
         String surname = insertPersonView.getTfVorname().getText();
         String name = insertPersonView.getTfName().getText();
@@ -159,6 +156,17 @@ public class InsertPersonController implements ActionListener {
             }
 
         }
+        if(hiwiTypeOfPayment.equals("Nicht ausgewählt")){
+            hiwiTypeOfPayment = "";
+        }
+
+        if(payGrade.equals("Nicht ausgewählt")){
+            payGrade = "";
+        }
+
+        if(payLevel.equals("Nicht ausgewählt")){
+            payLevel = "";
+        }
 
         employee.setSurname(surname);
         employee.setName(name);
@@ -182,17 +190,7 @@ public class InsertPersonController implements ActionListener {
         employee.setAdditional_address(additional_address);
         employee.setCity(city);
 
-        if(hiwiTypeOfPayment.equals("Nicht ausgewählt")){
-            hiwiTypeOfPayment = "";
-        }
 
-        if(payGrade.equals("Nicht ausgewählt")){
-            payGrade = "";
-        }
-
-        if(payLevel.equals("Nicht ausgewählt")){
-            payLevel = "";
-        }
 
         employee.setStatus(typeOfJob);
         contract.setPaygrade(payGrade);
@@ -210,10 +208,10 @@ public class InsertPersonController implements ActionListener {
 
         return false;
 
-    }
+    }*/
 
     public void fillFields(String id) {
-        Employee employee = employeeDataManager.getEmployee(Integer.parseInt(id));
+        Employee employee = employeeDataAccess.getEmployee(Integer.parseInt(id));
         currentlyEditedEmployeeID = employee.getId();
         insertPersonView.getTfVorname().setText(employee.getSurname());
         insertPersonView.getTfName().setText(employee.getName());
@@ -252,7 +250,7 @@ public class InsertPersonController implements ActionListener {
             insertPersonView.getTfGeburtsdatum().setDate(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         }
 
-        Contract contract = contractDataManager.getContract(Integer.parseInt(id));
+        Contract contract = employeeDataAccess.getContract(Integer.parseInt(id));
         insertPersonView.getTypeOfJobPicklist().setSelectedItem(employee.getStatus());
         if (employee.getStatus().equals("SHK")) {
             insertPersonView.getHiwiTypeOfPayment().setVisible(true);
@@ -325,9 +323,7 @@ public class InsertPersonController implements ActionListener {
         insertPersonView.getTfWorkStart().setText(null);
     }
 
-    //TODO fallunterscheidung ob neuer employee erstellt wird oder bearbeitet wird
     public Employee safeData() {
-        int id = employeeDataManager.getNextID();
         String surname = insertPersonView.getTfVorname().getText();
         String name = insertPersonView.getTfName().getText();
         String email_private = insertPersonView.getTfPrivatEmail().getText();
@@ -343,8 +339,6 @@ public class InsertPersonController implements ActionListener {
         String status = insertPersonView.getStatusPicklist().getSelectedItem().toString();
         String transponder_number = insertPersonView.getTfTranspondernummer().getText();
         String office_number = insertPersonView.getTfBueronummer().getText();
-        //TODO als Date abfragen und speichern
-
         LocalDate localDate = insertPersonView.getTfSalaryPlannedUntil().getDate();
         Date salaryPlannedUntil;
         if (localDate == null) {
@@ -405,46 +399,44 @@ public class InsertPersonController implements ActionListener {
             insertPersonView.markMustBeFilledTextFields();
             return null;
         }
-        if(typeOfJob.equals("SHK")){
-            if(hiwiTypeOfPayment.equals("Nicht ausgewählt")){
+        if (typeOfJob.equals("SHK")) {
+            if (hiwiTypeOfPayment.equals("Nicht ausgewählt")) {
                 insertPersonView.markMustBeFilledTextFields();
                 return null;
             }
         }
-        if(typeOfJob.equals("WiMi")||typeOfJob.equals("ATM")){
-            if(payGrade.equals("Nicht ausgewählt") || payLevel.equals("Nicht ausgewählt") || insertPersonView.getVblList().getSelectedItem().toString().equals("Nicht ausgewählt")){
+        if (typeOfJob.equals("WiMi") || typeOfJob.equals("ATM")) {
+            if (payGrade.equals("Nicht ausgewählt") || payLevel.equals("Nicht ausgewählt") || insertPersonView.getVblList().getSelectedItem().toString().equals("Nicht ausgewählt")) {
                 insertPersonView.markMustBeFilledTextFields();
                 return null;
             }
 
         }
 
-
-        Employee newEmployee = new Employee(id, name, surname, email_private, phone_private, citizenship_1,
-                citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
-                salaryPlannedUntil, visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
-        employeeDataManager.addEmployee(newEmployee);
-
-        if(hiwiTypeOfPayment.equals("Nicht ausgewählt")){
+        if (hiwiTypeOfPayment.equals("Nicht ausgewählt")) {
             hiwiTypeOfPayment = "";
         }
 
-        if(payGrade.equals("Nicht ausgewählt")){
+        if (payGrade.equals("Nicht ausgewählt")) {
             payGrade = "";
         }
 
-        if(payLevel.equals("Nicht ausgewählt")){
+        if (payLevel.equals("Nicht ausgewählt")) {
             payLevel = "";
         }
 
-        Contract newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, new BigDecimal(0), new BigDecimal(0), scope, hiwiTypeOfPayment, vbl);
-        BigDecimal[] startSalary;
-        startSalary = salaryTableLookUp.getCurrentPayRateTableEntry(newContract);
-        BigDecimal regular_cost = startSalary[0]; //TODO Berechnung für SHK ändern
-        BigDecimal bonus_cost = startSalary[1].multiply(new BigDecimal(12));
-        newContract = new Contract(id, payGrade, payLevel, workStart, workEnd, regular_cost, bonus_cost, scope, hiwiTypeOfPayment, vbl);
-        contractDataManager.addContract(newContract);
-        return newEmployee;
+
+        if (currentlyEditedEmployeeID == 0) {
+            Employee newEmployee = employeeDataInserter.insertNewEmployeeData(name, surname, email_private, phone_private, citizenship_1,
+                    citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
+                    salaryPlannedUntil, visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street, payGrade, payLevel, workStart, workEnd, scope, hiwiTypeOfPayment, vbl);
+            return newEmployee;
+        } else {
+            Employee updateEmployee = employeeDataInserter.updateExistingEmployeeData(currentlyEditedEmployeeID, name, surname, email_private, phone_private, citizenship_1,
+                    citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
+                    salaryPlannedUntil, visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street, payGrade, payLevel, workStart, workEnd, scope, hiwiTypeOfPayment, vbl);
+            return updateEmployee;
+        }
 
 
     }
@@ -468,67 +460,51 @@ public class InsertPersonController implements ActionListener {
         }
         if (e.getSource() == insertPersonView.getSubmit()) {
             Employee checkEmployee = null;
-            boolean test = false;
-            if (currentlyEditedEmployeeID != 0) {
-                test = updateData(currentlyEditedEmployeeID);
-                if (test) {
-                    JOptionPane.showConfirmDialog(null, "Bitte füllen Sie die markierten Spalten aus um fortzufahren.", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            } else {
-                checkEmployee = safeData();
-                if (checkEmployee == null) {
-                    JOptionPane.showConfirmDialog(null, "Bitte füllen Sie die markierten Spalten aus um fortzufahren.", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+
+            checkEmployee = safeData();
+            if (checkEmployee == null) {
+                JOptionPane.showConfirmDialog(null, "Bitte füllen Sie die markierten Spalten aus um fortzufahren.", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                return;
             }
             resetInputs();
             insertPersonView.revalidate();
             insertPersonView.repaint();
-            ShowPersonController showPersonController = frameController.getShowPersonalData();
-            showPersonController.updateData(showPersonController.getEmployeeDataFromDataBase());
-            SalaryListController salaryListController = frameController.getSalaryListController();
+            ShowPersonController showPersonController = mainFrameController.getShowPersonalData();
+            showPersonController.updateData();
+            SalaryListController salaryListController = mainFrameController.getSalaryListController();
             salaryListController.updateData(salaryListController.getSalaryDataFromDataBase());
-            frameController.getUpdater().nameListUpdate();
+            mainFrameController.getUpdater().nameListUpdate();
         }
         if (e.getSource() == insertPersonView.getSalaryEntry()) {
-            boolean test = false;
-            InsertSalaryController insertSalaryController = new InsertSalaryController(frameController);
-            if (currentlyEditedEmployeeID != 0) {
-                test = updateData(currentlyEditedEmployeeID);
-                if (test) {
-                    JOptionPane.showConfirmDialog(null, "Bitte füllen Sie die markierten Spalten aus um fortzufahren.", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                insertSalaryController.fillFields(currentlyEditedEmployeeID);
-            } else {
-                Employee newEmployee = safeData();
-                if (newEmployee == null) {
-                    JOptionPane.showConfirmDialog(null, "Bitte füllen Sie die markierten Spalten aus um fortzufahren.", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                insertSalaryController.fillFields(newEmployee.getId());
+            InsertSalaryController insertSalaryController = new InsertSalaryController(mainFrameController);
+
+            Employee newEmployee = safeData();
+            if (newEmployee == null) {
+                JOptionPane.showConfirmDialog(null, "Bitte füllen Sie die markierten Spalten aus um fortzufahren.", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                return;
             }
+            insertSalaryController.fillFields(newEmployee.getId());
+
             resetInputs();
             insertPersonView.revalidate();
             insertPersonView.repaint();
-            ShowPersonController showPersonController = frameController.getShowPersonalData();
-            showPersonController.updateData(showPersonController.getEmployeeDataFromDataBase());
-            SalaryListController salaryListController = frameController.getSalaryListController();
+            ShowPersonController showPersonController = mainFrameController.getShowPersonalData();
+            showPersonController.updateData();
+            SalaryListController salaryListController = mainFrameController.getSalaryListController();
             salaryListController.updateData(salaryListController.getSalaryDataFromDataBase());
-            insertSalaryController.showInsertSalaryView(frameController);
-            frameController.getUpdater().nameListUpdate();
-            frameController.getTabs().removeTabNewWindow(insertPersonView);
+            insertSalaryController.showInsertSalaryView(mainFrameController);
+            mainFrameController.getUpdater().nameListUpdate();
+            mainFrameController.getTabs().removeTabNewWindow(insertPersonView);
         }
         if (e.getSource() == insertPersonView.getReset()) {
             resetInputs();
         }
         if (e.getSource() == insertPersonView.getCancel()) {
             resetInputs();
-            frameController.getTabs().removeTabNewWindow(insertPersonView);
+            mainFrameController.getTabs().removeTabNewWindow(insertPersonView);
         }
         if (e.getSource() == insertPersonView.getTypeOfJobPicklist()) {
-            if(insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("Nicht ausgewählt")){
+            if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("Nicht ausgewählt")) {
                 insertPersonView.getTfWorkScope().setInputVerifier(null);
                 insertPersonView.getTfWorkScope().setText(null);
                 insertPersonView.getPayGroupOnHiring().setVisible(false);

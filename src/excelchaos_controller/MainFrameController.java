@@ -36,7 +36,6 @@ public class MainFrameController {
         tabsController = new TabsController(this);
         window.add(tabsController.getTabs());
         sideMenuTables = new SideMenuPanelTablesController(this);
-        //sideMenuActionLog = new SideMenuPanelActionLogController(this);
         showPersonalData = new ShowPersonController(this);
         salaryListController = new SalaryListController(this);
         //salaryHistoryController = new SalaryHistoryController(this);

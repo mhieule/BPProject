@@ -235,6 +235,8 @@ public class InsertPersonView extends JPanel {
         repaint();
     }
 
+
+
     public void setActionListener(ActionListener l) {
         nationalityCheckBox.addActionListener(l);
         visaRequiredCheckBox.addActionListener(l);

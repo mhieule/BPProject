@@ -15,7 +15,7 @@ public class CSVExporter {
         try {
 
             TableModel model = tableToExport.getModel();
-            BufferedWriter csv = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(pathToExportTo), "UTF-8"));
+            BufferedWriter csv = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(pathToExportTo), "ISO-8859-1")); //TODO Ändern
 
             for (int i = 0; i < model.getColumnCount(); i++) {
                 if (i == 0 || i == 1) {

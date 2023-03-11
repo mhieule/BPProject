@@ -1,7 +1,7 @@
 package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
-import excelchaos_model.MultiLineTableCellRenderer;
+import excelchaos_view.components.TableCellRenderer.MultiLineTableCellRenderer;
 import excelchaos_model.utility.TableColumnAdjuster;
 
 import javax.swing.*;
