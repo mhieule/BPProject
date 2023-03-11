@@ -19,7 +19,7 @@ public class WorkScopeSHKVerifier extends InputVerifier {
         } else if (text.matches("\\d{1}? Stunden") || text.matches("\\d{2}? Stunden")) {
             return true;
         }
-        JOptionPane.showConfirmDialog(null, "Bitte geben Sie eine Zahl oder ein Wert im Format 20h.", "Falsches Eingabe Format", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showConfirmDialog(null, "Bitte geben Sie eine Anzahl Stunden oder ein Wert im Format 20h.", "Falsches Eingabe Format", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
         return false;
     }
 }

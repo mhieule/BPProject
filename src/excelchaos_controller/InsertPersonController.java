@@ -384,11 +384,20 @@ public class InsertPersonController implements ActionListener {
             workEnd = Date.from(workEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         }
         BigDecimal scope;
-        if (insertPersonView.getTfWorkScope().getText().equals("")) {
-            scope = new BigDecimal(0);
+        if(typeOfJob.equals("SHK")){
+            if (insertPersonView.getTfWorkScope().getText().equals("")) {
+                scope = new BigDecimal(0);
+            } else {
+                scope = StringAndBigDecimalFormatter.formatHoursStringToBigDecimal(insertPersonView.getTfWorkScope().getText());
+            }
         } else {
-            scope = StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(insertPersonView.getTfWorkScope().getText());
-        } //TODO Anpassen für SHK
+            if (insertPersonView.getTfWorkScope().getText().equals("")) {
+                scope = new BigDecimal(0);
+            } else {
+                scope = StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(insertPersonView.getTfWorkScope().getText());
+            }
+        }
+
 
         if (surname.equals("") || name.equals("") || salaryPlannedUntil == null || workStart == null || workEnd == null || typeOfJob.equals("Nicht ausgewählt")) {
             insertPersonView.markMustBeFilledTextFields();

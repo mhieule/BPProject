@@ -58,7 +58,12 @@ public class EmployeeDataAccess {
             String startDateString = dateFormat.format(startDate);
             Date endDate = contract.getEnd_date();
             String endDateString = dateFormat.format(endDate);
-            String workScope = StringAndBigDecimalFormatter.formatPercentageToStringForScope(contract.getScope()); //TODO Workscope anpassen wenn SHK
+            String workScope = "";
+            if(typeOfJob.equals("SHK")){
+                workScope = StringAndBigDecimalFormatter.formatBigDecimalToHours(contract.getScope());
+            } else {
+                workScope = StringAndBigDecimalFormatter.formatPercentageToStringForScope(contract.getScope());
+            }
             String payGrade = contract.getPaygrade();
             String payLevel = contract.getPaylevel();
             String vblStatus;
