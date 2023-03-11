@@ -34,6 +34,9 @@ public class InsertPersonView extends JPanel {
     private final int FIELD_WIDTH = 400;
     private final int FIELD_HEIGHT = 25;
 
+    /**
+     * initialises GUI elements
+     */
     public void init() {
         setLayout(new BorderLayout());
         centerUp = new JPanel();
@@ -235,8 +238,10 @@ public class InsertPersonView extends JPanel {
         repaint();
     }
 
-
-
+    /**
+     * Sets the action listener for all Buttons, ComboBoxes and CheckBoxes
+     * @param l is the ActionListener
+     */
     public void setActionListener(ActionListener l) {
         nationalityCheckBox.addActionListener(l);
         visaRequiredCheckBox.addActionListener(l);
@@ -247,6 +252,9 @@ public class InsertPersonView extends JPanel {
         cancel.addActionListener(l);
     }
 
+    /**
+     * Changes color of necessary text fields to red
+     */
     public void markMustBeFilledTextFields() {
         name.setForeground(Color.RED);
         vorname.setForeground(Color.RED);
@@ -261,170 +269,339 @@ public class InsertPersonView extends JPanel {
         hiwiTypeOfPayment.setForeground(Color.RED);
     }
 
+    /**
+     *
+     * @return label of pay group
+     */
     public JLabel getPayGroupOnHiring() {
         return payGroupOnHiring;
     }
 
+    /**
+     *
+     * @return label of pay level
+     */
     public JLabel getPayLevelOnHiring() {
         return payLevelOnHiring;
     }
 
+    /**
+     *
+     * @return label of type of payment
+     */
     public JLabel getHiwiTypeOfPayment() {
         return hiwiTypeOfPayment;
     }
 
+    /**
+     *
+     * @return label of nationality CheckBox
+     */
     public JCheckBox getNationalityCheckBox() {
         return nationalityCheckBox;
     }
 
+    /**
+     *
+     * @return label of second nationality pick list
+     */
     public JLabel getNationalitySecond() {
         return nationalitySecond;
     }
 
+    /**
+     *
+     * @return label of work scope
+     */
     public JLabel getWorkScope() {
         return workScope;
     }
 
+    /**
+     *
+     * @return ComboBox of second nationality pick list
+     */
     public JComboBox getNationalityPickList2() {
         return nationalityPickList2;
     }
 
+    /**
+     *
+     * @return label of vbl state
+     */
     public JLabel getVblstate() {
         return vblstate;
     }
 
+    /**
+     *
+     * @return CheckBox if Visa is required
+     */
     public JCheckBox getVisaRequiredCheckBox() {
         return visaRequiredCheckBox;
     }
 
+    /**
+     *
+     * @return label of visa valid until
+     */
     public JLabel getVisaValidUntil() {
         return visaValidUntil;
     }
 
+    /**
+     *
+     * @return Date Picker of visa valid until
+     */
     public DatePicker getTfVisaValidUntil() {
         return tfVisaValidUntil;
     }
 
+    /**
+     *
+     * @return submit button
+     */
     public JButton getSubmit() {
         return submit;
     }
 
+    /**
+     *
+     * @return salary entry button
+     */
     public JButton getSalaryEntry() {
         return salary;
     }
 
+    /**
+     *
+     * @retur reset button
+     */
     public JButton getReset() {
         return reset;
     }
 
+    /**
+     *
+     * @return cancel button
+     */
     public JButton getCancel() {
         return cancel;
     }
 
+    /**
+     *
+     * @return entered name
+     */
     public JTextField getTfName() {
         return tfName;
     }
 
+    /**
+     *
+     * @return entered surname
+     */
     public JTextField getTfVorname() {
         return tfVorname;
     }
 
+    /**
+     *
+     * @return entered house number
+     */
     public JTextField getTfHausnummer() {
         return tfHausnummer;
     }
 
+    /**
+     *
+     * @return entered additional address information
+     */
     public JTextField getTfAdresszusatz() {
         return tfAdresszusatz;
     }
 
+    /**
+     *
+     * @return entered postal code
+     */
     public JTextField getTfPLZ() {
         return tfPLZ;
     }
 
+    /**
+     *
+     * @return entered city
+     */
     public JTextField getTfStadt() {
         return tfStadt;
     }
 
+    /**
+     *
+     * @return entered street
+     */
     public JTextField getTfStrasse() {
         return tfStrasse;
     }
 
+    /**
+     *
+     * @return entered email address
+     */
     public JTextField getTfPrivatEmail() {
         return tfPrivatEmail;
     }
 
+    /**
+     *
+     * @return entered private phone number
+     */
     public JTextField getTfPrivateTelefonnummer() {
         return tfPrivateTelefonnummer;
     }
 
+    /**
+     *
+     * @return entered birthday
+     */
     public DatePicker getTfGeburtsdatum() {
         return tfGeburtsdatum;
     }
 
+    /**
+     *
+     * @return entered personal number
+     */
     public JTextField getTfPersonalnummer() {
         return tfPersonalnummer;
     }
 
+    /**
+     *
+     * @return entered TUID
+     */
     public JTextField getTfTuid() {
         return tfTuid;
     }
 
+    /**
+     *
+     * @return entered date until which the salary is planned
+     */
     public DatePicker getTfSalaryPlannedUntil() {
         return tfSalaryPlannedUntil;
     }
 
+    /**
+     *
+     * @return entered transponder number
+     */
     public JTextField getTfTranspondernummer() {
         return tfTranspondernummer;
     }
 
+    /**
+     *
+     * @return entered office number
+     */
     public JTextField getTfBueronummer() {
         return tfBueronummer;
     }
 
+    /**
+     *
+     * @return entered office phone number
+     */
     public JTextField getTfTelefonnummerTUDA() {
         return tfTelefonnummerTUDA;
     }
 
+    /**
+     *
+     * @return type of job pick list
+     */
     public JComboBox getStatusPicklist() {
         return typeOfJobPicklist;
     }
 
+    /**
+     *
+     * @return nationality pick list
+     */
     public JComboBox getNationalityPickList() {
         return nationalityPickList;
     }
 
+    /**
+     *
+     * @return date of work end
+     */
     public DatePicker getTfWorkEnd() {
         return tfWorkEnd;
     }
 
+    /**
+     *
+     * @return date of work start
+     */
     public DatePicker getTfWorkStart() {
         return tfWorkStart;
     }
 
+    /**
+     *
+     * @return type of payment pick list
+     */
     public JComboBox getHiwiTypeOfPaymentList() {
         return hiwiTypeOfPaymentList;
     }
 
+    /**
+     *
+     * @return type of job pick list
+     */
     public JComboBox getTypeOfJobPicklist() {
         return typeOfJobPicklist;
     }
 
+    /**
+     *
+     * @return entered work scope
+     */
     public JTextField getTfWorkScope() {
         return tfWorkScope;
     }
 
+    /**
+     *
+     * @return pay group pick list
+     */
     public JComboBox getPayGroupList() {
         return payGroupList;
     }
 
+    /**
+     *
+     * @return pay level pick list
+     */
     public JComboBox getPayLevelList() {
         return payLevelList;
     }
 
+    /**
+     *
+     * @return vbl pick list
+     */
     public JComboBox getVblList() {
         return vblList;
     }
 
+    /**
+     * sets the constraints for the label
+     * @param label JLabel to which constraints should be applied
+     * @param rowNumber row number of the label
+     */
     private void setConstraintsLabel(JLabel label, int rowNumber) {
         constraints.gridx = 0;
         constraints.gridy = rowNumber;
@@ -433,6 +610,11 @@ public class InsertPersonView extends JPanel {
         centerUp.add(label, constraints);
     }
 
+    /**
+     * sets the constraints for the text field
+     * @param textField JTextField to which constraints should be applied
+     * @param rowNumber row number of the text field
+     */
     private void setConstraintsTextField(JTextField textField, int rowNumber) {
         textField.setPreferredSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
         constraints.gridx = 1;
@@ -442,6 +624,11 @@ public class InsertPersonView extends JPanel {
         centerUp.add(textField, constraints);
     }
 
+    /**
+     * sets the constraints for the date picker
+     * @param datePicker DatePicker to which constraints should be applied
+     * @param rowNumber row number of the date picker
+     */
     private void setConstraintsDatePicker(DatePicker datePicker, int rowNumber) {
         datePicker.setPreferredSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
         constraints.gridx = 1;
@@ -451,6 +638,11 @@ public class InsertPersonView extends JPanel {
         centerUp.add(datePicker, constraints);
     }
 
+    /**
+     * sets the constraints for the pick list
+     * @param jComboBox JComboBox to which constraints should be applied
+     * @param rowNumber row number of the pick list
+     */
     private void setConstraintsJComboBox(JComboBox jComboBox, int rowNumber) {
         jComboBox.setPreferredSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
         constraints.gridx = 1;
@@ -460,6 +652,11 @@ public class InsertPersonView extends JPanel {
         centerUp.add(jComboBox, constraints);
     }
 
+    /**
+     * sets the constraints for the checkbox
+     * @param jCheckBox JCheckBox to which constraints should be applied
+     * @param rowNumber row number of the checkbox
+     */
     private void setConstraintsJCheckBox(JCheckBox jCheckBox, int rowNumber) {
         constraints.gridx = 0;
         constraints.gridy = rowNumber;
@@ -468,6 +665,11 @@ public class InsertPersonView extends JPanel {
         centerUp.add(jCheckBox, constraints);
     }
 
+    /**
+     * sets the constraints for the puffer. this ensures that each element is scaled vertically correct
+     * @param label JLabel to which constraints should be applied
+     * @param rowNumber row number of the puffer
+     */
     private void setConstraintsPuffer(JLabel label, int rowNumber) {
         constraints.gridx = 0;
         constraints.gridy = rowNumber;
