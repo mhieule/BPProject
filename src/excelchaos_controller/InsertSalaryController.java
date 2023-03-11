@@ -3,8 +3,8 @@ package excelchaos_controller;
 import excelchaos_model.calculations.SalaryTableLookUp;
 import excelchaos_model.database.Contract;
 import excelchaos_model.database.Employee;
-import excelchaos_model.datamodel.EmployeeDataAccess;
-import excelchaos_model.datamodel.EmployeeDataInserter;
+import excelchaos_model.datamodel.employeedataoperations.EmployeeDataAccess;
+import excelchaos_model.datamodel.employeedataoperations.EmployeeDataInserter;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.InsertSalaryView;
 

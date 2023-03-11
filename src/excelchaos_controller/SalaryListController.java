@@ -2,11 +2,8 @@ package excelchaos_controller;
 
 import excelchaos_model.*;
 import excelchaos_model.calculations.SalaryProjection;
-import excelchaos_model.database.Contract;
-import excelchaos_model.database.Employee;
-import excelchaos_model.datamodel.EmployeeDataAccess;
+import excelchaos_model.datamodel.employeedataoperations.EmployeeDataAccess;
 import excelchaos_model.export.CSVExporter;
-import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.SalaryListView;
 import excelchaos_view.ShowSalaryStageDialogView;
 import excelchaos_view.ToolbarSalaryListView;
@@ -18,12 +15,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.List;
 
 public class SalaryListController implements TableModelListener, ActionListener, ItemListener {
     private EmployeeDataAccess employeeDataAccess;

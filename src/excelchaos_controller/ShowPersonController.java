@@ -1,9 +1,8 @@
 package excelchaos_controller;
 
 import excelchaos_model.*;
-import excelchaos_model.database.*;
-import excelchaos_model.datamodel.EmployeeDataAccess;
-import excelchaos_model.datamodel.EmployeeDataDeleter;
+import excelchaos_model.datamodel.employeedataoperations.EmployeeDataAccess;
+import excelchaos_model.datamodel.employeedataoperations.EmployeeDataDeleter;
 import excelchaos_model.export.CSVExporter;
 import excelchaos_view.ShowPersonView;
 import excelchaos_view.ToolbarShowPersonView;

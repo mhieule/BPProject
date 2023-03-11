@@ -1,6 +1,9 @@
 package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
+import excelchaos_model.database.SalaryTable;
+import excelchaos_model.utility.PayRateTableNameDateSeperator;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.components.TableCellRenderer.MultiLineTableCellRenderer;
 import excelchaos_model.utility.TableColumnAdjuster;
 
@@ -9,6 +12,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class ShowPayRateTableView extends JPanel {
     private JPanel topPanel;
@@ -23,7 +30,7 @@ public class ShowPayRateTableView extends JPanel {
     private JPanel centerPanel;
     private JPanel bottomPanel;
 
-    private JTable table;
+    private JTable showPayRatesTable;
     private JScrollPane scrollPane;
 
     private JButton cancelButton;
@@ -101,8 +108,8 @@ public class ShowPayRateTableView extends JPanel {
 
     public void initTable(String[] columns) {
 
-        DefaultTableModel test = new DefaultTableModel(columns, 15);
-        table = new JTable(test);
+        DefaultTableModel defaultTableModel = new DefaultTableModel(columns, 15);
+        showPayRatesTable = new JTable(defaultTableModel);
         DefaultTableModel model = new DefaultTableModel() {
 
             @Override
@@ -117,7 +124,7 @@ public class ShowPayRateTableView extends JPanel {
 
             @Override
             public int getRowCount() {
-                return table.getRowCount();
+                return showPayRatesTable.getRowCount();
             }
 
             @Override
@@ -153,14 +160,77 @@ public class ShowPayRateTableView extends JPanel {
         headerTable.setRowHeight(30);
         headerTable.getColumnModel().getColumn(0).setCellRenderer(new MultiLineTableCellRenderer());
 
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        table.setRowHeight(30);
-        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) table.getDefaultRenderer(Object.class);
+        showPayRatesTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        showPayRatesTable.setRowHeight(30);
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) showPayRatesTable.getDefaultRenderer(Object.class);
         renderer.setHorizontalAlignment(JLabel.RIGHT);
-        TableColumnAdjuster tca = new TableColumnAdjuster(table);
+        TableColumnAdjuster tca = new TableColumnAdjuster(showPayRatesTable);
         tca.adjustColumns();
-        scrollPane = new JScrollPane(table);
+        scrollPane = new JScrollPane(showPayRatesTable);
         scrollPane.setRowHeaderView(headerTable);
+    }
+
+    public void insertPayRateValuesInTable(List<SalaryTable> salaryTables) {
+        int column = 0;
+        int row = 0;
+        // columncount = 13, rowCount = 15
+        for (SalaryTable salaryTable : salaryTables) {
+            if (salaryTable.getGrundendgeld().compareTo(new BigDecimal(0)) == 0) {
+                showPayRatesTable.setValueAt(null, 0, column);
+            } else
+                showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getGrundendgeld(), column), 0, column);
+            showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getAv_ag_anteil_lfd_entgelt(), column), 1, column);
+            showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getKv_ag_anteil_lfd_entgelt(), column), 2, column);
+            showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getZusbei_af_lfd_entgelt(), column), 3, column);
+            showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getPv_ag_anteil_lfd_entgelt(), column), 4, column);
+            showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getRv_ag_anteil_lfd_entgelt(), column), 5, column);
+            showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getSv_umlage_u2(), column), 6, column);
+            showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getSteuern_ag(), column), 7, column);
+            if (salaryTable.getZv_Sanierungsbeitrag().compareTo(new BigDecimal(0)) == 0) {
+                showPayRatesTable.setValueAt(null, 8, column);
+            } else
+                showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getZv_Sanierungsbeitrag(), column), 8, column);
+            if (salaryTable.getZv_umlage_allgemein().compareTo(new BigDecimal(0)) == 0) {
+                showPayRatesTable.setValueAt(null, 9, column);
+            } else
+                showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getZv_umlage_allgemein(), column), 9, column);
+            if (salaryTable.getVbl_wiss_4perc_ag_buchung().compareTo(new BigDecimal(0)) == 0) {
+                showPayRatesTable.setValueAt(null, 10, column);
+            } else
+                showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getVbl_wiss_4perc_ag_buchung(), column), 10, column);
+            if (salaryTable.getMtl_kosten_ohne_jsz().compareTo(new BigDecimal(0)) == 0) {
+                showPayRatesTable.setValueAt(null, 11, column);
+            } else
+                showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getMtl_kosten_ohne_jsz(), column), 11, column);
+            if (salaryTable.getJsz_als_monatliche_zulage().compareTo(new BigDecimal(0)) == 0) {
+                showPayRatesTable.setValueAt(null, 12, column);
+            } else
+                showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getJsz_als_monatliche_zulage(), column), 12, column);
+            if (salaryTable.getMtl_kosten_mit_jsz().compareTo(new BigDecimal(0)) == 0) {
+                showPayRatesTable.setValueAt(null, 13, column);
+            } else
+                showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getMtl_kosten_mit_jsz(), column), 13, column);
+            if (salaryTable.getJaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung().compareTo(new BigDecimal(0)) == 0) {
+                showPayRatesTable.setValueAt(null, 14, column);
+            } else
+                showPayRatesTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalToStringPayRateTable(salaryTable.getJaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung(), column), 14, column);
+            if (column < showPayRatesTable.getColumnCount() - 1) {
+                column++;
+            } else {
+                PayRateTableNameDateSeperator nameDateSeperator = new PayRateTableNameDateSeperator();
+                getTfNameOfTable().setText(nameDateSeperator.seperateName(salaryTable.getTable_name()));
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                LocalDate date = LocalDate.parse(nameDateSeperator.seperateDateAsString(salaryTable.getTable_name()), dateTimeFormatter);
+                getDatePicker().setDate(date);
+                break;
+            }
+            if (row < showPayRatesTable.getRowCount()) {
+                row++;
+            } else break;
+
+
+        }
+
     }
 
     public JButton getCancelButton() {
@@ -171,8 +241,8 @@ public class ShowPayRateTableView extends JPanel {
         return saveAndExit;
     }
 
-    public JTable getTable() {
-        return table;
+    public JTable getShowPayRatesTable() {
+        return showPayRatesTable;
     }
 
     public JTextField getTfNameOfTable() {

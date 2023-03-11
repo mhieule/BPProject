@@ -1,4 +1,4 @@
-package excelchaos_model.datamodel;
+package excelchaos_model.datamodel.employeedataoperations;
 
 import excelchaos_model.database.*;
 

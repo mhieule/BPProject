@@ -28,11 +28,6 @@ public class PayRateTablesView extends JPanel {
         add(centerPanel, BorderLayout.CENTER);
 
     }
-
-    public JPanel getCenterPanel() {
-        return centerPanel;
-    }
-
     public JList getPayRateTableList() {
         return payRateTableList;
     }
