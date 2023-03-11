@@ -7,6 +7,7 @@ import excelchaos_model.database.Employee;
 import excelchaos_model.database.EmployeeDataManager;
 
 import java.math.BigDecimal;
+import java.util.ConcurrentModificationException;
 import java.util.Date;
 
 public class EmployeeDataInserter {
@@ -90,5 +91,9 @@ public class EmployeeDataInserter {
         contractDataManager.updateContract(contract);
 
         return employee;
+    }
+
+    public void updateExistingContract(Contract contract){
+        contractDataManager.updateContract(contract);
     }
 }

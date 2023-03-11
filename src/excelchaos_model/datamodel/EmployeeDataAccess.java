@@ -81,6 +81,39 @@ public class EmployeeDataAccess {
         return resultData;
     }
 
+    public String[][] getSalaryDataFromDataBase() {
+        int lines = contractDataManager.getRowCount();
+        String[][] resultData = new String[lines][];
+        int currentIndex = 0;
+        List<Contract> contracts = contractDataManager.getAllContracts();
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        for (Contract contract : contracts) {
+            Employee employee = employeeDataManager.getEmployee(contract.getId());
+            String id = String.valueOf(employee.getId());
+            String name = employee.getName();
+            String surname = employee.getSurname();
+            String dateOfBirth;
+            if(employee.getDate_of_birth() == null){
+                dateOfBirth = "";
+            }else {
+                dateOfBirth = dateFormat.format(employee.getDate_of_birth());
+            }
+            String group = contract.getPaygrade();
+            String stufe = contract.getPaylevel();
+            String gehalt = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getRegular_cost());
+            String sonderzahlungen = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getBonus_cost());
+
+            String[] values = {id, name, surname, dateOfBirth, group, stufe, gehalt, sonderzahlungen};
+            resultData[currentIndex] = values;
+            currentIndex++;
+        }
+        return resultData;
+    }
+
+    public String[] getEmployeeNamesList(){
+        return employeeDataManager.getAllEmployeesNameList();
+    }
+
     public Employee getEmployee(int employeeID){
         return employeeDataManager.getEmployee(employeeID);
     }

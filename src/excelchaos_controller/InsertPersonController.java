@@ -24,11 +24,7 @@ public class InsertPersonController implements ActionListener {
     private EmployeeDataInserter employeeDataInserter;
     private InsertPersonView insertPersonView;
     private MainFrameController mainFrameController;
-
     private String addPersonTab = "Person hinzufügen";
-
-    private SalaryTableLookUp salaryTableLookUp = new SalaryTableLookUp();
-
     private int currentlyEditedEmployeeID = 0;
 
 
@@ -472,7 +468,7 @@ public class InsertPersonController implements ActionListener {
             ShowPersonController showPersonController = mainFrameController.getShowPersonalData();
             showPersonController.updateData();
             SalaryListController salaryListController = mainFrameController.getSalaryListController();
-            salaryListController.updateData(salaryListController.getSalaryDataFromDataBase());
+            salaryListController.updateData();
             mainFrameController.getUpdater().nameListUpdate();
         }
         if (e.getSource() == insertPersonView.getSalaryEntry()) {
@@ -491,7 +487,7 @@ public class InsertPersonController implements ActionListener {
             ShowPersonController showPersonController = mainFrameController.getShowPersonalData();
             showPersonController.updateData();
             SalaryListController salaryListController = mainFrameController.getSalaryListController();
-            salaryListController.updateData(salaryListController.getSalaryDataFromDataBase());
+            salaryListController.updateData();
             insertSalaryController.showInsertSalaryView(mainFrameController);
             mainFrameController.getUpdater().nameListUpdate();
             mainFrameController.getTabs().removeTabNewWindow(insertPersonView);

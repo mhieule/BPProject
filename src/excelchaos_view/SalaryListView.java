@@ -9,6 +9,20 @@ import java.awt.*;
 public class SalaryListView extends JPanel {
     private CustomTable salaryDataTable;
 
+    private String columns[] = {
+            "ID", "Name", "Vorname", "Geburtsdatum", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
+    };
+
+    private String next2PayLevelIncreaseColumns[] = {
+            "ID", "Name", "Vorname", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung", "Höherstufung 1 ab", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung",
+            "Höherstufung 2 ab", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
+    };
+
+    private String salaryLevelIncreaseBasedOnChosenDateColumns[] = {
+            "ID", "Name", "Vorname", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung", "Gewähltes Datum", "Stufe zum gewählten Zeitpunkt",
+            "Gehaltskosten zum gewählten Zeitpunkt", "Jahressonderzahlung"
+    };
+
     public void init() {
         setLayout(new BorderLayout());
     }
@@ -27,6 +41,40 @@ public class SalaryListView extends JPanel {
         add(scrollpane);
         revalidate();
         repaint();
+    }
+
+    public void updateTable(String[][] tableData){
+        CustomTableModel customTableModel = new CustomTableModel(tableData, columns);
+        salaryDataTable.setModel(customTableModel);
+        salaryDataTable.getColumnModel().getColumn(1).setMinWidth(0);
+        salaryDataTable.getColumnModel().getColumn(1).setMaxWidth(0);
+        salaryDataTable.getColumnModel().getColumn(1).setWidth(0);
+        CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(salaryDataTable);
+        tca.adjustColumns();
+    }
+
+    public void changeToFuturePayLevelTable(String[][] tableData){
+        CustomTableModel customTableModel = new CustomTableModel(tableData, next2PayLevelIncreaseColumns);
+        salaryDataTable.setModel(customTableModel);
+        salaryDataTable.getColumnModel().getColumn(1).setMinWidth(0);
+        salaryDataTable.getColumnModel().getColumn(1).setMaxWidth(0);
+        salaryDataTable.getColumnModel().getColumn(1).setWidth(0);
+        CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(salaryDataTable);
+        tca.adjustColumns();
+    }
+
+    public void changeToProjectedSalaryTable(String[][] tableData){
+        CustomTableModel customTableModel = new CustomTableModel(tableData, salaryLevelIncreaseBasedOnChosenDateColumns);
+        salaryDataTable.setModel(customTableModel);
+        salaryDataTable.getColumnModel().getColumn(1).setMinWidth(0);
+        salaryDataTable.getColumnModel().getColumn(1).setMaxWidth(0);
+        salaryDataTable.getColumnModel().getColumn(1).setWidth(0);
+        CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(salaryDataTable);
+        tca.adjustColumns();
+    }
+
+    public void createTableWithData(String[][] tableData) {
+        createSalaryTable(tableData, columns);
     }
 
 

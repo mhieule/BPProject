@@ -1,56 +1,51 @@
 package excelchaos_controller;
 
 import excelchaos_model.*;
+import excelchaos_model.calculations.SalaryProjection;
 import excelchaos_model.database.Contract;
-import excelchaos_model.database.ContractDataManager;
 import excelchaos_model.database.Employee;
-import excelchaos_model.database.EmployeeDataManager;
+import excelchaos_model.datamodel.EmployeeDataAccess;
+import excelchaos_model.export.CSVExporter;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.SalaryListView;
+import excelchaos_view.ShowSalaryStageDialogView;
+import excelchaos_view.ToolbarSalaryListView;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
-public class SalaryListController implements TableModelListener {
-
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
-    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
+public class SalaryListController implements TableModelListener, ActionListener, ItemListener {
+    private EmployeeDataAccess employeeDataAccess;
     private SalaryListView salaryListView;
-    private ToolbarSalaryListController toolbarSalaryList;
-    private MainFrameController frameController;
-
+    private ShowSalaryStageDialogView showSalaryStageDialogView;
+    private ToolbarSalaryListView toolbar;
+    private MainFrameController mainFrameController;
     private String title = "Gehaltsprojektion";
 
-    private String columns[] = {
-            "ID", "Name", "Vorname", "Geburtsdatum", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
-    };
-
-    private String next2PayLevelIncreaseColumns[] = {
-            "ID", "Name", "Vorname", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung", "Höherstufung 1 ab", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung",
-            "Höherstufung 2 ab", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
-    };
-
-    private String salaryLevelIncreaseBasedOnChosenDateColumns[] = {
-            "ID", "Name", "Vorname", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung", "Gewähltes Datum", "Stufe zum gewählten Zeitpunkt",
-            "Gehaltskosten zum gewählten Zeitpunkt", "Jahressonderzahlung"
-    };
-
-    private StringAndBigDecimalFormatter transformer = new StringAndBigDecimalFormatter();
-
     public SalaryListController(MainFrameController mainFrameController) {
-        frameController = mainFrameController;
+        this.mainFrameController = mainFrameController;
+        employeeDataAccess = new EmployeeDataAccess();
         salaryListView = new SalaryListView();
         salaryListView.init();
-        createTableWithData(getSalaryDataFromDataBase());
-        toolbarSalaryList = new ToolbarSalaryListController(frameController, salaryListView, this);
-        salaryListView.add(toolbarSalaryList.getToolbar(), BorderLayout.NORTH);
-        SearchAndFilterModel.setUpSearchAndFilterModel(salaryListView.getTable(), toolbarSalaryList.getToolbar());
-
-
+        salaryListView.createTableWithData(employeeDataAccess.getSalaryDataFromDataBase());
+        salaryListView.getTable().getModel().addTableModelListener(this);
+        toolbar = new ToolbarSalaryListView();
+        toolbar.init();
+        toolbar.setActionListener(this);
+        toolbar.setItemListener(this);
+        salaryListView.add(toolbar, BorderLayout.NORTH);
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryListView.getTable(), toolbar);
     }
 
     public void showSalaryView(MainFrameController mainFrameController) {
@@ -61,84 +56,26 @@ public class SalaryListController implements TableModelListener {
         }
     }
 
-    public String[][] getSalaryDataFromDataBase() {
-        int lines = contractDataManager.getRowCount();
-        String[][] resultData = new String[lines][];
-        int currentIndex = 0;
-        List<Contract> contracts = contractDataManager.getAllContracts();
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        for (Contract contract : contracts) {
-            Employee employee = employeeDataManager.getEmployee(contract.getId());
-            String id = String.valueOf(employee.getId());
-            String name = employee.getName();
-            String surname = employee.getSurname();
-            String dateOfBirth;
-            if(employee.getDate_of_birth() == null){
-                dateOfBirth = "";
-            }else {
-                dateOfBirth = dateFormat.format(employee.getDate_of_birth());
-            }
-            String group = contract.getPaygrade();
-            String stufe = contract.getPaylevel();
-            String gehalt = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getRegular_cost());
-            String sonderzahlungen = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getBonus_cost());
-
-            String[] values = {id, name, surname, dateOfBirth, group, stufe, gehalt, sonderzahlungen};
-            resultData[currentIndex] = values;
-            currentIndex++;
-        }
-        return resultData;
-    }
-
-
-    private void createTableWithData(String[][] tableData) {
-        salaryListView.createSalaryTable(tableData, columns);
+    public void updateData() {
+        salaryListView.updateTable(employeeDataAccess.getSalaryDataFromDataBase());
         salaryListView.getTable().getModel().addTableModelListener(this);
-    }
-
-
-    public void updateData(String[][] tableData) {
-        CustomTableModel customTableModel = new CustomTableModel(tableData, columns);
-        salaryListView.getTable().setModel(customTableModel);
-        salaryListView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
-        salaryListView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
-        salaryListView.getTable().getColumnModel().getColumn(1).setWidth(0);
-        CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(salaryListView.getTable());
-        tca.adjustColumns();
-        customTableModel.addTableModelListener(this);
-        SearchAndFilterModel.setUpSearchAndFilterModel(salaryListView.getTable(), toolbarSalaryList.getToolbar());
-        toolbarSalaryList.getToolbar().getEditEntry().setEnabled(false);
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryListView.getTable(), toolbar);
+        toolbar.getEditEntry().setEnabled(false);
 
     }
 
     public void buildFuturePayLevelTable(String[][] tableData) {
-        CustomTableModel customTableModel = new CustomTableModel(tableData, next2PayLevelIncreaseColumns);
-        salaryListView.getTable().setModel(customTableModel);
-        salaryListView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
-        salaryListView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
-        salaryListView.getTable().getColumnModel().getColumn(1).setWidth(0);
-        CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(salaryListView.getTable());
-        tca.adjustColumns();
-        customTableModel.addTableModelListener(this);
-        SearchAndFilterModel.setUpSearchAndFilterModel(salaryListView.getTable(), toolbarSalaryList.getToolbar());
-        toolbarSalaryList.getToolbar().getEditEntry().setEnabled(false);
+        salaryListView.changeToFuturePayLevelTable(tableData);
+        salaryListView.getTable().getModel().addTableModelListener(this);
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryListView.getTable(), toolbar);
+        toolbar.getEditEntry().setEnabled(false);
     }
 
     public void buildPayLevelTableBasedOnChosenDate(String[][] tableData) {
-        CustomTableModel customTableModel = new CustomTableModel(tableData, salaryLevelIncreaseBasedOnChosenDateColumns);
-        salaryListView.getTable().setModel(customTableModel);
-        salaryListView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
-        salaryListView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
-        salaryListView.getTable().getColumnModel().getColumn(1).setWidth(0);
-        CustomTableColumnAdjuster tca = new CustomTableColumnAdjuster(salaryListView.getTable());
-        tca.adjustColumns();
-        customTableModel.addTableModelListener(this);
-        SearchAndFilterModel.setUpSearchAndFilterModel(salaryListView.getTable(), toolbarSalaryList.getToolbar());
-        toolbarSalaryList.getToolbar().getEditEntry().setEnabled(false);
-    }
-
-    public ToolbarSalaryListController getToolbarSalary() {
-        return toolbarSalaryList;
+        salaryListView.changeToProjectedSalaryTable(tableData);
+        salaryListView.getTable().getModel().addTableModelListener(this);
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryListView.getTable(), toolbar);
+        toolbar.getEditEntry().setEnabled(false);
     }
 
     public SalaryListView getSalaryListView() {
@@ -152,12 +89,60 @@ public class SalaryListController implements TableModelListener {
         int numberOfSelectedRows = salaryListView.getTable().getNumberOfSelectedRows();
         if (e.getColumn() == 0) {
             if (numberOfSelectedRows == 0) {
-                toolbarSalaryList.getToolbar().getEditEntry().setEnabled(false);
+                toolbar.getEditEntry().setEnabled(false);
             } else if (numberOfSelectedRows == 1) {
-                toolbarSalaryList.getToolbar().getEditEntry().setEnabled(true);
+                toolbar.getEditEntry().setEnabled(true);
             } else {
-                toolbarSalaryList.getToolbar().getEditEntry().setEnabled(false);
+               toolbar.getEditEntry().setEnabled(false);
             }
+        }
+    }
+
+    //TODO komplett überarbeiten, hier ist noch ein Bug (siehe Word Dokument)
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == toolbar.getEditEntry()) {
+            InsertSalaryController insertSalaryController = new InsertSalaryController(mainFrameController);
+            String employeeID = salaryListView.getTable().getIdsOfCurrentSelectedRows()[0];
+            insertSalaryController.fillFields(Integer.parseInt(employeeID));
+            insertSalaryController.showInsertSalaryView(mainFrameController);
+            toolbar.getShowNextPayGrade().setSelected(false);
+            toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
+        } else if (e.getSource() == toolbar.getSalaryStageOn()) {
+            showSalaryStageDialogView = new ShowSalaryStageDialogView();
+            showSalaryStageDialogView.init();
+            showSalaryStageDialogView.setActionListener(this);
+        } else if (e.getSource() == toolbar.getRemoveAdditionalSalaryStage()) {
+            updateData();
+            toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
+        } else if (e.getSource() == toolbar.getIncreaseSalary()) {
+            toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
+            //increaseSalaryDialogController = new IncreaseSalaryDialogController(frameController);
+        } else if (e.getSource() == toolbar.getExportToCSV()) {
+            CSVExporter.createCSVVariableName(salaryListView.getTable()); //TODO Hier muss ganz neue Funktionalität implementiert werden
+        } else if (e.getSource() == showSalaryStageDialogView.getCloseButton()) {
+            showSalaryStageDialogView.dispose();
+        } else if (e.getSource() == showSalaryStageDialogView.getOkayButton()) {
+            LocalDate localDate = showSalaryStageDialogView.getDatePicker().getDate();
+            if (localDate != null) {
+                Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                SalaryProjection salaryProjection = new SalaryProjection();
+                buildPayLevelTableBasedOnChosenDate(salaryProjection.getSalaryProjectionForGivenDate(date));
+                showSalaryStageDialogView.dispose();
+                toolbar.getRemoveAdditionalSalaryStage().setEnabled(true);
+                toolbar.getShowNextPayGrade().setSelected(false);
+            } else showSalaryStageDialogView.dispose();
+        }
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            SalaryProjection salaryProjection = new SalaryProjection();
+            buildFuturePayLevelTable(salaryProjection.getNextPayLevelProjection());
+            toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
+        } else {
+            updateData();
         }
     }
 }

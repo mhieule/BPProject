@@ -22,6 +22,6 @@ public class Updater {
     //TODO Add SalaryHistorie Update wenn vorhanden
     public void salaryUpDate() {
         BackEndUpdates.calculationsOnStartUp();
-        frameController.getSalaryListController().updateData(frameController.getSalaryListController().getSalaryDataFromDataBase());
+        frameController.getSalaryListController().updateData();
     }
 }

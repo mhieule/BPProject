@@ -2,9 +2,9 @@ package excelchaos_controller;
 
 import excelchaos_model.calculations.SalaryTableLookUp;
 import excelchaos_model.database.Contract;
-import excelchaos_model.database.ContractDataManager;
 import excelchaos_model.database.Employee;
-import excelchaos_model.database.EmployeeDataManager;
+import excelchaos_model.datamodel.EmployeeDataAccess;
+import excelchaos_model.datamodel.EmployeeDataInserter;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.InsertSalaryView;
 
@@ -16,8 +16,8 @@ import java.awt.event.ItemListener;
 import java.math.BigDecimal;
 
 public class InsertSalaryController implements ActionListener, ItemListener {
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
-    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
+    private EmployeeDataAccess employeeDataAccess;
+    private EmployeeDataInserter employeeDataInserter;
     private InsertSalaryView insertSalaryView;
     private MainFrameController frameController;
     private int currentlyEditingContractID = 0;
@@ -29,6 +29,8 @@ public class InsertSalaryController implements ActionListener, ItemListener {
     private String addSalaryTab = "Gehaltseintrag bearbeiten";
 
     public InsertSalaryController(MainFrameController mainFrameController) {
+        employeeDataAccess = new EmployeeDataAccess();
+        employeeDataInserter = new EmployeeDataInserter();
         insertSalaryView = new InsertSalaryView();
         insertSalaryView.init();
         insertSalaryView.setActionListener(this);
@@ -36,11 +38,6 @@ public class InsertSalaryController implements ActionListener, ItemListener {
         frameController = mainFrameController;
 
     }
-
-    public InsertSalaryView getInsertSalaryView() {
-        return insertSalaryView;
-    }
-
     public void showInsertSalaryView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(addSalaryTab) == -1) {
             mainFrameController.getTabs().addTab(addSalaryTab, insertSalaryView);
@@ -52,10 +49,10 @@ public class InsertSalaryController implements ActionListener, ItemListener {
     public void fillFields(int id) {
 
         currentlyEditingContractID = id;
-        Contract contract = contractDataManager.getContract(id);
+        Contract contract = employeeDataAccess.getContract(id);
 
-        String[] names = employeeDataManager.getAllEmployeesNameList();
-        String currentEmployeeName = employeeDataManager.getEmployee(id).getSurname() + " " + employeeDataManager.getEmployee(id).getName();
+        String[] names = employeeDataAccess.getEmployeeNamesList();
+        String currentEmployeeName = employeeDataAccess.getEmployee(id).getSurname() + " " + employeeDataAccess.getEmployee(id).getName();
         insertSalaryView.getNamePickList().setModel(new DefaultComboBoxModel<>(names));
         insertSalaryView.getNamePickList().setSelectedItem(currentEmployeeName);
         insertSalaryView.getNamePickList().setEnabled(false);
@@ -93,9 +90,9 @@ public class InsertSalaryController implements ActionListener, ItemListener {
             BigDecimal gehalt =  new BigDecimal(0);
             BigDecimal sonderzahlung = new BigDecimal(0);
             if (backUpNumber != 0) {
-                employee = employeeDataManager.getEmployee(backUpNumber);
+                employee = employeeDataAccess.getEmployee(backUpNumber);
             } else {
-                employee = employeeDataManager.getEmployee(currentlyEditingContractID);
+                employee = employeeDataAccess.getEmployee(currentlyEditingContractID);
             }
             int id = employee.getId();
             paygrade = insertSalaryView.getTfGruppe().getSelectedItem().toString();
@@ -117,19 +114,19 @@ public class InsertSalaryController implements ActionListener, ItemListener {
                 JOptionPane.showConfirmDialog(null, "Bitte füllen Sie mindestens die Felder \"Gehaltsklasse\", \"Gehaltsstufe\" und \"VBL-Status\" aus.", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
-                Contract contract = contractDataManager.getContract(id);
+                Contract contract = employeeDataAccess.getContract(id);
                 contract.setPaygrade(paygrade);
                 contract.setPaylevel(paylevel);
                 contract.setVbl_status(vbl);
                 contract.setRegular_cost(gehalt);
                 contract.setBonus_cost(sonderzahlung);
 
-                contractDataManager.updateContract(contract);
+                employeeDataInserter.updateExistingContract(contract);
 
                 insertSalaryView.revalidate();
                 insertSalaryView.repaint();
                 SalaryListController salaryListController = frameController.getSalaryListController();
-                salaryListController.updateData(salaryListController.getSalaryDataFromDataBase());
+                salaryListController.updateData();
                 resetInputs();
                 frameController.getTabs().removeTabNewWindow(insertSalaryView);
             }
@@ -156,7 +153,7 @@ public class InsertSalaryController implements ActionListener, ItemListener {
                 if (insertSalaryView.getVblList().getSelectedItem().toString().equals("Pflichtig")) {
                     vbl = true;
                 }
-                Contract contract = contractDataManager.getContract(currentlyEditingContractID);
+                Contract contract = employeeDataAccess.getContract(currentlyEditingContractID);
                 Contract calcContract = new Contract(currentlyEditingContractID, (String) insertSalaryView.getTfGruppe().getSelectedItem(),
                         (String) insertSalaryView.getPlStufe().getSelectedItem(), contract.getStart_date(), contract.getEnd_date(), new BigDecimal(0), new BigDecimal(0), contract.getScope(), "", vbl);
                 BigDecimal[] newCost = salaryTableLookUp.getCurrentPayRateTableEntry(calcContract);
