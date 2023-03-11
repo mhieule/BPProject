@@ -10,16 +10,16 @@ public class SalaryListView extends JPanel {
     private CustomTable salaryDataTable;
 
     private String columns[] = {
-            "ID", "Name", "Vorname", "Geburtsdatum", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
+            "ID", "Vorname", "Name", "Geburtsdatum", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
     };
 
     private String next2PayLevelIncreaseColumns[] = {
-            "ID", "Name", "Vorname", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung", "Höherstufung 1 ab", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung",
+            "ID", "Vorname", "Name", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung", "Höherstufung 1 ab", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung",
             "Höherstufung 2 ab", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung"
     };
 
     private String salaryLevelIncreaseBasedOnChosenDateColumns[] = {
-            "ID", "Name", "Vorname", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung", "Gewähltes Datum", "Stufe zum gewählten Zeitpunkt",
+            "ID", "Vorname", "Name", "Gruppe", "Stufe", "Gehaltskosten", "Kosten Jahressonderzahlung", "Gewähltes Datum", "Stufe zum gewählten Zeitpunkt",
             "Gehaltskosten zum gewählten Zeitpunkt", "Jahressonderzahlung"
     };
 

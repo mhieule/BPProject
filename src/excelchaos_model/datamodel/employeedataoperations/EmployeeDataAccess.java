@@ -73,7 +73,7 @@ public class EmployeeDataAccess {
             Date salaryPlannedUntil = employee.getSalary_planned_until();
             String salaryPlannedUntilString = dateFormat.format(salaryPlannedUntil);
 
-            String[] values = {id, name, surname, street, houseNumber, additionalAddress, zipCode, city, dateOfBirth, emailPrivate, phonePrivate, phoneTuda,
+            String[] values = {id, surname, name, street, houseNumber, additionalAddress, zipCode, city, dateOfBirth, emailPrivate, phonePrivate, phoneTuda,
                     citizenship1, citizenship2, visaExpiration, employeeNumber, transponderNumber, officeNumber, tuId, typeOfJob, startDateString, endDateString, workScope, payGrade, payLevel, vblStatus, shkHourlyRate, salaryPlannedUntilString};
             resultData[currentIndex] = values;
             currentIndex++;
@@ -103,7 +103,7 @@ public class EmployeeDataAccess {
             String gehalt = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getRegular_cost());
             String sonderzahlungen = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getBonus_cost());
 
-            String[] values = {id, name, surname, dateOfBirth, group, stufe, gehalt, sonderzahlungen};
+            String[] values = {id, surname, name, dateOfBirth, group, stufe, gehalt, sonderzahlungen};
             resultData[currentIndex] = values;
             currentIndex++;
         }
