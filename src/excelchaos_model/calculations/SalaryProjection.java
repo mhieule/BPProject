@@ -58,7 +58,7 @@ public class SalaryProjection {
             BigDecimal[] secondIncreaseCostArray = salaryTableLookUp.getPayRateTableEntryForChosenDate(secondIncreaseContract, secondIncreaseLocaleDate);
             String secondIncreaseGehalt = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(secondIncreaseCostArray[0]);
             String secondIncreaseSonderzahlung = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(secondIncreaseCostArray[1].multiply(new BigDecimal(12)));
-            String[] values = {id, name, surname, group, stufe, gehalt, sonderzahlungen, firstIncreaseDate, group, firstIncreaseLevel, firstIncreaseGehalt, firstIncreaseSonderzahlung,
+            String[] values = {id, surname, name, group, stufe, gehalt, sonderzahlungen, firstIncreaseDate, group, firstIncreaseLevel, firstIncreaseGehalt, firstIncreaseSonderzahlung,
                     secondIncreaseDate, group, secondIncreaseLevel, secondIncreaseGehalt, secondIncreaseSonderzahlung};
 
             resultData[currentIndex] = values;
@@ -89,7 +89,7 @@ public class SalaryProjection {
             String salary = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(salaryOfGivenMonth);
             String nextSalaryLevel = ProjectedSalaryModel.calculatePayLevelBasedOnDate(contract.getStart_date(), contract.getPaylevel(), givenDate);
 
-            String[] values = {id, name, surname, group, stufe, gehalt, sonderzahlungen, givenDateAsString, nextSalaryLevel, salary, sonderzahlungen};
+            String[] values = {id, surname, name, group, stufe, gehalt, sonderzahlungen, givenDateAsString, nextSalaryLevel, salary, sonderzahlungen};
 
             resultData[currentIndex] = values;
             currentIndex++;
