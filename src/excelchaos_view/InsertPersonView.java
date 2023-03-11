@@ -48,13 +48,13 @@ public class InsertPersonView extends JPanel {
         add(centerUp, BorderLayout.CENTER);
         add(centerDown, BorderLayout.SOUTH);
 
-        name = new JLabel("Name");
+        name = new JLabel("Name*");
         setConstraintsLabel(name, 0);
         tfName = new JTextField();
         setConstraintsTextField(tfName, 0);
         constraints.insets.top = 5;
 
-        vorname = new JLabel("Vorname");
+        vorname = new JLabel("Vorname*");
         setConstraintsLabel(vorname, 1);
         tfVorname = new JTextField();
         setConstraintsTextField(tfVorname, 1);
@@ -152,28 +152,28 @@ public class InsertPersonView extends JPanel {
         tfTuid = new JTextField();
         setConstraintsTextField(tfTuid, 19);
 
-        typeOfJob = new JLabel("Art der Anstellung");
+        typeOfJob = new JLabel("Art der Anstellung*");
         setConstraintsLabel(typeOfJob, 20);
         String[] statusArray = {"Nicht ausgewählt", "WiMi", "ATM", "SHK"};
         typeOfJobPicklist = new JComboBox(statusArray);
         setConstraintsJComboBox(typeOfJobPicklist, 20);
 
-        workStart = new JLabel("Beschäftigungsbeginn");
+        workStart = new JLabel("Beschäftigungsbeginn*");
         setConstraintsLabel(workStart, 21);
         tfWorkStart = new DatePicker();
         setConstraintsDatePicker(tfWorkStart, 21);
 
-        workEnd = new JLabel("Beschäftigungsende");
+        workEnd = new JLabel("Beschäftigungsende*");
         setConstraintsLabel(workEnd, 22);
         tfWorkEnd = new DatePicker();
         setConstraintsDatePicker(tfWorkEnd, 22);
 
-        workScope = new JLabel("Beschäftigungsumfang");
+        workScope = new JLabel("Beschäftigungsumfang*");
         setConstraintsLabel(workScope, 23);
         tfWorkScope = new JTextField();
         setConstraintsTextField(tfWorkScope, 23);
 
-        payGroupOnHiring = new JLabel("Gehaltsklasse");
+        payGroupOnHiring = new JLabel("Gehaltsklasse*");
         setConstraintsLabel(payGroupOnHiring, 24);
         payGroupOnHiring.setVisible(false);
         String[] payGroups = {"Nicht ausgewählt", "E13", "E14"};
@@ -181,7 +181,7 @@ public class InsertPersonView extends JPanel {
         setConstraintsJComboBox(payGroupList, 24);
         payGroupList.setVisible(false);
 
-        payLevelOnHiring = new JLabel("Gehaltsstufe");
+        payLevelOnHiring = new JLabel("Gehaltsstufe*");
         setConstraintsLabel(payLevelOnHiring, 25);
         payLevelOnHiring.setVisible(false);
         String[] payLevels = {"Nicht ausgewählt", "1A", "1B", "1", "2", "3", "4", "5", "6"};
@@ -189,7 +189,7 @@ public class InsertPersonView extends JPanel {
         setConstraintsJComboBox(payLevelList, 25);
         payLevelList.setVisible(false);
 
-        vblstate = new JLabel("VBL-Status");
+        vblstate = new JLabel("VBL-Status*");
         setConstraintsLabel(vblstate, 26);
         vblstate.setVisible(false);
         String[] vbl = {"Nicht ausgewählt", "Pflichtig", "Befreit"};
@@ -197,7 +197,7 @@ public class InsertPersonView extends JPanel {
         setConstraintsJComboBox(vblList, 26);
         vblList.setVisible(false);
 
-        hiwiTypeOfPayment = new JLabel("SHK Stundensatz");
+        hiwiTypeOfPayment = new JLabel("SHK Stundensatz*");
         setConstraintsLabel(hiwiTypeOfPayment, 27);
         hiwiTypeOfPayment.setVisible(false);
         String[] hiwiPaymentArray = {"Nicht ausgewählt", "SHK Basisvergütung", "SHK erhöhter Stundensatz", "WHK"};
@@ -205,7 +205,7 @@ public class InsertPersonView extends JPanel {
         setConstraintsJComboBox(hiwiTypeOfPaymentList, 27);
         hiwiTypeOfPaymentList.setVisible(false);
 
-        gehaltEingeplanntBis = new JLabel("Gehalt eingeplant bis");
+        gehaltEingeplanntBis = new JLabel("Gehalt eingeplant bis*");
         setConstraintsLabel(gehaltEingeplanntBis, 28);
         tfSalaryPlannedUntil = new DatePicker();
         setConstraintsDatePicker(tfSalaryPlannedUntil, 28);
@@ -279,6 +279,10 @@ public class InsertPersonView extends JPanel {
 
     public JLabel getNationalitySecond() {
         return nationalitySecond;
+    }
+
+    public JLabel getWorkScope() {
+        return workScope;
     }
 
     public JComboBox getNationalityPickList2() {

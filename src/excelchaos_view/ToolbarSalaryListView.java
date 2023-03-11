@@ -28,7 +28,7 @@ public class ToolbarSalaryListView extends SearchPanelToolbar {
         setLayout(new WrapLayout(FlowLayout.LEFT));
         editEntry = new JButton("Eintrag bearbeiten");
         increaseSalary = new JButton("Gehaltserhöhung");
-        salaryStageOn = new JButton("Gehaltsprojektion");
+        salaryStageOn = new JButton("Gehaltsprojektion zum ...");
         removeAdditionalSalaryStage = new JButton("Gehaltsprojektion ausblenden");
         showNextPayGrade = new JToggleButton("Gehaltsstufenerhöhungen anzeigen");
         exportToCSV = new JButton("Daten als CSV exportieren");

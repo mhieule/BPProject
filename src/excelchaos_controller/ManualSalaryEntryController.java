@@ -32,7 +32,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
     private String columns[] = {"ID", "Gültig ab", "Gehalt", "Kommentar"};
     private String nullColumns[] = {"Gültig ab", "Gehalt", "Kommentar"};
-    private String title = "Manuelle Gehaltseinträge";
+    private String title = "Gehaltsanpassung SAP";
 
     public ManualSalaryEntryController(MainFrameController mainFrameController) {
         frameController = mainFrameController;

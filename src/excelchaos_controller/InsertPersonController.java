@@ -388,7 +388,7 @@ public class InsertPersonController implements ActionListener {
             scope = new BigDecimal(0);
         } else {
             scope = StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(insertPersonView.getTfWorkScope().getText());
-        }
+        } //TODO Anpassen für SHK
 
         if (surname.equals("") || name.equals("") || salaryPlannedUntil == null || workStart == null || workEnd == null || typeOfJob.equals("Nicht ausgewählt")) {
             insertPersonView.markMustBeFilledTextFields();
@@ -514,6 +514,7 @@ public class InsertPersonController implements ActionListener {
                 insertPersonView.getHiwiTypeOfPayment().setVisible(false);
                 insertPersonView.getHiwiTypeOfPaymentList().setVisible(false);
                 insertPersonView.getHiwiTypeOfPaymentList().setSelectedItem("Nicht ausgewählt");
+                insertPersonView.getWorkScope().setText("Beschäftigungsumfang*");
             }
             if (insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("WiMi") || insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString().equals("ATM")) {
                 insertPersonView.getTfWorkScope().setInputVerifier(null);
@@ -526,6 +527,7 @@ public class InsertPersonController implements ActionListener {
                 insertPersonView.getVblList().setVisible(true);
                 insertPersonView.getHiwiTypeOfPaymentList().setSelectedItem("Nicht ausgewählt");
                 insertPersonView.getTfWorkScope().setInputVerifier(new WorkScopeVerifier());
+                insertPersonView.getWorkScope().setText("Beschäftigungsumfang in Prozent*");
             } else {
                 insertPersonView.getPayGroupOnHiring().setVisible(false);
                 insertPersonView.getPayGroupList().setVisible(false);
@@ -543,6 +545,7 @@ public class InsertPersonController implements ActionListener {
                 insertPersonView.getPayLevelList().setSelectedItem("Nicht ausgewählt");
                 insertPersonView.getVblList().setSelectedItem("Nicht ausgewählt");
                 insertPersonView.getTfWorkScope().setInputVerifier(new WorkScopeSHKVerifier());
+                insertPersonView.getWorkScope().setText("Beschäftigungsumfang in Stunden*");
             } else {
                 insertPersonView.getHiwiTypeOfPayment().setVisible(false);
                 insertPersonView.getHiwiTypeOfPaymentList().setVisible(false);

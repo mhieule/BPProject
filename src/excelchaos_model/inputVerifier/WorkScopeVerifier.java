@@ -12,7 +12,6 @@ public class WorkScopeVerifier extends InputVerifier {
     public boolean verify(JComponent input) {
         String text = ((JTextField) input).getText();
         if (text.matches("")) {
-            ((JTextField) input).setText("0"+ "%");
             return true;
         } else if (text.matches("\\d{1}") || text.matches("\\d{2}")) {
             ((JTextField) input).setText(text + "%");
@@ -29,7 +28,7 @@ public class WorkScopeVerifier extends InputVerifier {
                 return true;
             }
         } else if (text.matches("\\d{3}?%")) {
-            if (StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(text).compareTo(new BigDecimal(100)) >0 ) {
+            if (StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(text).compareTo(new BigDecimal(1)) >0 ) {
                 JOptionPane.showConfirmDialog(null, "Der Beschäftigungsumfang darf nicht größer als 100% sein. Bitte passen Sie den Wert an.", "Beschäftigungsumfang zu groß", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 return false;
             } else {

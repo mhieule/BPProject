@@ -20,7 +20,7 @@ public class ShowSalaryStageDialogView extends JDialog {
     public void init() {
         setLayout(new BorderLayout());
         setTitle("Gehaltsprojektion");
-        dateLabel = new JLabel("Datum auswählen");
+        dateLabel = new JLabel("Datum für Gehaltsprojektion auswählen");
         okayButton = new JButton("Ok");
         closeButton = new JButton("Abbrechen");
         datePicker = new DatePicker();
