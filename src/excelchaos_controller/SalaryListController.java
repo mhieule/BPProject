@@ -113,7 +113,7 @@ public class SalaryListController implements TableModelListener, ActionListener,
             toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
             //increaseSalaryDialogController = new IncreaseSalaryDialogController(frameController);
         } else if (e.getSource() == toolbar.getExportToCSV()) {
-            CSVExporter.createCSVVariableName(salaryListView.getTable()); //TODO Hier muss ganz neue Funktionalität implementiert werden
+            CSVExporter.createCSVSalaryProjection();
         } else if (e.getSource() == showSalaryStageDialogView.getCloseButton()) {
             showSalaryStageDialogView.dispose();
         } else if (e.getSource() == showSalaryStageDialogView.getOkayButton()) {

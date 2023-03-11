@@ -119,6 +119,10 @@ public class EmployeeDataAccess {
         return employeeDataManager.getAllEmployeesNameList();
     }
 
+    public List<Employee> getAllEmployees(){
+        return employeeDataManager.getAllEmployees();
+    }
+
     public Employee getEmployee(int employeeID){
         return employeeDataManager.getEmployee(employeeID);
     }

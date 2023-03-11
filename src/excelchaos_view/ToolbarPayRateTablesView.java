@@ -17,7 +17,7 @@ public class ToolbarPayRateTablesView extends SearchPanelToolbar {
         setBackground(Color.WHITE);
         setLayout(new WrapLayout(FlowLayout.LEFT));
         insertNewPayRateTable = new JButton("Neue Entgelttabelle erstellen");
-        editExistingPayRateTable = new JButton("Bestehende Entgelttabelle bearbeiten");
+        editExistingPayRateTable = new JButton("Ausgewählte Entgelttabelle öffnen");
         deleteExistingPayRateTable = new JButton("Bestehende Entgelttabelle löschen");
         add(insertNewPayRateTable);
         add(editExistingPayRateTable);
