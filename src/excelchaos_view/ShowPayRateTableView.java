@@ -4,7 +4,7 @@ import com.github.lgooddatepicker.components.DatePicker;
 import excelchaos_model.database.SalaryTable;
 import excelchaos_model.utility.PayRateTableNameDateSeperator;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
-import excelchaos_view.components.TableCellRenderer.MultiLineTableCellRenderer;
+import excelchaos_view.components.tablecellrenderer.MultiLineTableCellRenderer;
 import excelchaos_model.utility.TableColumnAdjuster;
 
 import javax.swing.*;

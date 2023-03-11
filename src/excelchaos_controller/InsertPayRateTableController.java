@@ -3,6 +3,7 @@ package excelchaos_controller;
 import excelchaos_model.PayRateTableCalculationModel;
 import excelchaos_model.database.SalaryTable;
 import excelchaos_model.database.SalaryTableManager;
+import excelchaos_model.datamodel.payratetablesdataoperations.PayRateTablesDataInserter;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.InsertPayRateTableView;
 
@@ -21,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 
 public class InsertPayRateTableController extends MouseAdapter implements ActionListener {
 
-    private SalaryTableManager salaryTableManager = SalaryTableManager.getInstance();
+    private PayRateTablesDataInserter payRateTablesDataInserter;
 
     private InsertPayRateTableView insertPayRateTableView;
     private MainFrameController frameController;
@@ -36,6 +37,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
 
     public InsertPayRateTableController(MainFrameController mainFrameController, PayRateTablesController payRateTablesController, String name, String[] columnNames, boolean typeOfTable) {
         frameController = mainFrameController;
+        payRateTablesDataInserter = new PayRateTablesDataInserter();
         insertPayRateTableView = new InsertPayRateTableView();
         payRateController = payRateTablesController;
         title = name;
@@ -162,12 +164,6 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
         menu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
     }
 
-
-    public InsertPayRateTableView getInsertPayRateTableView() {
-        return insertPayRateTableView;
-    }
-
-
     private BigDecimal[][] prepareTableForDatabaseInsertion() {
         BigDecimal[][] result = new BigDecimal[insertPayRateTableView.getTable().getRowCount()][insertPayRateTableView.getTable().getRowCount()];
         for (int row = 0; row < insertPayRateTableView.getTable().getRowCount(); row++) {
@@ -183,29 +179,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
     }
 
     private void insertValuesInDatabase(String name, String paygrade, BigDecimal[][] values) {
-
-        for (int column = 0; column < values[0].length; column++) {
-            String tableName = name;
-            BigDecimal grundentgelt = values[0][column];
-            BigDecimal av_ag_anteil_lfd_entgelt = values[1][column];
-            BigDecimal kv_ag_anteil_lfd_entgelt = values[2][column];
-            BigDecimal zusbei_af_lfd_entgelt = values[3][column];
-            BigDecimal pv_ag_anteil_lfd_entgelt = values[4][column];
-            BigDecimal rv_ag_anteil_lfd_entgelt = values[5][column];
-            BigDecimal sv_umlage_u2 = values[6][column];
-            BigDecimal steuern_ag = values[7][column];
-            BigDecimal zv_Sanierungsbeitrag = values[8][column];
-            BigDecimal zv_umlage_allgemein = values[9][column];
-            BigDecimal vbl_wiss_4perc_ag_buchung = values[10][column];
-            BigDecimal mtl_kosten_ohne_jsz = values[11][column];
-            BigDecimal jsz_als_monatliche_zulage = values[12][column];
-            BigDecimal mtl_kosten_mit_jsz = values[13][column];
-            BigDecimal jaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung = values[14][column];
-            String grade = paygrade;
-
-            SalaryTable salaryTable = new SalaryTable(tableName, grundentgelt, av_ag_anteil_lfd_entgelt, kv_ag_anteil_lfd_entgelt, zusbei_af_lfd_entgelt, pv_ag_anteil_lfd_entgelt, rv_ag_anteil_lfd_entgelt, sv_umlage_u2, steuern_ag, zv_Sanierungsbeitrag, zv_umlage_allgemein, vbl_wiss_4perc_ag_buchung, mtl_kosten_ohne_jsz, jsz_als_monatliche_zulage, mtl_kosten_mit_jsz, jaehrliche_arbeitgeberbelastung_inklusive_jaehressonderzahlung, grade);
-            salaryTableManager.addSalaryTable(salaryTable);
-        }
+        payRateTablesDataInserter.insertNewSalaryTable(name,paygrade,values);
     }
 
 

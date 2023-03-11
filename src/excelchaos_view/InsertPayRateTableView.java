@@ -1,7 +1,7 @@
 package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
-import excelchaos_view.components.TableCellRenderer.MultiLineTableCellRenderer;
+import excelchaos_view.components.tablecellrenderer.MultiLineTableCellRenderer;
 import excelchaos_model.utility.TableColumnAdjuster;
 
 import javax.swing.*;
@@ -20,14 +20,6 @@ public class InsertPayRateTableView extends JPanel {
     private JLabel nameOfTable, startDate;
 
     private JLabel wageTypeLongtext;
-
-    //JLabels for column names
-    private JLabel percentage, e13St1VBLbefreit, e13St1VBLpflichtig, e13St2VBLbefreit, e13St2VBLpflichtig, e13St3VBLbefreit, e13St3VBLpflichtig, e13St4VBLbefreit, e13St4VBLpflichtig,
-            e13St5VBLbefreit, e13St5VBLpflichtig, e13St6VBLbefreit, e13St6VBLpflichtig;
-    //JLabels for row names
-    private JLabel grundentgelt, AV_AG_Anteil_lfd_Entgelt, KV_AG_Anteil_lfd_Entgelt, ZusBei_AG_lfd_Entgelt, PV_AG_Anteil_lfd_Entgelt, RV_AG_Anteil_lfd_Entgelt, SV_Umlage_U2, Steuern_AG,
-            ZV_Sanierungsbeitrag, ZV_Umlage_allgemein, VBL_Wiss_4_AG_Buchung, mtl_Kosten_ohne_JSZ, JSZ_als_monatliche_Zulage, mtl_Kosten_mit_JSZ,
-            Jaehrliche_Arbeitgeberbelastung_inklusive_Jahressonderzahlung;
 
     private JTextField tfNameOfTable;
     private JPanel centerPanel;

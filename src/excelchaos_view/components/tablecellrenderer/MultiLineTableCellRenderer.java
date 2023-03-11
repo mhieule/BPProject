@@ -1,4 +1,4 @@
-package excelchaos_view.components.TableCellRenderer;
+package excelchaos_view.components.tablecellrenderer;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;

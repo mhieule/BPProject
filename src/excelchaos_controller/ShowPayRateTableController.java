@@ -108,7 +108,7 @@ public class ShowPayRateTableController implements ActionListener {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String tableName = showPayRateTableView.getTfNameOfTable().getText() + "_" +showPayRateTableView.getDatePicker().getDate().format(dateTimeFormatter);
         int border = showPayRateTableView.getShowPayRatesTable().getColumnCount() - 1;
-        payRateTablesDataInserter.saveSalaryTableInDatabase(values,tableTitle,tableName,border);
+        payRateTablesDataInserter.updateSalaryTable(values,tableTitle,tableName,border);
 
 
     }

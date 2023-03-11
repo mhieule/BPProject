@@ -1,6 +1,6 @@
 package excelchaos_view;
 
-import excelchaos_view.components.TableCellRenderer.PayRateTableListCellRenderer;
+import excelchaos_view.components.tablecellrenderer.PayRateTableListCellRenderer;
 
 import javax.swing.*;
 import java.awt.*;
