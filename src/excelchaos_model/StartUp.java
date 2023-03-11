@@ -73,7 +73,7 @@ public class StartUp {
     }
 
     private static void createSnapshotOfCurrentDatabase(String currentDBPath, String snapShotFolderPath) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH-mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm");
         LocalDateTime localDateTime = LocalDateTime.now();
         String formattedDateTime = formatter.format(localDateTime);
         String snapshotName = "Excelchaos " + formattedDateTime + ".db";

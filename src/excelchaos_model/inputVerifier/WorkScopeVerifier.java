@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.math.BigDecimal;
 
 public class WorkScopeVerifier extends InputVerifier {
-    StringAndBigDecimalFormatter transformer = new StringAndBigDecimalFormatter();
 
     @Override
     public boolean verify(JComponent input) {
