@@ -48,6 +48,15 @@ public class StringAndBigDecimalFormatter {
         return result;
     }
 
+    public static String formatBigDecimalToHours(BigDecimal valueToFormat){
+        String result;
+        Formatter formatter = new Formatter();
+        formatter.format("%.0f", valueToFormat);
+        result = formatter.toString();
+        result = result.concat(" Stunden");
+        return result;
+    }
+
 
     public static String formatBigDecimalCurrencyToString(BigDecimal valueToFormat) {
         NumberFormat euroTransformer = NumberFormat.getCurrencyInstance();
@@ -61,6 +70,13 @@ public class StringAndBigDecimalFormatter {
         valueToFormat = valueToFormat.replaceAll(",",".");
         result = new BigDecimal(valueToFormat);
         result = result.divide(new BigDecimal(100),2,RoundingMode.HALF_EVEN);
+        return result;
+    }
+
+    public static BigDecimal formatHoursStringToBigDecimal(String valueToFormat){
+        BigDecimal result;
+        valueToFormat = valueToFormat.split(" ")[0];
+        result = new BigDecimal(valueToFormat);
         return result;
     }
 
