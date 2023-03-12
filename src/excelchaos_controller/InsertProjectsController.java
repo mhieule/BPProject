@@ -467,8 +467,6 @@ public class InsertProjectsController implements ActionListener, TableModelListe
                 Date endDate = format.parse(tableValues[row][3]);
                 LocalDate participationStartDate = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate participationEndDate = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                System.out.println(participationStartDate + "StartDate");
-                System.out.println(participationEndDate + "EndDate");
                 for (LocalDate date = participationStartDate; date.isBefore(participationEndDate); date = date.plusMonths(1)) {
                     int personId = employeeDataManager.getEmployeeByName(tableValues[row][0]).getId();
                     projectParticipation = new ProjectParticipation(projectId, personId, StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(tableValues[row][1]), Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()));

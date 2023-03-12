@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PayRateTableCalculationModel {
 
@@ -164,6 +166,132 @@ public class PayRateTableCalculationModel {
         }
 
         return stringResults;
+    }
+
+    public String[] pasteWholeTable(String tableContents){
+        String[] splitAtLineBreaks = tableContents.split("\\r?\\n");
+        String[] removeStringWithoutMoneyValues = new String[15];
+        for (int i = 0; i < removeStringWithoutMoneyValues.length; i++) {
+            if(i < 14){
+                removeStringWithoutMoneyValues[i] = splitAtLineBreaks[i];
+            } else {
+                removeStringWithoutMoneyValues[14] = splitAtLineBreaks[15];
+            }
+
+        }
+       /* String[] grundentgelt = removeStringWithoutMoneyValues[0].split("(?<=€)");
+
+        String[] percentSplitter = removeStringWithoutMoneyValues[1].split("(?<=%)");
+        String avagPercentPart = percentSplitter[0];
+        String[] avagValue = percentSplitter[1].split("(?<=€)");
+
+        percentSplitter = removeStringWithoutMoneyValues[2].split("(?<=%)");
+        String kvagPercentPart = percentSplitter[0];
+        String[] kvagValue = percentSplitter[1].split("(?<=€)");
+
+        percentSplitter = removeStringWithoutMoneyValues[3].split("(?<=%)");
+        String zusbeiPercentPart = percentSplitter[0];
+        String[] zusbeiValue = percentSplitter[1].split("(?<=€)");
+
+        percentSplitter = removeStringWithoutMoneyValues[4].split("(?<=%)");
+        String pvagPercentPart = percentSplitter[0];
+        String[] pvagValue = percentSplitter[1].split("(?<=€)");
+
+        percentSplitter = removeStringWithoutMoneyValues[5].split("(?<=%)");
+        String rvagPercentPart = percentSplitter[0];
+        String[] rvagValue = percentSplitter[1].split("(?<=€)");
+
+        percentSplitter = removeStringWithoutMoneyValues[6].split("(?<=%)");
+        String svumlagePercentPart = percentSplitter[0];
+        String[] svumlageValue = percentSplitter[1].split("(?<=€)");
+
+        percentSplitter = removeStringWithoutMoneyValues[7].split("(?<=%)");
+        String steuernPercentPart = percentSplitter[0];
+        String[] steuernValue = percentSplitter[1].split("(?<=€)");
+
+        percentSplitter = removeStringWithoutMoneyValues[8].split("(?<=%)");
+        String ZVSPercentPart = percentSplitter[0];
+        String[] ZVSValue = percentSplitter[1].split("(?<=€)");
+
+        percentSplitter = removeStringWithoutMoneyValues[9].split("(?<=%)");
+        String ZVUPercentPart = percentSplitter[0];
+        String[] ZVUValue = percentSplitter[1].split("(?<=€)");
+
+        percentSplitter = removeStringWithoutMoneyValues[10].split("(?<=%)");
+        String VBLPercentPart = percentSplitter[0];
+        String[] VBLValue = percentSplitter[1].split("(?<=€)");
+
+        String[] monthlywithout = removeStringWithoutMoneyValues[11].split("(?<=€)");
+        String[] monthlyJSZ = removeStringWithoutMoneyValues[12].split("(?<=€)");
+        String[] monthlyWith = removeStringWithoutMoneyValues[13].split("(?<=€)");
+        String[] total = removeStringWithoutMoneyValues[14].split("(?<=€)");*/
+
+        String[] result = new String[removeStringWithoutMoneyValues.length];
+
+
+        Pattern pattern = Pattern.compile("Grundentgelt ");
+        String grundendgelt = pattern.matcher(removeStringWithoutMoneyValues[0]).replaceAll("");
+        result[0] = grundendgelt;
+
+        pattern = Pattern.compile("AV-AG-Anteil, lfd\\. Entgelt ");
+        String avag = pattern.matcher(removeStringWithoutMoneyValues[1]).replaceAll("");
+        result[1] = avag;
+
+        pattern = Pattern.compile("KV-AG-Anteil, lfd\\. Entgelt ");
+        String kvag = pattern.matcher(removeStringWithoutMoneyValues[2]).replaceAll("");
+        result[2] = kvag;
+
+        pattern = Pattern.compile("ZusBei AG lfd\\. Entgelt ");
+        String zusbei = pattern.matcher(removeStringWithoutMoneyValues[3]).replaceAll("");
+        result[3] = zusbei;
+
+        pattern = Pattern.compile("PV-AG-Anteil, lfd\\. Entgelt ");
+        String pvag = pattern.matcher(removeStringWithoutMoneyValues[4]).replaceAll("");
+        result[4] = pvag;
+
+        pattern = Pattern.compile("RV-AG-Anteil, lfd\\. Entgelt ");
+        String rvag = pattern.matcher(removeStringWithoutMoneyValues[5]).replaceAll("");
+        result[5] = rvag;
+
+        pattern = Pattern.compile("SV-Umlage U2 \\* ");
+        String svumlage = pattern.matcher(removeStringWithoutMoneyValues[6]).replaceAll("");
+        result[6] = svumlage;
+
+        pattern = Pattern.compile("Steuern AG \\*\\* ");
+        String steuern = pattern.matcher(removeStringWithoutMoneyValues[7]).replaceAll("");
+        result[7] = steuern;
+
+        pattern = Pattern.compile("ZV-Sanierungsbeitrag ");
+        String zvs = pattern.matcher(removeStringWithoutMoneyValues[8]).replaceAll("");
+        result[8] = zvs;
+
+        pattern = Pattern.compile("ZV-Umlage, allgemein ");
+        String zvu = pattern.matcher(removeStringWithoutMoneyValues[9]).replaceAll("");
+        result[9] = zvu;
+
+        pattern = Pattern.compile("VBL Wiss 4% AG Buchung ");
+        String vbl = pattern.matcher(removeStringWithoutMoneyValues[10]).replaceAll("");
+        result[10] = vbl;
+
+        pattern = Pattern.compile("mtl. Kosten ohne JSZ ");
+        String monthlywithout = pattern.matcher(removeStringWithoutMoneyValues[11]).replaceAll("");
+        result[11] = monthlywithout;
+
+        pattern = Pattern.compile("JSZ als monatliche Zulage\\*\\*\\* ");
+        String monthlyjsz = pattern.matcher(removeStringWithoutMoneyValues[12]).replaceAll("");
+        result[12] = monthlyjsz;
+
+        pattern = Pattern.compile("mtl. Kosten mit JSZ ");
+        String monthlywith = pattern.matcher(removeStringWithoutMoneyValues[13]).replaceAll("");
+        result[13] = monthlywith;
+
+        pattern = Pattern.compile("inklusive Jahressonderzahlung ");
+        String total = pattern.matcher(removeStringWithoutMoneyValues[14]).replaceAll("");
+        result[14] = total;
+
+
+        return result;
+
     }
 
     public String[] prepareInsertionString(String text) {

@@ -58,8 +58,8 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
         }
     }
 
-    private void determineTableName(boolean typeOfTable){
-        if(typeOfTable){
+    private void determineTableName(boolean typeOfTable) {
+        if (typeOfTable) {
             tableName = "Entgelttabelle " + determinePayGrade() + " mit Stufe 1A und 1B";
         } else {
             tableName = "Entgelttabelle " + determinePayGrade() + " mit Stufe 1";
@@ -78,7 +78,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
 
         } else if (e.getSource() == insertPayRateTableView.getSaveAndExit()) {
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            String tableName = insertPayRateTableView.getTfNameOfTable().getText() + "_" +insertPayRateTableView.getDatePicker().getDate().format(dateTimeFormatter);
+            String tableName = insertPayRateTableView.getTfNameOfTable().getText() + "_" + insertPayRateTableView.getDatePicker().getDate().format(dateTimeFormatter);
             String paygrade = determinePayGrade();
             insertValuesInDatabase(tableName, paygrade, prepareTableForDatabaseInsertion());
             payRateController.updateview();
@@ -124,6 +124,8 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
     private void showPopUp(MouseEvent mouseEvent) {
         JPopupMenu menu = new JPopupMenu();
         JMenuItem pasteRow = new JMenuItem();
+        JMenuItem pasteTable = new JMenuItem();
+        pasteTable.setText("Tabelle einfügen");
         pasteRow.setText("Zeile einfügen");
         pasteRow.addActionListener(new ActionListener() {
             @Override
@@ -132,9 +134,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
                 String clipboardCopy;
                 try {
                     clipboardCopy = (String) clipboard.getData(DataFlavor.stringFlavor);
-                } catch (UnsupportedFlavorException ex) {
-                    throw new RuntimeException(ex);
-                } catch (IOException ex) {
+                } catch (UnsupportedFlavorException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 String[] resultString = model.prepareInsertionString(clipboardCopy);
@@ -148,7 +148,8 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
                         columnCounter++;
                         i--;
                         continue;
-                    }if (row == 10 && columnCounter % 2 == 0 && columnCounter != 0) {
+                    }
+                    if (row == 10 && columnCounter % 2 == 0 && columnCounter != 0) {
                         columnCounter++;
                         i--;
                         continue;
@@ -160,7 +161,40 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
 
             }
         });
+        pasteTable.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                String clipboardCopy;
+                try {
+                    clipboardCopy = (String) clipboard.getData(DataFlavor.stringFlavor);
+                } catch (UnsupportedFlavorException | IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                String[] tableValues = model.pasteWholeTable(clipboardCopy);
+                for (int row = 0; row < tableValues.length; row++) {
+                    String[] resultString = model.prepareInsertionString(tableValues[row]);
+                    int index = 0;
+                    for (int column = 0; column < insertPayRateTableView.getTable().getColumnCount(); column++) {
+                        if ((row == 0 || row == 11 || row == 12 || row == 13 || row == 14) && column == 0) {
+                            continue;
+                        }
+                        if ((row == 8 || row == 9) && column % 2 == 1) {
+                            continue;
+                        }
+                        if (row == 10 && column % 2 == 0 && column != 0) {
+                            continue;
+                        }
+                        System.out.println(resultString[index]);
+                        insertPayRateTableView.getTable().setValueAt(resultString[index], row, column);
+                        index++;
+
+                    }
+                }
+            }
+        });
         menu.add(pasteRow);
+        menu.add(pasteTable);
         menu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
     }
 
@@ -179,7 +213,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
     }
 
     private void insertValuesInDatabase(String name, String paygrade, BigDecimal[][] values) {
-        payRateTablesDataInserter.insertNewSalaryTable(name,paygrade,values);
+        payRateTablesDataInserter.insertNewSalaryTable(name, paygrade, values);
     }
 
 
