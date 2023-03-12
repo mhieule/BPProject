@@ -1,6 +1,5 @@
 package excelchaos_view;
 
-import excelchaos_model.*;
 import excelchaos_model.calculations.NewAndImprovedSalaryCalculation;
 import excelchaos_model.database.EmployeeDataManager;
 import excelchaos_model.database.ProjectParticipation;
@@ -40,9 +39,6 @@ public class ProjectParticipationView extends JPanel {
     private JTable participationSumTable, participationSumHeaderTable;
 
 
-    private ProjectParticipationDataModel projectParticipationDataModel = new ProjectParticipationDataModel();
-
-
     public void init() {
 
         setLayout(new BorderLayout());
@@ -75,7 +71,7 @@ public class ProjectParticipationView extends JPanel {
         participationSumHeaderTable = setParticipationSumHeaderTable(participationSumTable,employeeNames);
         JScrollPane participationSumPane = new JScrollPane(participationSumTable);
         participationSumPane.setRowHeaderView(participationSumHeaderTable);
-        participationSumPane.setPreferredSize(new Dimension(participationSumTable.getPreferredSize().width,participationSumTable.getRowHeight()*6));
+        //participationSumPane.setPreferredSize(new Dimension(participationSumTable.getPreferredSize().width,participationSumTable.getRowHeight()*6));
         projectParticipationSumPanel.add(participationSumPane);
         add(projectParticipationSumPanel,BorderLayout.SOUTH);
     }

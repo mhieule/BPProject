@@ -49,7 +49,7 @@ public class InsertProjectsView extends JPanel {
 
         funderColumnWithID = new String[]{"FunderID", "ProjektID", "Name des Projektträgers", "Förderkennzeichen", "Projektnummer der TU Darmstadt"};
 
-        participationColumnsWithID = new String[]{"ProjektID", "Name", "Beschäftigungsumfang", "Arbeitsmonat"};
+        participationColumnsWithID = new String[]{"ProjektID", "Name", "Beschäftigungsumfang", "Projektmitarbeitsbeginn", "Projektmitarbeitsende"};
 
         textFieldConstraints = new GridBagConstraints();
 
@@ -147,9 +147,15 @@ public class InsertProjectsView extends JPanel {
         categoryLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         categoryColumns = new String[]{"Name", "Bewilligte Mittel"};
         DefaultTableModel categoriesModel = new DefaultTableModel(null, categoryColumns);
-        categoriesModel.setRowCount(10);
+        categoriesModel.setRowCount(4);
         categoriesTable = new JTable(categoriesModel);
         categoriesTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+        categoriesTable.getTableHeader().setReorderingAllowed(false);
+        categoriesTable.setRowHeight(26);
+        categoriesTable.setValueAt("WiMi",0,0);
+        categoriesTable.setValueAt("HiWi",1,0);
+        categoriesTable.setValueAt("Reise Inland",2,0);
+        categoriesTable.setValueAt("Reise Ausland",3,0);
         JScrollPane categoriesScrollpane = new JScrollPane(categoriesTable);
         categoriesScrollpane.setVisible(true);
         categoriesPanel.add(categoriesScrollpane, BorderLayout.CENTER);
@@ -180,9 +186,11 @@ public class InsertProjectsView extends JPanel {
         categoryLabel = new JLabel("Kategorien");
         categoryLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         DefaultTableModel categoriesModel = new DefaultTableModel(null, categoryColumnWithID);
-        categoriesModel.setRowCount(10);
+        //categoriesModel.setRowCount(10);
         categoriesTable = new JTable(categoriesModel);
         categoriesTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+        categoriesTable.getTableHeader().setReorderingAllowed(false);
+        categoriesTable.setRowHeight(26);
         categoriesModel.setDataVector(data, categoryColumnWithID);
         categoriesTable.setModel(categoriesModel);
         JScrollPane categoriesScrollpane = new JScrollPane(categoriesTable);
@@ -217,9 +225,11 @@ public class InsertProjectsView extends JPanel {
         funderLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         funderColumns = new String[]{"Name des Projektträgers", "Förderkennzeichen", "Projektnummer der TU Darmstadt"};
         DefaultTableModel funderModel = new DefaultTableModel(null, funderColumns);
-        funderModel.setRowCount(10);
+        funderModel.setRowCount(1);
         projectFunderTable = new JTable(funderModel);
         projectFunderTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+        projectFunderTable.getTableHeader().setReorderingAllowed(false);
+        projectFunderTable.setRowHeight(26);
         JScrollPane funderScrollpane = new JScrollPane(projectFunderTable);
         funderScrollpane.setVisible(true);
         projectFunderPanel.add(funderScrollpane, BorderLayout.CENTER);
@@ -253,6 +263,8 @@ public class InsertProjectsView extends JPanel {
         //funderModel.setRowCount(10);
         projectFunderTable = new JTable(funderModel);
         projectFunderTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+        projectFunderTable.getTableHeader().setReorderingAllowed(false);
+        projectFunderTable.setRowHeight(26);
         funderModel.setDataVector(data, funderColumnWithID);
         projectFunderTable.setModel(funderModel);
         JScrollPane funderScrollpane = new JScrollPane(projectFunderTable);
@@ -283,13 +295,14 @@ public class InsertProjectsView extends JPanel {
         JPanel northPanel = new JPanel();
         northPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        participationLabel = new JLabel("Mitarbeiter");
+        participationLabel = new JLabel("Mitarbeiter*innen");
         participationLabel.setFont(new Font("Dialog", Font.BOLD, 18));
-        participationColumns = new String[]{"Name", "Beschäftigungsumfang", "Arbeitsmonat"};
+        participationColumns = new String[]{"Name", "Beschäftigungsumfang", "Projektmitarbeitsbeginn", "Projektmitarbeitsende"};
         DefaultTableModel participationModel = new DefaultTableModel(null, participationColumns);
         participationModel.setRowCount(10);
         projectParticipationTable = new JTable(participationModel);
         projectParticipationTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+        projectParticipationTable.getTableHeader().setReorderingAllowed(false);
         setUpNameSelection(projectParticipationTable);
         setUpDateSelection(projectParticipationTable);
         JScrollPane participationScrollpane = new JScrollPane(projectParticipationTable);
@@ -319,14 +332,16 @@ public class InsertProjectsView extends JPanel {
         JPanel northPanel = new JPanel();
         northPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        participationLabel = new JLabel("Mitarbeiter");
+        participationLabel = new JLabel("Mitarbeiter*innen");
         participationLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         DefaultTableModel participationModel = new DefaultTableModel(null, participationColumnsWithID);
         participationModel.setRowCount(data[1].length);
         projectParticipationTable = new JTable(participationModel);
         projectParticipationTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+        projectParticipationTable.getTableHeader().setReorderingAllowed(false);
         setUpEditNameSelection(projectParticipationTable, data[1]);
-        setUpEditDateSelection(projectParticipationTable, data[3]);
+        setUpEditDateSelection(projectParticipationTable, data[3], 3);
+        setUpEditDateSelection(projectParticipationTable,data[4],4);
         for (int i = 0; i < data[0].length; i++) {
             projectParticipationTable.setValueAt(data[0][i], i, 0);
             projectParticipationTable.setValueAt(data[2][i], i, 2);
@@ -366,11 +381,12 @@ public class InsertProjectsView extends JPanel {
 
         for (int i = 0; i < names.length; i++) {
             table.setValueAt(names[i], i, 1);
+            System.out.println(names[i]);
         }
     }
 
-    public void setUpEditDateSelection(JTable table, String[] dates) {
-        TableColumn dateColumn = table.getColumnModel().getColumn(3);
+    public void setUpEditDateSelection(JTable table, String[] dates, int columnIndex) {
+        TableColumn dateColumn = table.getColumnModel().getColumn(columnIndex);
         table.setDefaultEditor(LocalDate.class, new DateTableEditor());
         table.setDefaultRenderer(LocalDate.class, new DateTableEditor());
         dateColumn.setCellEditor(table.getDefaultEditor(LocalDate.class));
@@ -379,7 +395,10 @@ public class InsertProjectsView extends JPanel {
         LocalDate date;
         for (int i = 0; i < dates.length; i++) {
             date = LocalDate.parse(dates[i], formatter);
-            table.setValueAt(date, i, 3);
+            if(columnIndex == 4){
+                date = date.plusMonths(1).minusDays(1);
+            }
+            table.setValueAt(date, i, columnIndex);
         }
     }
 
@@ -397,6 +416,10 @@ public class InsertProjectsView extends JPanel {
         TableColumn dateColumn = table.getColumnModel().getColumn(2);
         table.setDefaultEditor(LocalDate.class, new DateTableEditor());
         table.setDefaultRenderer(LocalDate.class, new DateTableEditor());
+        dateColumn.setCellEditor(table.getDefaultEditor(LocalDate.class));
+        dateColumn.setCellRenderer(table.getDefaultRenderer(LocalDate.class));
+
+        dateColumn = table.getColumnModel().getColumn(3);
         dateColumn.setCellEditor(table.getDefaultEditor(LocalDate.class));
         dateColumn.setCellRenderer(table.getDefaultRenderer(LocalDate.class));
     }

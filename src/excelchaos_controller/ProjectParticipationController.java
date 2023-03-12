@@ -43,7 +43,6 @@ public class ProjectParticipationController implements ActionListener {
             model.getProjectRunTimeInMonths(selectedProjectIds[projectId]);
             model.getPersonNamesForProject(selectedProjectIds[projectId]);
         }
-        model.setUpParticipationHashMap();
         for (int projectId = 0; projectId < selectedProjectIds.length; projectId++) {
             String projectName = model.getProjectName(selectedProjectIds[projectId]);
             String[] monthColumns = model.getProjectRunTimeInMonths(selectedProjectIds[projectId]);
@@ -64,8 +63,8 @@ public class ProjectParticipationController implements ActionListener {
 
         String[] allEmployeeNames = model.getAllEmployeesNamesForSelectedProjects();
         String[] allMonths = model.getRuntimeInMonthsForAllProjects();
-        String[][] participationSum = model.getTotalParticipationOfSelectedProjectsForEmployees();
-        participationView.setUpParticipationSumPanel(allEmployeeNames,allMonths,participationSum);
+        String[][] totalParticipations = model.getTotalParticipationsOfShownEmployees();
+        participationView.setUpParticipationSumPanel(allEmployeeNames,allMonths,totalParticipations);
 
     }
 
