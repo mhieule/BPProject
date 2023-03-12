@@ -19,7 +19,7 @@ import java.util.List;
 public class InsertProjectsView extends JPanel {
     private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
 
-    private JLabel name, approval, start, duration, puffer, categoryLabel, funderLabel, participationLabel;
+    private JLabel name, approval, start, duration, puffer, categoryLabel, categoriesSum,  funderLabel, participationLabel;
 
     private JTextField tfName;
 
@@ -31,7 +31,7 @@ public class InsertProjectsView extends JPanel {
 
     private JButton submitAndReset, submitAndClose, reset, cancel;
 
-    private JPanel projectValuesPanel, categoriesPanel, projectFunderPanel, projectParticipationPanel, tablePanel, buttonPanel, leftButtons, rightButtons;
+    private JPanel projectValuesPanel, categoriesPanel,categoriesSumPanel, projectFunderPanel, projectParticipationPanel, tablePanel, buttonPanel, leftButtons, rightButtons;
 
     private GridBagConstraints textFieldConstraints;
 
@@ -56,6 +56,8 @@ public class InsertProjectsView extends JPanel {
         projectValuesPanel = new JPanel();
         tablePanel = new JPanel();
         categoriesPanel = new JPanel();
+        categoriesSumPanel = new JPanel();
+
         projectFunderPanel = new JPanel();
         projectParticipationPanel = new JPanel();
         buttonPanel = new JPanel();
@@ -75,7 +77,7 @@ public class InsertProjectsView extends JPanel {
 
         setUpCategoriesPanel();
         tablePanel.add(categoriesPanel);
-
+        setUpCategorySumLabel();
 
         setUpProjectFunderPanel();
         tablePanel.add(projectFunderPanel);
@@ -142,7 +144,6 @@ public class InsertProjectsView extends JPanel {
         categoriesPanel.setLayout(new BorderLayout());
         JPanel northPanel = new JPanel();
         northPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-
         categoryLabel = new JLabel("Kategorien");
         categoryLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         categoryColumns = new String[]{"Name", "Bewilligte Mittel"};
@@ -175,10 +176,19 @@ public class InsertProjectsView extends JPanel {
         northPanel.add(addRowButton);
         categoriesPanel.add(northPanel, BorderLayout.NORTH);
 
+
+    }
+
+    public void setUpCategorySumLabel(){
+        categoriesSumPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        categoriesSum = new JLabel("Summe: ");
+        categoriesSumPanel.add(categoriesSum);
+        categoriesPanel.add(categoriesSumPanel,BorderLayout.SOUTH);
     }
 
     public void setUpEditCategoriesPanel(String[][] data) {
         categoriesPanel.removeAll();
+        categoriesSumPanel.removeAll();
         categoriesPanel.setLayout(new BorderLayout());
         JPanel northPanel = new JPanel();
         northPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -213,7 +223,7 @@ public class InsertProjectsView extends JPanel {
         });
         northPanel.add(addRowButton);
         categoriesPanel.add(northPanel, BorderLayout.NORTH);
-
+        setUpCategorySumLabel();
     }
 
     public void setUpProjectFunderPanel() {
@@ -430,6 +440,12 @@ public class InsertProjectsView extends JPanel {
         reset.addActionListener(l);
         cancel.addActionListener(l);
     }
+
+    public JLabel getCategoriesSum() {
+        return categoriesSum;
+    }
+
+
 
     public String[] getCategoryColumns() {
         return categoryColumns;

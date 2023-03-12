@@ -1,11 +1,12 @@
 package excelchaos_controller;
 
-import com.j256.ormlite.stmt.query.In;
 import excelchaos_model.database.*;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.InsertProjectsView;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +21,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
-public class InsertProjectsController implements ActionListener {
+public class InsertProjectsController implements ActionListener, TableModelListener {
     private ProjectManager projectManager = ProjectManager.getInstance();
     private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
 
@@ -42,6 +43,7 @@ public class InsertProjectsController implements ActionListener {
         insertProjectsView = new InsertProjectsView();
         insertProjectsView.init();
         insertProjectsView.setActionListener(this);
+        insertProjectsView.getCategoriesTable().getModel().addTableModelListener(this);
 
     }
 
@@ -60,18 +62,38 @@ public class InsertProjectsController implements ActionListener {
         insertProjectsView.getTfApproval().setText(null);
         insertProjectsView.getTfDuration().setText(null);
         insertProjectsView.getTfStart().setText(null);
-        insertProjectsView.getCategoriesTable().setModel(resetTable(insertProjectsView.getCategoryColumns()));
-        insertProjectsView.getProjectFunderTable().setModel(resetTable(insertProjectsView.getFunderColumns()));
-        insertProjectsView.getProjectParticipationTable().setModel(resetTable(insertProjectsView.getParticipationColumns()));
+        insertProjectsView.getCategoriesTable().setModel(resetCategoriesTable(insertProjectsView.getCategoryColumns()));
+        insertProjectsView.getCategoriesSum().setText("Summe: ");
+        insertProjectsView.getProjectFunderTable().setModel(resetFunderTable(insertProjectsView.getFunderColumns()));
+        insertProjectsView.getProjectParticipationTable().setModel(resetPaticipationTable(insertProjectsView.getParticipationColumns()));
         insertProjectsView.setUpNameSelection(insertProjectsView.getProjectParticipationTable());
         insertProjectsView.setUpDateSelection(insertProjectsView.getProjectParticipationTable());
+        insertProjectsView.getCategoriesTable().getModel().addTableModelListener(this);
+
     }
 
-    public DefaultTableModel resetTable(String[] newColumns) {
+    public DefaultTableModel resetPaticipationTable(String[] newColumns) {
         DefaultTableModel result = new DefaultTableModel(null, newColumns);
         result.setRowCount(10);
         return result;
     }
+
+    private DefaultTableModel resetCategoriesTable(String[] newColumns){
+        String[][] categoriesData = new String[4][2];
+        categoriesData[0][0] = "WiMi";
+        categoriesData[1][0] = "HiWi";
+        categoriesData[2][0] = "Reise Inland";
+        categoriesData[3][0] = "Reise Ausland";
+        DefaultTableModel result = new DefaultTableModel(categoriesData,newColumns);
+        return result;
+    }
+
+    private DefaultTableModel resetFunderTable(String[] newColumns){
+        DefaultTableModel result = new DefaultTableModel(null,newColumns);
+        result.setRowCount(1);
+        return result;
+    }
+
 
     public void fillFields(String projectID) {
         Project project = projectManager.getProject(Integer.parseInt(projectID));
@@ -93,13 +115,17 @@ public class InsertProjectsController implements ActionListener {
 
         String[][] categoryData = new String[projectCategoryList.size()][4];
         int categoryIndex = 0;
+        BigDecimal categoriesSum = new BigDecimal(0);
         for (ProjectCategory projectCategory : projectCategoryList) {
             categoryData[categoryIndex][0] = String.valueOf(projectCategory.getCategory_id());
             categoryData[categoryIndex][1] = String.valueOf(projectCategory.getProject_id());
             categoryData[categoryIndex][2] = projectCategory.getCategory_name();
             categoryData[categoryIndex][3] = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(projectCategory.getApproved_funds());
+            categoriesSum = categoriesSum.add(projectCategory.getApproved_funds());
             categoryIndex++;
         }
+
+
 
 
         List<ProjectFunder> projectFunderList = projectFunderManager.getAllProjectFundersForProject(project.getProject_id());
@@ -186,6 +212,7 @@ public class InsertProjectsController implements ActionListener {
         }
 
         insertProjectsView.setUpEditCategoriesPanel(categoryData);
+        insertProjectsView.getCategoriesSum().setText("Summe: " + StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(categoriesSum));
         insertProjectsView.setUpEditProjectFunderPanel(funderData);
         insertProjectsView.setUpEditProjectParticipationPanel(participationData);
 
@@ -207,7 +234,7 @@ public class InsertProjectsController implements ActionListener {
         insertProjectsView.getProjectParticipationTable().getColumnModel().getColumn(0).setMaxWidth(0);
         insertProjectsView.getProjectParticipationTable().getColumnModel().getColumn(0).setWidth(0);
 
-
+        insertProjectsView.getCategoriesTable().getModel().addTableModelListener(this);
     }
 
 
@@ -560,4 +587,27 @@ public class InsertProjectsController implements ActionListener {
         return tableValues;
     }
 
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        BigDecimal sum = new BigDecimal(0);
+        if(e.getSource() == insertProjectsView.getCategoriesTable().getModel()){
+            if(e.getColumn() == 1){
+                for (int i = 0; i < insertProjectsView.getCategoriesTable().getRowCount(); i++) {
+                    if(insertProjectsView.getCategoriesTable().getValueAt(i,1) != null){
+                        sum = sum.add(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String)insertProjectsView.getCategoriesTable().getValueAt(i,1)));
+                    }
+                }
+                insertProjectsView.getCategoriesSum().setText("Summe: " + StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(sum));
+            }
+            if(e.getColumn() == 3){
+                for (int i = 0; i < insertProjectsView.getCategoriesTable().getRowCount(); i++) {
+                    if(insertProjectsView.getCategoriesTable().getValueAt(i,3) != null){
+                        sum = sum.add(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String)insertProjectsView.getCategoriesTable().getValueAt(i,3)));
+                    }
+                }
+                insertProjectsView.getCategoriesSum().setText("Summe: " + StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(sum));
+            }
+        }
+
+    }
 }
