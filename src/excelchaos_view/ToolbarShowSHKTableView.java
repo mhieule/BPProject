@@ -12,7 +12,6 @@ public class ToolbarShowSHKTableView extends SearchPanelToolbar {
 
     private JButton addEntry;
     private JButton editEntry;
-
     private JButton deleteEntry;
 
     public void init() {
@@ -29,7 +28,6 @@ public class ToolbarShowSHKTableView extends SearchPanelToolbar {
         editEntry.setEnabled(false);
         deleteEntry.setEnabled(false);
         setUpSearchPanel();
-
     }
 
     public void setActionListener(ActionListener l) {
@@ -37,7 +35,6 @@ public class ToolbarShowSHKTableView extends SearchPanelToolbar {
         editEntry.addActionListener(l);
         deleteEntry.addActionListener(l);
     }
-
 
     public JButton getEditEntry() {
         return editEntry;

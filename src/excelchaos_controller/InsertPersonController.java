@@ -251,6 +251,7 @@ public class InsertPersonController implements ActionListener {
             insertPersonView.getHiwiTypeOfPayment().setVisible(true);
             insertPersonView.getHiwiTypeOfPaymentList().setVisible(true);
             insertPersonView.getHiwiTypeOfPaymentList().setSelectedItem(contract.getShk_hourly_rate());
+            insertPersonView.getTfWorkScope().setText(StringAndBigDecimalFormatter.formatBigDecimalToHours(contract.getScope()));
         } else {
             insertPersonView.getTfWorkScope().setText(StringAndBigDecimalFormatter.formatPercentageToStringForScope(contract.getScope()));
             insertPersonView.getPayGroupOnHiring().setVisible(true);
@@ -331,7 +332,7 @@ public class InsertPersonController implements ActionListener {
         String employeeNumber = insertPersonView.getTfPersonalnummer().getText();
         String tu_id = insertPersonView.getTfTuid().getText();
         boolean visa_required = insertPersonView.getVisaRequiredCheckBox().isSelected();
-        String status = insertPersonView.getStatusPicklist().getSelectedItem().toString();
+        String status = insertPersonView.getTypeOfJobPicklist().getSelectedItem().toString();
         String transponder_number = insertPersonView.getTfTranspondernummer().getText();
         String office_number = insertPersonView.getTfBueronummer().getText();
         LocalDate localDate = insertPersonView.getTfSalaryPlannedUntil().getDate();
@@ -481,13 +482,18 @@ public class InsertPersonController implements ActionListener {
         }
         if (e.getSource() == insertPersonView.getSalaryEntry()) {
             InsertSalaryController insertSalaryController = new InsertSalaryController(mainFrameController);
-
+            InsertSalarySHKController insertSalarySHKController = new InsertSalarySHKController(mainFrameController);
             Employee newEmployee = safeData();
             if (newEmployee == null) {
                 JOptionPane.showConfirmDialog(null, "Bitte füllen Sie die markierten Spalten aus um fortzufahren.", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            insertSalaryController.fillFields(newEmployee.getId());
+
+            if (newEmployee.getStatus().equals("SHK")) {
+                insertSalarySHKController.fillFields(newEmployee.getId());
+            } else{
+                insertSalaryController.fillFields(newEmployee.getId());
+            }
 
             resetInputs();
             insertPersonView.revalidate();
@@ -496,7 +502,11 @@ public class InsertPersonController implements ActionListener {
             showPersonController.updateData();
             SalaryListController salaryListController = mainFrameController.getSalaryListController();
             salaryListController.updateData();
-            insertSalaryController.showInsertSalaryView(mainFrameController);
+            if(newEmployee.getStatus().equals("SHK")){
+                insertSalarySHKController.showInsertSalarySHKView(mainFrameController);
+            } else {
+                insertSalaryController.showInsertSalaryView(mainFrameController);
+            }
             mainFrameController.getUpdater().nameListUpdate();
             mainFrameController.getTabs().removeTabNewWindow(insertPersonView);
         }

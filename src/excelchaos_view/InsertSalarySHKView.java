@@ -8,15 +8,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 
 
-public class InsertSalaryView extends JPanel {
+public class InsertSalarySHKView extends JPanel {
 
     private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
 
-    private JLabel nameList, group, level, salary, extraCost, vblState, puffer;
+    private JLabel nameList, hiwiTypeOfPayment, salary, extraCost, puffer;
 
     private JTextField tfSalary, tfExtraCost;
 
-    private JComboBox namePickList, plLevel, tfGroup, vblList;
+    private JComboBox namePickList, tfHiwiTypeOfPayment;
 
     private JButton submit, reset, cancel;
 
@@ -51,36 +51,24 @@ public class InsertSalaryView extends JPanel {
         setConstraintsJComboBox(namePickList, 0);
         constraints.insets.top = 5;
 
-        group = new JLabel("Gehaltsklasse");
-        setConstraintsLabel(group, 1);
-        String[] payGrade = {"Nicht ausgewählt", "E13", "E14"};
-        tfGroup = new JComboBox(payGrade);
-        setConstraintsJComboBox(tfGroup, 1);
-
-        level = new JLabel("Gehaltsstufe");
-        setConstraintsLabel(level, 2);
-        String[] payLevel = {"Nicht ausgewählt", "1A", "1B", "1", "2", "3", "4", "5", "6"};
-        plLevel = new JComboBox(payLevel);
-        setConstraintsJComboBox(plLevel, 2);
-
-        vblState = new JLabel("VBL-Status");
-        setConstraintsLabel(vblState, 3);
-        String[] vbl = {"Nicht ausgewählt", "Pflichtig", "Befreit"};
-        vblList = new JComboBox(vbl);
-        setConstraintsJComboBox(vblList, 3);
+        hiwiTypeOfPayment = new JLabel("Stundensatz");
+        setConstraintsLabel(hiwiTypeOfPayment, 1);
+        String[] hiwiPaymentArray = {"Nicht ausgewählt", "SHK Basisvergütung", "SHK erhöhter Stundensatz", "WHK"};
+        tfHiwiTypeOfPayment = new JComboBox(hiwiPaymentArray);
+        setConstraintsJComboBox(tfHiwiTypeOfPayment, 1);
 
         salary = new JLabel("Gehalt");
-        setConstraintsLabel(salary, 4);
+        setConstraintsLabel(salary, 2);
         tfSalary = new JTextField();
-        setConstraintsTextField(tfSalary, 4);
+        setConstraintsTextField(tfSalary, 2);
 
         extraCost = new JLabel("Jahressonderzahlung");
-        setConstraintsLabel(extraCost, 5);
+        setConstraintsLabel(extraCost, 3);
         tfExtraCost = new JTextField();
-        setConstraintsTextField(tfExtraCost, 5);
+        setConstraintsTextField(tfExtraCost, 3);
 
         puffer = new JLabel(" ");
-        setConstraintsPuffer(puffer, 6);
+        setConstraintsPuffer(puffer, 4);
 
 
         leftButtons = new JPanel(new FlowLayout());
@@ -109,15 +97,11 @@ public class InsertSalaryView extends JPanel {
     }
 
     public void setItemListener(ItemListener l) {
-        vblList.addItemListener(l);
-        plLevel.addItemListener(l);
-        tfGroup.addItemListener(l);
+        tfHiwiTypeOfPayment.addItemListener(l);
     }
 
     public void markMustBeFilledTextFields() {
-        group.setForeground(Color.RED);
-        level.setForeground(Color.RED);
-        vblState.setForeground(Color.RED);
+        hiwiTypeOfPayment.setForeground(Color.RED);
     }
 
 
@@ -125,16 +109,12 @@ public class InsertSalaryView extends JPanel {
         return salary;
     }
 
-    public JLabel getGroup() {
-        return group;
+    public JLabel getHiwiTypeOfPayment() {
+        return hiwiTypeOfPayment;
     }
 
     public JLabel getExtraCost() {
         return extraCost;
-    }
-
-    public JLabel getLevel() {
-        return level;
     }
 
     public JButton getReset() {
@@ -153,10 +133,6 @@ public class InsertSalaryView extends JPanel {
         return namePickList;
     }
 
-    public JComboBox getVblList() {
-        return vblList;
-    }
-
     public JTextField getTfSalary() {
         return tfSalary;
     }
@@ -165,12 +141,8 @@ public class InsertSalaryView extends JPanel {
         return tfExtraCost;
     }
 
-    public JComboBox getTfGroup() {
-        return tfGroup;
-    }
-
-    public JComboBox getPlLevel() {
-        return plLevel;
+    public JComboBox getTfHiwiTypeOfPayment() {
+        return tfHiwiTypeOfPayment;
     }
 
     private void setConstraintsLabel(JLabel label, int rowNumber) {

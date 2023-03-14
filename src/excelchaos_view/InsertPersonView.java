@@ -240,6 +240,7 @@ public class InsertPersonView extends JPanel {
 
     /**
      * Sets the action listener for all Buttons, ComboBoxes and CheckBoxes
+     *
      * @param l is the ActionListener
      */
     public void setActionListener(ActionListener l) {
@@ -270,7 +271,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return label of pay group
      */
     public JLabel getPayGroupOnHiring() {
@@ -278,7 +278,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return label of pay level
      */
     public JLabel getPayLevelOnHiring() {
@@ -286,7 +285,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return label of type of payment
      */
     public JLabel getHiwiTypeOfPayment() {
@@ -294,7 +292,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return label of nationality CheckBox
      */
     public JCheckBox getNationalityCheckBox() {
@@ -302,7 +299,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return label of second nationality pick list
      */
     public JLabel getNationalitySecond() {
@@ -310,7 +306,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return label of work scope
      */
     public JLabel getWorkScope() {
@@ -318,7 +313,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return ComboBox of second nationality pick list
      */
     public JComboBox getNationalityPickList2() {
@@ -326,7 +320,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return label of vbl state
      */
     public JLabel getVblstate() {
@@ -334,7 +327,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return CheckBox if Visa is required
      */
     public JCheckBox getVisaRequiredCheckBox() {
@@ -342,7 +334,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return label of visa valid until
      */
     public JLabel getVisaValidUntil() {
@@ -350,7 +341,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return Date Picker of visa valid until
      */
     public DatePicker getTfVisaValidUntil() {
@@ -358,7 +348,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return submit button
      */
     public JButton getSubmit() {
@@ -366,7 +355,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return salary entry button
      */
     public JButton getSalaryEntry() {
@@ -374,7 +362,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @retur reset button
      */
     public JButton getReset() {
@@ -382,7 +369,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return cancel button
      */
     public JButton getCancel() {
@@ -390,7 +376,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered name
      */
     public JTextField getTfName() {
@@ -398,7 +383,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered surname
      */
     public JTextField getTfVorname() {
@@ -406,7 +390,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered house number
      */
     public JTextField getTfHausnummer() {
@@ -414,7 +397,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered additional address information
      */
     public JTextField getTfAdresszusatz() {
@@ -422,7 +404,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered postal code
      */
     public JTextField getTfPLZ() {
@@ -430,7 +411,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered city
      */
     public JTextField getTfStadt() {
@@ -438,7 +418,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered street
      */
     public JTextField getTfStrasse() {
@@ -446,7 +425,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered email address
      */
     public JTextField getTfPrivatEmail() {
@@ -454,7 +432,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered private phone number
      */
     public JTextField getTfPrivateTelefonnummer() {
@@ -462,7 +439,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered birthday
      */
     public DatePicker getTfGeburtsdatum() {
@@ -470,7 +446,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered personal number
      */
     public JTextField getTfPersonalnummer() {
@@ -478,7 +453,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered TUID
      */
     public JTextField getTfTuid() {
@@ -486,7 +460,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered date until which the salary is planned
      */
     public DatePicker getTfSalaryPlannedUntil() {
@@ -494,7 +467,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered transponder number
      */
     public JTextField getTfTranspondernummer() {
@@ -502,7 +474,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered office number
      */
     public JTextField getTfBueronummer() {
@@ -510,7 +481,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered office phone number
      */
     public JTextField getTfTelefonnummerTUDA() {
@@ -518,15 +488,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
-     * @return type of job pick list
-     */
-    public JComboBox getStatusPicklist() {
-        return typeOfJobPicklist;
-    }
-
-    /**
-     *
      * @return nationality pick list
      */
     public JComboBox getNationalityPickList() {
@@ -534,7 +495,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return date of work end
      */
     public DatePicker getTfWorkEnd() {
@@ -542,7 +502,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return date of work start
      */
     public DatePicker getTfWorkStart() {
@@ -550,7 +509,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return type of payment pick list
      */
     public JComboBox getHiwiTypeOfPaymentList() {
@@ -558,7 +516,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return type of job pick list
      */
     public JComboBox getTypeOfJobPicklist() {
@@ -566,7 +523,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return entered work scope
      */
     public JTextField getTfWorkScope() {
@@ -574,7 +530,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return pay group pick list
      */
     public JComboBox getPayGroupList() {
@@ -582,7 +537,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return pay level pick list
      */
     public JComboBox getPayLevelList() {
@@ -590,7 +544,6 @@ public class InsertPersonView extends JPanel {
     }
 
     /**
-     *
      * @return vbl pick list
      */
     public JComboBox getVblList() {
@@ -599,7 +552,8 @@ public class InsertPersonView extends JPanel {
 
     /**
      * sets the constraints for the label
-     * @param label JLabel to which constraints should be applied
+     *
+     * @param label     JLabel to which constraints should be applied
      * @param rowNumber row number of the label
      */
     private void setConstraintsLabel(JLabel label, int rowNumber) {
@@ -612,6 +566,7 @@ public class InsertPersonView extends JPanel {
 
     /**
      * sets the constraints for the text field
+     *
      * @param textField JTextField to which constraints should be applied
      * @param rowNumber row number of the text field
      */
@@ -626,8 +581,9 @@ public class InsertPersonView extends JPanel {
 
     /**
      * sets the constraints for the date picker
+     *
      * @param datePicker DatePicker to which constraints should be applied
-     * @param rowNumber row number of the date picker
+     * @param rowNumber  row number of the date picker
      */
     private void setConstraintsDatePicker(DatePicker datePicker, int rowNumber) {
         datePicker.setPreferredSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
@@ -640,6 +596,7 @@ public class InsertPersonView extends JPanel {
 
     /**
      * sets the constraints for the pick list
+     *
      * @param jComboBox JComboBox to which constraints should be applied
      * @param rowNumber row number of the pick list
      */
@@ -654,6 +611,7 @@ public class InsertPersonView extends JPanel {
 
     /**
      * sets the constraints for the checkbox
+     *
      * @param jCheckBox JCheckBox to which constraints should be applied
      * @param rowNumber row number of the checkbox
      */
@@ -667,7 +625,8 @@ public class InsertPersonView extends JPanel {
 
     /**
      * sets the constraints for the puffer. this ensures that each element is scaled vertically correct
-     * @param label JLabel to which constraints should be applied
+     *
+     * @param label     JLabel to which constraints should be applied
      * @param rowNumber row number of the puffer
      */
     private void setConstraintsPuffer(JLabel label, int rowNumber) {

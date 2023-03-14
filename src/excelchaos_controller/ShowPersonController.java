@@ -20,9 +20,7 @@ public class ShowPersonController implements ActionListener, TableModelListener 
     private ShowPersonView showPersonView;
     private ToolbarShowPersonView toolbar;
     private MainFrameController mainFrameController;
-
     private String title = "Personalstammdaten";
-
 
     public ShowPersonController(MainFrameController mainFrameController) {
         this.mainFrameController = mainFrameController;
@@ -50,9 +48,6 @@ public class ShowPersonController implements ActionListener, TableModelListener 
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(title));
         }
     }
-
-
-
 
 
     public void updateData() {

@@ -38,12 +38,12 @@ public class InsertSalaryController implements ActionListener, ItemListener {
         frameController = mainFrameController;
 
     }
+
     public void showInsertSalaryView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(addSalaryTab) == -1) {
             mainFrameController.getTabs().addTab(addSalaryTab, insertSalaryView);
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addSalaryTab));
-        } else
-            mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addSalaryTab));
+        } else mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addSalaryTab));
     }
 
     public void fillFields(int id) {
@@ -56,8 +56,8 @@ public class InsertSalaryController implements ActionListener, ItemListener {
         insertSalaryView.getNamePickList().setModel(new DefaultComboBoxModel<>(names));
         insertSalaryView.getNamePickList().setSelectedItem(currentEmployeeName);
         insertSalaryView.getNamePickList().setEnabled(false);
-        insertSalaryView.getTfGruppe().setSelectedItem(contract.getPaygrade());
-        insertSalaryView.getPlStufe().setSelectedItem(contract.getPaylevel());
+        insertSalaryView.getTfGroup().setSelectedItem(contract.getPaygrade());
+        insertSalaryView.getPlLevel().setSelectedItem(contract.getPaylevel());
         if (contract.getVbl_status()) {
             insertSalaryView.getVblList().setSelectedItem("Pflichtig");
         } else {
@@ -65,18 +65,18 @@ public class InsertSalaryController implements ActionListener, ItemListener {
         }
         String salary = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getRegular_cost());
         String extraCost = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getBonus_cost());
-        insertSalaryView.getTfGehalt().setText(salary);
-        insertSalaryView.getTfSonderzahlung().setText(extraCost);
+        insertSalaryView.getTfSalary().setText(salary);
+        insertSalaryView.getTfExtraCost().setText(extraCost);
     }
 
     public void resetInputs() {
         backUpNumber = currentlyEditingContractID;
         currentlyEditingContractID = 0;
-        insertSalaryView.getTfGruppe().setSelectedItem("Nicht ausgewählt");
-        insertSalaryView.getPlStufe().setSelectedItem("Nicht ausgewählt");
+        insertSalaryView.getTfGroup().setSelectedItem("Nicht ausgewählt");
+        insertSalaryView.getPlLevel().setSelectedItem("Nicht ausgewählt");
         insertSalaryView.getVblList().setSelectedItem("Nicht ausgewählt");
-        insertSalaryView.getTfGehalt().setText(null);
-        insertSalaryView.getTfSonderzahlung().setText(null);
+        insertSalaryView.getTfSalary().setText(null);
+        insertSalaryView.getTfExtraCost().setText(null);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class InsertSalaryController implements ActionListener, ItemListener {
             String paylevel = null;
             String vblState = null;
             boolean vbl = true;
-            BigDecimal gehalt =  new BigDecimal(0);
+            BigDecimal gehalt = new BigDecimal(0);
             BigDecimal sonderzahlung = new BigDecimal(0);
             if (backUpNumber != 0) {
                 employee = employeeDataAccess.getEmployee(backUpNumber);
@@ -95,18 +95,18 @@ public class InsertSalaryController implements ActionListener, ItemListener {
                 employee = employeeDataAccess.getEmployee(currentlyEditingContractID);
             }
             int id = employee.getId();
-            paygrade = insertSalaryView.getTfGruppe().getSelectedItem().toString();
-            paylevel = insertSalaryView.getPlStufe().getSelectedItem().toString();
+            paygrade = insertSalaryView.getTfGroup().getSelectedItem().toString();
+            paylevel = insertSalaryView.getPlLevel().getSelectedItem().toString();
             vblState = insertSalaryView.getVblList().getSelectedItem().toString();
 
             if (vblState.equals("Befreit")) {
                 vbl = false;
             }
-            if (!insertSalaryView.getTfGehalt().getText().equals("")) {
-                gehalt = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertSalaryView.getTfGehalt().getText());
+            if (!insertSalaryView.getTfSalary().getText().equals("")) {
+                gehalt = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertSalaryView.getTfSalary().getText());
             }
-            if (!insertSalaryView.getTfSonderzahlung().getText().equals("")) {
-                sonderzahlung = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertSalaryView.getTfSonderzahlung().getText());
+            if (!insertSalaryView.getTfExtraCost().getText().equals("")) {
+                sonderzahlung = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertSalaryView.getTfExtraCost().getText());
             }
 
             if (paygrade.equals("Nicht ausgewählt") || paylevel.equals("Nicht ausgewählt") || vblState.equals("Nicht ausgewählt")) {
@@ -143,7 +143,7 @@ public class InsertSalaryController implements ActionListener, ItemListener {
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
-            if (insertSalaryView.getVblList().getSelectedItem().toString().equals("Nicht ausgewählt") || insertSalaryView.getTfGruppe().getSelectedItem().toString().equals("Nicht ausgewählt") || insertSalaryView.getPlStufe().getSelectedItem().toString().equals("Nicht ausgewählt")) {
+            if (insertSalaryView.getVblList().getSelectedItem().toString().equals("Nicht ausgewählt") || insertSalaryView.getTfGroup().getSelectedItem().toString().equals("Nicht ausgewählt") || insertSalaryView.getPlLevel().getSelectedItem().toString().equals("Nicht ausgewählt")) {
 
             } else {
                 if (backUpNumber != 0) {
@@ -154,11 +154,10 @@ public class InsertSalaryController implements ActionListener, ItemListener {
                     vbl = true;
                 }
                 Contract contract = employeeDataAccess.getContract(currentlyEditingContractID);
-                Contract calcContract = new Contract(currentlyEditingContractID, (String) insertSalaryView.getTfGruppe().getSelectedItem(),
-                        (String) insertSalaryView.getPlStufe().getSelectedItem(), contract.getStart_date(), contract.getEnd_date(), new BigDecimal(0), new BigDecimal(0), contract.getScope(), "", vbl);
+                Contract calcContract = new Contract(currentlyEditingContractID, (String) insertSalaryView.getTfGroup().getSelectedItem(), (String) insertSalaryView.getPlLevel().getSelectedItem(), contract.getStart_date(), contract.getEnd_date(), new BigDecimal(0), new BigDecimal(0), contract.getScope(), "", vbl);
                 BigDecimal[] newCost = salaryTableLookUp.getCurrentPayRateTableEntry(calcContract);
-                insertSalaryView.getTfGehalt().setText(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(newCost[0]));
-                insertSalaryView.getTfSonderzahlung().setText(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(newCost[1] .multiply(new BigDecimal(12))));
+                insertSalaryView.getTfSalary().setText(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(newCost[0]));
+                insertSalaryView.getTfExtraCost().setText(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(newCost[1].multiply(new BigDecimal(12))));
             }
 
         }

@@ -2,6 +2,7 @@ package excelchaos_controller;
 
 import excelchaos_model.*;
 import excelchaos_model.calculations.SalaryProjection;
+import excelchaos_model.database.Employee;
 import excelchaos_model.datamodel.employeedataoperations.EmployeeDataAccess;
 import excelchaos_model.export.CSVExporter;
 import excelchaos_view.SalaryListView;
@@ -96,10 +97,17 @@ public class SalaryListController implements TableModelListener, ActionListener,
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toolbar.getEditEntry()) {
-            InsertSalaryController insertSalaryController = new InsertSalaryController(mainFrameController);
             String employeeID = salaryListView.getTable().getIdsOfCurrentSelectedRows()[0];
-            insertSalaryController.fillFields(Integer.parseInt(employeeID));
-            insertSalaryController.showInsertSalaryView(mainFrameController);
+            Employee employee = employeeDataAccess.getEmployee(Integer.parseInt(employeeID));
+            if(employee.getStatus().equals("SHK")){
+                InsertSalarySHKController insertSalarySHKController = new InsertSalarySHKController(mainFrameController);
+                insertSalarySHKController.fillFields(Integer.parseInt(employeeID));
+                insertSalarySHKController.showInsertSalarySHKView(mainFrameController);
+            } else{
+                InsertSalaryController insertSalaryController = new InsertSalaryController(mainFrameController);
+                insertSalaryController.fillFields(Integer.parseInt(employeeID));
+                insertSalaryController.showInsertSalaryView(mainFrameController);
+            }
             toolbar.getShowNextPayGrade().setSelected(false);
             toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
         } else if (e.getSource() == toolbar.getSalaryStageOn()) {
