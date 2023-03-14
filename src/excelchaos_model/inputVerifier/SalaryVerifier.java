@@ -9,29 +9,18 @@ public class SalaryVerifier extends InputVerifier {
     @Override
     public boolean verify(JComponent input) {
         String text = ((JTextField) input).getText();
-        if (text.matches("")) {
+        if (text.matches("") || text.matches("\\d+\\.\\d{3},\\d{2}\\h€") || text.matches("\\d+,\\d{2}\\h€")) {
             return true;
-        } else if(text.matches("\\d+\\.*\\d*")) {
-            ((JTextField) input).setText(text + ",00" + " €");
-            return true;
-        } else if (text.matches("\\d+\\.*\\d*,\\d{2}") || text.matches("\\d+\\.*\\d*\\.\\d{2}")) {
-            ((JTextField) input).setText(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(text)));
-            //((JTextField) input).setText(text.replaceFirst("(?s)(.*)" + "\\.","$1" + ",") + " €"); //replaceFirst written to replaceLast
-            return true;
-        } else if (text.matches("\\d+\\.*\\d*\\.\\d{1}")) {
-            ((JTextField) input).setText(text.replaceFirst("(?s)(.*)" + "\\.","$1" + ",0") + " €");
-            return true;
-        } else if (text.matches("\\d+\\.*\\d*,\\d{1}")) {
-            ((JTextField) input).setText(text + ",0 €");
-            return true;
-        } else if (text.matches("\\d+\\.*\\d*\\.\\d{2}\\h€")) {
-            ((JTextField) input).setText(text.replaceFirst("(?s)(.*)" + "\\.","$1" + ",0") + " €");
-            return true;
-        } else if (text.matches("\\d+\\.*\\d*,\\d{2}\\h€")) {
-            return true;
-        } else {
-            JOptionPane.showConfirmDialog(null, "Bitte geben Sie einen Geldwert ein und trennen Sie falls nötig die Nachkommastellen mit \",\" ab.", "Falsches Eingabe Format", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-            return false;
         }
+        else if(text.matches("\\d+") || text.matches("\\d+\\.\\d{3}") || text.matches("\\d+\\.\\d{3},\\d{1,2}") || text.matches("\\d+,\\d{1,2}")){
+            ((JTextField) input).setText(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(text)));
+            return true;
+        } else if (text.matches("\\d+\\.\\d{3}\\.\\d{1,2}\\h€") || text.matches("\\d+\\.\\d{3}\\.\\d{1,2}") || text.matches("\\d+\\.\\d{1,2}\\h€") || text.matches("\\d+\\.\\d{1,2}")) {
+            //replaceFirst written to replaceLast
+            ((JTextField) input).setText(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(text.replaceFirst("(?s)(.*)" + "\\.","$1" + ","))));
+            return true;
+        }
+        JOptionPane.showConfirmDialog(null, "Bitte geben Sie einen GeldBetrag ein und trennen Sie falls nötig die Nachkommastellen mit \",\" ab.", "Falsches Eingabe Format", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+        return false;
     }
 }
