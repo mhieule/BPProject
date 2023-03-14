@@ -28,7 +28,6 @@ public class InsertSalarySHKController implements ActionListener, ItemListener {
 
     private String addSalaryTab = "Gehaltseintrag bearbeiten";
 
-    //TODO: an entsprechender stelle controller aufrufen
     public InsertSalarySHKController(MainFrameController mainFrameController) {
         employeeDataAccess = new EmployeeDataAccess();
         employeeDataInserter = new EmployeeDataInserter();
@@ -40,7 +39,6 @@ public class InsertSalarySHKController implements ActionListener, ItemListener {
 
     }
 
-    //TODO: an entsprechender stelle view aufrufen
     public void showInsertSalarySHKView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(addSalaryTab) == -1) {
             mainFrameController.getTabs().addTab(addSalaryTab, insertSalarySHKView);
