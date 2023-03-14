@@ -27,7 +27,7 @@ public class CSVExporter {
 
         try {
             TableModel model = tableToExport.getModel();
-            BufferedWriter csv = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(pathToExportTo), StandardCharsets.ISO_8859_1));
+            BufferedWriter csv = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(pathToExportTo), StandardCharsets.UTF_8));
             for (int i = 0; i < model.getColumnCount(); i++) {
                 if (i == 0 || i == 1) {
                 } else {

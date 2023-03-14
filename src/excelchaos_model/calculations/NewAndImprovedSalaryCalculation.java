@@ -111,8 +111,12 @@ public class NewAndImprovedSalaryCalculation {
         LocalDate currentManualSalaryDate = getLastCurrentManualInsertedSalaryDate(employeeId, givenDate);
         LocalDate currentSalaryIncreaseDate = getLastCurrentSalaryIncreaseDate(employeeId, givenDate);
         LocalDate lastPayLevelIncreaseDate = getLastCurrentPayLevelIncreaseDate(contract.getStart_date(), givenDate);
-        AutomaticPayLevelIncrease payLevelIncrease = new AutomaticPayLevelIncrease();
-        contract = payLevelIncrease.performPayLevelIncreaseBasedOnGivenDate(givenDate, contract);
+        if(employeeDataManager.getEmployee(employeeId).getStatus().equals("SHK")){
+
+        } else {
+            AutomaticPayLevelIncrease payLevelIncrease = new AutomaticPayLevelIncrease();
+            contract = payLevelIncrease.performPayLevelIncreaseBasedOnGivenDate(givenDate, contract);
+        }
         LocalDate chosenLocalDate = givenDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate payRateTableChangeDate = salaryTableLookUp.getActivePayRateTableBasedOnGivenDate(contract, chosenLocalDate);
 

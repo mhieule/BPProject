@@ -34,17 +34,21 @@ public class AutomaticPayLevelIncrease {
         Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
         int i = 0;
         for (Employee employee : employeeList) {
-            if (contractDataManager.getContract(employee.getId()) == null) {
-                i++;
-                continue;
+            if (employee.getStatus().equals("SHK")) {
+
+            } else {
+                if (contractDataManager.getContract(employee.getId()) == null) {
+                    i++;
+                    continue;
+                }
+                payLevelIncreaseForEmployees[i] = ProjectedSalaryModel.calculatePayLevelIncrease(contractDataManager.getContract(employee.getId()).getStart_date(), contractDataManager.getContract(employee.getId()).getPaylevel());
+                if (currentDate.compareTo(payLevelIncreaseForEmployees[i].get(0)) >= 0) {
+                    setNewPayLevel(contractDataManager.getContract(employee.getId()));
+                }
+                if (i < numberOfEmployees) {
+                    i++;
+                } else break;
             }
-            payLevelIncreaseForEmployees[i] = ProjectedSalaryModel.calculatePayLevelIncrease(contractDataManager.getContract(employee.getId()).getStart_date(), contractDataManager.getContract(employee.getId()).getPaylevel());
-            if (currentDate.compareTo(payLevelIncreaseForEmployees[i].get(0)) >= 0) {
-                setNewPayLevel(contractDataManager.getContract(employee.getId()));
-            }
-            if (i < numberOfEmployees) {
-                i++;
-            } else break;
         }
 
     }
