@@ -83,7 +83,7 @@ public class ProjectParticipationView extends JPanel {
                 Contract contract = contractDataManager.getContract(employeeDataManager.getEmployeeByName(name).getId());
                 BigDecimal updatedValue = StringAndBigDecimalFormatter.formatStringToPercentageValueForScope((String) value);
                 if(contract.getScope().compareTo(updatedValue) < 0){
-                    comp.setBackground(Color.RED);
+                    comp.setBackground(new Color(255,143,143));
                 } else {
                     comp.setBackground(Color.WHITE);
                 }
