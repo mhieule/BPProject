@@ -21,10 +21,10 @@ public class SalaryVerifier extends InputVerifier {
         } else if (text.matches("\\d+\\.*\\d+,\\d{1}") || text.matches("\\d+\\.*\\d+\\.\\d{1}")) {
             ((JTextField) input).setText(text.replaceFirst("(?s)(.*)" + "\\.","$1" + ",0") + " €");
             return true;
-        } else if (text.matches("\\d+\\.*\\d+\\.\\d{2}\\s€")) {
+        } else if (text.matches("\\d+\\.*\\d+\\.\\d{2} €")) {
             ((JTextField) input).setText(text.replaceFirst("(?s)(.*)" + "\\.","$1" + ",0") + " €");
             return true;
-        } else if (text.matches("\\d+\\.*\\d+,\\d{2}\\s€")) {
+        } else if (text.matches("\\d+\\.*\\d+,\\d{2} €")) {
             return true;
         } else {
             JOptionPane.showConfirmDialog(null, "Bitte geben Sie einen Geldwert ein und trennen Sie falls nötig die Nachkommastellen mit \",\" ab.", "Falsches Eingabe Format", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
