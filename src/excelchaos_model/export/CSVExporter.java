@@ -27,7 +27,9 @@ public class CSVExporter {
 
         try {
             TableModel model = tableToExport.getModel();
-            BufferedWriter csv = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(pathToExportTo), StandardCharsets.UTF_8));
+            File csvFile = new File(pathToExportTo);
+            BufferedWriter csv = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile), StandardCharsets.UTF_8));
+            csv.write("\ufeff");
             for (int i = 0; i < model.getColumnCount(); i++) {
                 if (i == 0 || i == 1) {
                 } else {
@@ -137,8 +139,10 @@ public class CSVExporter {
         List<Employee> allEmployees = employeeDataAccess.getAllEmployees();
         NewAndImprovedSalaryCalculation salaryCalculation = new NewAndImprovedSalaryCalculation();
         DateFormat format = new SimpleDateFormat("MMMM-yyyy");
+        File csvFile = new File(pathToExportTo);
         try {
-            BufferedWriter csv = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(pathToExportTo), StandardCharsets.ISO_8859_1));
+            BufferedWriter csv = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile), StandardCharsets.UTF_8));
+            csv.write("\ufeff");
             csv.write("Name" + ";");
             csv.write("Monat" + ";");
             csv.write("Gehaltskosten" + ";");
