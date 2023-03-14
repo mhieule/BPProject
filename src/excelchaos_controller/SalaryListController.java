@@ -125,6 +125,7 @@ public class SalaryListController implements TableModelListener, ActionListener,
         } else if (e.getSource() == showSalaryStageDialogView.getCloseButton()) {
             showSalaryStageDialogView.dispose();
         } else if (e.getSource() == showSalaryStageDialogView.getOkayButton()) {
+            toolbar.getShowNextPayGrade().setSelected(false);
             LocalDate localDate = showSalaryStageDialogView.getDatePicker().getDate();
             if (localDate != null) {
                 Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -132,7 +133,7 @@ public class SalaryListController implements TableModelListener, ActionListener,
                 buildPayLevelTableBasedOnChosenDate(salaryProjection.getSalaryProjectionForGivenDate(date));
                 showSalaryStageDialogView.dispose();
                 toolbar.getRemoveAdditionalSalaryStage().setEnabled(true);
-                toolbar.getShowNextPayGrade().setSelected(false);
+
             } else showSalaryStageDialogView.dispose();
         }
     }
@@ -143,8 +144,11 @@ public class SalaryListController implements TableModelListener, ActionListener,
             SalaryProjection salaryProjection = new SalaryProjection();
             buildFuturePayLevelTable(salaryProjection.getNextPayLevelProjection());
             toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
-        } else {
-            updateData();
+        } if(e.getStateChange() == ItemEvent.DESELECTED){
+            if(e.getSource() == toolbar.getShowNextPayGrade()){
+                updateData();
+            }
+
         }
     }
 }

@@ -2,7 +2,6 @@ package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import excelchaos_model.CountryModel;
-import excelchaos_model.inputVerifier.WorkScopeVerifier;
 
 import javax.swing.*;
 import java.awt.*;
