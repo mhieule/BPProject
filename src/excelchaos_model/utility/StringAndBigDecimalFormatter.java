@@ -73,6 +73,15 @@ public class StringAndBigDecimalFormatter {
         return result;
     }
 
+    public static BigDecimal formatStringToPercentageValueForPayRate(String valueToFormat) {
+        BigDecimal result;
+        valueToFormat = valueToFormat.replaceAll("%", "");
+        valueToFormat = valueToFormat.replaceAll(",",".");
+        result = new BigDecimal(valueToFormat);
+        result = result.divide(new BigDecimal(100),3,RoundingMode.HALF_EVEN);
+        return result;
+    }
+
     public static BigDecimal formatHoursStringToBigDecimal(String valueToFormat){
         BigDecimal result;
         valueToFormat = valueToFormat.split(" ")[0];

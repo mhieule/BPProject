@@ -2,6 +2,7 @@ package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import excelchaos_model.database.SalaryTable;
+import excelchaos_model.inputVerifier.PayRateTablePercentVerifier;
 import excelchaos_model.inputVerifier.SalaryVerifier;
 import excelchaos_model.utility.PayRateTableNameDateSeperator;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
@@ -112,6 +113,7 @@ public class ShowPayRateTableView extends JPanel {
         DefaultTableModel defaultTableModel = new DefaultTableModel(columns, 15);
         showPayRatesTable = new JTable(defaultTableModel);
         showPayRatesTable.setDefaultEditor(Object.class, new CellEditor(new SalaryVerifier()));
+        showPayRatesTable.getColumn("%-Satz").setCellEditor(new CellEditor(new PayRateTablePercentVerifier()));
         DefaultTableModel model = new DefaultTableModel() {
 
             @Override
