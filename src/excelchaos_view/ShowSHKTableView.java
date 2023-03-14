@@ -34,8 +34,4 @@ public class ShowSHKTableView extends JPanel {
         revalidate();
         repaint();
     }
-
-    public CustomTable getTable(){
-        return shkTable;
-    }
 }
