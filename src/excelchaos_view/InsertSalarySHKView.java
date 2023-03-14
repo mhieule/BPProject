@@ -1,6 +1,7 @@
 package excelchaos_view;
 
 import excelchaos_model.database.EmployeeDataManager;
+import excelchaos_model.inputVerifier.SalaryVerifier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,11 +62,13 @@ public class InsertSalarySHKView extends JPanel {
         setConstraintsLabel(salary, 2);
         tfSalary = new JTextField();
         setConstraintsTextField(tfSalary, 2);
+        tfSalary.setInputVerifier(new SalaryVerifier());
 
         extraCost = new JLabel("Jahressonderzahlung");
         setConstraintsLabel(extraCost, 3);
         tfExtraCost = new JTextField();
         setConstraintsTextField(tfExtraCost, 3);
+        tfExtraCost.setInputVerifier(new SalaryVerifier());
 
         puffer = new JLabel(" ");
         setConstraintsPuffer(puffer, 4);

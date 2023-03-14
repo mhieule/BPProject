@@ -25,7 +25,6 @@ public class InsertSalarySHKController implements ActionListener, ItemListener {
 
     private SalaryTableLookUp salaryTableLookUp = new SalaryTableLookUp();
 
-
     private String addSalaryTab = "Gehaltseintrag bearbeiten";
 
     public InsertSalarySHKController(MainFrameController mainFrameController) {

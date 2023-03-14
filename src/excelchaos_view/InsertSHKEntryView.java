@@ -1,6 +1,7 @@
 package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
+import excelchaos_model.inputVerifier.SalaryVerifier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,16 +52,19 @@ public class InsertSHKEntryView extends JPanel {
         setConstraintsLabel(basePayRateLabel, 1);
         basePayRateTextfield = new JTextField();
         setConstraintsTextField(basePayRateTextfield, 1);
+        basePayRateTextfield.setInputVerifier(new SalaryVerifier());
 
         extendedPayRateLabel = new JLabel("SHK erhöhter Stundensatz");
         setConstraintsLabel(extendedPayRateLabel, 2);
         extendedPayRateTextField = new JTextField();
         setConstraintsTextField(extendedPayRateTextField, 2);
+        basePayRateTextfield.setInputVerifier(new SalaryVerifier());
 
         WHKPayRateLabel = new JLabel("WHK");
         setConstraintsLabel(WHKPayRateLabel, 3);
         WHKPayRateTextfield = new JTextField();
         setConstraintsTextField(WHKPayRateTextfield, 3);
+        basePayRateTextfield.setInputVerifier(new SalaryVerifier());
 
         puffer = new JLabel(" ");
         setConstraintsPuffer(puffer, 4);

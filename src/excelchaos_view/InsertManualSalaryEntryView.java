@@ -2,6 +2,7 @@ package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import excelchaos_model.database.EmployeeDataManager;
+import excelchaos_model.inputVerifier.SalaryVerifier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,6 +63,7 @@ public class InsertManualSalaryEntryView extends JPanel {
         setConstraintsLabel(newSalaryLabel, 2);
         tfNewSalary = new JTextField();
         setConstraintsTextField(tfNewSalary, 2);
+        tfNewSalary.setInputVerifier(new SalaryVerifier());
 
 
         commentLabel = new JLabel("Kommentar");

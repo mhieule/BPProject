@@ -273,7 +273,7 @@ public class PayRateTableCalculationModel {
         String vbl = pattern.matcher(removeStringWithoutMoneyValues[10]).replaceAll("");
         result[10] = vbl;
 
-        pattern = Pattern.compile("mtl. Kosten ohne JSZ ");
+        pattern = Pattern.compile("mtl\\. Kosten ohne JSZ ");
         String monthlywithout = pattern.matcher(removeStringWithoutMoneyValues[11]).replaceAll("");
         result[11] = monthlywithout;
 
@@ -281,7 +281,7 @@ public class PayRateTableCalculationModel {
         String monthlyjsz = pattern.matcher(removeStringWithoutMoneyValues[12]).replaceAll("");
         result[12] = monthlyjsz;
 
-        pattern = Pattern.compile("mtl. Kosten mit JSZ ");
+        pattern = Pattern.compile("mtl\\. Kosten mit JSZ ");
         String monthlywith = pattern.matcher(removeStringWithoutMoneyValues[13]).replaceAll("");
         result[13] = monthlywith;
 
