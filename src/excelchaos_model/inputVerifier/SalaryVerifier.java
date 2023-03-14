@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.math.BigDecimal;
 
 public class SalaryVerifier extends InputVerifier {
-
     @Override
     public boolean verify(JComponent input) {
         String text = ((JTextField) input).getText();
