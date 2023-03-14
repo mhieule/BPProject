@@ -44,9 +44,9 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             frameController.getManualSalaryEntryController().showManualSalaryEntryView(frameController);
         } else if (e.getSource() == sideMenu.getSalaryIncrease()) {
             frameController.getSalaryIncreaseController().showManualSalaryEntryView(frameController);
-        } else if (e.getSource() == sideMenu.getGehaltshistorie()) {
+        } /*else if (e.getSource() == sideMenu.getGehaltshistorie()) {
            // frameController.getSalaryHistoryController().showSalaryHistoryView(frameController); //TODO Wieder hinzufügen
-        } else if (e.getSource() == sideMenu.getShowE13Tables()) {
+        }*/ else if (e.getSource() == sideMenu.getShowE13Tables()) {
             PayRateTablesController E13Controller = new PayRateTablesController(frameController);
             E13Controller.setTitle("E13 Entgelttabellen");
             E13Controller.showPayRatesView(frameController);
@@ -85,7 +85,7 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             sideMenu.getPayRateToggleButtonPanel().setPreferredSize(new Dimension(150, 45));
             sideMenu.payRateCloseArrowLabelVisible();
         } else if (e.getStateChange() == ItemEvent.SELECTED && e.getSource() == sideMenu.getSalaryToggleButton()) {
-            sideMenu.getSalaryPanel().setPreferredSize(new Dimension(150, 164));
+            sideMenu.getSalaryPanel().setPreferredSize(new Dimension(150, 135));
             sideMenu.getSalaryTableButtonPanel().setVisible(true);
             sideMenu.getSalaryToggleButtonPanel().setBorder(null);
             sideMenu.getSalaryToggleButtonPanel().setPreferredSize(new Dimension(150, 35));

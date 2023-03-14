@@ -24,7 +24,7 @@ public class SalaryProjection {
     private ContractDataManager contractDataManager = ContractDataManager.getInstance();
 
 
-    public String[][] getNextPayLevelProjection() {
+    public String[][] getNextPayLevelProjection() { //TODO Mit SHK Testen
         int lines = contractDataManager.getRowCount();
         String[][] resultData = new String[lines][];
         int currentIndex = 0;

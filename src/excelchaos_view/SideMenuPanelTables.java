@@ -12,7 +12,7 @@ public class SideMenuPanelTables extends JPanel {
     private JButton personenliste;
     private JButton projektliste;
     private JButton gehaltsliste;
-    private JButton gehaltshistorie;
+   // private JButton gehaltshistorie;
     private JButton salaryIncrease;
     private JButton manualSalary;
     private JButton showE13Tables;
@@ -135,17 +135,17 @@ public class SideMenuPanelTables extends JPanel {
         manualSalary = new JButton("Gehaltsanpassung SAP");
         manualSalary.setMargin(new Insets(2,0,2,0));
         salaryIncrease = new JButton("Gehaltserhöhung");
-        gehaltshistorie = new JButton("Gehaltshistorie");
+      //  gehaltshistorie = new JButton("Gehaltshistorie");
 
         gehaltsliste.setPreferredSize(new Dimension(140, RegularButtonHeigt));
         manualSalary.setPreferredSize(new Dimension(140, RegularButtonHeigt));
         salaryIncrease.setPreferredSize(new Dimension(140, RegularButtonHeigt));
-        gehaltshistorie.setPreferredSize(new Dimension(140, RegularButtonHeigt));
+       // gehaltshistorie.setPreferredSize(new Dimension(140, RegularButtonHeigt));
 
         salaryTableButtonPanel.add(gehaltsliste);
         salaryTableButtonPanel.add(manualSalary);
         salaryTableButtonPanel.add(salaryIncrease);
-        salaryTableButtonPanel.add(gehaltshistorie);
+        //salaryTableButtonPanel.add(gehaltshistorie);
 
         salaryTableButtonPanel.setVisible(false);
         salaryPanel.add(salaryTableButtonPanel, BorderLayout.CENTER);
@@ -272,9 +272,9 @@ public class SideMenuPanelTables extends JPanel {
         return gehaltsliste;
     }
 
-    public JButton getGehaltshistorie() {
+   /* public JButton getGehaltshistorie() {
         return gehaltshistorie;
-    }
+    }*/
 
     public JToggleButton getPayRates() {
         return payRatesToogleButton;
@@ -355,7 +355,7 @@ public class SideMenuPanelTables extends JPanel {
         gehaltsliste.addActionListener(l);
         manualSalary.addActionListener(l);
         salaryIncrease.addActionListener(l);
-        gehaltshistorie.addActionListener(l);
+        //gehaltshistorie.addActionListener(l);
         arrowButtonWest.addActionListener(l);
         showE13Tables.addActionListener(l);
         showE14Tables.addActionListener(l);

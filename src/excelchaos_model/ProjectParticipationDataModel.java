@@ -61,7 +61,7 @@ public class ProjectParticipationDataModel {
         Project project = projectManager.getProject(projectId);
         Date start_date = project.getStart_date();
         Date end_date = project.getDuration();
-        DateFormat formatter = new SimpleDateFormat("MMMM-yyyy");
+        DateFormat formatter = new SimpleDateFormat("MMM-yyyy");
 
         Calendar beginCalendarArrayLength = Calendar.getInstance();
         Calendar finishCalendarArrayLength = Calendar.getInstance();
@@ -129,7 +129,7 @@ public class ProjectParticipationDataModel {
 
     public String[][] getTableData(int projectId, int numOfRows, String[] months, String[] employeeNames) throws ParseException {
         String[][] tableData = new String[numOfRows * 2][months.length];
-        DateFormat format = new SimpleDateFormat("MMMM-yyyy");
+        DateFormat format = new SimpleDateFormat("MMM-yyyy");
         int[] personIdsForProject = getPersonIdsForProject(projectId);
         for (int row = 0; row < tableData.length; row++) {
             int lastCorrectGivenValue = 0;
@@ -173,7 +173,7 @@ public class ProjectParticipationDataModel {
             monthlyProjectPersonalCost[i] = new BigDecimal(0);
         }
         int lastCorrectGivenValue = 0;
-        DateFormat format = new SimpleDateFormat("MMMM-yyyy");
+        DateFormat format = new SimpleDateFormat("MMM-yyyy");
         int[] personIdsForProject = getPersonIdsForProject(projectId);
         for (int row = 0; row < numOfRows * 2; row++) {
             List<ProjectParticipation> projectParticipationsList = new ArrayList<>();
@@ -226,7 +226,7 @@ public class ProjectParticipationDataModel {
     private ArrayList<String> transformAllMonthsToSortedList() {
         ArrayList<String> allMonthsList = new ArrayList<String>(allShownMonths);
         allMonthsList.sort(new Comparator<String>() {
-            DateFormat format = new SimpleDateFormat("MMMM-yyyy");
+            DateFormat format = new SimpleDateFormat("MMM-yyyy");
 
             @Override
             public int compare(String firstDate, String secondDate) {
@@ -273,7 +273,7 @@ public class ProjectParticipationDataModel {
             }
         }
 
-        DateFormat format = new SimpleDateFormat("MMMM-yyyy");
+        DateFormat format = new SimpleDateFormat("MMM-yyyy");
         List<Project> allProjectsList = projectManager.getAllProjects();
         for (Project project : allProjectsList) {
             for (int i = 0; i < totalParticipations.length; i++) {
