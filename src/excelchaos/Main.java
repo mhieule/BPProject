@@ -8,7 +8,7 @@ import excelchaos_model.StartUp;
 
 public class Main {
     public static void main(String[] args) {
-        StartUp.performStartUp();
+        StartUp.performExistingDatabaseStartUp();
         BackEndUpdates.calculationsOnStartUp();
         new MainFrameController();
 

@@ -36,8 +36,6 @@ public class ProjectParticipationDataModel {
         allShownEmployeeNames = new HashSet<>();
     }
 
-    public ProjectParticipationDataModel() {
-    }
 
     public int[] getProjectIds() {
         return projectIds;

@@ -2,11 +2,13 @@ package excelchaos_model;
 
 import excelchaos_model.database.*;
 import excelchaos_model.export.CSVExporter;
+import excelchaos_view.layoutmanager.WrapLayout;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -113,7 +115,7 @@ public class StartUp {
     }
 
 
-    public static void performStartUp() {
+    public static void performExistingDatabaseStartUp() {
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         String currentDBPath;
 
@@ -164,4 +166,92 @@ public class StartUp {
         ProjectParticipationManager.setDatabaseURL(currentDBPath);
         SHKSalaryTableManager.setDatabaseURL(currentDBPath);
     }
+
+    public static void performStartUpNewDatabase(){
+        Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
+        String currentDBPath;
+
+        if (!prefs.get(DatabaseAlreadyChosen, "false").equals("true")) {
+            currentDBPath = chooseDatabasePath();
+
+            prefs.put(DatabaseAlreadyChosen, "true");
+        } else {
+            currentDBPath = prefs.get(LAST_USED_DATABASE,
+                    new File(".").getAbsolutePath());
+        }
+
+        String snapShotFolderPath;
+        if (!prefs.get(SnapShotFolderChosen, "false").equals("true")) {
+            snapShotFolderPath = selectSnapshotFolder();
+            prefs.put(SnapShotFolderChosen, "true");
+        } else {
+            snapShotFolderPath = prefs.get(LAST_USED_SNAPSHOT_FOLDER,
+                    new File(".").getAbsolutePath());
+        }
+        if(currentDBPath == null){
+            JOptionPane.showConfirmDialog(null, "Bitte starten Sie das Programm neu und wählen eine korrekte Datenbank", "Fehler! Keine gültige Datenbank ausgewählt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
+        File databaseExists = new File(currentDBPath);
+        if(!databaseExists.exists() && !databaseExists.isDirectory()) {
+            currentDBPath = chooseDatabasePath();
+            prefs.put(DatabaseAlreadyChosen, "true");
+        }
+        if(snapShotFolderPath == null){
+            JOptionPane.showConfirmDialog(null, "Bitte starten Sie das Programm neu und wählen einen korrekten Snapshot Speicherort!", "Fehler! Keinen gültigen Snapshot Speicherort ausgewählt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
+        File snapShotFolderExists = new File(snapShotFolderPath);
+        if(!snapShotFolderExists.exists() && !snapShotFolderExists.isDirectory()){
+            snapShotFolderPath = selectSnapshotFolder();
+            prefs.put(SnapShotFolderChosen, "true");
+        }
+
+        //createSnapshotOfCurrentDatabase(currentDBPath, snapShotFolderPath); //TODO Wenn Snapshots durchgeführt werden sollen den Kommentar wieder entfernen.
+        ContractDataManager.setDatabaseURL(currentDBPath);
+        EmployeeDataManager.setDatabaseURL(currentDBPath);
+        ManualSalaryEntryManager.setDatabaseURL(currentDBPath);
+        SalaryIncreaseHistoryManager.setDatabaseURL(currentDBPath);
+        SalaryTableManager.setDatabaseURL(currentDBPath);
+        ProjectManager.setDatabaseURL(currentDBPath);
+        ProjectCategoryManager.setDatabaseURL(currentDBPath);
+        ProjectFunderManager.setDatabaseURL(currentDBPath);
+        ProjectParticipationManager.setDatabaseURL(currentDBPath);
+        SHKSalaryTableManager.setDatabaseURL(currentDBPath);
+    }
+
+
+    public void noPreviousPathSet(){
+        JDialog databaseDialog = new JDialog();
+        databaseDialog.setLayout(new WrapLayout());
+        databaseDialog.setTitle("Datenbank erstellen oder auswählen");
+        JButton cancelButton = new JButton("Abbrechen");
+        JButton createNewDataBase = new JButton("Neue Datenbank erstellen");
+        JButton openExistingDatabase = new JButton("Bestehende Datenbank öffnen");
+
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showConfirmDialog(null, "Das Programm wird beendet.", "Es wurde nichts ausgewählt", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                System.exit(0);
+            }
+        });
+
+        openExistingDatabase.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performExistingDatabaseStartUp();
+            }
+        });
+
+        createNewDataBase.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+
+    }
+
 }
