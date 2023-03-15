@@ -15,8 +15,8 @@ import java.awt.event.ActionListener;
 
 public class IncreaseSalaryDialogView extends JDialog {
 
-    private EmployeeDataManager employeeDataManager=EmployeeDataManager.getInstance();
-    private ContractDataManager contractDataManager=ContractDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager= new EmployeeDataManager();
+    private ContractDataManager contractDataManager= new ContractDataManager();
     private JButton okayButton;
     private JButton closeButton;
 

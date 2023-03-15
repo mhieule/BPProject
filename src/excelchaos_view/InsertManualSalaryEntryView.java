@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.time.*;
 
 public class InsertManualSalaryEntryView extends JPanel {
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
     private JLabel nameList, newSalaryLabel, usageDateLabel, commentLabel, puffer;
 
     private JTextField tfNewSalary, tfComment;

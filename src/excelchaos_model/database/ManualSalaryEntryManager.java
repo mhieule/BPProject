@@ -25,13 +25,12 @@ public class ManualSalaryEntryManager {
 
     private static String databaseURL;
 
-    private static ManualSalaryEntryManager manualSalaryEntryManager;
 
     /**
      * Constructor creates database connection and DAO manager
      */
 
-    private ManualSalaryEntryManager() {
+    public ManualSalaryEntryManager() {
         try {
             String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
@@ -198,12 +197,7 @@ public class ManualSalaryEntryManager {
         return manualSalaryEntryList.size();
     }
 
-    public static ManualSalaryEntryManager getInstance() {
-        if(manualSalaryEntryManager == null){
-            manualSalaryEntryManager = new ManualSalaryEntryManager();
-        }
-        return manualSalaryEntryManager;
-    }
+
 
     public static void setDatabaseURL(String databaseURL) {
         ManualSalaryEntryManager.databaseURL = databaseURL;

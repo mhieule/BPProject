@@ -20,9 +20,7 @@ public class ProjectFunderManager {
 
     private static String databaseURL;
 
-    private static ProjectFunderManager projectFunderManager;
-
-    private ProjectFunderManager() {
+    public ProjectFunderManager() {
         try {
             String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
@@ -159,12 +157,6 @@ public class ProjectFunderManager {
         }
     }
 
-    public static ProjectFunderManager getInstance() {
-        if(projectFunderManager == null){
-            projectFunderManager = new ProjectFunderManager();
-        }
-        return projectFunderManager;
-    }
 
     public static void setDatabaseURL(String databaseURL) {
         ProjectFunderManager.databaseURL = databaseURL;

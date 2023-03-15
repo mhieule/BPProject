@@ -13,8 +13,8 @@ import java.util.List;
 
 public class EmployeeDataAccess {
 
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
-    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+    private ContractDataManager contractDataManager = new ContractDataManager();
 
     public String[][] getEmployeeDataFromDataBase() {
         int lines = employeeDataManager.getRowCount();

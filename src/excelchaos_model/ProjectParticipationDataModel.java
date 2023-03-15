@@ -12,10 +12,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ProjectParticipationDataModel {
-    private ProjectManager projectManager = ProjectManager.getInstance();
-    private ProjectParticipationManager projectParticipationManager = ProjectParticipationManager.getInstance();
+    private ProjectManager projectManager = new ProjectManager();
+    private ProjectParticipationManager projectParticipationManager = new ProjectParticipationManager();
 
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
     private int[] projectIds;
 
     private NewAndImprovedSalaryCalculation salaryCalculation = new NewAndImprovedSalaryCalculation();

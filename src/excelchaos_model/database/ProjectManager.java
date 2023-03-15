@@ -18,9 +18,8 @@ public class ProjectManager {
 
     private static String databaseURL;
 
-    private static ProjectManager projectManager;
 
-    private ProjectManager() {
+    public ProjectManager() {
         try {
             String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
@@ -139,12 +138,6 @@ public class ProjectManager {
         return rowCount;
     }
 
-    public static ProjectManager getInstance() {
-        if(projectManager == null){
-            projectManager = new ProjectManager();
-        }
-        return projectManager;
-    }
 
     public static void setDatabaseURL(String databaseURL) {
         ProjectManager.databaseURL = databaseURL;

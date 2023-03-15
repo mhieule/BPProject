@@ -9,14 +9,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ProjectManagerTest {
     @Test
     void testRemoveAll() {
-        var manager = ProjectManager.getInstance();
+        var manager = new ProjectManager();
         manager.removeAllProjects();
         assertEquals(manager.getAllProjects().size(), 0);
     }
 
     @Test
     void testGetValid() {
-        var manager = ProjectManager.getInstance();
+        var manager =new ProjectManager();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970, 12, 30);
@@ -37,7 +37,7 @@ public class ProjectManagerTest {
 
     @Test
     void testGetInvalid() {
-        var manager = ProjectManager.getInstance();
+        var manager = new ProjectManager();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970, 12, 30);
@@ -54,7 +54,7 @@ public class ProjectManagerTest {
 
     @Test
     void testRemoveValid() {
-        var manager = ProjectManager.getInstance();
+        var manager = new ProjectManager();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970, 12, 30);
@@ -72,7 +72,7 @@ public class ProjectManagerTest {
 
     @Test
     void testRemoveInvalid() {
-        var manager = ProjectManager.getInstance();
+        var manager = new ProjectManager();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970, 12, 30);
@@ -90,7 +90,7 @@ public class ProjectManagerTest {
 
     @Test
     void testGetAll() {
-        var manager = ProjectManager.getInstance();
+        var manager = new ProjectManager();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970, 12, 30);
@@ -117,7 +117,7 @@ public class ProjectManagerTest {
 
     @Test
     void testGetRowCount() {
-        var manager = ProjectManager.getInstance();
+        var manager = new ProjectManager();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970, 12, 30);
@@ -135,14 +135,14 @@ public class ProjectManagerTest {
 
     @Test
     void testGetRowCountEmpty() {
-        var manager = ProjectManager.getInstance();
+        var manager = new ProjectManager();
         manager.removeAllProjects();
         assertEquals(manager.getRowCount(), 0);
     }
 
     @Test
     void testUpdateValid() {
-        var manager = ProjectManager.getInstance();
+        var manager = new ProjectManager();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970, 12, 30);
@@ -166,7 +166,7 @@ public class ProjectManagerTest {
 
     @Test
     void testUpdateInvalid() {
-        var manager = ProjectManager.getInstance();
+        var manager = new ProjectManager();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970, 12, 30);
@@ -190,7 +190,7 @@ public class ProjectManagerTest {
 
     @Test
     void testGetNextID() {
-        var manager = ProjectManager.getInstance();
+        var manager = new ProjectManager();
         manager.removeAllProjects();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970, 12, 30);
@@ -206,7 +206,7 @@ public class ProjectManagerTest {
 
     @Test
     void testGetNextIDEmpty() {
-        var manager = ProjectManager.getInstance();
+        var manager = new ProjectManager();
         manager.removeAllProjects();
         assertEquals(manager.getNextID(), 1);
     }

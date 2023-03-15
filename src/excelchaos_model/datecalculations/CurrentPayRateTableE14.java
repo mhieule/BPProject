@@ -13,7 +13,7 @@ public class CurrentPayRateTableE14 {
 
     private final String paygrade = "E14";
 
-    private SalaryTableManager salaryTableManager = SalaryTableManager.getInstance();
+    private SalaryTableManager salaryTableManager = new SalaryTableManager();
 
     private List<String> tableNames;
 

@@ -7,7 +7,7 @@ import excelchaos_model.database.EmployeeDataManager;
 public class Updater {
     public MainFrameController frameController;
 
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
     public Updater(MainFrameController mainFrameController) {
         frameController = mainFrameController;

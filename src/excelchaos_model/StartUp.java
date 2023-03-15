@@ -5,6 +5,7 @@ import excelchaos_model.export.CSVExporter;
 import excelchaos_view.layoutmanager.WrapLayout;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -81,11 +82,11 @@ public class StartUp {
         String snapshotName = "Excelchaos " + formattedDateTime + ".db";
         snapShotFolderPath = snapShotFolderPath + "\\" + snapshotName;
         try {
-            if(currentDBPath == null){
+            if (currentDBPath == null) {
                 JOptionPane.showConfirmDialog(null, "Bitte starten Sie das Programm neu und wählen eine korrekte Datenbank!", "Fehler! Keine gültige Datenbank ausgewählt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
-            if(snapShotFolderPath == null){
+            if (snapShotFolderPath == null) {
                 JOptionPane.showConfirmDialog(null, "Bitte starten Sie das Programm neu und wählen einen korrekten Snapshot Speicherort!", "Fehler! Keinen gültigen Snapshot Speicherort ausgewählt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
@@ -95,23 +96,23 @@ public class StartUp {
         }
     }
 
-    public static void createSnapshot(){
+    public static void createSnapshot() {
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         String currentDBPath = prefs.get(LAST_USED_DATABASE,
                 new File(".").getAbsolutePath());
         String snapShotFolderPath = prefs.get(LAST_USED_SNAPSHOT_FOLDER,
                 new File(".").getAbsolutePath());
         File databaseExists = new File(currentDBPath);
-        if(!databaseExists.exists() && !databaseExists.isDirectory()) {
+        if (!databaseExists.exists() && !databaseExists.isDirectory()) {
             currentDBPath = chooseDatabasePath();
             prefs.put(DatabaseAlreadyChosen, "true");
         }
         File snapShotFolderExists = new File(snapShotFolderPath);
-        if(!snapShotFolderExists.exists() && !snapShotFolderExists.isDirectory()){
+        if (!snapShotFolderExists.exists() && !snapShotFolderExists.isDirectory()) {
             snapShotFolderPath = selectSnapshotFolder();
             prefs.put(SnapShotFolderChosen, "true");
         }
-        createSnapshotOfCurrentDatabase(currentDBPath,snapShotFolderPath);
+        createSnapshotOfCurrentDatabase(currentDBPath, snapShotFolderPath);
     }
 
 
@@ -135,23 +136,33 @@ public class StartUp {
             snapShotFolderPath = prefs.get(LAST_USED_SNAPSHOT_FOLDER,
                     new File(".").getAbsolutePath());
         }
-        if(currentDBPath == null){
+        if (currentDBPath == null) {
             JOptionPane.showConfirmDialog(null, "Bitte starten Sie das Programm neu und wählen eine korrekte Datenbank", "Fehler! Keine gültige Datenbank ausgewählt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
         File databaseExists = new File(currentDBPath);
-        if(!databaseExists.exists() && !databaseExists.isDirectory()) {
+        if (!databaseExists.exists() && !databaseExists.isDirectory()) {
             currentDBPath = chooseDatabasePath();
             prefs.put(DatabaseAlreadyChosen, "true");
         }
-        if(snapShotFolderPath == null){
+        if (snapShotFolderPath == null) {
             JOptionPane.showConfirmDialog(null, "Bitte starten Sie das Programm neu und wählen einen korrekten Snapshot Speicherort!", "Fehler! Keinen gültigen Snapshot Speicherort ausgewählt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
         File snapShotFolderExists = new File(snapShotFolderPath);
-        if(!snapShotFolderExists.exists() && !snapShotFolderExists.isDirectory()){
+        if (!snapShotFolderExists.exists() && !snapShotFolderExists.isDirectory()) {
             snapShotFolderPath = selectSnapshotFolder();
             prefs.put(SnapShotFolderChosen, "true");
+        }
+
+        if (currentDBPath == null) {
+            JOptionPane.showConfirmDialog(null, "Bitte starten Sie das Programm neu und wählen eine korrekte Datenbank", "Fehler! Keine gültige Datenbank ausgewählt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
+
+        if (snapShotFolderPath == null) {
+            JOptionPane.showConfirmDialog(null, "Bitte starten Sie das Programm neu und wählen einen korrekten Snapshot Speicherort!", "Fehler! Keinen gültigen Snapshot Speicherort ausgewählt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
 
         //createSnapshotOfCurrentDatabase(currentDBPath, snapShotFolderPath); //TODO Wenn Snapshots durchgeführt werden sollen den Kommentar wieder entfernen.
@@ -167,10 +178,9 @@ public class StartUp {
         SHKSalaryTableManager.setDatabaseURL(currentDBPath);
     }
 
-    public static void performStartUpNewDatabase(){
+    public static void performStartUpNewDatabase() {
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         String currentDBPath;
-
         if (!prefs.get(DatabaseAlreadyChosen, "false").equals("true")) {
             currentDBPath = chooseDatabasePath();
 
@@ -188,68 +198,92 @@ public class StartUp {
             snapShotFolderPath = prefs.get(LAST_USED_SNAPSHOT_FOLDER,
                     new File(".").getAbsolutePath());
         }
-        if(currentDBPath == null){
+        if (currentDBPath == null) {
             JOptionPane.showConfirmDialog(null, "Bitte starten Sie das Programm neu und wählen eine korrekte Datenbank", "Fehler! Keine gültige Datenbank ausgewählt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
         File databaseExists = new File(currentDBPath);
-        if(!databaseExists.exists() && !databaseExists.isDirectory()) {
+        if (!databaseExists.exists() && !databaseExists.isDirectory()) {
             currentDBPath = chooseDatabasePath();
             prefs.put(DatabaseAlreadyChosen, "true");
         }
-        if(snapShotFolderPath == null){
+        if (snapShotFolderPath == null) {
             JOptionPane.showConfirmDialog(null, "Bitte starten Sie das Programm neu und wählen einen korrekten Snapshot Speicherort!", "Fehler! Keinen gültigen Snapshot Speicherort ausgewählt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
         File snapShotFolderExists = new File(snapShotFolderPath);
-        if(!snapShotFolderExists.exists() && !snapShotFolderExists.isDirectory()){
+        if (!snapShotFolderExists.exists() && !snapShotFolderExists.isDirectory()) {
             snapShotFolderPath = selectSnapshotFolder();
             prefs.put(SnapShotFolderChosen, "true");
         }
 
         //createSnapshotOfCurrentDatabase(currentDBPath, snapShotFolderPath); //TODO Wenn Snapshots durchgeführt werden sollen den Kommentar wieder entfernen.
-        ContractDataManager.setDatabaseURL(currentDBPath);
-        EmployeeDataManager.setDatabaseURL(currentDBPath);
-        ManualSalaryEntryManager.setDatabaseURL(currentDBPath);
-        SalaryIncreaseHistoryManager.setDatabaseURL(currentDBPath);
-        SalaryTableManager.setDatabaseURL(currentDBPath);
-        ProjectManager.setDatabaseURL(currentDBPath);
-        ProjectCategoryManager.setDatabaseURL(currentDBPath);
-        ProjectFunderManager.setDatabaseURL(currentDBPath);
-        ProjectParticipationManager.setDatabaseURL(currentDBPath);
-        SHKSalaryTableManager.setDatabaseURL(currentDBPath);
+
+    }
+
+    private static void setupDatabase(String databasePath) {
+        ContractDataManager.setDatabaseURL(databasePath);
+        EmployeeDataManager.setDatabaseURL(databasePath);
+        ManualSalaryEntryManager.setDatabaseURL(databasePath);
+        SalaryIncreaseHistoryManager.setDatabaseURL(databasePath);
+        SalaryTableManager.setDatabaseURL(databasePath);
+        ProjectManager.setDatabaseURL(databasePath);
+        ProjectCategoryManager.setDatabaseURL(databasePath);
+        ProjectFunderManager.setDatabaseURL(databasePath);
+        ProjectParticipationManager.setDatabaseURL(databasePath);
+        SHKSalaryTableManager.setDatabaseURL(databasePath);
+    }
+
+    public static String selectDatabasePath() {
+        Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
+        JFileChooser databaseFolderChooser = new JFileChooser(prefs.get(LAST_USED_DATABASE,
+                new File(".").getAbsolutePath()));
+        databaseFolderChooser.setDialogTitle("Datenbank Speicherort festlegen");
+        databaseFolderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        databaseFolderChooser.setAcceptAllFileFilterUsed(false);
+
+        if (databaseFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            prefs.put(LAST_USED_DATABASE, databaseFolderChooser.getSelectedFile().getAbsolutePath());
+            return prefs.get(LAST_USED_DATABASE,
+                    new File(".").getAbsolutePath());
+        } else return null;
     }
 
 
-    public void noPreviousPathSet(){
-        JDialog databaseDialog = new JDialog();
-        databaseDialog.setLayout(new WrapLayout());
-        databaseDialog.setTitle("Datenbank erstellen oder auswählen");
-        JButton cancelButton = new JButton("Abbrechen");
-        JButton createNewDataBase = new JButton("Neue Datenbank erstellen");
-        JButton openExistingDatabase = new JButton("Bestehende Datenbank öffnen");
 
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showConfirmDialog(null, "Das Programm wird beendet.", "Es wurde nichts ausgewählt", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+    public static void showStartActionsDialog() {
+        Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
+        String[] options = {"Neue Datenbank erstellen", "Bestehende Datenbank öffnen", "Beenden"};
+        int option = JOptionPane.showOptionDialog(null, "Verwaltungswerkzeug für Fachgebiete", "Parallel Programming", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+
+        if (option == 0) {
+            String folderPath = selectDatabasePath();
+            if (folderPath == null || folderPath.equals("")) {
+                JOptionPane.showConfirmDialog(null, "Der Dateipfad war ungültig, das Programm wird beendet.", "Es wurde kein korrekter Pfad festgelegt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
-        });
-
-        openExistingDatabase.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                performExistingDatabaseStartUp();
+            String fileName = JOptionPane.showInputDialog(null, "Bitte benenne die Datei:", "Eingabe eines Dateinamens", JOptionPane.QUESTION_MESSAGE);
+            if (fileName == null || fileName.equals("")) {
+                JOptionPane.showConfirmDialog(null, "Der Dateiname war ungültig, das Programm wird beendet.", "Es wurde kein Name festgelegt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                System.exit(0);
             }
-        });
-
-        createNewDataBase.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
+            fileName = fileName +".db";
+            String fullPathName = folderPath + "\\" + fileName;
+            prefs.put(DatabaseAlreadyChosen, "true");
+            prefs.put(LAST_USED_DATABASE, fullPathName);
+            setupDatabase(fullPathName);
+            performStartUpNewDatabase();
+            return;
+        }
+        else if (option == 1) {
+            performExistingDatabaseStartUp();
+            return;
+        }
+        else if (option == 2) {
+            System.exit(0);
+        } else {
+            System.exit(0);
+        }
 
 
     }

@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class InsertSHKEntryController implements ActionListener {
 
-    private SHKSalaryTableManager shkSalaryTableManager = SHKSalaryTableManager.getInstance();
+    private SHKSalaryTableManager shkSalaryTableManager = new SHKSalaryTableManager();
 
     private String title = "SHK Stundensätze hinzufügen";
 

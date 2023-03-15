@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
 
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
     private JComboBox nameComboBox;
 
     private JButton doSalaryIncrease, deleteSalaryEntry, exportToCSV;//,editSalaryEntry; TODO Edit Button implementieren, Vielleicht auch nicht

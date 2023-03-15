@@ -19,8 +19,8 @@ import java.util.Date;
 
 public class InsertManualSalaryEntryController implements ActionListener {
 
-    private ManualSalaryEntryManager manualSalaryEntryManager = ManualSalaryEntryManager.getInstance();
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
     private String title = "Gehaltseintrag hinzufügen";
 

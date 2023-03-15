@@ -11,7 +11,7 @@ import java.awt.event.ItemListener;
 
 public class InsertSalarySHKView extends JPanel {
 
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
     private JLabel nameList, hiwiTypeOfPayment, salary, extraCost, puffer;
 

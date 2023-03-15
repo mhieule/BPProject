@@ -20,9 +20,8 @@ public class SalaryTableManager {
 
     private static String databaseURL;
 
-    private static SalaryTableManager salaryTableManager;
 
-    private SalaryTableManager() {
+    public SalaryTableManager() {
         try {
             String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
@@ -129,12 +128,6 @@ public class SalaryTableManager {
         }
     }
 
-    public static SalaryTableManager getInstance() {
-        if(salaryTableManager == null){
-            salaryTableManager = new SalaryTableManager();
-        }
-        return salaryTableManager;
-    }
 
     public static void setDatabaseURL(String databaseURL) {
         SalaryTableManager.databaseURL = databaseURL;

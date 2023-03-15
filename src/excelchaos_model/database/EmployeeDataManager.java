@@ -23,13 +23,12 @@ public class EmployeeDataManager {
 
     private static String databaseURL;
 
-    private static EmployeeDataManager employeeDataManager;
 
     /**
      * Constructor creates database connection and DAO manager
      */
 
-    private EmployeeDataManager() {
+    public EmployeeDataManager() {
         try {
             String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
@@ -239,12 +238,6 @@ public class EmployeeDataManager {
         }
     }
 
-    public static EmployeeDataManager getInstance() {
-        if(employeeDataManager == null){
-            employeeDataManager = new EmployeeDataManager();
-        }
-        return employeeDataManager;
-    }
 
     public static void setDatabaseURL(String databaseURL) {
         EmployeeDataManager.databaseURL = databaseURL;

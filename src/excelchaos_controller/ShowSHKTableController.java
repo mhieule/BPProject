@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ShowSHKTableController implements TableModelListener {
 
-    private SHKSalaryTableManager shkSalaryTableManager = SHKSalaryTableManager.getInstance();
+    private SHKSalaryTableManager shkSalaryTableManager = new SHKSalaryTableManager();
 
     private ShowSHKTableView showSHKTableView;
 

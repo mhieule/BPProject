@@ -21,9 +21,8 @@ public class SalaryIncreaseHistoryManager {
 
     private static String databaseURL;
 
-    private static SalaryIncreaseHistoryManager salaryIncreaseHistoryManager;
 
-    private SalaryIncreaseHistoryManager() {
+    public SalaryIncreaseHistoryManager() {
         try {
             String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
@@ -136,12 +135,6 @@ public class SalaryIncreaseHistoryManager {
         return salaryIncreaseHistoryList.size();
     }
 
-    public static SalaryIncreaseHistoryManager getInstance() {
-        if(salaryIncreaseHistoryManager == null){
-            salaryIncreaseHistoryManager = new SalaryIncreaseHistoryManager();
-        }
-        return salaryIncreaseHistoryManager;
-    }
 
     public static void setDatabaseURL(String databaseURL) {
         SalaryIncreaseHistoryManager.databaseURL = databaseURL;

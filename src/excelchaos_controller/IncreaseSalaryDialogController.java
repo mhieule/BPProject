@@ -19,9 +19,9 @@ public class IncreaseSalaryDialogController implements ActionListener {
     private MainFrameController frameController;
     private IncreaseSalaryDialogView increaseSalaryDialogView;
 
-    private SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = SalaryIncreaseHistoryManager.getInstance();
-    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = new SalaryIncreaseHistoryManager();
+    private ContractDataManager contractDataManager = new ContractDataManager();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
     private SalaryListView salaryListView;
     private boolean isProjectedColumnOpened;
     private String employeeName;

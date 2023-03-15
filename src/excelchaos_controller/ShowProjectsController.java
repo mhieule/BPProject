@@ -14,10 +14,10 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ShowProjectsController implements ActionListener, TableModelListener {
-    private ProjectManager projectManager = ProjectManager.getInstance();
-    private ProjectCategoryManager projectCategoryManager = ProjectCategoryManager.getInstance();
-    private ProjectFunderManager projectFunderManager = ProjectFunderManager.getInstance();
-    private ProjectParticipationManager projectParticipationManager = ProjectParticipationManager.getInstance();
+    private ProjectManager projectManager = new ProjectManager();
+    private ProjectCategoryManager projectCategoryManager = new ProjectCategoryManager();
+    private ProjectFunderManager projectFunderManager = new ProjectFunderManager();
+    private ProjectParticipationManager projectParticipationManager = new ProjectParticipationManager();
     private ShowProjectsView showProjectsView;
     private MainFrameController frameController;
     private ToolbarShowProjectsController toolbarShowProjects;

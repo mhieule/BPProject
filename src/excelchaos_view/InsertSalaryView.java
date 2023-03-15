@@ -11,7 +11,7 @@ import java.awt.event.ItemListener;
 
 public class InsertSalaryView extends JPanel {
 
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
     private JLabel nameList, group, level, salary, extraCost, vblState, puffer;
 

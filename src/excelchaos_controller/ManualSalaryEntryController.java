@@ -22,8 +22,8 @@ import java.util.List;
 
 public class ManualSalaryEntryController implements ItemListener, TableModelListener {
 
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
-    private ManualSalaryEntryManager manualSalaryEntryManager = ManualSalaryEntryManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+    private ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
     private ManualSalaryEntryView salaryEntryView;
     private ToolbarManualSalaryEntryController toolbarManualSalaryEntry;
     private MainFrameController frameController;

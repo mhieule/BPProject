@@ -19,9 +19,7 @@ public class SHKSalaryTableManager {
 
     private static String databaseURL;
 
-    private static SHKSalaryTableManager shkSalaryTableManager;
-
-    private SHKSalaryTableManager() {
+    public SHKSalaryTableManager() {
         try {
             String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
@@ -152,12 +150,6 @@ public class SHKSalaryTableManager {
         }
     }
 
-    public static SHKSalaryTableManager getInstance() {
-        if(shkSalaryTableManager == null){
-            shkSalaryTableManager = new SHKSalaryTableManager();
-        }
-        return shkSalaryTableManager;
-    }
 
     public static void setDatabaseURL(String databaseURL) {
         SHKSalaryTableManager.databaseURL = databaseURL;

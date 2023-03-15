@@ -8,14 +8,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ProjectFunderManagerTest {
     @Test
     void testRemoveAll(){
-        var manager = ProjectFunderManager.getInstance();
+        var manager =  new ProjectFunderManager();
         manager.removeAllProjectFunder();
         assertEquals(manager.getAllProjectFunder().size(), 0);
     }
 
     @Test
     void testGetValid(){
-        var manager = ProjectFunderManager.getInstance();
+        var manager = new ProjectFunderManager();
         manager.removeAllProjectFunder();
         var projectFunder = new ProjectFunder(1, 1, "test_1", "test_1", "test_1");
         manager.addProjectFunder(projectFunder);
@@ -29,7 +29,7 @@ public class ProjectFunderManagerTest {
 
     @Test
     void testGetInvalid(){
-        var manager = ProjectFunderManager.getInstance();
+        var manager = new ProjectFunderManager();
         manager.removeAllProjectFunder();
         var projectFunder = new ProjectFunder(1, 1, "test_1", "test_1", "test_1");
         manager.addProjectFunder(projectFunder);
@@ -39,7 +39,7 @@ public class ProjectFunderManagerTest {
 
     @Test
     void testRemoveValid(){
-        var manager = ProjectFunderManager.getInstance();
+        var manager = new ProjectFunderManager();
         manager.removeAllProjectFunder();
         var projectFunder = new ProjectFunder(1, 1, "test_1", "test_1", "test_1");
         manager.addProjectFunder(projectFunder);
@@ -50,7 +50,7 @@ public class ProjectFunderManagerTest {
 
     @Test
     void testRemoveInvalid(){
-        var manager = ProjectFunderManager.getInstance();
+        var manager = new ProjectFunderManager();
         manager.removeAllProjectFunder();
         var projectFunder = new ProjectFunder(1, 1, "test_1", "test_1", "test_1");
         manager.addProjectFunder(projectFunder);
@@ -61,7 +61,7 @@ public class ProjectFunderManagerTest {
 
     @Test
     void testGetAll(){
-        var manager = ProjectFunderManager.getInstance();
+        var manager = new ProjectFunderManager();
         manager.removeAllProjectFunder();
         var projectFunders = new ProjectFunder[10];
         for (int i = 0; i < 10; i++){
@@ -81,7 +81,7 @@ public class ProjectFunderManagerTest {
 
     @Test
     void testGetRowCount(){
-        var manager = ProjectFunderManager.getInstance();
+        var manager = new ProjectFunderManager();
         manager.removeAllProjectFunder();
         for (int i = 0; i < 10; i++){
             var projectFunder = new ProjectFunder(i, i, "test_1", "test_1", "test_1");
@@ -92,14 +92,14 @@ public class ProjectFunderManagerTest {
 
     @Test
     void testGetRowCountEmpty(){
-        var manager = ProjectFunderManager.getInstance();
+        var manager = new ProjectFunderManager();
         manager.removeAllProjectFunder();
         assertEquals(manager.getRowCount(), 0);
     }
 
     @Test
     void testUpdateValid(){
-        var manager = ProjectFunderManager.getInstance();
+        var manager = new ProjectFunderManager();
         manager.removeAllProjectFunder();
         var projectFunder = new ProjectFunder(1, 1, "test_1", "test_1", "test_1");
         manager.addProjectFunder(projectFunder);
@@ -115,7 +115,7 @@ public class ProjectFunderManagerTest {
 
     @Test
     void testUpdateInvalid(){
-        var manager =ProjectFunderManager.getInstance();
+        var manager = new ProjectFunderManager();
         manager.removeAllProjectFunder();
         var projectFunder = new ProjectFunder(1, 1, "test_1", "test_1", "test_1");
         manager.addProjectFunder(projectFunder);
@@ -131,7 +131,7 @@ public class ProjectFunderManagerTest {
 
     @Test
     void testGetNextID(){
-        var manager =ProjectFunderManager.getInstance();
+        var manager = new ProjectFunderManager();
         manager.removeAllProjectFunder();
         var projectFunder = new ProjectFunder(1, 1, "test_1", "test_1", "test_1");
         manager.addProjectFunder(projectFunder);
@@ -140,7 +140,7 @@ public class ProjectFunderManagerTest {
 
     @Test
     void testGetNextIDEmpty(){
-        var manager = ProjectFunderManager.getInstance();
+        var manager = new ProjectFunderManager();
         manager.removeAllProjectFunder();
         assertEquals(manager.getNextID(), 1);
     }

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ToolbarManualSalaryEntryView extends SearchPanelToolbar {
 
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
     private JComboBox nameComboBox;
 

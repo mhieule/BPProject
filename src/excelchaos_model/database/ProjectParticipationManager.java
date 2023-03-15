@@ -20,9 +20,8 @@ public class ProjectParticipationManager {
 
     private static String databaseURL;
 
-    private static ProjectParticipationManager projectParticipationManager;
 
-    private ProjectParticipationManager() {
+    public ProjectParticipationManager() {
         try {
             String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
@@ -175,12 +174,6 @@ public class ProjectParticipationManager {
         return getProjectParticipationByProjectID(id).size();
     }
 
-    public static ProjectParticipationManager getInstance() {
-        if(projectParticipationManager == null){
-            projectParticipationManager = new ProjectParticipationManager();
-        }
-        return projectParticipationManager;
-    }
 
     public static void setDatabaseURL(String databaseURL) {
         ProjectParticipationManager.databaseURL = databaseURL;

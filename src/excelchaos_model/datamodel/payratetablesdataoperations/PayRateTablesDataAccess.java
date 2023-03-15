@@ -12,7 +12,7 @@ import java.util.Vector;
 
 public class PayRateTablesDataAccess {
 
-    private SalaryTableManager salaryTableManager = SalaryTableManager.getInstance();
+    private SalaryTableManager salaryTableManager = new SalaryTableManager();
 
     public Vector<String> getPayRateTablesNameVectorForList(String payGrade){
         PayRateTableNameDateSeperator payRateTableNameDateSeperator = new PayRateTableNameDateSeperator();

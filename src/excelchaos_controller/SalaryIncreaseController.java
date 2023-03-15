@@ -22,9 +22,9 @@ import java.util.List;
 
 public class SalaryIncreaseController implements ItemListener, TableModelListener {
 
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
-    private SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = SalaryIncreaseHistoryManager.getInstance();
+    private SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = new SalaryIncreaseHistoryManager();
 
     private SalaryIncreaseView salaryIncreaseView;
 

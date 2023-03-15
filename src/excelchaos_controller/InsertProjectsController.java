@@ -22,14 +22,14 @@ import java.util.HashSet;
 import java.util.List;
 
 public class InsertProjectsController implements ActionListener, TableModelListener {
-    private ProjectManager projectManager = ProjectManager.getInstance();
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private ProjectManager projectManager = new ProjectManager();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
-    private ProjectCategoryManager projectCategoryManager = ProjectCategoryManager.getInstance();
+    private ProjectCategoryManager projectCategoryManager = new ProjectCategoryManager();
 
-    private ProjectFunderManager projectFunderManager = ProjectFunderManager.getInstance();
+    private ProjectFunderManager projectFunderManager = new ProjectFunderManager();
 
-    private ProjectParticipationManager projectParticipationManager = ProjectParticipationManager.getInstance();
+    private ProjectParticipationManager projectParticipationManager = new ProjectParticipationManager();
     private InsertProjectsView insertProjectsView;
     private MainFrameController frameController;
 

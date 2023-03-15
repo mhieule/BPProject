@@ -12,13 +12,13 @@ import java.util.List;
 
 public class NewAndImprovedSalaryCalculation {
 
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
-    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
+    private ContractDataManager contractDataManager = new ContractDataManager();
 
-    private SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = SalaryIncreaseHistoryManager.getInstance();
+    private SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = new SalaryIncreaseHistoryManager();
 
-    private ManualSalaryEntryManager manualSalaryEntryManager = ManualSalaryEntryManager.getInstance();
+    private ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
 
     public NewAndImprovedSalaryCalculation() {
 

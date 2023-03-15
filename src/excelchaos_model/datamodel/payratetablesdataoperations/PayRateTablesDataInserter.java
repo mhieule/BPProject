@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class PayRateTablesDataInserter {
-    private SalaryTableManager salaryTableManager = SalaryTableManager.getInstance();
+    private SalaryTableManager salaryTableManager = new SalaryTableManager();
 
     public void updateSalaryTable(BigDecimal[][] newPayRates, String tableTitle, String tableName, int border){
         List<SalaryTable> salaryTables = salaryTableManager.getSalaryTable(tableTitle);

@@ -20,9 +20,8 @@ public class ProjectCategoryManager {
 
     private static String databaseURL;
 
-    private static ProjectCategoryManager projectCategoryManager;
 
-    private ProjectCategoryManager() {
+    public ProjectCategoryManager() {
         try {
             String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
@@ -157,14 +156,7 @@ public class ProjectCategoryManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
-
-    public static ProjectCategoryManager getInstance() {
-        if(projectCategoryManager == null){
-            projectCategoryManager = new ProjectCategoryManager();
-        }
-        return projectCategoryManager;
-    }
-
+    
     public static void setDatabaseURL(String databaseURL) {
         ProjectCategoryManager.databaseURL = databaseURL;
     }

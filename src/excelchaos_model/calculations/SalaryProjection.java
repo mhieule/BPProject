@@ -19,9 +19,9 @@ import java.util.List;
 public class SalaryProjection {
     private NewAndImprovedSalaryCalculation newAndImprovedSalaryCalculation = new NewAndImprovedSalaryCalculation();
     private SalaryTableLookUp salaryTableLookUp = new SalaryTableLookUp();
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
-    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
+    private ContractDataManager contractDataManager = new ContractDataManager();
 
 
     public String[][] getNextPayLevelProjection() { //TODO Mit SHK Testen

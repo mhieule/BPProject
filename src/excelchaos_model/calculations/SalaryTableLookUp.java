@@ -14,9 +14,9 @@ import java.util.List;
 public class SalaryTableLookUp {
 
     //TODO Methoden können evtl. Static werden
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
-    private SHKSalaryTableManager shkSalaryTableManager = SHKSalaryTableManager.getInstance();
+    private SHKSalaryTableManager shkSalaryTableManager = new SHKSalaryTableManager();
 
 
     public BigDecimal[] getCurrentPayRateTableEntry(Contract contract) {
@@ -25,7 +25,7 @@ public class SalaryTableLookUp {
         if (employee.getStatus().equals("SHK")) {
             CurrentPayRateTableSHK currentPayRateTableSHK = new CurrentPayRateTableSHK();
             int currentSHKEntryId = currentPayRateTableSHK.getCurrentSHKPayRates();
-            SHKSalaryEntry currentEntry = SHKSalaryTableManager.getInstance().getSHKSalaryEntry(currentSHKEntryId);
+            SHKSalaryEntry currentEntry =shkSalaryTableManager.getSHKSalaryEntry(currentSHKEntryId);
             if (currentEntry == null) {
                 resultValue[0] = new BigDecimal(0);
                 resultValue[1] = new BigDecimal(0);
@@ -303,7 +303,7 @@ public class SalaryTableLookUp {
         if (employee.getStatus().equals("SHK")) {
             CurrentPayRateTableSHK currentPayRateTableSHK = new CurrentPayRateTableSHK();
             int SHKEntryId = currentPayRateTableSHK.getSHKPayRatesBasedOnChosenDate(chosenDate);
-            SHKSalaryEntry chosenSHKEntry = SHKSalaryTableManager.getInstance().getSHKSalaryEntry(SHKEntryId);
+            SHKSalaryEntry chosenSHKEntry = shkSalaryTableManager.getSHKSalaryEntry(SHKEntryId);
             if (chosenSHKEntry == null) {
                 resultValue[0] = new BigDecimal(0);
                 resultValue[1] = new BigDecimal(0);

@@ -11,8 +11,8 @@ import java.util.ConcurrentModificationException;
 import java.util.Date;
 
 public class EmployeeDataInserter {
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
-    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+    private ContractDataManager contractDataManager = new ContractDataManager();
     private SalaryTableLookUp salaryTableLookUp = new SalaryTableLookUp();
 
 

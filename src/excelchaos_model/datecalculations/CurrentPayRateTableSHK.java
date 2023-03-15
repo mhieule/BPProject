@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public class CurrentPayRateTableSHK {
-    private SHKSalaryTableManager shkSalaryTableManager = SHKSalaryTableManager.getInstance();
+    private SHKSalaryTableManager shkSalaryTableManager = new SHKSalaryTableManager();
 
 
     public int getCurrentSHKPayRates() {

@@ -12,9 +12,9 @@ import java.util.Date;
 import java.util.List;
 
 public class AutomaticPayLevelIncrease {
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
-    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
+    private ContractDataManager contractDataManager = new ContractDataManager();
 
 
     private List<Employee> employeeList;

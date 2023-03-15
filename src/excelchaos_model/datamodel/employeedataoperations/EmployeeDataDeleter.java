@@ -3,11 +3,11 @@ package excelchaos_model.datamodel.employeedataoperations;
 import excelchaos_model.database.*;
 
 public class EmployeeDataDeleter {
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
-    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
-    private ProjectParticipationManager projectParticipationManager = ProjectParticipationManager.getInstance();
-    private ManualSalaryEntryManager manualSalaryEntryManager = ManualSalaryEntryManager.getInstance();
-    private SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = SalaryIncreaseHistoryManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+    private ContractDataManager contractDataManager = new ContractDataManager();
+    private ProjectParticipationManager projectParticipationManager = new ProjectParticipationManager();
+    private ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
+    private SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = new SalaryIncreaseHistoryManager();
 
 
     public void deleteData(int[] employeeIds) {

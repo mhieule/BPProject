@@ -26,11 +26,11 @@ import static javax.swing.BorderFactory.createEmptyBorder;
 
 public class ProjectParticipationView extends JPanel {
 
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
-    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
+    private ContractDataManager contractDataManager = new ContractDataManager();
 
-    private ProjectParticipationManager participationManager = ProjectParticipationManager.getInstance();
+    private ProjectParticipationManager participationManager = new ProjectParticipationManager();
 
     private NewAndImprovedSalaryCalculation salaryCalculation = new NewAndImprovedSalaryCalculation();
 

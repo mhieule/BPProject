@@ -18,7 +18,7 @@ import java.util.List;
 
 
 public class InsertProjectsView extends JPanel {
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
     private JLabel name, approval, start, duration, categoryLabel, categoriesSum,  funderLabel, participationLabel;
 

@@ -26,12 +26,10 @@ public class ContractDataManager {
 
     private static String databaseURL;
 
-    private static ContractDataManager contractDataManager;
-
     /**
      * Constructor creates database connection and DAO manager
      */
-    private ContractDataManager() {
+    public ContractDataManager() {
         try {
             String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
@@ -181,15 +179,10 @@ public class ContractDataManager {
         }
     }
 
-    public static ContractDataManager getInstance() {
-        if(contractDataManager == null){
-            contractDataManager = new ContractDataManager();
-        }
-        return contractDataManager;
-    }
 
     public static void setDatabaseURL(String databaseURL) {
         ContractDataManager.databaseURL = databaseURL;
+
     }
 
 }
