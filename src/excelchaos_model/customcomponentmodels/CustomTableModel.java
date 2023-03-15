@@ -105,8 +105,6 @@ public class CustomTableModel extends DefaultTableModel implements TableModelLis
         if (e.getType() == TableModelEvent.UPDATE) {
             int row = e.getFirstRow();
             int column = e.getColumn();
-            System.out.println("Row and column has been changed at " + row + ".." + column);
-            System.out.println("New value " + getValueAt(row, column));
         }
     }
 

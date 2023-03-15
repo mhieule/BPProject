@@ -17,7 +17,11 @@ public class SalaryTableLookUp {
 
     private SHKSalaryTableManager shkSalaryTableManager = new SHKSalaryTableManager();
 
-
+    /**
+     * This method determines the current pay rate table entry in the currently active pay rate table specified by the parameters set in the contract that the method is given.
+     * @param contract The contract object of the employee that we want the pay rate table entry for.
+     * @return A BigDecimal Array containing the current € Value of Bonus and Regular cost in the active pay rate table.
+     */
     public BigDecimal[] getCurrentPayRateTableEntry(Contract contract) {
         BigDecimal[] resultValue = new BigDecimal[2];
         Employee employee = employeeDataManager.getEmployee(contract.getId());
@@ -295,6 +299,13 @@ public class SalaryTableLookUp {
         return resultValue;
     }
 
+    /**
+     * This method determines the pay rate table entry in the active pay rate table specified by the chosenDate and the parameters set in the contract that the method is given.
+     * It projects the salary into the future/past.
+     * @param contract The contract object of the employee that we want the pay rate table entry for.
+     * @param chosenDate The date by which the active pay rate table is determined.
+     * @return A BigDecimal Array containing the current € Value of Bonus and Regular cost in the active pay rate table.
+     */
     public BigDecimal[] getPayRateTableEntryForChosenDate(Contract contract, LocalDate chosenDate) {
         BigDecimal[] resultValue = new BigDecimal[2];
         Employee employee = employeeDataManager.getEmployee(contract.getId());
@@ -567,6 +578,18 @@ public class SalaryTableLookUp {
         return resultValue;
     }
 
+    /**
+
+     Retrieves the active pay rate table based on a given date for a specific contract.
+     If the employee is a student employee ("SHK"), the pay rate table is determined using the
+     PayRateTableSHKCalculations class. If the employee is not a student employee, the pay rate table
+     is determined based on the employee's pay grade and pay level using the PayRateTableE13Calculations
+     and PayRateTableE14Calculations classes. The chosen date is used to determine the effective date
+     of the active pay rate table. The method returns the effective date as a LocalDate object.
+     @param contract The contract for which to retrieve the active pay rate table.
+     @param chosenDate The chosen date to use for determining the active pay rate table.
+     @return A LocalDate object representing the effective date of the active pay rate table.
+     */
     public LocalDate getActivePayRateTableBasedOnGivenDate(Contract contract, LocalDate chosenDate) {
         Employee employee = employeeDataManager.getEmployee(contract.getId());
         if (employee.getStatus().equals("SHK")) {
