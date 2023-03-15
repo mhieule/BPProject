@@ -2,6 +2,7 @@ package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import excelchaos_model.CountryModel;
+import excelchaos_view.layoutmanager.WrapLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,7 +47,7 @@ public class InsertPersonView extends JPanel {
         constraints.insets = new Insets(30, 25, 0, 50);
         constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 
-        centerDown.setLayout(new BoxLayout(centerDown, BoxLayout.X_AXIS));
+        centerDown.setLayout(new WrapLayout(FlowLayout.LEFT));
         add(centerUp, BorderLayout.CENTER);
         add(centerDown, BorderLayout.SOUTH);
 
@@ -223,7 +224,7 @@ public class InsertPersonView extends JPanel {
         leftButtons.add(salary);
         centerDown.add(leftButtons);
         reset = new JButton("Felder zurücksetzen");
-        centerDown.add(Box.createHorizontalGlue());
+        centerDown.add(Box.createHorizontalStrut(100));
         rightButtons.add(reset);
         cancel = new JButton("Abbrechen");
         rightButtons.add(cancel);

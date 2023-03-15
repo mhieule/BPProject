@@ -70,7 +70,7 @@ public class InsertProjectsView extends JPanel {
         textFieldConstraints.insets = new Insets(30, 25, 0, 50);
         textFieldConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
 
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setLayout(new WrapLayout(FlowLayout.LEFT));
 
         add(buttonPanel, BorderLayout.SOUTH);
         add(mainPanel, BorderLayout.CENTER);
@@ -96,7 +96,7 @@ public class InsertProjectsView extends JPanel {
         buttonPanel.add(leftButtons);
         reset = new JButton("Felder zurücksetzen");
         cancel = new JButton("Abbrechen");
-        buttonPanel.add(Box.createHorizontalGlue());
+        buttonPanel.add(Box.createHorizontalStrut(100));
         rightButtons.add(reset);
         rightButtons.add(cancel);
         buttonPanel.add(rightButtons);

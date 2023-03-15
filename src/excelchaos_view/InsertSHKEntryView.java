@@ -2,6 +2,7 @@ package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import excelchaos_model.inputVerifier.SalaryVerifier;
+import excelchaos_view.layoutmanager.WrapLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +38,7 @@ public class InsertSHKEntryView extends JPanel {
         constraints.insets = new Insets(30, 25, 0, 50);
         constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 
-        centerDown.setLayout(new GridLayout());
+        centerDown.setLayout(new WrapLayout(FlowLayout.LEFT));
         add(centerUp, BorderLayout.CENTER);
         add(centerDown, BorderLayout.SOUTH);
 
@@ -80,6 +81,7 @@ public class InsertSHKEntryView extends JPanel {
         centerDown.add(leftButtons);
         reset = new JButton("Felder zurücksetzen");
         cancel = new JButton("Abbrechen");
+        centerDown.add(Box.createHorizontalStrut(100));
         rightButtons.add(reset);
         rightButtons.add(cancel);
         centerDown.add(rightButtons);

@@ -3,6 +3,7 @@ package excelchaos_view;
 import com.github.lgooddatepicker.components.DatePicker;
 import excelchaos_view.components.tablecellrenderer.MultiLineTableCellRenderer;
 import excelchaos_model.utility.TableColumnAdjuster;
+import excelchaos_view.layoutmanager.WrapLayout;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -47,7 +48,7 @@ public class InsertPayRateTableView extends JPanel {
 
     private void topPanelInit() {
         topPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 15));
+        topPanel.setLayout(new WrapLayout(FlowLayout.LEFT, 20, 15));
         nameOfTable = new JLabel("Name der Tabelle");
         startDate = new JLabel("Gültig ab");
         tfNameOfTable = new JTextField();
