@@ -24,29 +24,32 @@ import java.util.List;
 public class InsertProjectsController implements ActionListener, TableModelListener {
     private ProjectManager projectManager = new ProjectManager();
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
-
     private ProjectCategoryManager projectCategoryManager = new ProjectCategoryManager();
-
     private ProjectFunderManager projectFunderManager = new ProjectFunderManager();
-
     private ProjectParticipationManager projectParticipationManager = new ProjectParticipationManager();
     private InsertProjectsView insertProjectsView;
     private MainFrameController frameController;
-
-
     private int currentlyEditingProjectId = 0;
-
     private String addProjectsTab = "Projekt hinzufügen";
 
+    /**
+     * Constructor for the InsertProjectsController
+     *
+     * @param mainFrameController the main frame controller
+     */
     public InsertProjectsController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         insertProjectsView = new InsertProjectsView();
         insertProjectsView.init();
         insertProjectsView.setActionListener(this);
         insertProjectsView.getCategoriesTable().getModel().addTableModelListener(this);
-
     }
 
+    /**
+     * Adds a tab of insertProjectsView.
+     *
+     * @param mainFrameController the main frame controller
+     */
     public void showInsertProjectsView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(addProjectsTab) == -1) {
             mainFrameController.getTabs().addTab(addProjectsTab, insertProjectsView);
@@ -55,7 +58,9 @@ public class InsertProjectsController implements ActionListener, TableModelListe
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addProjectsTab));
     }
 
-
+    /**
+     * Resets the input fields of the insertProjectsView.
+     */
     public void resetInputs() {
         currentlyEditingProjectId = 0;
         insertProjectsView.getTfName().setText(null);
@@ -65,36 +70,57 @@ public class InsertProjectsController implements ActionListener, TableModelListe
         insertProjectsView.getCategoriesTable().setModel(resetCategoriesTable(insertProjectsView.getCategoryColumns()));
         insertProjectsView.getCategoriesSum().setText("Summe: ");
         insertProjectsView.getProjectFunderTable().setModel(resetFunderTable(insertProjectsView.getFunderColumns()));
-        insertProjectsView.getProjectParticipationTable().setModel(resetPaticipationTable(insertProjectsView.getParticipationColumns()));
+        insertProjectsView.getProjectParticipationTable().setModel(resetParticipationTable(insertProjectsView.getParticipationColumns()));
         insertProjectsView.setUpNameSelection(insertProjectsView.getProjectParticipationTable());
         insertProjectsView.setUpDateSelection(insertProjectsView.getProjectParticipationTable());
         insertProjectsView.getCategoriesTable().getModel().addTableModelListener(this);
-
     }
 
-    public DefaultTableModel resetPaticipationTable(String[] newColumns) {
+    /**
+     * resets the participation table
+     *
+     * @param newColumns column names
+     * @return the new table model
+     */
+    public DefaultTableModel resetParticipationTable(String[] newColumns) {
         DefaultTableModel result = new DefaultTableModel(null, newColumns);
         result.setRowCount(10);
         return result;
     }
 
-    private DefaultTableModel resetCategoriesTable(String[] newColumns){
+    /**
+     * resets the categories table
+     *
+     * @param newColumns column names
+     * @return the new table model
+     */
+    private DefaultTableModel resetCategoriesTable(String[] newColumns) {
         String[][] categoriesData = new String[4][2];
         categoriesData[0][0] = "WiMi";
         categoriesData[1][0] = "HiWi";
         categoriesData[2][0] = "Reise Inland";
         categoriesData[3][0] = "Reise Ausland";
-        DefaultTableModel result = new DefaultTableModel(categoriesData,newColumns);
+        DefaultTableModel result = new DefaultTableModel(categoriesData, newColumns);
         return result;
     }
 
-    private DefaultTableModel resetFunderTable(String[] newColumns){
-        DefaultTableModel result = new DefaultTableModel(null,newColumns);
+    /**
+     * resets the funder table
+     *
+     * @param newColumns column names
+     * @return the new table model
+     */
+    private DefaultTableModel resetFunderTable(String[] newColumns) {
+        DefaultTableModel result = new DefaultTableModel(null, newColumns);
         result.setRowCount(1);
         return result;
     }
 
-
+    /**
+     * Fills the input fields with the data of the project with the given projectID.
+     *
+     * @param projectID id of Project of interest
+     */
     public void fillFields(String projectID) {
         Project project = projectManager.getProject(Integer.parseInt(projectID));
         currentlyEditingProjectId = project.getProject_id();
@@ -125,9 +151,6 @@ public class InsertProjectsController implements ActionListener, TableModelListe
             categoryIndex++;
         }
 
-
-
-
         List<ProjectFunder> projectFunderList = projectFunderManager.getAllProjectFundersForProject(project.getProject_id());
 
         String[][] funderData = new String[projectFunderList.size()][5];
@@ -140,7 +163,6 @@ public class InsertProjectsController implements ActionListener, TableModelListe
             funderData[funderIndex][4] = projectFunder.getProject_number();
             funderIndex++;
         }
-
 
         List<ProjectParticipation> participationList = projectParticipationManager.getProjectParticipationByProjectID(project.getProject_id());
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
@@ -165,7 +187,6 @@ public class InsertProjectsController implements ActionListener, TableModelListe
         }
 
         String[][] participationData = new String[5][arraySize];
-
         Integer[] employeeIDs = new Integer[employeeIds.size()];
         int i = 0;
         for (Integer id : employeeIds) {
@@ -200,13 +221,11 @@ public class InsertProjectsController implements ActionListener, TableModelListe
                     }
                 }
 
-
                 if (counter == employeeParticipationList.size() - 1) {
                     participationData[4][index] = format.format(participation.getParticipation_period());
                 }
                 lastCheckedDate = participation.getParticipation_period();
                 counter++;
-
             }
             index++;
         }
@@ -215,7 +234,6 @@ public class InsertProjectsController implements ActionListener, TableModelListe
         insertProjectsView.getCategoriesSum().setText("Summe: " + StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(categoriesSum));
         insertProjectsView.setUpEditProjectFunderPanel(funderData);
         insertProjectsView.setUpEditProjectParticipationPanel(participationData);
-
 
         insertProjectsView.getCategoriesTable().getColumnModel().getColumn(0).setMinWidth(0);
         insertProjectsView.getCategoriesTable().getColumnModel().getColumn(0).setMaxWidth(0);
@@ -237,7 +255,15 @@ public class InsertProjectsController implements ActionListener, TableModelListe
         insertProjectsView.getCategoriesTable().getModel().addTableModelListener(this);
     }
 
-
+    /**
+     * updates the edited Project in the database
+     *
+     * @param project      Project to be updated
+     * @param name         Name of the project
+     * @param approval     Date of approval
+     * @param startDate    Date of start
+     * @param endLocalDate Date of end
+     */
     private void updateProjectDataInDatabase(Project project, String name, LocalDate approval, LocalDate startDate, LocalDate endLocalDate) {
         Date dateOfApproval = Date.from(approval.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date dateOfStart = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -318,6 +344,16 @@ public class InsertProjectsController implements ActionListener, TableModelListe
         }
     }
 
+    /**
+     * inserts the new Project in the database
+     *
+     * @param project      Project to be inserted
+     * @param id           Project ID
+     * @param name         Project name
+     * @param approval     Date of approval
+     * @param startDate    Date of start
+     * @param endLocalDate Date of end
+     */
     private void insertNewProjectDataInDatabase(Project project, int id, String name, LocalDate approval, LocalDate startDate, LocalDate endLocalDate) {
         Date dateOfApproval = Date.from(approval.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date dateOfStart = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -333,6 +369,11 @@ public class InsertProjectsController implements ActionListener, TableModelListe
         }
     }
 
+    /**
+     * Depending on the event, updates the view
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == insertProjectsView.getSubmitAndReset()) {
@@ -428,7 +469,11 @@ public class InsertProjectsController implements ActionListener, TableModelListe
         return tableValues;
     }
 
-
+    /**
+     * inserts the values of the category table into the database
+     *
+     * @param projectId id of project whose categories are to be inserted
+     */
     private void insertCategoryValuesDB(int projectId) {
         JTable categoriesTable = insertProjectsView.getCategoriesTable();
         String[][] tableValues = getTableValues(categoriesTable);
@@ -438,10 +483,14 @@ public class InsertProjectsController implements ActionListener, TableModelListe
                 projectCategory = new ProjectCategory(projectId, projectCategoryManager.getNextID(), tableValues[row][0], StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(tableValues[row][1]));
                 projectCategoryManager.addProjectCategory(projectCategory);
             }
-
         }
     }
 
+    /**
+     * inserts the values of the funder table into the database
+     *
+     * @param projectId id of project whose funders are to be inserted
+     */
     private void insertFunderValuesDB(int projectId) {
         JTable funderTable = insertProjectsView.getProjectFunderTable();
         String[][] tableValues = getTableValues(funderTable);
@@ -455,13 +504,18 @@ public class InsertProjectsController implements ActionListener, TableModelListe
         }
     }
 
-    //TODO Wenn nur für einen Monat der Beschäftigungsumfang eingetragen wurde, dann erstelle automatisch für alle weiteren. Wenn mehrere dann erstelle wenn welche fehlen für den letzten Monat die verbleibenden Einträge
+    /**
+     * inserts the values of the participation table into the database
+     *
+     * @param projectId id of project whose participations are to be inserted
+     * @throws ParseException throws exception if date cannot be parsed
+     */
     private void insertParticipationValuesDB(int projectId) throws ParseException {
         JTable participationTable = insertProjectsView.getProjectParticipationTable();
         String[][] tableValues = getParticipationTableValues(participationTable);
         ProjectParticipation projectParticipation;
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        for (int row = 0; row < tableValues.length; row++) {  //TODO Umwandlungsmethoden für SHK Angestellte implementieren
+        for (int row = 0; row < tableValues.length; row++) {
             if (tableValues[row][0] != null && tableValues[row][1] != null && tableValues[row][2] != null && tableValues[row][3] != null) {
                 Date startDate = format.parse(tableValues[row][2]);
                 Date endDate = format.parse(tableValues[row][3]);
@@ -472,12 +526,16 @@ public class InsertProjectsController implements ActionListener, TableModelListe
                     projectParticipation = new ProjectParticipation(projectId, personId, StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(tableValues[row][1]), Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
                     projectParticipationManager.addProjectParticipation(projectParticipation);
                 }
-
             }
-
         }
     }
 
+    /**
+     * reads out the values of the participation table
+     *
+     * @param participationTable table with the participation data
+     * @return String[][] with the values of the participation table
+     */
     private String[][] getParticipationTableValues(JTable participationTable) {
         String[][] tableValues = new String[participationTable.getRowCount()][participationTable.getColumnCount()];
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -498,6 +556,12 @@ public class InsertProjectsController implements ActionListener, TableModelListe
         return tableValues;
     }
 
+    /**
+     * reads out the updated values of the participation table
+     *
+     * @param participationTable table with the participation data
+     * @return String[][] with the updated values of the participation table
+     */
     private String[][] getUpdatedParticipationTableValues(JTable participationTable) {
         String[][] tableValues = new String[participationTable.getRowCount()][participationTable.getColumnCount()];
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -513,7 +577,7 @@ public class InsertProjectsController implements ActionListener, TableModelListe
                     if (column == 3) {
                         break;
                     }
-                    if(column == 4){
+                    if (column == 4) {
                         break;
                     }
                 }
@@ -521,7 +585,6 @@ public class InsertProjectsController implements ActionListener, TableModelListe
                     LocalDate temporaryDate = (LocalDate) participationTable.getValueAt(row, column);
                     String temporaryString = temporaryDate.format(dateTimeFormatter);
                     tableValues[row][column] = temporaryString;
-
                 } else {
                     tableValues[row][column] = (String) participationTable.getValueAt(row, column);
                 }
@@ -530,6 +593,12 @@ public class InsertProjectsController implements ActionListener, TableModelListe
         return tableValues;
     }
 
+    /**
+     * reads out the values of the given table
+     *
+     * @param givenTable table with the data
+     * @return String[][] with the values of the given table
+     */
     private String[][] getTableValues(JTable givenTable) {
         String[][] tableValues = new String[givenTable.getRowCount()][givenTable.getColumnCount()];
         for (int row = 0; row < givenTable.getRowCount(); row++) {
@@ -543,6 +612,12 @@ public class InsertProjectsController implements ActionListener, TableModelListe
         return tableValues;
     }
 
+    /**
+     * reads out the updated values of the given funder table
+     *
+     * @param givenTable table with the funder data
+     * @return String[][] with the updated values of the given funder table
+     */
     private String[][] getUpdatedFunderTableValues(JTable givenTable) {
         String[][] tableValues = new String[givenTable.getRowCount()][givenTable.getColumnCount()];
         for (int row = 0; row < givenTable.getRowCount(); row++) {
@@ -557,8 +632,6 @@ public class InsertProjectsController implements ActionListener, TableModelListe
                     if (column == 4) {
                         break;
                     }
-
-
                 }
                 tableValues[row][column] = (String) givenTable.getValueAt(row, column);
             }
@@ -566,6 +639,12 @@ public class InsertProjectsController implements ActionListener, TableModelListe
         return tableValues;
     }
 
+    /**
+     * reads out the updated values of the given category table
+     *
+     * @param givenTable table with the category data
+     * @return String[][] with the updated values of the given category table
+     */
     private String[][] getUpdatedCategoryTableValues(JTable givenTable) {
         String[][] tableValues = new String[givenTable.getRowCount()][givenTable.getColumnCount()];
         for (int row = 0; row < givenTable.getRowCount(); row++) {
@@ -585,27 +664,32 @@ public class InsertProjectsController implements ActionListener, TableModelListe
         return tableValues;
     }
 
+    /**
+     * notifies listener that a table model has changed
+     *
+     * @param e a {@code TableModelEvent} to notify listener that a table model
+     *          has changed
+     */
     @Override
     public void tableChanged(TableModelEvent e) {
         BigDecimal sum = new BigDecimal(0);
-        if(e.getSource() == insertProjectsView.getCategoriesTable().getModel()){
-            if(e.getColumn() == 1){
+        if (e.getSource() == insertProjectsView.getCategoriesTable().getModel()) {
+            if (e.getColumn() == 1) {
                 for (int i = 0; i < insertProjectsView.getCategoriesTable().getRowCount(); i++) {
-                    if(insertProjectsView.getCategoriesTable().getValueAt(i,1) != null){
-                        sum = sum.add(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String)insertProjectsView.getCategoriesTable().getValueAt(i,1)));
+                    if (insertProjectsView.getCategoriesTable().getValueAt(i, 1) != null) {
+                        sum = sum.add(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String) insertProjectsView.getCategoriesTable().getValueAt(i, 1)));
                     }
                 }
                 insertProjectsView.getCategoriesSum().setText("Summe: " + StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(sum));
             }
-            if(e.getColumn() == 3){
+            if (e.getColumn() == 3) {
                 for (int i = 0; i < insertProjectsView.getCategoriesTable().getRowCount(); i++) {
-                    if(insertProjectsView.getCategoriesTable().getValueAt(i,3) != null){
-                        sum = sum.add(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String)insertProjectsView.getCategoriesTable().getValueAt(i,3)));
+                    if (insertProjectsView.getCategoriesTable().getValueAt(i, 3) != null) {
+                        sum = sum.add(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String) insertProjectsView.getCategoriesTable().getValueAt(i, 3)));
                     }
                 }
                 insertProjectsView.getCategoriesSum().setText("Summe: " + StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(sum));
             }
         }
-
     }
 }
