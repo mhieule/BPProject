@@ -3,6 +3,7 @@ package excelchaos_view;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.tableeditors.DateTableEditor;
 import excelchaos_model.database.EmployeeDataManager;
+import excelchaos_view.layoutmanager.WrapLayout;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -31,7 +32,7 @@ public class InsertProjectsView extends JPanel {
 
     private JButton submitAndReset, submitAndClose, reset, cancel;
 
-    private JPanel projectValuesPanel, categoriesPanel,categoriesSumPanel, projectFunderPanel, projectParticipationPanel, tablePanel, buttonPanel, leftButtons, rightButtons;
+    private JPanel mainPanel, mixedPanel, projectValuesPanel, categoriesPanel,categoriesSumPanel, projectFunderPanel, projectParticipationPanel, tablePanel, buttonPanel, leftButtons, rightButtons;
 
     private GridBagConstraints textFieldConstraints;
 
@@ -53,41 +54,69 @@ public class InsertProjectsView extends JPanel {
 
         textFieldConstraints = new GridBagConstraints();
 
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout(30,0));
+
+        mixedPanel = new JPanel();
+        mixedPanel.setLayout(new GridLayout(3,1,0,20));
+
+        projectParticipationPanel = new JPanel();
+
         projectValuesPanel = new JPanel();
         tablePanel = new JPanel();
         categoriesPanel = new JPanel();
         categoriesSumPanel = new JPanel();
-
         projectFunderPanel = new JPanel();
-        projectParticipationPanel = new JPanel();
         buttonPanel = new JPanel();
-
-        GridBagLayout projectValuesLayout = new GridBagLayout();
-        projectValuesPanel.setLayout(projectValuesLayout);
-
 
         textFieldConstraints.insets = new Insets(30, 25, 0, 50);
         textFieldConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
 
-
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        tablePanel.setLayout(new GridLayout(3, 1, 0, 20));
 
-        add(projectValuesPanel, BorderLayout.WEST);
+        add(buttonPanel, BorderLayout.SOUTH);
+        add(mainPanel, BorderLayout.CENTER);
 
+        setUpProjectValuesPanel();
+        mixedPanel.add(projectValuesPanel);
         setUpCategoriesPanel();
-        tablePanel.add(categoriesPanel);
+        mixedPanel.add(categoriesPanel);
         setUpCategorySumLabel();
-
         setUpProjectFunderPanel();
-        tablePanel.add(projectFunderPanel);
+        mixedPanel.add(projectFunderPanel);
 
         setUpProjectParticipationPanel();
-        tablePanel.add(projectParticipationPanel);
+        mainPanel.add(mixedPanel, BorderLayout.WEST);
+        mainPanel.add(projectParticipationPanel, BorderLayout.CENTER);
 
-        add(tablePanel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
+        leftButtons = new JPanel(new FlowLayout());
+        rightButtons = new JPanel(new FlowLayout());
+        submitAndReset = new JButton("Projekt speichern und Felder zurücksetzen");
+        submitAndClose = new JButton("Projekt speichern und Verlassen");
+        leftButtons.add(submitAndReset);
+        leftButtons.add(submitAndClose);
+        buttonPanel.add(leftButtons);
+        reset = new JButton("Felder zurücksetzen");
+        cancel = new JButton("Abbrechen");
+        buttonPanel.add(Box.createHorizontalGlue());
+        rightButtons.add(reset);
+        rightButtons.add(cancel);
+        buttonPanel.add(rightButtons);
+        buttonPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
+        revalidate();
+        repaint();
+    }
+
+    public void markMustBeFilledTextFields() {
+        name.setForeground(Color.RED);
+        approval.setForeground(Color.RED);
+        start.setForeground(Color.RED);
+        duration.setForeground(Color.RED);
+    }
+
+    public void setUpProjectValuesPanel(){
+        projectValuesPanel.setLayout(new GridBagLayout());
 
         name = new JLabel("Projektname");
         setConstraintsLabel(name, 0);
@@ -112,32 +141,6 @@ public class InsertProjectsView extends JPanel {
 
         puffer = new JLabel(" ");
         setConstraintsPuffer(puffer, 4);
-
-        leftButtons = new JPanel(new FlowLayout());
-        rightButtons = new JPanel(new FlowLayout());
-        submitAndReset = new JButton("Projekt speichern und Felder zurücksetzen");
-        submitAndClose = new JButton("Projekt speichern und Verlassen");
-        leftButtons.add(submitAndReset);
-        leftButtons.add(submitAndClose);
-        buttonPanel.add(leftButtons);
-        reset = new JButton("Felder zurücksetzen");
-        cancel = new JButton("Abbrechen");
-        buttonPanel.add(Box.createHorizontalGlue());
-        rightButtons.add(reset);
-        rightButtons.add(cancel);
-        buttonPanel.add(rightButtons);
-        buttonPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-
-
-        revalidate();
-        repaint();
-    }
-
-    public void markMustBeFilledTextFields() {
-        name.setForeground(Color.RED);
-        approval.setForeground(Color.RED);
-        start.setForeground(Color.RED);
-        duration.setForeground(Color.RED);
     }
 
     public void setUpCategoriesPanel() {
