@@ -14,17 +14,16 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class InsertSHKEntryController implements ActionListener {
-
     private SHKSalaryTableManager shkSalaryTableManager = new SHKSalaryTableManager();
-
     private String title = "SHK Stundensätze hinzufügen";
-
     private InsertSHKEntryView insertSHKEntryView;
-
     private MainFrameController frameController;
-
     private int currentEditingID = 0;
 
+    /**
+     * Constructor for the InsertSHKEntryController
+     * @param mainFrameController the mainframecontroller
+     */
     public InsertSHKEntryController(MainFrameController mainFrameController){
         frameController = mainFrameController;
         insertSHKEntryView = new InsertSHKEntryView();
@@ -32,6 +31,11 @@ public class InsertSHKEntryController implements ActionListener {
         insertSHKEntryView.setActionListener(this);
     }
 
+    /**
+     * Constructor for the InsertSHKEntryController with the data to be viewed
+     * @param mainFrameController the mainframecontroller
+     * @param data the data to be viewed
+     */
     public InsertSHKEntryController(MainFrameController mainFrameController, String[][] data){
         frameController = mainFrameController;
         insertSHKEntryView = new InsertSHKEntryView();
@@ -44,15 +48,21 @@ public class InsertSHKEntryController implements ActionListener {
         insertSHKEntryView.getWHKPayRateTextfield().setText(data[0][4]);
     }
 
+    /**
+     * Adds tab with insertSHKEntryView.
+     * @param mainFrameController the mainframecontroller
+     */
     public void showInsertSHKEntryView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
             mainFrameController.addTab(title, insertSHKEntryView);
         } else {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(title));
         }
-
     }
 
+    /**
+     * Inserts the data into the database
+     */
     private void insertEntryInDB(){
         LocalDate localDate = insertSHKEntryView.getDatePicker().getDate();
         Date validationDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -79,6 +89,9 @@ public class InsertSHKEntryController implements ActionListener {
         showSHKTableController.getToolbarShowSHKTableController().getToolbar().getEditEntry().setEnabled(false);
     }
 
+    /**
+     * Resets the inputs
+     */
     private void resetInputs(){
         insertSHKEntryView.getDatePicker().setText(null);
         insertSHKEntryView.getBasePayRateTextfield().setText(null);
@@ -86,16 +99,20 @@ public class InsertSHKEntryController implements ActionListener {
         insertSHKEntryView.getWHKPayRateTextfield().setText(null);
     }
 
+    /**
+     * Depending on the event e cancels, submits or resets the inputs
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == insertSHKEntryView.getCancel()){
             frameController.getTabs().removeTabNewWindow(insertSHKEntryView);
         } else if (e.getSource() == insertSHKEntryView.getSubmitAndClose()) {
             insertEntryInDB();
-            resetInputs();//TODO Wahrscheinlich SalaryUpdate Aufrufen
+            resetInputs();
             frameController.getTabs().removeTabNewWindow(insertSHKEntryView);
         } else if (e.getSource() == insertSHKEntryView.getSubmit()) {
-            insertEntryInDB();//TODO Wahrscheinlich SalaryUpdate Aufrufen
+            insertEntryInDB();
             resetInputs();
         } else if (e.getSource() == insertSHKEntryView.getReset()) {
             resetInputs();
