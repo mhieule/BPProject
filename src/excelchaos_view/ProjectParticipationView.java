@@ -2,6 +2,8 @@ package excelchaos_view;
 
 import excelchaos_model.calculations.SalaryCalculation;
 import excelchaos_model.database.*;
+import excelchaos_model.inputVerifier.SalaryVerifier;
+import excelchaos_model.inputVerifier.WorkScopeVerifier;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_model.utility.TableColumnAdjuster;
 import excelchaos_view.components.tablecellrenderer.MultiLineTableCellRenderer;
@@ -169,6 +171,7 @@ public class ProjectParticipationView extends JPanel {
         projectPanel.add(projectNamePanel, BorderLayout.NORTH);
 
         JTable mainTable = initMainTable(monthColumns, tableData);
+        mainTable.setDefaultEditor(Object.class, new CellEditor(new WorkScopeVerifier()));
         JTable rowsMainTable = initMainTableRows(mainTable, nameRows);
         JTable sumTable = initSumTable(summedTableData, monthColumns);
         JTable rowsSumTable = initSumHeaderTable(sumTable);
@@ -776,6 +779,21 @@ public class ProjectParticipationView extends JPanel {
         participationDialog.setAlwaysOnTop(true);
         participationDialog.setVisible(true);
 
+
+    }
+
+    private class CellEditor extends DefaultCellEditor {
+        InputVerifier verifier = null;
+
+        public CellEditor(InputVerifier verifier) {
+            super(new JTextField());
+            this.verifier = verifier;
+        }
+
+        @Override
+        public boolean stopCellEditing() {
+            return verifier.verify(editorComponent) && super.stopCellEditing();
+        }
 
     }
 
