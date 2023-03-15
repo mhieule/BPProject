@@ -20,6 +20,7 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
 
     /**
      * initialises the side menu panel controller
+     *
      * @param mainFrameController the main frame controller
      */
     public SideMenuPanelTablesController(MainFrameController mainFrameController) {
@@ -33,6 +34,7 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
 
     /**
      * getter class for sideMenu Attribute
+     *
      * @return sideMenu
      */
     public SideMenuPanelTables getSideTable() {
@@ -41,6 +43,7 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
 
     /**
      * depending on e, this Method calls the corresponding view. Reacts to the user input
+     *
      * @param e the event to be processed
      */
     @Override
@@ -76,7 +79,7 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             StartUp.selectSnapshotFolder();
         } else if (e.getSource() == sideMenu.getChangeUsedDatabaseAndCloseApplication()) {
             boolean correctlyChosen = StartUp.changeDatabasePath();
-            if(correctlyChosen){
+            if (correctlyChosen) {
                 BackEndUpdates.calculationsOnStartUp();
                 new MainFrameController();
                 frameController.getWindow().dispose();
@@ -89,19 +92,20 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
 
     /**
      * depending on e, this Method changes the current sidepanel view. Reacts to the user input
+     *
      * @param e the event to be processed
      */
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED && e.getSource() == sideMenu.getPayRates()) {
-            sideMenu.getPayRatePanel().setPreferredSize(new Dimension(150,120));
+            sideMenu.getPayRatePanel().setPreferredSize(new Dimension(150, 120));
             sideMenu.getPayRateTableButtonPanel().setVisible(true);
             sideMenu.getPayRateToggleButtonPanel().setBorder(null);
             sideMenu.getPayRateToggleButtonPanel().setPreferredSize(new Dimension(150, 35));
             sideMenu.getPayRatePanel().setBorder(sideMenu.getRaisedetchedBorder());
             sideMenu.payRateOpenArrowLabelVisible();
         } else if (e.getStateChange() == ItemEvent.DESELECTED && e.getSource() == sideMenu.getPayRates()) {
-            sideMenu.getPayRatePanel().setPreferredSize(new Dimension(150,45));
+            sideMenu.getPayRatePanel().setPreferredSize(new Dimension(150, 45));
             sideMenu.getPayRateTableButtonPanel().setVisible(false);
             sideMenu.getPayRatePanel().setBorder(null);
             sideMenu.getPayRateToggleButtonPanel().setBorder(sideMenu.getRaisedetchedBorder());
@@ -122,10 +126,10 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             sideMenu.getSalaryToggleButtonPanel().setPreferredSize(new Dimension(150, 45));
             sideMenu.salaryCloseArrowLabelVisible();
         } else if (e.getStateChange() == ItemEvent.SELECTED && e.getSource() == sideMenu.getDatabaseOperationsToggleButton()) {
-            sideMenu.getDatabaseOperationPanel().setPreferredSize(new Dimension(150,135));
+            sideMenu.getDatabaseOperationPanel().setPreferredSize(new Dimension(150, 135));
             sideMenu.getDatabaseOperationButtonPanel().setVisible(true);
             sideMenu.getDataBaseOperationToggleButtonPanel().setBorder(null);
-            sideMenu.getDataBaseOperationToggleButtonPanel().setPreferredSize(new Dimension(150,35));
+            sideMenu.getDataBaseOperationToggleButtonPanel().setPreferredSize(new Dimension(150, 35));
             sideMenu.getDatabaseOperationPanel().setBorder(sideMenu.getRaisedetchedBorder());
             sideMenu.databaseOperationOpenArrowLabelVisible();
         } else if (e.getStateChange() == ItemEvent.DESELECTED && e.getSource() == sideMenu.getDatabaseOperationsToggleButton()) {
@@ -140,6 +144,7 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
 
     /**
      * this method is called when the user clicks on the arrow button in the west side of the window and expands the sidepanel
+     *
      * @param frameController the controller of the mainframe
      */
     private void westArrowButtonPressed(MainFrameController frameController) {

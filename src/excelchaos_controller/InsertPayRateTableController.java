@@ -29,11 +29,12 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
 
     /**
      * Constructor for the InsertPayRateTableController. Initializes the following attributes.
-     * @param mainFrameController the MainFrameController
+     *
+     * @param mainFrameController     the MainFrameController
      * @param payRateTablesController the PayRateTablesController
-     * @param name the title of the tab
-     * @param columnNames the column names of the table
-     * @param typeOfTable the type of the table
+     * @param name                    the title of the tab
+     * @param columnNames             the column names of the table
+     * @param typeOfTable             the type of the table
      */
     public InsertPayRateTableController(MainFrameController mainFrameController, PayRateTablesController payRateTablesController, String name, String[] columnNames, boolean typeOfTable) {
         frameController = mainFrameController;
@@ -51,6 +52,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
 
     /**
      * Adds the insertPayRateTableView as a tab.
+     *
      * @param mainFrameController the MainFrameController
      */
     public void showInsertPayRateTableView(MainFrameController mainFrameController) {
@@ -63,6 +65,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
 
     /**
      * determines the form of the table
+     *
      * @param typeOfTable boolean true if the table is a table with 1A and 1B, false if the table is a table with only 1
      */
     private void determineTableName(boolean typeOfTable) {
@@ -75,6 +78,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
 
     /**
      * getter Method for title
+     *
      * @return title
      */
     public String getTitle() {
@@ -83,6 +87,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
 
     /**
      * Depending on the performed action e cancels or saves and exits the insertPayRateTableView.
+     *
      * @param e the event to be processed
      */
     @Override
@@ -122,6 +127,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
 
     /**
      * Sets selection interval depending on row and column of the mouse event.
+     *
      * @param e the Mous Event to be processed
      */
     protected void highlightRow(MouseEvent e) {
@@ -136,6 +142,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
 
     /**
      * Implements the JPopupMenu for the right click.
+     *
      * @param mouseEvent the mouse event to be processed
      */
     private void showPopUp(MouseEvent mouseEvent) {
@@ -215,6 +222,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
 
     /**
      * Prepares the table for the database insertion.
+     *
      * @return BigDecimal[][] with the values of the table
      */
     private BigDecimal[][] prepareTableForDatabaseInsertion() {
@@ -233,9 +241,10 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
 
     /**
      * inserts the values into the database.
-     * @param name String name of salary table
+     *
+     * @param name     String name of salary table
      * @param paygrade String paygrade of salary table
-     * @param values BigDecimal[][] values of salary table
+     * @param values   BigDecimal[][] values of salary table
      */
     private void insertValuesInDatabase(String name, String paygrade, BigDecimal[][] values) {
         payRateTablesDataInserter.insertNewSalaryTable(name, paygrade, values);
@@ -243,6 +252,7 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
 
     /**
      * Determines the paygrade of the salary table.
+     *
      * @return paygrade as String
      */
     private String determinePayGrade() {

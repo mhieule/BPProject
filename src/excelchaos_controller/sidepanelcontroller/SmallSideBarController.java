@@ -14,6 +14,7 @@ public class SmallSideBarController implements ActionListener {
 
     /**
      * Constructor for the SmallSideBarController
+     *
      * @param mainFrameController the MainFrameController
      */
     public SmallSideBarController(MainFrameController mainFrameController) {
@@ -25,6 +26,7 @@ public class SmallSideBarController implements ActionListener {
 
     /**
      * getter Method for the SmallSideBar
+     *
      * @return the SmallSideBar
      */
     public SmallSideBar getSmallSideBar() {
@@ -33,6 +35,7 @@ public class SmallSideBarController implements ActionListener {
 
     /**
      * Depending on e calls Method eastArrowButtonPressed
+     *
      * @param e the event to be processed
      */
     @Override
@@ -44,9 +47,10 @@ public class SmallSideBarController implements ActionListener {
 
     /**
      * Removes the SmallSideBar and adds the SideMenuPanelTablesController
+     *
      * @param mainFrameController the MainFrameController
      */
-    private void eastArrowButtonPressed(MainFrameController mainFrameController){
+    private void eastArrowButtonPressed(MainFrameController mainFrameController) {
         mainFrameController.getWindow().remove(smallSideBar);
         sideMenuTables = new SideMenuPanelTablesController(mainFrameController);
         mainFrameController.getWindow().add(sideMenuTables.getSideTable(), BorderLayout.WEST);

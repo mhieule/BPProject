@@ -28,8 +28,9 @@ public class InsertManualSalaryEntryController implements ActionListener {
 
     /**
      * Constructor for the InsertManualSalaryEntryController
+     *
      * @param mainFrameController the main frame controller
-     * @param currentEntry the currently selected Name as String
+     * @param currentEntry        the currently selected Name as String
      */
     public InsertManualSalaryEntryController(MainFrameController mainFrameController, String currentEntry) {
         frameController = mainFrameController;
@@ -41,11 +42,12 @@ public class InsertManualSalaryEntryController implements ActionListener {
 
     /**
      * Constructor for the InsertManualSalaryEntryController
+     *
      * @param mainFrameController the main frame controller
-     * @param currentEntry the currently selected Name as String
-     * @param data the data corresponding to the currently selected entry
+     * @param currentEntry        the currently selected Name as String
+     * @param data                the data corresponding to the currently selected entry
      */
-    public InsertManualSalaryEntryController(MainFrameController mainFrameController,String currentEntry,String[][] data){
+    public InsertManualSalaryEntryController(MainFrameController mainFrameController, String currentEntry, String[][] data) {
         frameController = mainFrameController;
         insertManualSalaryEntryView = new InsertManualSalaryEntryView();
         insertManualSalaryEntryView.init();
@@ -65,6 +67,7 @@ public class InsertManualSalaryEntryController implements ActionListener {
 
     /**
      * Depending on e calls Method adds a tab of insertManualSalaryEntryView to the mainFrameController
+     *
      * @param mainFrameController the main frame controller
      */
     public void showInsertManualSalaryEntryView(MainFrameController mainFrameController) {
@@ -80,16 +83,16 @@ public class InsertManualSalaryEntryController implements ActionListener {
      * from the GUI elements, creates a new ManualSalaryEntry object, removes the current entry if in editing mode,
      * adds the new entry to the database, and updates the GUI table.
      */
-    private void insertEntryInDB(){
+    private void insertEntryInDB() {
         Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) insertManualSalaryEntryView.getNamePickList().getSelectedItem());
         int id = temporaryEmployee.getId();
-        BigDecimal newSalary =  StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertManualSalaryEntryView.getTfNewSalary().getText());
-        LocalDate date  = insertManualSalaryEntryView.getDatePicker().getDate();
+        BigDecimal newSalary = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertManualSalaryEntryView.getTfNewSalary().getText());
+        LocalDate date = insertManualSalaryEntryView.getDatePicker().getDate();
         Date usageDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
         String comment = insertManualSalaryEntryView.getTfComment().getText();
-        ManualSalaryEntry manualSalaryEntry = new ManualSalaryEntry(id,newSalary,usageDate,comment);
-        if(currentEditingID != 0){
-            manualSalaryEntryManager.removeManualSalaryEntry(currentEditingID,editingDate);
+        ManualSalaryEntry manualSalaryEntry = new ManualSalaryEntry(id, newSalary, usageDate, comment);
+        if (currentEditingID != 0) {
+            manualSalaryEntryManager.removeManualSalaryEntry(currentEditingID, editingDate);
         }
         manualSalaryEntryManager.addManualSalaryEntry(manualSalaryEntry);
         insertManualSalaryEntryView.revalidate();
@@ -101,7 +104,7 @@ public class InsertManualSalaryEntryController implements ActionListener {
     /**
      * This method resets the input fields of insertManualSalaryEntryView.
      */
-    private void resetInputs(){
+    private void resetInputs() {
         insertManualSalaryEntryView.getTfNewSalary().setText(null);
         insertManualSalaryEntryView.getDatePicker().setText(null);
         insertManualSalaryEntryView.getTfComment().setText(null);
@@ -109,11 +112,12 @@ public class InsertManualSalaryEntryController implements ActionListener {
 
     /**
      * Depending on the performed action e it cancels, submits, resets or closes the insertManualSalaryEntryView
+     *
      * @param e the event to be processed
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == insertManualSalaryEntryView.getCancel()){
+        if (e.getSource() == insertManualSalaryEntryView.getCancel()) {
             frameController.getTabs().removeTabNewWindow(insertManualSalaryEntryView);
         } else if (e.getSource() == insertManualSalaryEntryView.getSubmitAndClose()) {
             insertEntryInDB();
