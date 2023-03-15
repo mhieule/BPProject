@@ -43,36 +43,36 @@ public class SalaryProjection {
             String name = employee.getName();
             String surname = employee.getSurname();
             String group = contract.getPaygrade();
-            String stufe = contract.getPaylevel();
-            String gehalt = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getRegular_cost());
-            String sonderzahlungen = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getBonus_cost());
+            String paylevel = contract.getPaylevel();
+            String salary = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getRegular_cost());
+            String bonusPayment = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getBonus_cost());
             String firstIncreaseDate;
             String firstIncreaseLevel;
-            String firstIncreaseGehalt;
-            String firstIncreaseSonderzahlung;
+            String firstIncreaseSalary;
+            String firstIncreaseBonusPayment;
             String secondIncreaseDate;
             String secondIncreaseLevel;
-            String secondIncreaseGehalt;
-            String secondIncreaseSonderzahlung;
+            String secondIncreaseSalary;
+            String secondIncreaseBonusPayment;
             if (employee.getStatus().equals("SHK")) {
                 firstIncreaseDate = "";
                 firstIncreaseLevel = "";
-                firstIncreaseGehalt = "";
-                firstIncreaseSonderzahlung = "";
+                firstIncreaseSalary = "";
+                firstIncreaseBonusPayment = "";
                 secondIncreaseDate = "";
                 secondIncreaseLevel = "";
-                secondIncreaseGehalt = "";
-                secondIncreaseSonderzahlung = "";
+                secondIncreaseSalary = "";
+                secondIncreaseBonusPayment = "";
             } else {
                 List<Date> payLevelIncreases = new ArrayList<>();
-                payLevelIncreases = ProjectedSalaryModel.calculatePayLevelIncrease(contract.getStart_date(), stufe);
+                payLevelIncreases = ProjectedSalaryModel.calculatePayLevelIncrease(contract.getStart_date(), paylevel);
                 LocalDate firstIncreaseLocaledate = payLevelIncreases.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 firstIncreaseDate = dateFormat.format(payLevelIncreases.get(0));
-                firstIncreaseLevel = ProjectedSalaryModel.getNextPayLevel(stufe);
+                firstIncreaseLevel = ProjectedSalaryModel.getNextPayLevel(paylevel);
                 Contract firstIncreaseContract = new Contract(contract.getId(), group, firstIncreaseLevel, contract.getStart_date(), contract.getEnd_date(), new BigDecimal(0), new BigDecimal(0), contract.getScope(), contract.getShk_hourly_rate(), contract.getVbl_status());
                 BigDecimal[] firstIncreaseCostArray = salaryTableLookUp.getPayRateTableEntryForChosenDate(firstIncreaseContract, firstIncreaseLocaledate);
-                firstIncreaseGehalt = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(firstIncreaseCostArray[0]);
-                firstIncreaseSonderzahlung = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(firstIncreaseCostArray[1].multiply(new BigDecimal(12)));
+                firstIncreaseSalary = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(firstIncreaseCostArray[0]);
+                firstIncreaseBonusPayment = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(firstIncreaseCostArray[1].multiply(new BigDecimal(12)));
 
                 payLevelIncreases = ProjectedSalaryModel.calculatePayLevelIncrease(contract.getStart_date(), firstIncreaseLevel);
                 LocalDate secondIncreaseLocaleDate = payLevelIncreases.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -80,13 +80,13 @@ public class SalaryProjection {
                 secondIncreaseLevel = ProjectedSalaryModel.getNextPayLevel(firstIncreaseLevel);
                 Contract secondIncreaseContract = new Contract(contract.getId(), group, secondIncreaseLevel, contract.getStart_date(), contract.getEnd_date(), new BigDecimal(0), new BigDecimal(0), contract.getScope(), contract.getShk_hourly_rate(), contract.getVbl_status());
                 BigDecimal[] secondIncreaseCostArray = salaryTableLookUp.getPayRateTableEntryForChosenDate(secondIncreaseContract, secondIncreaseLocaleDate);
-                secondIncreaseGehalt = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(secondIncreaseCostArray[0]);
-                secondIncreaseSonderzahlung = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(secondIncreaseCostArray[1].multiply(new BigDecimal(12)));
+                secondIncreaseSalary = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(secondIncreaseCostArray[0]);
+                secondIncreaseBonusPayment = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(secondIncreaseCostArray[1].multiply(new BigDecimal(12)));
             }
 
 
-            String[] values = {id, surname, name, group, stufe, gehalt, sonderzahlungen, firstIncreaseDate, group, firstIncreaseLevel, firstIncreaseGehalt, firstIncreaseSonderzahlung,
-                    secondIncreaseDate, group, secondIncreaseLevel, secondIncreaseGehalt, secondIncreaseSonderzahlung};
+            String[] values = {id, surname, name, group, paylevel, salary, bonusPayment, firstIncreaseDate, group, firstIncreaseLevel, firstIncreaseSalary, firstIncreaseBonusPayment,
+                    secondIncreaseDate, group, secondIncreaseLevel, secondIncreaseSalary, secondIncreaseBonusPayment};
 
             resultData[currentIndex] = values;
             currentIndex++;
@@ -119,16 +119,16 @@ public class SalaryProjection {
             String name = employee.getName();
             String surname = employee.getSurname();
             String group = contract.getPaygrade();
-            String stufe = contract.getPaylevel();
-            String gehalt = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getRegular_cost());
-            String sonderzahlungen = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getBonus_cost());
+            String paylevel = contract.getPaylevel();
+            String oldSalary = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getRegular_cost());
+            String bonusPayment = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getBonus_cost());
 
             String givenDateAsString = dateFormat.format(givenDate);
             BigDecimal salaryOfGivenMonth = newAndImprovedSalaryCalculation.projectSalaryToGivenMonth(contract.getId(), givenDate);
             String salary = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(salaryOfGivenMonth);
             String nextSalaryLevel = ProjectedSalaryModel.calculatePayLevelBasedOnDate(contract.getStart_date(), contract.getPaylevel(), givenDate);
 
-            String[] values = {id, surname, name, group, stufe, gehalt, sonderzahlungen, givenDateAsString, nextSalaryLevel, salary, sonderzahlungen};
+            String[] values = {id, surname, name, group, paylevel, oldSalary, bonusPayment, givenDateAsString, nextSalaryLevel, salary, bonusPayment};
 
             resultData[currentIndex] = values;
             currentIndex++;
