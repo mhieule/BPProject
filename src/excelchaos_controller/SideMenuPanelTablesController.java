@@ -1,5 +1,6 @@
 package excelchaos_controller;
 
+import excelchaos_model.BackEndUpdates;
 import excelchaos_model.StartUp;
 import excelchaos_view.SideMenuPanelTables;
 
@@ -29,7 +30,6 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
         return sideMenu;
     }
 
-    //TODO Nach Nutzerstudie die Gehaltshistorie und SHK wieder einfügen
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sideMenu.getArrowButtonWest()) {
@@ -45,7 +45,7 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
         } else if (e.getSource() == sideMenu.getSalaryIncrease()) {
             frameController.getSalaryIncreaseController().showManualSalaryEntryView(frameController);
         } /*else if (e.getSource() == sideMenu.getGehaltshistorie()) {
-           // frameController.getSalaryHistoryController().showSalaryHistoryView(frameController); //TODO Wieder hinzufügen
+           // frameController.getSalaryHistoryController().showSalaryHistoryView(frameController);
         }*/ else if (e.getSource() == sideMenu.getShowE13Tables()) {
             PayRateTablesController E13Controller = new PayRateTablesController(frameController);
             E13Controller.setTitle("E13 Entgelttabellen");
@@ -62,9 +62,17 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
         } else if (e.getSource() == sideMenu.getChangeSnapShotSaveFolder()) {
             StartUp.selectSnapshotFolder();
         } else if (e.getSource() == sideMenu.getChangeUsedDatabaseAndCloseApplication()) {
-            StartUp.chooseDatabasePath();
-            JOptionPane.showConfirmDialog(null, "Die Datenbank wurde erfolgreich geändert. Bitte starten Sie die Anwendung erneut.", "Aktion war erfolgreich!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
+            boolean correctlyChosen = StartUp.changeDatabasePath();
+            if(correctlyChosen){
+                BackEndUpdates.calculationsOnStartUp();
+                new MainFrameController();
+                frameController.getWindow().dispose();
+                frameController = null;
+            } else {
+                JOptionPane.showConfirmDialog(null, "Änderung fehlgeschlagen.", "Fehler! Keine gültige Datenbank ausgewählt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            }
+
+
         }
     }
 

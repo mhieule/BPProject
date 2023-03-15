@@ -60,6 +60,27 @@ public class StartUp {
         } else return null;
     }
 
+    public static boolean changeDatabasePath(){
+        String newPath = chooseDatabasePath();
+        if(newPath == null){
+            return false;
+        } else {
+            ContractDataManager.setDatabaseURL(newPath);
+            EmployeeDataManager.setDatabaseURL(newPath);
+            ManualSalaryEntryManager.setDatabaseURL(newPath);
+            SalaryIncreaseHistoryManager.setDatabaseURL(newPath);
+            SalaryTableManager.setDatabaseURL(newPath);
+            ProjectManager.setDatabaseURL(newPath);
+            ProjectCategoryManager.setDatabaseURL(newPath);
+            ProjectFunderManager.setDatabaseURL(newPath);
+            ProjectParticipationManager.setDatabaseURL(newPath);
+            SHKSalaryTableManager.setDatabaseURL(newPath);
+            return true;
+        }
+
+
+    }
+
     public static String selectSnapshotFolder() {
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         JFileChooser snapShotFolderChooser = new JFileChooser(prefs.get(LAST_USED_SNAPSHOT_FOLDER,
