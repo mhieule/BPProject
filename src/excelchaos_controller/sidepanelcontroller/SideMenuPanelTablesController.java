@@ -16,9 +16,12 @@ import java.awt.event.ItemListener;
 public class SideMenuPanelTablesController implements ActionListener, ItemListener {
     private SideMenuPanelTables sideMenu;
     private MainFrameController frameController;
-
     private SmallSideBarController smallSideBar;
 
+    /**
+     * initialises the side menu panel controller
+     * @param mainFrameController
+     */
     public SideMenuPanelTablesController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         sideMenu = new SideMenuPanelTables();
@@ -28,10 +31,18 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
         mainFrameController.getWindow().add(sideMenu, BorderLayout.WEST);
     }
 
+    /**
+     * getter class for sideMenu Attribute
+     * @return
+     */
     public SideMenuPanelTables getSideTable() {
         return sideMenu;
     }
 
+    /**
+     * depending on e, this Method calls the corresponding view. Reacts to the user input
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sideMenu.getArrowButtonWest()) {
@@ -73,11 +84,13 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
             } else {
                 JOptionPane.showConfirmDialog(null, "Änderung fehlgeschlagen.", "Fehler! Keine gültige Datenbank ausgewählt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             }
-
-
         }
     }
 
+    /**
+     * depending on e, this Method changes the current sidepanel view. Reacts to the user input
+     * @param e the event to be processed
+     */
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED && e.getSource() == sideMenu.getPayRates()) {
@@ -125,6 +138,10 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
         }
     }
 
+    /**
+     * this method is called when the user clicks on the arrow button in the west side of the window and expands the sidepanel
+     * @param frameController
+     */
     private void westArrowButtonPressed(MainFrameController frameController) {
         smallSideBar = new SmallSideBarController(frameController);
         frameController.getWindow().remove(sideMenu);
@@ -132,6 +149,4 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
         frameController.getWindow().revalidate();
         frameController.getWindow().repaint();
     }
-
-
 }
