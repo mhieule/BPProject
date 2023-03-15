@@ -20,7 +20,7 @@ import java.util.List;
 public class InsertProjectsView extends JPanel {
     private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
 
-    private JLabel name, approval, start, duration, puffer, categoryLabel, categoriesSum,  funderLabel, participationLabel;
+    private JLabel name, approval, start, duration, categoryLabel, categoriesSum,  funderLabel, participationLabel;
 
     private JTextField tfName;
 
@@ -32,7 +32,7 @@ public class InsertProjectsView extends JPanel {
 
     private JButton submitAndReset, submitAndClose, reset, cancel;
 
-    private JPanel mainPanel, mixedPanel, projectValuesPanel, categoriesPanel,categoriesSumPanel, projectFunderPanel, projectParticipationPanel, tablePanel, buttonPanel, leftButtons, rightButtons;
+    private JPanel flowProjectValuesPanel, mainPanel, mixedPanel, projectValuesPanel, categoriesPanel,categoriesSumPanel, projectFunderPanel, projectParticipationPanel, buttonPanel, leftButtons, rightButtons;
 
     private GridBagConstraints textFieldConstraints;
 
@@ -42,7 +42,6 @@ public class InsertProjectsView extends JPanel {
     private final int FIELD_HEIGHT = 25;
 
     public void init() {
-
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
@@ -61,9 +60,8 @@ public class InsertProjectsView extends JPanel {
         mixedPanel.setLayout(new GridLayout(3,1,0,20));
 
         projectParticipationPanel = new JPanel();
-
         projectValuesPanel = new JPanel();
-        tablePanel = new JPanel();
+        flowProjectValuesPanel = new JPanel();
         categoriesPanel = new JPanel();
         categoriesSumPanel = new JPanel();
         projectFunderPanel = new JPanel();
@@ -78,7 +76,7 @@ public class InsertProjectsView extends JPanel {
         add(mainPanel, BorderLayout.CENTER);
 
         setUpProjectValuesPanel();
-        mixedPanel.add(projectValuesPanel);
+        mixedPanel.add(flowProjectValuesPanel);
         setUpCategoriesPanel();
         mixedPanel.add(categoriesPanel);
         setUpCategorySumLabel();
@@ -104,6 +102,10 @@ public class InsertProjectsView extends JPanel {
         buttonPanel.add(rightButtons);
         buttonPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
+        JScrollPane scrollPane = new JScrollPane(mainPanel);
+        scrollPane.setVisible(true);
+        add(scrollPane);
+
         revalidate();
         repaint();
     }
@@ -116,7 +118,8 @@ public class InsertProjectsView extends JPanel {
     }
 
     public void setUpProjectValuesPanel(){
-        projectValuesPanel.setLayout(new GridBagLayout());
+        flowProjectValuesPanel.setLayout(new FlowLayout());
+        projectValuesPanel.setLayout(new GridLayout(4,2,0,10));
 
         name = new JLabel("Projektname");
         setConstraintsLabel(name, 0);
@@ -139,9 +142,36 @@ public class InsertProjectsView extends JPanel {
         tfDuration = new DatePicker();
         setConstraintsDatePicker(tfDuration, 3);
 
-        puffer = new JLabel(" ");
-        setConstraintsPuffer(puffer, 4);
+        flowProjectValuesPanel.add(projectValuesPanel);
     }
+
+//    public void setUpProjectValuesPanel(){
+//        flowProjectValuesPanel.setLayout(new FlowLayout());
+//        projectValuesPanel.setLayout(new GridBagLayout());
+//
+//        name = new JLabel("Projektname");
+//        setConstraintsLabel(name, 0);
+//        tfName = new JTextField();
+//        setConstraintsTextField(tfName, 0);
+//        textFieldConstraints.insets.top = 5;
+//
+//        approval = new JLabel("Bewilligungsdatum");
+//        setConstraintsLabel(approval, 1);
+//        tfApproval = new DatePicker();
+//        setConstraintsDatePicker(tfApproval, 1);
+//
+//        start = new JLabel("Startdatum");
+//        setConstraintsLabel(start, 2);
+//        tfStart = new DatePicker();
+//        setConstraintsDatePicker(tfStart, 2);
+//
+//        duration = new JLabel("Enddatum");
+//        setConstraintsLabel(duration, 3);
+//        tfDuration = new DatePicker();
+//        setConstraintsDatePicker(tfDuration, 3);
+//
+//        flowProjectValuesPanel.add(projectValuesPanel);
+//    }
 
     public void setUpCategoriesPanel() {
         categoriesPanel.setLayout(new BorderLayout());
@@ -162,6 +192,7 @@ public class InsertProjectsView extends JPanel {
         categoriesTable.setValueAt("Reise Ausland",3,0);
         JScrollPane categoriesScrollpane = new JScrollPane(categoriesTable);
         categoriesScrollpane.setVisible(true);
+        categoriesScrollpane.setPreferredSize(new Dimension(categoriesTable.getWidth(), categoriesTable.getRowHeight()*categoriesTable.getRowCount()+2));
         categoriesPanel.add(categoriesScrollpane, BorderLayout.CENTER);
         northPanel.add(categoryLabel);
         northPanel.add(Box.createHorizontalStrut(14));
@@ -208,6 +239,7 @@ public class InsertProjectsView extends JPanel {
         categoriesTable.setModel(categoriesModel);
         JScrollPane categoriesScrollpane = new JScrollPane(categoriesTable);
         categoriesScrollpane.setVisible(true);
+        categoriesScrollpane.setPreferredSize(new Dimension(categoriesTable.getWidth(), categoriesTable.getRowHeight()*categoriesTable.getRowCount()+2));
         categoriesPanel.add(categoriesScrollpane, BorderLayout.CENTER);
         northPanel.add(categoryLabel);
         northPanel.add(Box.createHorizontalStrut(14));
@@ -245,6 +277,7 @@ public class InsertProjectsView extends JPanel {
         projectFunderTable.setRowHeight(26);
         JScrollPane funderScrollpane = new JScrollPane(projectFunderTable);
         funderScrollpane.setVisible(true);
+        funderScrollpane.setPreferredSize(new Dimension(projectFunderTable.getWidth(), projectFunderTable.getRowHeight()*projectFunderTable.getRowCount()+2));
         projectFunderPanel.add(funderScrollpane, BorderLayout.CENTER);
         northPanel.add(funderLabel);
         northPanel.add(Box.createHorizontalStrut(6));
@@ -282,6 +315,7 @@ public class InsertProjectsView extends JPanel {
         projectFunderTable.setModel(funderModel);
         JScrollPane funderScrollpane = new JScrollPane(projectFunderTable);
         funderScrollpane.setVisible(true);
+        funderScrollpane.setPreferredSize(new Dimension(projectFunderTable.getWidth(), projectFunderTable.getRowHeight()*projectFunderTable.getRowCount()+2));
         projectFunderPanel.add(funderScrollpane, BorderLayout.CENTER);
         northPanel.add(funderLabel);
         northPanel.add(Box.createHorizontalStrut(6));
@@ -538,15 +572,6 @@ public class InsertProjectsView extends JPanel {
         textFieldConstraints.gridwidth = GridBagConstraints.REMAINDER;
         textFieldConstraints.weightx = 1.0;
         projectValuesPanel.add(datePicker, textFieldConstraints);
-    }
-
-    private void setConstraintsPuffer(JLabel label, int rowNumber) {
-        textFieldConstraints.gridx = 0;
-        textFieldConstraints.gridy = rowNumber;
-        textFieldConstraints.gridwidth = 1;
-        textFieldConstraints.weightx = 0.0;
-        textFieldConstraints.weighty = 1.0;
-        projectValuesPanel.add(label, textFieldConstraints);
     }
 }
 
