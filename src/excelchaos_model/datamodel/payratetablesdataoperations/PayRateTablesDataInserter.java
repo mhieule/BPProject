@@ -9,7 +9,16 @@ import java.util.List;
 public class PayRateTablesDataInserter {
     private SalaryTableManager salaryTableManager = new SalaryTableManager();
 
-    public void updateSalaryTable(BigDecimal[][] newPayRates, String tableTitle, String tableName, int border){
+    /**
+     * Updates the pay rates in the salary table for the specified table title and table name. The new pay rates are provided
+     * as a two-dimensional array of BigDecimal values. The border parameter determines the number of columns to update.
+     *
+     * @param newPayRates a two-dimensional array of BigDecimal values representing the new pay rates to be updated
+     * @param tableTitle  a String representing the title of the salary table to be updated
+     * @param tableName   a String representing the name of the salary table to be updated
+     * @param border      an int representing the number of columns to update
+     */
+    public void updateSalaryTable(BigDecimal[][] newPayRates, String tableTitle, String tableName, int border) {
         List<SalaryTable> salaryTables = salaryTableManager.getSalaryTable(tableTitle);
         salaryTableManager.removeSalaryTable(tableTitle);
 
@@ -40,7 +49,14 @@ public class PayRateTablesDataInserter {
         }
     }
 
-    public void insertNewSalaryTable(String tableName, String paygrade, BigDecimal[][] payRateValues){
+    /**
+     * Inserts a new salary table with the specified table name, pay grade and pay rate values.
+     *
+     * @param tableName     the name of the salary table to insert
+     * @param paygrade      the pay grade of the salary table to insert
+     * @param payRateValues the pay rate values for each column of the salary table to insert
+     */
+    public void insertNewSalaryTable(String tableName, String paygrade, BigDecimal[][] payRateValues) {
         for (int column = 0; column < payRateValues[0].length; column++) {
             BigDecimal grundentgelt = payRateValues[0][column];
             BigDecimal av_ag_anteil_lfd_entgelt = payRateValues[1][column];

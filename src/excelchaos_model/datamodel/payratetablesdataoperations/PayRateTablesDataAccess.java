@@ -14,7 +14,16 @@ public class PayRateTablesDataAccess {
 
     private SalaryTableManager salaryTableManager = new SalaryTableManager();
 
-    public Vector<String> getPayRateTablesNameVectorForList(String payGrade){
+    /**
+     * Returns a vector of pay rate tables names for the specified pay grade, sorted in descending order by date.
+     *
+     * @param payGrade the pay grade for which the pay rate tables names are requested.
+     * @return a vector of pay rate tables names, sorted in descending order by date.
+     * @throws NullPointerException     if the payGrade is null.
+     * @throws IllegalArgumentException if the payGrade is an empty string.
+     */
+
+    public Vector<String> getPayRateTablesNameVectorForList(String payGrade) {
         PayRateTableNameDateSeperator payRateTableNameDateSeperator = new PayRateTableNameDateSeperator();
 
         int numberOfTables = salaryTableManager.getNumOfTables(payGrade);
@@ -42,7 +51,7 @@ public class PayRateTablesDataAccess {
         return presentVector;
     }
 
-    public List<SalaryTable> getSalaryTable(String tableTitle){
+    public List<SalaryTable> getSalaryTable(String tableTitle) {
         return salaryTableManager.getSalaryTable(tableTitle);
     }
 }
