@@ -23,7 +23,15 @@ public class SalaryProjection {
     private ContractDataManager contractDataManager = new ContractDataManager();
 
 
-    public String[][] getNextPayLevelProjection() { //TODO Mit SHK Testen
+    /**
+
+     Calculates the projected salary of each employee's contract for the next pay level increase date and returns a two-dimensional array of strings representing the result.
+     The method retrieves all contracts and employee data from the contractDataManager and employeeDataManager, respectively.
+     It iterates through each contract and calculates the next pay level increase date, level, and associated salary and bonus payments.
+     The resulting two-dimensional String array represents the projected salary data for all contracts.
+     @return a two-dimensional array of strings representing the projected salary data for each employee's contract.
+     */
+    public String[][] getNextPayLevelProjection() {
         int lines = contractDataManager.getRowCount();
         String[][] resultData = new String[lines][];
         int currentIndex = 0;
@@ -87,6 +95,18 @@ public class SalaryProjection {
         return resultData;
     }
 
+    /**
+
+     Returns a 2-dimensional array of Strings representing the salary projections for each employee's contract based on the given date.
+     The method iterates over all contracts, retrieves the relevant information about each employee and their contract,
+     calculates the salary projection for the given month based on the contract and given date, and returns the results in a 2D array.
+     Each row in the array represents an employee's information, including their ID, name, surname, paygrade, paylevel, regular cost,
+     bonus cost, the given date, the next salary level based on the given date, the projected salary for the given date,
+     and the bonus cost for the contract.
+     The date parameter should be a valid Date object representing the month for which salary projections are requested.
+     @param givenDate the Date object representing the month for which salary projections are requested
+     @return a 2-dimensional array of Strings representing the salary projections for each employee's contract based on the given date
+     */
     public String[][] getSalaryProjectionForGivenDate(Date givenDate) {
         int lines = contractDataManager.getRowCount();
         String[][] resultData = new String[lines][];
