@@ -20,7 +20,7 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
 
     /**
      * initialises the side menu panel controller
-     * @param mainFrameController
+     * @param mainFrameController the main frame controller
      */
     public SideMenuPanelTablesController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
@@ -33,7 +33,7 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
 
     /**
      * getter class for sideMenu Attribute
-     * @return
+     * @return sideMenu
      */
     public SideMenuPanelTables getSideTable() {
         return sideMenu;
@@ -140,7 +140,7 @@ public class SideMenuPanelTablesController implements ActionListener, ItemListen
 
     /**
      * this method is called when the user clicks on the arrow button in the west side of the window and expands the sidepanel
-     * @param frameController
+     * @param frameController the controller of the mainframe
      */
     private void westArrowButtonPressed(MainFrameController frameController) {
         smallSideBar = new SmallSideBarController(frameController);
