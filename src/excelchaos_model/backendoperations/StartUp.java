@@ -26,6 +26,15 @@ public class StartUp {
     public static final String SnapShotFolderChosen = "KeyForSnapShotPathAlreadyChosen";
 
 
+    /**
+     * This method allows the user to choose the path to the database by opening a JFileChooser dialog.
+     * The dialog displays a list of files and directories and allows the user to select a file or directory
+     * from the file system. Once a file is selected and the dialog is closed, the absolute path to the
+     * selected file is saved to the user's preferences. This method retrieves the path from the user's
+     * preferences and returns it as a string.
+     *
+     * @return the absolute path of the selected database file, or null if no file was selected or if an error occurred.
+     */
     public static String chooseDatabasePath() {
         UIManager.put("FileChooser.openButtonText", "Öffnen");
         UIManager.put("FileChooser.cancelButtonText", "Abbrechen");
@@ -60,9 +69,14 @@ public class StartUp {
         } else return null;
     }
 
-    public static boolean changeDatabasePath(){
+    /**
+     * Changes the path to the database and updates the database URL for all relevant data managers.
+     *
+     * @return true if the path was successfully changed, false otherwise
+     */
+    public static boolean changeDatabasePath() {
         String newPath = chooseDatabasePath();
-        if(newPath == null){
+        if (newPath == null) {
             return false;
         } else {
             ContractDataManager.setDatabaseURL(newPath);
@@ -81,6 +95,14 @@ public class StartUp {
 
     }
 
+    /**
+     * Allows the user to select a folder for storing application snapshots.
+     * The method opens a file chooser dialog that allows the user to select a directory.
+     * The path of the selected directory is stored in the user preferences.
+     * If the user cancels the dialog, null is returned.
+     *
+     * @return A string representing the path of the selected directory, or null if the user cancels the dialog.
+     */
     public static String selectSnapshotFolder() {
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         JFileChooser snapShotFolderChooser = new JFileChooser(prefs.get(LAST_USED_SNAPSHOT_FOLDER,
@@ -96,6 +118,15 @@ public class StartUp {
         } else return null;
     }
 
+    /**
+     * This method creates a snapshot of the current database file and saves it to the specified snapshot folder.
+     * The snapshot is named with the current date and time in the format of "Excelchaos dd-MM-yyyy HH-mm.db".
+     * If the current database file or snapshot folder is null, an error message is displayed and the program exits.
+     *
+     * @param currentDBPath      the file path of the current database file
+     * @param snapShotFolderPath the file path of the snapshot folder
+     * @throws RuntimeException if an IO exception occurs during the file copying process
+     */
     private static void createSnapshotOfCurrentDatabase(String currentDBPath, String snapShotFolderPath) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm");
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -117,6 +148,15 @@ public class StartUp {
         }
     }
 
+    /**
+     * Creates a snapshot of the current database by copying the current database to a specified snapshot folder.
+     * <p>
+     * The snapshot folder and the current database are retrieved from the preferences.
+     * <p>
+     * If the current database or snapshot folder do not exist, the user is prompted to select a valid path.
+     *
+     * @throws RuntimeException if an error occurs while creating the snapshot.
+     */
     public static void createSnapshot() {
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         String currentDBPath = prefs.get(LAST_USED_DATABASE,
@@ -137,6 +177,12 @@ public class StartUp {
     }
 
 
+    /**
+     * Performs start-up tasks for an existing database, including selecting a database and snapshot folder if they have not
+     * already been chosen, ensuring the selected database and snapshot folder exist, and setting the database URLs for
+     * various data managers. Displays error messages and exits the program if a valid database and snapshot folder are not
+     * selected.
+     */
     public static void performExistingDatabaseStartUp() {
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         String currentDBPath;
@@ -186,7 +232,7 @@ public class StartUp {
             System.exit(0);
         }
 
-        //createSnapshotOfCurrentDatabase(currentDBPath, snapShotFolderPath); //TODO Wenn Snapshots durchgeführt werden sollen den Kommentar wieder entfernen.
+        createSnapshotOfCurrentDatabase(currentDBPath, snapShotFolderPath);
         ContractDataManager.setDatabaseURL(currentDBPath);
         EmployeeDataManager.setDatabaseURL(currentDBPath);
         ManualSalaryEntryManager.setDatabaseURL(currentDBPath);
@@ -199,6 +245,14 @@ public class StartUp {
         SHKSalaryTableManager.setDatabaseURL(currentDBPath);
     }
 
+    /**
+     * This method performs the startup for a new database, prompting the user to choose a database path and a snapshot folder.
+     * If a database path and a snapshot folder have already been chosen, it uses the last chosen values.
+     * If the database path or the snapshot folder is not valid, the user is prompted to choose again.
+     * Finally, it creates a snapshot of the new database and sets the URL of the database for the various data managers.
+     *
+     * @throws IllegalStateException if the database path or the snapshot folder is not valid and the user chooses to exit the program
+     */
     public static void performStartUpNewDatabase() {
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         String currentDBPath;
@@ -238,9 +292,15 @@ public class StartUp {
             prefs.put(SnapShotFolderChosen, "true");
         }
 
-        //createSnapshotOfCurrentDatabase(currentDBPath, snapShotFolderPath); //TODO Wenn Snapshots durchgeführt werden sollen den Kommentar wieder entfernen.
+        createSnapshotOfCurrentDatabase(currentDBPath, snapShotFolderPath);
 
     }
+
+    /**
+     * Sets up the database connection URL for all the data managers required to work with the specified database.
+     *
+     * @param databasePath the file path of the database to set up
+     */
 
     private static void setupDatabase(String databasePath) {
         ContractDataManager.setDatabaseURL(databasePath);
@@ -255,6 +315,12 @@ public class StartUp {
         SHKSalaryTableManager.setDatabaseURL(databasePath);
     }
 
+    /**
+     * Displays a file chooser dialog to allow the user to select a database path. The selected path is saved in user preferences
+     * for later use. If the user cancels the dialog, returns null.
+     *
+     * @return a String representing the selected database path, or null if the user cancels the dialog.
+     */
     public static String selectDatabasePath() {
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         JFileChooser databaseFolderChooser = new JFileChooser(prefs.get(LAST_USED_DATABASE,
@@ -271,7 +337,14 @@ public class StartUp {
     }
 
 
-
+    /**
+     * Displays a dialog box for the user to select one of three options: create a new database, open an existing database, or exit the program.
+     * Depending on the selected option, this method either calls performStartUpNewDatabase() to create a new database or
+     * performExistingDatabaseStartUp() to open an existing one, or exits the program.
+     * If the user selects the "create a new database" option, this method first prompts the user to select a folder in which to save the new database.
+     * If the folder selection is successful, it prompts the user to input a name for the new database file and then creates the new database in the selected folder.
+     * If the user cancels or inputs an invalid folder or filename, the method displays an error message and exits the program.
+     */
     public static void showStartActionsDialog() {
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         String[] options = {"Neue Datenbank erstellen", "Bestehende Datenbank öffnen", "Beenden"};
@@ -288,19 +361,17 @@ public class StartUp {
                 JOptionPane.showConfirmDialog(null, "Der Dateiname war ungültig, das Programm wird beendet.", "Es wurde kein Name festgelegt!", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
-            fileName = fileName +".db";
+            fileName = fileName + ".db";
             String fullPathName = folderPath + "\\" + fileName;
             prefs.put(DatabaseAlreadyChosen, "true");
             prefs.put(LAST_USED_DATABASE, fullPathName);
             setupDatabase(fullPathName);
             performStartUpNewDatabase();
             return;
-        }
-        else if (option == 1) {
+        } else if (option == 1) {
             performExistingDatabaseStartUp();
             return;
-        }
-        else if (option == 2) {
+        } else if (option == 2) {
             System.exit(0);
         } else {
             System.exit(0);
