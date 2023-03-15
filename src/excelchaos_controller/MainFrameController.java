@@ -1,5 +1,6 @@
 package excelchaos_controller;
 
+import excelchaos_controller.sidepanelcontroller.SideMenuPanelTablesController;
 import excelchaos_model.backendoperations.BackEndUpdates;
 import excelchaos_model.backendoperations.Updater;
 import excelchaos_view.*;

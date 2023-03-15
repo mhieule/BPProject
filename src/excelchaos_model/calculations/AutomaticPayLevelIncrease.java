@@ -14,21 +14,24 @@ public class AutomaticPayLevelIncrease {
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
     private ContractDataManager contractDataManager = new ContractDataManager();
-
-
     private List<Employee> employeeList;
 
     private List<Date>[] payLevelIncreaseForEmployees;
 
     private int numberOfEmployees;
 
+    /**
+     * Constructor creates a new AutomaticPayLevelIncrease Object which prepares the object for Performing automatic paylevel increases of employees.
+     */
     public AutomaticPayLevelIncrease() {
         numberOfEmployees = employeeDataManager.getAllEmployees().size();
         employeeList = employeeDataManager.getAllEmployees();
         payLevelIncreaseForEmployees = new List[numberOfEmployees];
     }
 
-    //TODO Großflächig testen
+    /**
+     * Performs the paylevel increases of all employees that are not SHK when the program is started.
+     */
     public void performPayLevelIncrease() {
         Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
         int i = 0;
@@ -52,12 +55,22 @@ public class AutomaticPayLevelIncrease {
 
     }
 
+    /**
+     * This method performs the paylevel increase for a single employee based on a date that is given to the method through an input.
+     * It is later used for a future or past salary projection.
+     * @param givenDate The date the paylevel will be projected on.
+     * @param contract The contract of the employee which paylevel is projected.
+     * @return A contract that has the new paylevel set as its attribute. This value is never saved in the database.
+     */
     public Contract performPayLevelIncreaseBasedOnGivenDate(Date givenDate, Contract contract) {
         contract.setPaylevel(ProjectedSalaryModel.calculatePayLevelBasedOnDate(contract.getStart_date(), contract.getPaylevel(), givenDate));
         return contract;
     }
 
-
+    /**
+     * This method sets a new paylevel for a contract it is given. The updated contract is saved in the database.
+     * @param contract The contract of the employee that is being updated in the method.
+     */
     private void setNewPayLevel(Contract contract) {
         switch (contract.getPaylevel()) {
             case "1A":

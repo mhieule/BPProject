@@ -1,5 +1,7 @@
-package excelchaos_controller;
+package excelchaos_controller.sidepanelcontroller;
 
+import excelchaos_controller.MainFrameController;
+import excelchaos_controller.PayRateTablesController;
 import excelchaos_model.backendoperations.BackEndUpdates;
 import excelchaos_model.backendoperations.StartUp;
 import excelchaos_view.sidepanel.SideMenuPanelTables;

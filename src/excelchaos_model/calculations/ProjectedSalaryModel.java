@@ -3,53 +3,65 @@ package excelchaos_model.calculations;
 import java.util.*;
 
 public class ProjectedSalaryModel {
-    public static List<Date> calculatePayLevelIncrease(Date startDate, String currentLevel) {
-        List<Date> payIncreases = new ArrayList<>();
+    /**
+     * This method calculates the date of the next paylevel increase of an employee based on the working start date of the employee.
+     * @param workingStartDate The date where the employee started working.
+     * @param currentLevel The current paylevel of the employee at a specific time.
+     * @return The next date when the paylevel gets increased for an employee that started working on the workingStartDate.
+     */
+    public static List<Date> calculatePayLevelIncrease(Date workingStartDate, String currentLevel) {
+        List<Date> payLevelIncreases = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(startDate);
+        calendar.setTime(workingStartDate);
         switch (currentLevel) {
             case "1A":
                 calendar.add(Calendar.MONTH, 6);
-                payIncreases.add(calendar.getTime());
+                payLevelIncreases.add(calendar.getTime());
                 break;
             case "1B":
                 calendar.add(Calendar.MONTH, 6);
                 calendar.add(Calendar.MONTH, 6);
-                payIncreases.add(calendar.getTime());
+                payLevelIncreases.add(calendar.getTime());
                 break;
             case "1":
                 calendar.add(Calendar.YEAR, 1);
-                payIncreases.add(calendar.getTime());
+                payLevelIncreases.add(calendar.getTime());
                 break;
             case "2":
                 calendar.add(Calendar.YEAR, 1);
                 calendar.add(Calendar.YEAR, 2);
-                payIncreases.add(calendar.getTime());
+                payLevelIncreases.add(calendar.getTime());
                 break;
             case "3":
                 calendar.add(Calendar.YEAR, 3);
                 calendar.add(Calendar.YEAR, 3);
-                payIncreases.add(calendar.getTime());
+                payLevelIncreases.add(calendar.getTime());
                 break;
             case "4":
                 calendar.add(Calendar.YEAR, 6);
                 calendar.add(Calendar.YEAR, 4);
-                payIncreases.add(calendar.getTime());
+                payLevelIncreases.add(calendar.getTime());
                 break;
             case "5":
                 calendar.add(Calendar.YEAR, 10);
                 calendar.add(Calendar.YEAR, 5);
-                payIncreases.add(calendar.getTime());
+                payLevelIncreases.add(calendar.getTime());
                 break;
             case "6":
                 calendar.add(Calendar.YEAR, 15);
-                payIncreases.add(calendar.getTime());
+                payLevelIncreases.add(calendar.getTime());
                 break;
         }
-        System.out.println("Test");
-        return payIncreases;
+        return payLevelIncreases;
     }
 
+    /**
+     * This method calculates the paylevel an employee will have on a given Date based on the working start date and the current paylevel.
+     * @param workStartDate The date an employee started working.
+     * @param currentLevel The current paylevel of the employee.
+     * @param givenDate The date for which you want the projected paylevel.
+     * @return The paylevel on the given Date as String.
+     */
     public static String calculatePayLevelBasedOnDate(Date workStartDate, String currentLevel, Date givenDate) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(workStartDate);
@@ -93,43 +105,11 @@ public class ProjectedSalaryModel {
         return "6";
     }
 
-    //TODO Debugging angesagt
-    public static List<Date> calculateNextPayLevelDate(Date startDate, String currentLevel) {
-        List<Date> payIncreases = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(startDate);
-        switch (currentLevel) {
-            case "1A":
-            case "1B":
-                calendar.add(Calendar.MONTH, 6);
-                payIncreases.add(calendar.getTime());
-                break;
-            case "1":
-                calendar.add(Calendar.YEAR, 1);
-                payIncreases.add(calendar.getTime());
-                break;
-            case "2":
-                calendar.add(Calendar.YEAR, 2);
-                payIncreases.add(calendar.getTime());
-                break;
-            case "3":
-                calendar.add(Calendar.YEAR, 3);
-                payIncreases.add(calendar.getTime());
-                break;
-            case "4":
-                calendar.add(Calendar.YEAR, 4);
-                payIncreases.add(calendar.getTime());
-                break;
-            case "5":
-                calendar.add(Calendar.YEAR, 5);
-                payIncreases.add(calendar.getTime());
-                break;
-            case "6":
-                payIncreases.add(calendar.getTime());
-        }
-        return payIncreases;
-    }
-
+    /**
+     * This method calculates all Dates on which a paylevel increase for an employee will/has happen/ed.
+     * @param workingStartDate The date on which the employee started working.
+     * @return A list of dates where a paylevel increase will happen.
+     */
     public static List<Date> getAllPayLevelChangesForEmployee(Date workingStartDate) {
         List<Date> payLevelChanges = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
@@ -151,7 +131,12 @@ public class ProjectedSalaryModel {
 
     }
 
-    //TODO Debugging, wirft ganz merkwürkdigen Nullpointer
+    /**
+     * This method calculates the last date on which a paylevel increase for an employee has been performed.
+     * @param workingStartDate The date on which the employee started working.
+     * @param currentDate Currentdate represents today's date.
+     * @return The date on which the last paylevel increase was performed.
+     */
     public static Date getLastPayLevelIncreaseDate(Date workingStartDate, Date currentDate) {
         Date lastIncreaseDate = workingStartDate;
         Calendar calendar = Calendar.getInstance();
@@ -166,6 +151,11 @@ public class ProjectedSalaryModel {
         return lastIncreaseDate;
     }
 
+    /**
+     * This method increases the paylevel based on the given paylevel.
+     * @param startLevel The current paylevel that is given to the method.
+     * @return The increased paylevel as String.
+     */
     public static String getNextPayLevel(String startLevel) {
         switch (startLevel) {
             case "1A":
