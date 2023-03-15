@@ -16,6 +16,13 @@ public class EmployeeDataAccess {
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
     private ContractDataManager contractDataManager = new ContractDataManager();
 
+    /**
+     * Retrieves employee data from the database and formats it into a 2D array of strings. Each row in the array represents
+     * one employee's information, while the columns represent different fields of information.
+     * The returned array is sorted by employee's surname.
+     *
+     * @return a 2D array of employee data formatted as strings
+     */
     public String[][] getEmployeeDataFromDataBase() {
         int lines = employeeDataManager.getRowCount();
         String resultData[][] = new String[lines][];
@@ -33,9 +40,9 @@ public class EmployeeDataAccess {
             String zipCode = employee.getZip_code();
             String city = employee.getCity();
             String dateOfBirth;
-            if(employee.getDate_of_birth() == null){
+            if (employee.getDate_of_birth() == null) {
                 dateOfBirth = "";
-            }else {
+            } else {
                 dateOfBirth = dateFormat.format(employee.getDate_of_birth());
             }
             String emailPrivate = employee.getEmail_private();
@@ -59,7 +66,7 @@ public class EmployeeDataAccess {
             Date endDate = contract.getEnd_date();
             String endDateString = dateFormat.format(endDate);
             String workScope = "";
-            if(typeOfJob.equals("SHK")){
+            if (typeOfJob.equals("SHK")) {
                 workScope = StringAndBigDecimalFormatter.formatBigDecimalToHours(contract.getScope());
             } else {
                 workScope = StringAndBigDecimalFormatter.formatPercentageToStringForScope(contract.getScope());
@@ -71,21 +78,29 @@ public class EmployeeDataAccess {
             if (contract.getVbl_status()) {
                 vblStatus = "Pflichtig";
             } else vblStatus = "Befreit";
-            if(typeOfJob.equals("SHK")){
+            if (typeOfJob.equals("SHK")) {
                 vblStatus = "";
             }
 
             Date salaryPlannedUntil = employee.getSalary_planned_until();
             String salaryPlannedUntilString = dateFormat.format(salaryPlannedUntil);
 
-            String[] values = {id, surname, name, street, houseNumber, additionalAddress, zipCode, city, dateOfBirth, emailPrivate, phonePrivate, phoneTuda,
-                    citizenship1, citizenship2, visaExpiration, employeeNumber, transponderNumber, officeNumber, tuId, typeOfJob, startDateString, endDateString, workScope, payGrade, payLevel, vblStatus, shkHourlyRate, salaryPlannedUntilString};
+            String[] values = {id, surname, name, street, houseNumber, additionalAddress, zipCode, city, dateOfBirth, emailPrivate, phonePrivate, phoneTuda, citizenship1, citizenship2, visaExpiration, employeeNumber, transponderNumber, officeNumber, tuId, typeOfJob, startDateString, endDateString, workScope, payGrade, payLevel, vblStatus, shkHourlyRate, salaryPlannedUntilString};
             resultData[currentIndex] = values;
             currentIndex++;
         }
         return resultData;
     }
 
+    /**
+     * Retrieves salary data from the database and returns it as a 2-dimensional String array.
+     * Each row represents a contract and contains information about the employee:
+     * The method retrieves the necessary data by iterating over all contracts in the database and
+     * retrieving the associated employee's data. The resulting data is
+     * returned as a 2-dimensional array of strings.
+     *
+     * @return A 2-dimensional String array containing salary data for all employees.
+     */
     public String[][] getSalaryDataFromDataBase() {
         int lines = contractDataManager.getRowCount();
         String[][] resultData = new String[lines][];
@@ -98,9 +113,9 @@ public class EmployeeDataAccess {
             String name = employee.getName();
             String surname = employee.getSurname();
             String dateOfBirth;
-            if(employee.getDate_of_birth() == null){
+            if (employee.getDate_of_birth() == null) {
                 dateOfBirth = "";
-            }else {
+            } else {
                 dateOfBirth = dateFormat.format(employee.getDate_of_birth());
             }
             String group = contract.getPaygrade();
@@ -116,22 +131,21 @@ public class EmployeeDataAccess {
         return resultData;
     }
 
-    public String[] getEmployeeNamesList(){
+    public String[] getEmployeeNamesList() {
         return employeeDataManager.getAllEmployeesNameList();
     }
 
-    public List<Employee> getAllEmployees(){
+    public List<Employee> getAllEmployees() {
         return employeeDataManager.getAllEmployees();
     }
 
-    public Employee getEmployee(int employeeID){
+    public Employee getEmployee(int employeeID) {
         return employeeDataManager.getEmployee(employeeID);
     }
 
-    public Contract getContract(int employeeID){
+    public Contract getContract(int employeeID) {
         return contractDataManager.getContract(employeeID);
     }
-
 
 
 }

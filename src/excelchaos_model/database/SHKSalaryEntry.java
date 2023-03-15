@@ -40,7 +40,7 @@ public class SHKSalaryEntry {
         return this.validation_date;
     }
 
-    public void setValidationDate(Date validation_date){
+    public void setValidationDate(Date validation_date) {
         this.validation_date = validation_date;
     }
 
@@ -48,7 +48,7 @@ public class SHKSalaryEntry {
         return this.base_payRate;
     }
 
-    public void setBasePayRate(BigDecimal base_payRate){
+    public void setBasePayRate(BigDecimal base_payRate) {
         this.base_payRate = base_payRate;
     }
 
@@ -56,15 +56,15 @@ public class SHKSalaryEntry {
         return this.extended_payRate;
     }
 
-    public void setExtendedPayRate(BigDecimal extended_payRate){
+    public void setExtendedPayRate(BigDecimal extended_payRate) {
         this.extended_payRate = extended_payRate;
     }
 
-    public BigDecimal getWHKPayRate(){
+    public BigDecimal getWHKPayRate() {
         return this.whk_payRate;
     }
 
-    public void setWHKPayRate(BigDecimal whk_payRate){
+    public void setWHKPayRate(BigDecimal whk_payRate) {
         this.whk_payRate = whk_payRate;
     }
 

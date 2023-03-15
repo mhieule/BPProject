@@ -130,6 +130,7 @@ public class SalaryTableManager {
 
     /**
      * Sets the Path where the database can be found.
+     *
      * @param databaseURL The path to the database.
      */
     public static void setDatabaseURL(String databaseURL) {

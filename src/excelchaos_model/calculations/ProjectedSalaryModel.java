@@ -5,8 +5,9 @@ import java.util.*;
 public class ProjectedSalaryModel {
     /**
      * This method calculates the date of the next paylevel increase of an employee based on the working start date of the employee.
+     *
      * @param workingStartDate The date where the employee started working.
-     * @param currentLevel The current paylevel of the employee at a specific time.
+     * @param currentLevel     The current paylevel of the employee at a specific time.
      * @return The next date when the paylevel gets increased for an employee that started working on the workingStartDate.
      */
     public static List<Date> calculatePayLevelIncrease(Date workingStartDate, String currentLevel) {
@@ -57,9 +58,10 @@ public class ProjectedSalaryModel {
 
     /**
      * This method calculates the paylevel an employee will have on a given Date based on the working start date and the current paylevel.
+     *
      * @param workStartDate The date an employee started working.
-     * @param currentLevel The current paylevel of the employee.
-     * @param givenDate The date for which you want the projected paylevel.
+     * @param currentLevel  The current paylevel of the employee.
+     * @param givenDate     The date for which you want the projected paylevel.
      * @return The paylevel on the given Date as String.
      */
     public static String calculatePayLevelBasedOnDate(Date workStartDate, String currentLevel, Date givenDate) {
@@ -107,6 +109,7 @@ public class ProjectedSalaryModel {
 
     /**
      * This method calculates all Dates on which a paylevel increase for an employee will/has happen/ed.
+     *
      * @param workingStartDate The date on which the employee started working.
      * @return A list of dates where a paylevel increase will happen.
      */
@@ -133,8 +136,9 @@ public class ProjectedSalaryModel {
 
     /**
      * This method calculates the last date on which a paylevel increase for an employee has been performed.
+     *
      * @param workingStartDate The date on which the employee started working.
-     * @param currentDate Currentdate represents today's date.
+     * @param currentDate      Currentdate represents today's date.
      * @return The date on which the last paylevel increase was performed.
      */
     public static Date getLastPayLevelIncreaseDate(Date workingStartDate, Date currentDate) {
@@ -153,6 +157,7 @@ public class ProjectedSalaryModel {
 
     /**
      * This method increases the paylevel based on the given paylevel.
+     *
      * @param startLevel The current paylevel that is given to the method.
      * @return The increased paylevel as String.
      */

@@ -9,7 +9,11 @@ public class EmployeeDataDeleter {
     private ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
     private SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = new SalaryIncreaseHistoryManager();
 
-
+    /**
+     * Removes all data related to the employees with the given IDs from the system. This includes removing the employee, their contract, any manually entered salary entries, their salary increase history, and their project participation.
+     *
+     * @param employeeIds an array of integer IDs of the employees to be deleted
+     */
     public void deleteData(int[] employeeIds) {
         for (int i = 0; i < employeeIds.length; i++) {
             employeeDataManager.removeEmployee(employeeIds[i]);

@@ -5,7 +5,12 @@ import java.util.Locale;
 
 public class CountryModel {
 
-
+    /**
+     * Returns an array of strings representing the names of all countries in the world,
+     * sorted alphabetically.
+     *
+     * @return an array of strings representing the names of all countries in the world, sorted alphabetically.
+     */
     public static String[] getCountries() {
         String[] countryCodes = Locale.getISOCountries();
         String[] countries = new String[countryCodes.length];
@@ -18,6 +23,12 @@ public class CountryModel {
         return countries;
     }
 
+    /**
+     * Returns an array of strings representing the names of all countries in the world,
+     * sorted alphabetically. Standard value is "Keine".
+     *
+     * @return an array of strings representing the names of all countries in the world, sorted alphabetically.
+     */
     public static String[] getCountriesWithKeine() {
         String[] countryCodes = Locale.getISOCountries();
         String[] countries = new String[countryCodes.length + 1];

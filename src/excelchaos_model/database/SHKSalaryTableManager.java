@@ -23,7 +23,7 @@ public class SHKSalaryTableManager {
         try {
             String databaseUrl = "jdbc:sqlite:" + databaseURL;
             this.connectionSource = new JdbcConnectionSource(databaseUrl);
-            this.SHKDao = DaoManager.createDao(connectionSource,SHKSalaryEntry.class);
+            this.SHKDao = DaoManager.createDao(connectionSource, SHKSalaryEntry.class);
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
@@ -69,11 +69,11 @@ public class SHKSalaryTableManager {
         return shkSalaryEntry;
     }
 
-    public SHKSalaryEntry getSHKSalaryEntryBasedOnDate(Date givenDate){
+    public SHKSalaryEntry getSHKSalaryEntryBasedOnDate(Date givenDate) {
         List<SHKSalaryEntry> shkSalaryEntries = getAllSHKSalaryEntries();
         SHKSalaryEntry resultEntry = null;
-        for (SHKSalaryEntry entry : shkSalaryEntries){
-            if(entry.getValidationDate().compareTo(givenDate) == 0){
+        for (SHKSalaryEntry entry : shkSalaryEntries) {
+            if (entry.getValidationDate().compareTo(givenDate) == 0) {
                 resultEntry = entry;
             }
         }
@@ -151,9 +151,9 @@ public class SHKSalaryTableManager {
     }
 
 
-
     /**
      * Sets the Path where the database can be found.
+     *
      * @param databaseURL The path to the database.
      */
     public static void setDatabaseURL(String databaseURL) {
