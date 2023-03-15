@@ -137,7 +137,6 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
                 toolbarSalaryIncreaseController.getToolbar().getExportToCSV().setEnabled(false);
                 if (salaryIncreaseView.getTable() != null) {
                     salaryIncreaseView.getTable().setModel(new DefaultTableModel(null, nullColumns));
-                    frameController.getTabs().setLabel(title);
                 }
             } else {
                 toolbarSalaryIncreaseController.getToolbar().getDoSalaryIncrease().setEnabled(true);
@@ -147,10 +146,8 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
                     String[][] data = getDataFromDB(temporaryEmployee);
                     if (salaryIncreaseView.getTable() == null) {
                         createTableWithData(data);
-                        frameController.getTabs().setLabel(title + " " + temporaryEmployee.getSurname() + " " + temporaryEmployee.getName());
                     } else {
                         setTableData(data);
-                        frameController.getTabs().setLabel(title + " " + temporaryEmployee.getSurname() + " " + temporaryEmployee.getName());
                     }
                 }
             }

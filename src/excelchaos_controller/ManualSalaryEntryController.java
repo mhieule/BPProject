@@ -139,10 +139,8 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
                 String[][] data = getDataFromDB(temporaryEmployee);
                 if (salaryEntryView.getTable() == null) {
                     createTableWithData(data);
-                    frameController.getTabs().setLabel(title + " " + temporaryEmployee.getSurname() + " " + temporaryEmployee.getName());
                 } else {
                     setTableData(data);
-                    frameController.getTabs().setLabel(title + " " + temporaryEmployee.getSurname() + " " + temporaryEmployee.getName());
                 }
 
             }

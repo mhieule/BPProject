@@ -196,6 +196,9 @@ public class ProjectParticipationView extends JPanel {
                     salaryChange = salaryChange.multiply(StringAndBigDecimalFormatter.formatStringToPercentageValueForScope((String) mainTable.getValueAt(e.getFirstRow(), e.getColumn())));
                     mainTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(salaryChange), e.getFirstRow() + 1, e.getColumn());
 
+                    participationManager.removeProjectParticipationBasedOnDate(projectId, employee.getId(), date);
+                    participationManager.addProjectParticipation(new ProjectParticipation(projectId,employee.getId(),StringAndBigDecimalFormatter.formatStringToPercentageValueForScope((String)mainTable.getValueAt(e.getFirstRow(),e.getColumn())),date));
+
                     BigDecimal sumPersonenMonate = new BigDecimal(0);
                     BigDecimal sumCostPerMonth = new BigDecimal(0);
                     for (int row = 0; row < mainTable.getRowCount(); row++) {
@@ -241,7 +244,7 @@ public class ProjectParticipationView extends JPanel {
                     participationSumTable.setValueAt(StringAndBigDecimalFormatter.formatPercentageToStringForScope(updatedScopeValue), row, column);
                     participationSumTable.revalidate();
                     participationSumTable.repaint();
-
+                    projectNameLabel.setForeground(Color.RED);
 
                 }
             }
@@ -254,6 +257,7 @@ public class ProjectParticipationView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DateFormat format = new SimpleDateFormat("MMM-yyyy");
+                projectNameLabel.setForeground(Color.BLACK);
                 for (int row = 0; row < mainTable.getRowCount(); row++) {
                     if (row % 2 == 0) {
                         int employeeID = employeeDataManager.getEmployeeByName((String) rowsMainTable.getValueAt(row / 2, 0)).getId();
@@ -510,6 +514,13 @@ public class ProjectParticipationView extends JPanel {
                 for (int row = 0; row < oldNames.length; row++) {
                     oldNames[row] = (String) rowsMainTable.getValueAt(row, 0);
                 }
+
+                LinkedHashSet<String> oldSumTableEmployeeNames =new LinkedHashSet<>();
+                for (int row = 0; row < participationSumHeaderTable.getRowCount() ; row++) {
+                    oldSumTableEmployeeNames.add((String) participationSumHeaderTable.getValueAt(row,0));
+                }
+
+
                 LinkedHashSet<String> combiningNames = new LinkedHashSet<>(List.of(oldNames));
                 combiningNames.addAll(newlySelectedNames);
                 String[] newNames = combiningNames.toArray(new String[0]);
