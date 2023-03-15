@@ -22,11 +22,14 @@ public class InsertSalarySHKController implements ActionListener, ItemListener {
     private MainFrameController frameController;
     private int currentlyEditingContractID = 0;
     private int backUpNumber = 0;
-
     private SalaryTableLookUp salaryTableLookUp = new SalaryTableLookUp();
-
     private String addSalaryTab = "Gehaltseintrag bearbeiten";
 
+    /**
+     * Constructor for the InsertSalarySHKController
+     *
+     * @param mainFrameController the main frame controller
+     */
     public InsertSalarySHKController(MainFrameController mainFrameController) {
         employeeDataAccess = new EmployeeDataAccess();
         employeeDataInserter = new EmployeeDataInserter();
@@ -38,6 +41,11 @@ public class InsertSalarySHKController implements ActionListener, ItemListener {
 
     }
 
+    /**
+     * Adds a tab of the insert salary view
+     *
+     * @param mainFrameController the main frame controller
+     */
     public void showInsertSalarySHKView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(addSalaryTab) == -1) {
             mainFrameController.getTabs().addTab(addSalaryTab, insertSalarySHKView);
@@ -45,23 +53,29 @@ public class InsertSalarySHKController implements ActionListener, ItemListener {
         } else mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addSalaryTab));
     }
 
+    /**
+     * Fills the fields of the insert salary view with data from contract with the given id
+     *
+     * @param id the id of the contract
+     */
     public void fillFields(int id) {
         currentlyEditingContractID = id;
         Contract contract = employeeDataAccess.getContract(id);
-
         String[] names = employeeDataAccess.getEmployeeNamesList();
         String currentEmployeeName = employeeDataAccess.getEmployee(id).getSurname() + " " + employeeDataAccess.getEmployee(id).getName();
         insertSalarySHKView.getNamePickList().setModel(new DefaultComboBoxModel<>(names));
         insertSalarySHKView.getNamePickList().setSelectedItem(currentEmployeeName);
         insertSalarySHKView.getNamePickList().setEnabled(false);
         insertSalarySHKView.getTfHiwiTypeOfPayment().setSelectedItem(contract.getShk_hourly_rate());
-
         String salary = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getRegular_cost());
         String extraCost = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getBonus_cost());
         insertSalarySHKView.getTfSalary().setText(salary);
         insertSalarySHKView.getTfExtraCost().setText(extraCost);
     }
 
+    /**
+     * Resets the input fields
+     */
     public void resetInputs() {
         backUpNumber = currentlyEditingContractID;
         currentlyEditingContractID = 0;
@@ -70,6 +84,11 @@ public class InsertSalarySHKController implements ActionListener, ItemListener {
         insertSalarySHKView.getTfExtraCost().setText(null);
     }
 
+    /**
+     * Depending on the event e the method calls the appropriate method
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == insertSalarySHKView.getSubmit()) {
@@ -91,7 +110,6 @@ public class InsertSalarySHKController implements ActionListener, ItemListener {
             if (!insertSalarySHKView.getTfExtraCost().getText().equals("")) {
                 sonderzahlung = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertSalarySHKView.getTfExtraCost().getText());
             }
-
             if (hiwiTypeOfPayment.equals("Nicht ausgewählt")) {
                 insertSalarySHKView.markMustBeFilledTextFields();
                 JOptionPane.showConfirmDialog(null, "Bitte füllen Sie mindestens das Feld \"SHK Stundensatz\".", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
@@ -118,9 +136,13 @@ public class InsertSalarySHKController implements ActionListener, ItemListener {
         if (e.getSource() == insertSalarySHKView.getCancel()) {
             frameController.getTabs().removeTabNewWindow(insertSalarySHKView);
         }
-
     }
 
+    /**
+     * Depending on the event e the method calls the appropriate method
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -136,8 +158,6 @@ public class InsertSalarySHKController implements ActionListener, ItemListener {
                 insertSalarySHKView.getTfSalary().setText(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(newCost[0]));
                 insertSalarySHKView.getTfExtraCost().setText("0");
             }
-
         }
-
     }
 }
