@@ -22,12 +22,14 @@ public class InsertSalaryController implements ActionListener, ItemListener {
     private MainFrameController frameController;
     private int currentlyEditingContractID = 0;
     private int backUpNumber = 0;
-
     private SalaryTableLookUp salaryTableLookUp = new SalaryTableLookUp();
-
-
     private String addSalaryTab = "Gehaltseintrag bearbeiten";
 
+    /**
+     * Constructor for the InsertSalaryController
+     *
+     * @param mainFrameController the main frame controller
+     */
     public InsertSalaryController(MainFrameController mainFrameController) {
         employeeDataAccess = new EmployeeDataAccess();
         employeeDataInserter = new EmployeeDataInserter();
@@ -36,9 +38,13 @@ public class InsertSalaryController implements ActionListener, ItemListener {
         insertSalaryView.setActionListener(this);
         insertSalaryView.setItemListener(this);
         frameController = mainFrameController;
-
     }
 
+    /**
+     * Adds tab of the insert salary view.
+     *
+     * @param mainFrameController the main frame controller
+     */
     public void showInsertSalaryView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(addSalaryTab) == -1) {
             mainFrameController.getTabs().addTab(addSalaryTab, insertSalaryView);
@@ -46,11 +52,14 @@ public class InsertSalaryController implements ActionListener, ItemListener {
         } else mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addSalaryTab));
     }
 
+    /**
+     * Fills fields with data of the selected contract.
+     *
+     * @param id id of the salary to fill the fields with
+     */
     public void fillFields(int id) {
-
         currentlyEditingContractID = id;
         Contract contract = employeeDataAccess.getContract(id);
-
         String[] names = employeeDataAccess.getEmployeeNamesList();
         String currentEmployeeName = employeeDataAccess.getEmployee(id).getSurname() + " " + employeeDataAccess.getEmployee(id).getName();
         insertSalaryView.getNamePickList().setModel(new DefaultComboBoxModel<>(names));
@@ -69,6 +78,9 @@ public class InsertSalaryController implements ActionListener, ItemListener {
         insertSalaryView.getTfExtraCost().setText(extraCost);
     }
 
+    /**
+     * Resets all fields.
+     */
     public void resetInputs() {
         backUpNumber = currentlyEditingContractID;
         currentlyEditingContractID = 0;
@@ -79,6 +91,11 @@ public class InsertSalaryController implements ActionListener, ItemListener {
         insertSalaryView.getTfExtraCost().setText(null);
     }
 
+    /**
+     * Depending on the event e, changes insertSalaryView.
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == insertSalaryView.getSubmit()) {
@@ -108,7 +125,6 @@ public class InsertSalaryController implements ActionListener, ItemListener {
             if (!insertSalaryView.getTfExtraCost().getText().equals("")) {
                 sonderzahlung = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertSalaryView.getTfExtraCost().getText());
             }
-
             if (paygrade.equals("Nicht ausgewählt") || paylevel.equals("Nicht ausgewählt") || vblState.equals("Nicht ausgewählt")) {
                 insertSalaryView.markMustBeFilledTextFields();
                 JOptionPane.showConfirmDialog(null, "Bitte füllen Sie mindestens die Felder \"Gehaltsklasse\", \"Gehaltsstufe\" und \"VBL-Status\" aus.", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
@@ -120,9 +136,7 @@ public class InsertSalaryController implements ActionListener, ItemListener {
                 contract.setVbl_status(vbl);
                 contract.setRegular_cost(gehalt);
                 contract.setBonus_cost(sonderzahlung);
-
                 employeeDataInserter.updateExistingContract(contract);
-
                 insertSalaryView.revalidate();
                 insertSalaryView.repaint();
                 SalaryListController salaryListController = frameController.getSalaryListController();
@@ -137,14 +151,17 @@ public class InsertSalaryController implements ActionListener, ItemListener {
         if (e.getSource() == insertSalaryView.getCancel()) {
             frameController.getTabs().removeTabNewWindow(insertSalaryView);
         }
-
     }
 
+    /**
+     * Depending on the event e, changes insertSalaryView.
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             if (insertSalaryView.getVblList().getSelectedItem().toString().equals("Nicht ausgewählt") || insertSalaryView.getTfGroup().getSelectedItem().toString().equals("Nicht ausgewählt") || insertSalaryView.getPlLevel().getSelectedItem().toString().equals("Nicht ausgewählt")) {
-
             } else {
                 if (backUpNumber != 0) {
                     currentlyEditingContractID = backUpNumber;
@@ -159,8 +176,6 @@ public class InsertSalaryController implements ActionListener, ItemListener {
                 insertSalaryView.getTfSalary().setText(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(newCost[0]));
                 insertSalaryView.getTfExtraCost().setText(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(newCost[1].multiply(new BigDecimal(12))));
             }
-
         }
-
     }
 }
