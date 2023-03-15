@@ -22,9 +22,10 @@ public class InsertSHKEntryController implements ActionListener {
 
     /**
      * Constructor for the InsertSHKEntryController
+     *
      * @param mainFrameController the mainframecontroller
      */
-    public InsertSHKEntryController(MainFrameController mainFrameController){
+    public InsertSHKEntryController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         insertSHKEntryView = new InsertSHKEntryView();
         insertSHKEntryView.init();
@@ -33,10 +34,11 @@ public class InsertSHKEntryController implements ActionListener {
 
     /**
      * Constructor for the InsertSHKEntryController with the data to be viewed
+     *
      * @param mainFrameController the mainframecontroller
-     * @param data the data to be viewed
+     * @param data                the data to be viewed
      */
-    public InsertSHKEntryController(MainFrameController mainFrameController, String[][] data){
+    public InsertSHKEntryController(MainFrameController mainFrameController, String[][] data) {
         frameController = mainFrameController;
         insertSHKEntryView = new InsertSHKEntryView();
         insertSHKEntryView.init();
@@ -50,6 +52,7 @@ public class InsertSHKEntryController implements ActionListener {
 
     /**
      * Adds tab with insertSHKEntryView.
+     *
      * @param mainFrameController the mainframecontroller
      */
     public void showInsertSHKEntryView(MainFrameController mainFrameController) {
@@ -63,13 +66,13 @@ public class InsertSHKEntryController implements ActionListener {
     /**
      * Inserts the data into the database
      */
-    private void insertEntryInDB(){
+    private void insertEntryInDB() {
         LocalDate localDate = insertSHKEntryView.getDatePicker().getDate();
         Date validationDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         BigDecimal basePayRate = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertSHKEntryView.getBasePayRateTextfield().getText());
         BigDecimal extendedPayRate = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertSHKEntryView.getExtendedPayRateTextField().getText());
         BigDecimal whkPayRate = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(insertSHKEntryView.getWHKPayRateTextfield().getText());
-        if(currentEditingID != 0){
+        if (currentEditingID != 0) {
             SHKSalaryEntry updateEntry = shkSalaryTableManager.getSHKSalaryEntry(currentEditingID);
             updateEntry.setValidationDate(validationDate);
             updateEntry.setBasePayRate(basePayRate);
@@ -78,7 +81,7 @@ public class InsertSHKEntryController implements ActionListener {
             shkSalaryTableManager.updateSHKSalaryEntry(updateEntry);
         } else {
             currentEditingID = shkSalaryTableManager.getNextID();
-            SHKSalaryEntry newEntry = new SHKSalaryEntry(currentEditingID,validationDate,basePayRate,extendedPayRate,whkPayRate);
+            SHKSalaryEntry newEntry = new SHKSalaryEntry(currentEditingID, validationDate, basePayRate, extendedPayRate, whkPayRate);
             shkSalaryTableManager.addSHKTableEntry(newEntry);
         }
         insertSHKEntryView.revalidate();
@@ -92,7 +95,7 @@ public class InsertSHKEntryController implements ActionListener {
     /**
      * Resets the inputs
      */
-    private void resetInputs(){
+    private void resetInputs() {
         insertSHKEntryView.getDatePicker().setText(null);
         insertSHKEntryView.getBasePayRateTextfield().setText(null);
         insertSHKEntryView.getExtendedPayRateTextField().setText(null);
@@ -101,11 +104,12 @@ public class InsertSHKEntryController implements ActionListener {
 
     /**
      * Depending on the event e cancels, submits or resets the inputs
+     *
      * @param e the event to be processed
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == insertSHKEntryView.getCancel()){
+        if (e.getSource() == insertSHKEntryView.getCancel()) {
             frameController.getTabs().removeTabNewWindow(insertSHKEntryView);
         } else if (e.getSource() == insertSHKEntryView.getSubmitAndClose()) {
             insertEntryInDB();
