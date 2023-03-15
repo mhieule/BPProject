@@ -23,6 +23,14 @@ public class SalaryCalculation {
 
     }
 
+    /**
+     Updates the current salaries of all employees based on their current salary information,
+     contract start date, and any manual salary entries or pay level increases that have been
+     recorded. If none of these exist for a given employee, their regular cost in the contract
+     is set to 0.
+     The method retrieves all employees from the employeeDataManager, then iterates through
+     each employee to determine their updated salary.
+     */
     public void updateCurrentSalaries() {
         BigDecimal updatedSalary = new BigDecimal(0);
         Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -102,7 +110,17 @@ public class SalaryCalculation {
         }
     }
 
-
+    /**
+     Calculates the projected salary for an employee based on the given month and year.
+     The method takes an employeeId and a Date object representing the month and year for which
+     the salary is to be projected. It then retrieves the relevant salary and contract data
+     from the database and applies various calculations based on the employee's current
+     pay level, manual salary adjustments, and other factors to arrive at a projected salary
+     for the given month and year.
+     @param employeeId The ID of the employee for whom the projected salary is to be calculated
+     @param givenDate The month and year for which the projected salary is to be calculated
+     @return A BigDecimal object representing the projected salary for the given employee and date
+     */
     public BigDecimal projectSalaryToGivenMonth(int employeeId, Date givenDate) {
         BigDecimal projectedSalary = new BigDecimal(0);
         SalaryTableLookUp salaryTableLookUp = new SalaryTableLookUp();
@@ -184,7 +202,12 @@ public class SalaryCalculation {
 
     }
 
-
+    /**
+     Returns the last manually inserted salary date before the given date for the employee with the given ID.
+     @param id the ID of the employee
+     @param givenDate the given date to find the last manually inserted salary date before it
+     @return the last manually inserted salary date before the given date as a LocalDate object, or null if no salary date was found
+     */
     private LocalDate getLastCurrentManualInsertedSalaryDate(int id, Date givenDate) {
         LocalDate lastManualInsertedSalaryDate;
         Date temporaryDate = null;
@@ -204,6 +227,14 @@ public class SalaryCalculation {
         return lastManualInsertedSalaryDate;
     }
 
+    /**
+
+     Returns the last manually inserted salary for the given employee ID and given date.
+     If no manually inserted salary exists for the given employee ID and date, returns 0.
+     @param id the ID of the employee
+     @param givenDate the date for which the last manually inserted salary is required
+     @return the last manually inserted salary for the given employee ID and given date, or 0 if none exists
+     */
     private BigDecimal getLastCurrentManualInsertedSalary(int id, Date givenDate) {
         BigDecimal lastManualInsertedSalary = new BigDecimal(0);
         Date temporaryDate = null;
@@ -221,7 +252,14 @@ public class SalaryCalculation {
         return lastManualInsertedSalary;
     }
 
-    //TODO Unbedingt testen
+    /**
+
+     Returns the date of the last salary increase for the given employee ID and given date.
+     If no salary increase exists for the given employee ID and date, returns null.
+     @param id the ID of the employee
+     @param givenDate the date for which the last salary increase date is required
+     @return the date of the last salary increase for the given employee ID and given date, or null if none exists
+     */
     private LocalDate getLastCurrentSalaryIncreaseDate(int id, Date givenDate) {
         LocalDate lastSalaryIncreaseDate;
         Date lastSalaryIncreaseDateNotBonusPayment = null;
@@ -262,7 +300,15 @@ public class SalaryCalculation {
 
     }
 
-    //TODO Ganz wichtig zu testen
+    /**
+     Returns the last salary increase for the employee with the given ID up to the given date,
+     including any additional payments flagged as bonuses.
+     If no salary increase was found, returns 0.
+     @param id The ID of the employee to retrieve the salary increase for.
+     @param givenDate The date up to which to retrieve the salary increase.
+     @return The last salary increase for the employee up to the given date, including any additional payments
+     flagged as bonuses, or 0 if no salary increase was found.
+     */
     private BigDecimal getLastCurrentSalaryIncrease(int id, Date givenDate) {
         BigDecimal lastSalaryIncrease = new BigDecimal(0);
         BigDecimal lastSalaryIncreaseNoBonus = new BigDecimal(0);
@@ -304,6 +350,14 @@ public class SalaryCalculation {
 
     }
 
+    /**
+
+     Returns the date of the last pay level increase between the given working start date and current date.
+     If no pay level increase occurred between the given dates, returns null.
+     @param workingStartDate the start date of working
+     @param currentDate the current date
+     @return the date of the last pay level increase between the given dates, or null if no pay level increase occurred
+     */
     private LocalDate getLastCurrentPayLevelIncreaseDate(Date workingStartDate, Date currentDate) {
         if (ProjectedSalaryModel.getLastPayLevelIncreaseDate(workingStartDate, currentDate).toInstant().atZone(ZoneId.systemDefault()).toLocalDate() == null) {
             return null;
