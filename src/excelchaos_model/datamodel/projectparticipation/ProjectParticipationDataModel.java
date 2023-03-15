@@ -41,18 +41,18 @@ public class ProjectParticipationDataModel {
         return projectIds;
     }
 
-    public String[] getProjectNames() {
-        String[] projectNames = new String[projectIds.length];
-        for (int i = 0; i < projectIds.length; i++) {
-            projectNames[i] = projectManager.getProject(projectIds[i]).getProject_name();
-        }
-        return projectNames;
-    }
 
     public String getProjectName(int projectId) {
         return projectManager.getProject(projectId).getProject_name();
     }
 
+    /**
+     * Returns an array of strings representing the names of the months between the start and end dates of a project.
+     * The first element of the array is always "Namen". The names of the months are formatted in "MMM-yyyy" format.
+     *
+     * @param projectId the ID of the project to get the run time for
+     * @return an array of strings representing the names of the months between the start and end dates of the project
+     */
     public String[] getProjectRunTimeInMonths(int projectId) {
         String[] months;
         int arrayLength = 0;
@@ -92,6 +92,13 @@ public class ProjectParticipationDataModel {
         return months;
     }
 
+
+    /**
+     * Returns an array of person names for a given project id.
+     *
+     * @param projectId The id of the project.
+     * @return An array of person names for the given project.
+     */
     public String[] getPersonNamesForProject(int projectId) {
         String[] names;
         List<ProjectParticipation> projectParticipationsList = new ArrayList<>();
@@ -105,6 +112,13 @@ public class ProjectParticipationDataModel {
 
 
     }
+
+    /**
+     * Returns an array of person ids for a given project id.
+     *
+     * @param projectId The id of the project.
+     * @return An array of person ids for the given project.
+     */
 
     private int[] getPersonIdsForProject(int projectId) {
         int[] personIds;
@@ -125,6 +139,16 @@ public class ProjectParticipationDataModel {
         return personIds;
     }
 
+    /**
+     * Returns a two-dimensional array of table data for a given project id, number of rows, months, and employee names.
+     * The table data consists of employee names, percentage scope of project participation, and corresponding salaries for each month.
+     *
+     * @param projectId     The id of the project.
+     * @param numOfRows     The number of rows in the table.
+     * @param months        The array of month strings to be included in the table.
+     * @param employeeNames The array of employee names to be included in the table.
+     * @return A two-dimensional array of table data for the given project.
+     */
     public String[][] getTableData(int projectId, int numOfRows, String[] months, String[] employeeNames) throws ParseException {
         String[][] tableData = new String[numOfRows * 2][months.length];
         DateFormat format = new SimpleDateFormat("MMM-yyyy");
@@ -162,6 +186,18 @@ public class ProjectParticipationDataModel {
         return tableData;
     }
 
+    /**
+     * This method returns a two-dimensional String array that contains the summed data of project participation and personal costs of a project for each month in the given array.
+     * The number of rows in the array is twice the given numOfRows.
+     * The first row of the returned array represents the total project participation in person months for each month in the given array,
+     * and the second row represents the total personal costs of the project for each month in the given array.
+     *
+     * @param projectId the ID of the project for which the summed data is required.
+     * @param numOfRows the number of rows in the returned array. It should be half the number of persons participating in the project.
+     * @param months    an array of String containing the names of the months in the format MMM-yyyy.
+     * @return a two-dimensional String array containing the summed data of project participation and personal costs of a project for each month in the given array.
+     * @throws ParseException if there is an error in parsing the date from the given months array.
+     */
     public String[][] getSummedTableData(int projectId, int numOfRows, String[] months) throws ParseException {
         String[][] summedData;
         BigDecimal[] sumPersonenMonate = new BigDecimal[months.length];
@@ -211,6 +247,11 @@ public class ProjectParticipationDataModel {
         return summedData;
     }
 
+    /**
+     * Calculates the total personal cost of the project by summing up the monthly personal costs.
+     *
+     * @return a String representing the total project personal cost formatted as currency.
+     */
     public String getTotalProjectPersonalCost() {
         String totalCost;
         BigDecimal totalCostNumber = new BigDecimal(0);
@@ -221,6 +262,11 @@ public class ProjectParticipationDataModel {
         return totalCost;
     }
 
+    /**
+     * Transforms all months in the "allShownMonths" list to a sorted list of Strings in the format of "MMM-yyyy".
+     *
+     * @return ArrayList of Strings with all the months in "allShownMonths" sorted in ascending order.
+     */
     private ArrayList<String> transformAllMonthsToSortedList() {
         ArrayList<String> allMonthsList = new ArrayList<String>(allShownMonths);
         allMonthsList.sort(new Comparator<String>() {
@@ -242,6 +288,15 @@ public class ProjectParticipationDataModel {
         return new ArrayList<String>(allShownEmployeeNames);
     }
 
+
+    /**
+     * Returns an array of all months in which project data is available, sorted in chronological order.
+     * This method obtains a sorted list of all months from the "allShownMonths" field, and then
+     * converts it to an array of strings to be returned.
+     *
+     * @return an array of strings containing the names of all months in chronological order
+     * @see #transformAllMonthsToSortedList()
+     */
     public String[] getRuntimeInMonthsForAllProjects() {
         ArrayList<String> allMonthsList = transformAllMonthsToSortedList();
         String[] allMonthsArray = new String[allMonthsList.size()];
@@ -251,6 +306,14 @@ public class ProjectParticipationDataModel {
         return allMonthsArray;
     }
 
+    /**
+     * Returns an array of Strings containing all employee names for the currently selected projects.
+     * The method retrieves the employee names from a Set of employee names previously collected from the selected projects.
+     * The returned array has the same order as the original Set.
+     * If no employee names were collected previously, an empty array is returned.
+     *
+     * @return String[] containing all employee names for the selected projects, in the same order as previously collected
+     */
     public String[] getAllEmployeesNamesForSelectedProjects() {
         String[] allEmployeeNamesArray = new String[allShownEmployeeNames.size()];
         for (int index = 0; index < allEmployeeNamesArray.length; index++) {
@@ -260,6 +323,15 @@ public class ProjectParticipationDataModel {
         return allEmployeeNamesArray;
     }
 
+    /**
+     * Returns a two-dimensional string array representing the total participation of each shown employee in each shown month.
+     * The first dimension of the array corresponds to each shown employee, and the second dimension corresponds to each shown month.
+     * The values are calculated by iterating through all projects and project participations associated with each shown employee,
+     * and accumulating the scope of each project participation that occurs in each shown month.
+     * The resulting BigDecimal values are formatted as percentage strings using the StringAndBigDecimalFormatter.formatPercentageToStringForScope() method.
+     *
+     * @return a two-dimensional string array representing the total participation of each shown employee in each shown month
+     */
     public String[][] getTotalParticipationsOfShownEmployees() {
         ArrayList<String> allNamesList = transformAllEmployeeNamesToList();
         ArrayList<String> allMonthsList = transformAllMonthsToSortedList();
