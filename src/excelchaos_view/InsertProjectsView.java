@@ -3,6 +3,7 @@ package excelchaos_view;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.tableeditors.DateTableEditor;
 import excelchaos_model.database.EmployeeDataManager;
+import excelchaos_model.inputVerifier.SalaryVerifier;
 import excelchaos_view.layoutmanager.WrapLayout;
 
 import javax.swing.*;
@@ -145,34 +146,6 @@ public class InsertProjectsView extends JPanel {
         flowProjectValuesPanel.add(projectValuesPanel);
     }
 
-//    public void setUpProjectValuesPanel(){
-//        flowProjectValuesPanel.setLayout(new FlowLayout());
-//        projectValuesPanel.setLayout(new GridBagLayout());
-//
-//        name = new JLabel("Projektname");
-//        setConstraintsLabel(name, 0);
-//        tfName = new JTextField();
-//        setConstraintsTextField(tfName, 0);
-//        textFieldConstraints.insets.top = 5;
-//
-//        approval = new JLabel("Bewilligungsdatum");
-//        setConstraintsLabel(approval, 1);
-//        tfApproval = new DatePicker();
-//        setConstraintsDatePicker(tfApproval, 1);
-//
-//        start = new JLabel("Startdatum");
-//        setConstraintsLabel(start, 2);
-//        tfStart = new DatePicker();
-//        setConstraintsDatePicker(tfStart, 2);
-//
-//        duration = new JLabel("Enddatum");
-//        setConstraintsLabel(duration, 3);
-//        tfDuration = new DatePicker();
-//        setConstraintsDatePicker(tfDuration, 3);
-//
-//        flowProjectValuesPanel.add(projectValuesPanel);
-//    }
-
     public void setUpCategoriesPanel() {
         categoriesPanel.setLayout(new BorderLayout());
         JPanel northPanel = new JPanel();
@@ -183,6 +156,7 @@ public class InsertProjectsView extends JPanel {
         DefaultTableModel categoriesModel = new DefaultTableModel(null, categoryColumns);
         categoriesModel.setRowCount(4);
         categoriesTable = new JTable(categoriesModel);
+        categoriesTable.getColumn("Bewilligte Mittel").setCellEditor(new CellEditor(new SalaryVerifier()));
         categoriesTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         categoriesTable.getTableHeader().setReorderingAllowed(false);
         categoriesTable.setRowHeight(26);
@@ -209,8 +183,6 @@ public class InsertProjectsView extends JPanel {
         });
         northPanel.add(addRowButton);
         categoriesPanel.add(northPanel, BorderLayout.NORTH);
-
-
     }
 
     public void setUpCategorySumLabel(){
@@ -232,6 +204,7 @@ public class InsertProjectsView extends JPanel {
         DefaultTableModel categoriesModel = new DefaultTableModel(null, categoryColumnWithID);
         //categoriesModel.setRowCount(10);
         categoriesTable = new JTable(categoriesModel);
+        categoriesTable.getColumn("Bewilligte Mittel").setCellEditor(new CellEditor(new SalaryVerifier()));
         categoriesTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         categoriesTable.getTableHeader().setReorderingAllowed(false);
         categoriesTable.setRowHeight(26);
@@ -572,6 +545,21 @@ public class InsertProjectsView extends JPanel {
         textFieldConstraints.gridwidth = GridBagConstraints.REMAINDER;
         textFieldConstraints.weightx = 1.0;
         projectValuesPanel.add(datePicker, textFieldConstraints);
+    }
+
+    private class CellEditor extends DefaultCellEditor {
+        InputVerifier verifier = null;
+
+        public CellEditor(InputVerifier verifier) {
+            super(new JTextField());
+            this.verifier = verifier;
+        }
+
+        @Override
+        public boolean stopCellEditing() {
+            return verifier.verify(editorComponent) && super.stopCellEditing();
+        }
+
     }
 }
 
