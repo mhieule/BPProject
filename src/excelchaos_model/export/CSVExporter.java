@@ -21,6 +21,13 @@ import java.util.prefs.Preferences;
 public class CSVExporter {
     public static final String LAST_USED_FOLDER = "KeyForLastPath";
 
+    /**
+     * Writes the data of the specified JTable to a CSV file at the given path.
+     *
+     * @param tableToExport  The JTable to export to CSV
+     * @param pathToExportTo The file path to export the CSV file to
+     * @return true if the CSV file is successfully written, false otherwise
+     */
     private static boolean writeToCSV(JTable tableToExport,
                                       String pathToExportTo) {
 
@@ -66,10 +73,14 @@ public class CSVExporter {
     }
 
 
+    /**
+     * Creates a CSV file containing the data from the given JTable and saves it to the user-selected directory.
+     * The file name is specified by the fileName parameter. If the user cancels the file selection dialog, the method does nothing.
+     *
+     * @param tableToExport The JTable containing the data to be exported to the CSV file.
+     * @param fileName      The desired name of the CSV file to be created.
+     */
     public static void createCSV(JTable tableToExport, String fileName) {
-        //TODO Filechooser Deutsche Labels geben
-
-
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         JFileChooser chooser = new JFileChooser(prefs.get(LAST_USED_FOLDER,
                 new File(".").getAbsolutePath()));
@@ -84,12 +95,17 @@ public class CSVExporter {
                     new File(".").getAbsolutePath()) + "\\" + fileName;
             System.out.println(fullPathName);
             writeToCSV(tableToExport, fullPathName);
-
         }
     }
 
+    /**
+     * Prompts the user to choose a directory to save a CSV file, and then allows the user to input a filename.
+     * If the user inputs a valid filename, the method will create a CSV file with the given filename and save it in the selected directory.
+     * If the user cancels either the directory selection or the filename input, the method returns without doing anything.
+     *
+     * @param tableToExport the JTable to be exported as a CSV file
+     */
     public static void createCSVVariableName(JTable tableToExport) {
-        //TODO Filechooser Deutsche Labels geben
 
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         JFileChooser chooser = new JFileChooser(prefs.get(LAST_USED_FOLDER,
@@ -103,7 +119,7 @@ public class CSVExporter {
             String fileName = JOptionPane.showInputDialog(null, "Bitte benenne die Datei:", "Eingabe eines Dateinamens", JOptionPane.QUESTION_MESSAGE);
             if (fileName == null || fileName.equals("")) {
                 return;
-            } //TODO Was passiert wenn auf cancel gedrückt wird?
+            }
             fileName = fileName + ".csv";
             String fullPathName = prefs.get(LAST_USED_FOLDER,
                     new File(".").getAbsolutePath()) + "\\" + fileName;
@@ -112,6 +128,13 @@ public class CSVExporter {
         }
     }
 
+    /**
+     * Creates a CSV file containing salary projection information for employees.
+     * The user is prompted to select a directory and enter a file name for the new CSV file.
+     * The salary projection data is obtained from the database and written to the CSV file.
+     * The file is saved to the selected directory with the specified file name.
+     * If the user cancels the file selection or enters an empty file name, no file is created.
+     */
     public static void createCSVSalaryProjection() {
         Preferences prefs = Preferences.userRoot().node(CSVExporter.class.getName());
         JFileChooser chooser = new JFileChooser(prefs.get(LAST_USED_FOLDER,
@@ -125,7 +148,7 @@ public class CSVExporter {
             String fileName = JOptionPane.showInputDialog(null, "Bitte benenne die Datei:", "Eingabe eines Dateinamens", JOptionPane.QUESTION_MESSAGE);
             if (fileName == null || fileName.equals("")) {
                 return;
-            } //TODO Was passiert wenn auf cancel gedrückt wird?
+            }
             fileName = fileName + ".csv";
             String fullPathName = prefs.get(LAST_USED_FOLDER,
                     new File(".").getAbsolutePath()) + "\\" + fileName;
@@ -133,6 +156,13 @@ public class CSVExporter {
         }
     }
 
+    /**
+     * Generates a CSV file with the projected salary costs for all employees over a period of 6 years and writes it to the specified path.
+     * The file includes the employee name, month, salary costs, and employment scope.
+     *
+     * @param pathToExportTo the file path to export the CSV file to
+     * @throws RuntimeException if the file is not found or an IO error occurs
+     */
     private static void writeSalaryProjectionCSV(String pathToExportTo) {
         EmployeeDataAccess employeeDataAccess = new EmployeeDataAccess();
         List<Employee> allEmployees = employeeDataAccess.getAllEmployees();
@@ -148,20 +178,20 @@ public class CSVExporter {
             csv.write("Beschäftigungsumfang" + ";");
             csv.write("\n");
 
-            for (Employee employee : allEmployees){
+            for (Employee employee : allEmployees) {
                 Contract contract = employeeDataAccess.getContract(employee.getId());
                 LocalDate startDate = contract.getStart_date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate endDate = startDate.plusYears(6);
                 String name = employee.getSurname() + " " + employee.getName();
-                for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusMonths(1)){
+                for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusMonths(1)) {
                     csv.write(name + ";");
-                    csv.write(format.format(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))+";");
-                    if(employee.getStatus().equals("SHK")){
-                        csv.write(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(salaryCalculation.projectSalaryToGivenMonth(employee.getId(), Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant())))+";");
-                        csv.write(StringAndBigDecimalFormatter.formatBigDecimalToHours(contract.getScope())+";");
+                    csv.write(format.format(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant())) + ";");
+                    if (employee.getStatus().equals("SHK")) {
+                        csv.write(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(salaryCalculation.projectSalaryToGivenMonth(employee.getId(), Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))) + ";");
+                        csv.write(StringAndBigDecimalFormatter.formatBigDecimalToHours(contract.getScope()) + ";");
                     } else {
-                        csv.write(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(salaryCalculation.projectSalaryToGivenMonth(employee.getId(), Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant())))+";");
-                        csv.write(StringAndBigDecimalFormatter.formatPercentageToStringForScope(contract.getScope())+";");
+                        csv.write(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(salaryCalculation.projectSalaryToGivenMonth(employee.getId(), Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))) + ";");
+                        csv.write(StringAndBigDecimalFormatter.formatPercentageToStringForScope(contract.getScope()) + ";");
                     }
 
                     csv.write("\n");

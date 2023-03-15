@@ -12,6 +12,12 @@ public class PayRateTableSHKCalculations {
     private SHKSalaryTableManager shkSalaryTableManager = new SHKSalaryTableManager();
 
 
+    /**
+     * Returns the ID of the currently active SHK salary entry based on the current date.
+     * The currently active entry is the one with the latest validation date that is not in the future.
+     *
+     * @return the ID of the currently active SHK salary entry
+     */
     public int getCurrentSHKPayRates() {
         LocalDate currentLocalDate = LocalDate.now();
         Date currentDate = Date.from(currentLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -38,6 +44,12 @@ public class PayRateTableSHKCalculations {
         return iDofCurrentSHKEntry;
     }
 
+    /**
+     * Returns the id of the currently valid SHK pay rate entry based on the provided chosen date.
+     *
+     * @param chosenDate the date for which the SHK pay rate should be determined
+     * @return the id of the valid SHK pay rate entry
+     */
     public int getSHKPayRatesBasedOnChosenDate(LocalDate chosenDate) {
         Date currentDate = Date.from(chosenDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         List<SHKSalaryEntry> shkSalaryEntries = shkSalaryTableManager.getAllSHKSalaryEntries();
