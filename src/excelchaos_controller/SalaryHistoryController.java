@@ -16,10 +16,11 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-/*public class SalaryHistoryController implements ItemListener {
-    private ManualSalaryEntryManager manualSalaryEntryManager = ManualSalaryEntryManager.getInstance();
-    private ContractDataManager contractDataManager = ContractDataManager.getInstance();
-    private EmployeeDataManager employeeDataManager = EmployeeDataManager.getInstance();
+public class SalaryHistoryController implements ItemListener {
+    //This Class is completely unfinished and needs complete reworking!
+    private ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
+    private ContractDataManager contractDataManager = new ContractDataManager();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
     private SalaryHistoryView salaryHistoryView;
     private ToolbarSalaryHistoryController toolbarSalaryHistory;
     private MainFrameController frameController;
@@ -73,10 +74,10 @@ import java.util.List;
 
         String year = months[rowCount - 1].format(DateTimeFormatter.ofPattern("yyyy"));
         String month = months[rowCount - 1].format(DateTimeFormatter.ofPattern("MMMM"));
-        String salary = Double.toString(contractDataManager.getContract(id).getRegular_cost());
+        //String salary = Double.toString(contractDataManager.getContract(id).getRegular_cost());
         String comment = null;
-        String[] values = {year, month, salary, comment};
-        resultData[rowCount - 1] = values;
+       // String[] values = {year, month, salary, comment};
+        //resultData[rowCount - 1] = values;
 
         List<ManualSalaryEntry> manualSalaryEntryList = manualSalaryEntryManager.getManualSalaryEntry(id);
         boolean found;
@@ -89,20 +90,20 @@ import java.util.List;
                 if (currDate.getYear() == changeDate.getYear() && currDate.getMonth() == changeDate.getMonth()) {
                     year = months[i].format(DateTimeFormatter.ofPattern("yyyy"));
                     month = months[i].format(DateTimeFormatter.ofPattern("MMMM"));
-                    salary = transformer.formatDoubleToString(entry.getNew_salary(), 1);
+                   // salary = transformer.formatDoubleToString(entry.getNew_salary(), 1);
                     comment = entry.getComment();
-                    values = new String[]{year, month, salary, comment};
-                    resultData[i] = values;
+                    //values = new String[]{year, month, salary, comment};
+                    //resultData[i] = values;
                     found = true;
                 }
             }
             if (!found) {
                 year = months[i].format(DateTimeFormatter.ofPattern("yyyy"));
                 month = months[i].format(DateTimeFormatter.ofPattern("MMMM"));
-                salary = resultData[i + 1][2];
+               // salary = resultData[i + 1][2];
                 comment = null;
-                values = new String[]{year, month, salary, comment};
-                resultData[i] = values;
+               // values = new String[]{year, month, salary, comment};
+               // resultData[i] = values;
             }
         }
         return resultData;
@@ -137,4 +138,4 @@ import java.util.List;
 
         }
     }
-}*/
+}

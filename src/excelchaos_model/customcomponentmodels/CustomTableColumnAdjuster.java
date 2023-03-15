@@ -1,4 +1,4 @@
-package excelchaos_model;
+package excelchaos_model.customcomponentmodels;
 
 import excelchaos_view.components.CustomTable;
 

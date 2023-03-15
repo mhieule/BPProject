@@ -8,7 +8,7 @@ import excelchaos_model.utility.TableNameDateTuple;
 import java.time.LocalDate;
 import java.util.List;
 
-public class CurrentPayRateTableE13 {
+public class PayRateTableE13Calculations {
     private int numberOfTables;
 
     private final String paygrade = "E13";
@@ -25,7 +25,7 @@ public class CurrentPayRateTableE13 {
 
     private int numberOfTablesWithout1AAnd1B = 0;
 
-    public CurrentPayRateTableE13() {
+    public PayRateTableE13Calculations() {
         numberOfTables = salaryTableManager.getNumOfTables(paygrade);
         tableNames = salaryTableManager.getDistinctTableNames(paygrade);
         tableNameDateTuple = new TableNameDateTuple[numberOfTables];

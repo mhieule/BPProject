@@ -1,8 +1,8 @@
 package excelchaos_controller;
 
-import excelchaos_model.BackEndUpdates;
-import excelchaos_model.StartUp;
-import excelchaos_view.SideMenuPanelTables;
+import excelchaos_model.backendoperations.BackEndUpdates;
+import excelchaos_model.backendoperations.StartUp;
+import excelchaos_view.sidepanel.SideMenuPanelTables;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,6 +1,6 @@
 package excelchaos_controller;
 
-import excelchaos_view.ToolbarSalaryHistoryView;
+import excelchaos_view.toolbarviews.ToolbarSalaryHistoryView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

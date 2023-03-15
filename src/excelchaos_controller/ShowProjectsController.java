@@ -1,7 +1,9 @@
 package excelchaos_controller;
 
-import excelchaos_model.*;
+import excelchaos_model.customcomponentmodels.CustomTableColumnAdjuster;
+import excelchaos_model.customcomponentmodels.CustomTableModel;
 import excelchaos_model.database.*;
+import excelchaos_model.utility.SearchAndFilterModel;
 import excelchaos_view.ShowProjectsView;
 
 import javax.swing.event.TableModelEvent;

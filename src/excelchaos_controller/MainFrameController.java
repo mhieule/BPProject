@@ -1,14 +1,11 @@
 package excelchaos_controller;
 
-import excelchaos_model.BackEndUpdates;
-import excelchaos_model.utility.Updater;
+import excelchaos_model.backendoperations.BackEndUpdates;
+import excelchaos_model.backendoperations.Updater;
 import excelchaos_view.*;
+import excelchaos_view.components.DnDCloseButtonTabbedPane;
 
 import javax.swing.*;
-import javax.swing.event.ChangeListener;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MainFrameController {
     private MainFrame window;

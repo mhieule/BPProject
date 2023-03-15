@@ -1,9 +1,9 @@
 package excelchaos_model.calculations;
 
 import excelchaos_model.database.*;
-import excelchaos_model.datecalculations.CurrentPayRateTableE13;
-import excelchaos_model.datecalculations.CurrentPayRateTableE14;
-import excelchaos_model.datecalculations.CurrentPayRateTableSHK;
+import excelchaos_model.datecalculations.PayRateTableE13Calculations;
+import excelchaos_model.datecalculations.PayRateTableE14Calculations;
+import excelchaos_model.datecalculations.PayRateTableSHKCalculations;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -22,7 +22,7 @@ public class SalaryTableLookUp {
         BigDecimal[] resultValue = new BigDecimal[2];
         Employee employee = employeeDataManager.getEmployee(contract.getId());
         if (employee.getStatus().equals("SHK")) {
-            CurrentPayRateTableSHK currentPayRateTableSHK = new CurrentPayRateTableSHK();
+            PayRateTableSHKCalculations currentPayRateTableSHK = new PayRateTableSHKCalculations();
             int currentSHKEntryId = currentPayRateTableSHK.getCurrentSHKPayRates();
             SHKSalaryEntry currentEntry =shkSalaryTableManager.getSHKSalaryEntry(currentSHKEntryId);
             if (currentEntry == null) {
@@ -49,7 +49,7 @@ public class SalaryTableLookUp {
             }
         } else {
             if (contract.getPaygrade().equals("E13")) {
-                CurrentPayRateTableE13 currentPayRateTableE13 = new CurrentPayRateTableE13();
+                PayRateTableE13Calculations currentPayRateTableE13 = new PayRateTableE13Calculations();
                 List<SalaryTable> E13SalaryTableWith1AAnd1B = null;
                 List<SalaryTable> E13SalaryTableWithout1AAnd1B = null;
 
@@ -166,7 +166,7 @@ public class SalaryTableLookUp {
                     }
                 }
             } else {
-                CurrentPayRateTableE14 currentPayRateTableE14 = new CurrentPayRateTableE14();
+                PayRateTableE14Calculations currentPayRateTableE14 = new PayRateTableE14Calculations();
                 List<SalaryTable> E14SalaryTableWith1AAnd1B = null;
                 List<SalaryTable> E14SalaryTableWithout1AAnd1B = null;
 
@@ -299,7 +299,7 @@ public class SalaryTableLookUp {
         BigDecimal[] resultValue = new BigDecimal[2];
         Employee employee = employeeDataManager.getEmployee(contract.getId());
         if (employee.getStatus().equals("SHK")) {
-            CurrentPayRateTableSHK currentPayRateTableSHK = new CurrentPayRateTableSHK();
+            PayRateTableSHKCalculations currentPayRateTableSHK = new PayRateTableSHKCalculations();
             int SHKEntryId = currentPayRateTableSHK.getSHKPayRatesBasedOnChosenDate(chosenDate);
             SHKSalaryEntry chosenSHKEntry = shkSalaryTableManager.getSHKSalaryEntry(SHKEntryId);
             if (chosenSHKEntry == null) {
@@ -326,7 +326,7 @@ public class SalaryTableLookUp {
             }
         } else {
             if (contract.getPaygrade().equals("E13")) {
-                CurrentPayRateTableE13 chosenDatePayRateTableE13 = new CurrentPayRateTableE13();
+                PayRateTableE13Calculations chosenDatePayRateTableE13 = new PayRateTableE13Calculations();
                 List<SalaryTable> E13SalaryTableWith1AAnd1B = null;
                 List<SalaryTable> E13SalaryTableWithout1AAnd1B = null;
 
@@ -445,7 +445,7 @@ public class SalaryTableLookUp {
                 }
 
             } else {
-                CurrentPayRateTableE14 choosenDatePayRateTableE14 = new CurrentPayRateTableE14();
+                PayRateTableE14Calculations choosenDatePayRateTableE14 = new PayRateTableE14Calculations();
                 List<SalaryTable> E14SalaryTableWith1AAnd1B = null;
                 List<SalaryTable> E14SalaryTableWithout1AAnd1B = null;
 
@@ -570,13 +570,13 @@ public class SalaryTableLookUp {
     public LocalDate getActivePayRateTableBasedOnGivenDate(Contract contract, LocalDate chosenDate) {
         Employee employee = employeeDataManager.getEmployee(contract.getId());
         if (employee.getStatus().equals("SHK")) {
-            CurrentPayRateTableSHK currentPayRateTableSHK = new CurrentPayRateTableSHK();
+            PayRateTableSHKCalculations currentPayRateTableSHK = new PayRateTableSHKCalculations();
             int determinedCurrentID = currentPayRateTableSHK.getSHKPayRatesBasedOnChosenDate(chosenDate);
             Date determinedDate = shkSalaryTableManager.getSHKSalaryEntry(determinedCurrentID).getValidationDate();
             return LocalDate.ofInstant(determinedDate.toInstant(), ZoneId.systemDefault());
         } else {
-            CurrentPayRateTableE13 chosenDatePayRateTableE13 = new CurrentPayRateTableE13();
-            CurrentPayRateTableE14 chosenDatePayRateTableE14 = new CurrentPayRateTableE14();
+            PayRateTableE13Calculations chosenDatePayRateTableE13 = new PayRateTableE13Calculations();
+            PayRateTableE14Calculations chosenDatePayRateTableE14 = new PayRateTableE14Calculations();
             switch (contract.getPaygrade()) {
                 case "E13":
                     if (contract.getPaylevel().equals("1")) {

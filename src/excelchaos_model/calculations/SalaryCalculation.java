@@ -1,6 +1,5 @@
 package excelchaos_model.calculations;
 
-import excelchaos_model.ProjectedSalaryModel;
 import excelchaos_model.database.*;
 
 import java.math.BigDecimal;
@@ -10,7 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class NewAndImprovedSalaryCalculation {
+public class SalaryCalculation {
 
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
@@ -20,7 +19,7 @@ public class NewAndImprovedSalaryCalculation {
 
     private ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
 
-    public NewAndImprovedSalaryCalculation() {
+    public SalaryCalculation() {
 
     }
 

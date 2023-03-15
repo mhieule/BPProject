@@ -1,11 +1,11 @@
 package excelchaos_controller;
 
-import excelchaos_model.*;
 import excelchaos_model.datamodel.employeedataoperations.EmployeeDataAccess;
 import excelchaos_model.datamodel.employeedataoperations.EmployeeDataDeleter;
 import excelchaos_model.export.CSVExporter;
+import excelchaos_model.utility.SearchAndFilterModel;
 import excelchaos_view.ShowPersonView;
-import excelchaos_view.ToolbarShowPersonView;
+import excelchaos_view.toolbarviews.ToolbarShowPersonView;
 
 import javax.swing.*;
 import javax.swing.event.*;

@@ -1,6 +1,5 @@
 package excelchaos_model.calculations;
 
-import excelchaos_model.*;
 import excelchaos_model.database.Contract;
 import excelchaos_model.database.ContractDataManager;
 import excelchaos_model.database.Employee;

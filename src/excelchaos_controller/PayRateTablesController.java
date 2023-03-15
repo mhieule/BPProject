@@ -1,12 +1,10 @@
 package excelchaos_controller;
 
-import excelchaos_model.database.SalaryTableManager;
 import excelchaos_model.datamodel.payratetablesdataoperations.PayRateTablesDataAccess;
 import excelchaos_model.datamodel.payratetablesdataoperations.PayRateTablesDataDeleter;
-import excelchaos_model.utility.PayRateTableNameDateSeperator;
 import excelchaos_model.utility.PayRateTableNameStringEditor;
 import excelchaos_view.PayRateTablesView;
-import excelchaos_view.ToolbarPayRateTablesView;
+import excelchaos_view.toolbarviews.ToolbarPayRateTablesView;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -16,8 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.Vector;
 
 public class PayRateTablesController extends MouseAdapter implements ListSelectionListener, ActionListener {

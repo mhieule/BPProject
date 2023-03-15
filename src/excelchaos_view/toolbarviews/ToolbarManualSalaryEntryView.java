@@ -1,4 +1,4 @@
-package excelchaos_view;
+package excelchaos_view.toolbarviews;
 
 import excelchaos_model.database.EmployeeDataManager;
 import excelchaos_view.components.SearchPanelToolbar;
@@ -11,12 +11,13 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
+public class ToolbarManualSalaryEntryView extends SearchPanelToolbar {
 
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+
     private JComboBox nameComboBox;
 
-    private JButton doSalaryIncrease, deleteSalaryEntry, exportToCSV;//,editSalaryEntry; TODO Edit Button implementieren, Vielleicht auch nicht
+    private JButton addSalaryEntry, editSalaryEntry, deleteSalaryEntry, exportToCSV;
 
     private JLabel nameLabel = new JLabel("Person auswählen:");
 
@@ -31,10 +32,11 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
         names.add("Keine Auswahl");
         names.addAll(employeeNames);
 
-        doSalaryIncrease = new JButton("Eintrag hinzufügen");
-        //   editSalaryEntry = new JButton("Eintrag bearbeiten");
+        addSalaryEntry = new JButton("Eintrag hinzufügen");
+        editSalaryEntry = new JButton("Eintrag bearbeiten");
         deleteSalaryEntry = new JButton("Eintrag löschen");
         exportToCSV = new JButton("Daten als CSV exportieren");
+
         nameComboBox = new JComboBox(names.toArray());
         nameComboBox.setBackground(Color.WHITE);
         nameComboBox.setMaximumRowCount(8);
@@ -42,20 +44,20 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
         addSeparator(new Dimension(5, 10));
         add(nameComboBox);
         addSeparator(new Dimension(20, 10));
-        add(doSalaryIncrease);
-        // add(editSalaryEntry);
+        add(addSalaryEntry);
+        add(editSalaryEntry);
         add(deleteSalaryEntry);
         setUpSearchPanel();
         add(exportToCSV);
-        //   editSalaryEntry.setEnabled(false);
+        editSalaryEntry.setEnabled(false);
         deleteSalaryEntry.setEnabled(false);
-        doSalaryIncrease.setEnabled(false);
+        addSalaryEntry.setEnabled(false);
         exportToCSV.setEnabled(false);
     }
 
     public void setActionListener(ActionListener l) {
-        doSalaryIncrease.addActionListener(l);
-        // editSalaryEntry.addActionListener(l);
+        addSalaryEntry.addActionListener(l);
+        editSalaryEntry.addActionListener(l);
         deleteSalaryEntry.addActionListener(l);
         exportToCSV.addActionListener(l);
     }
@@ -68,13 +70,13 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
         return nameComboBox;
     }
 
-    public JButton getDoSalaryIncrease() {
-        return doSalaryIncrease;
+    public JButton getAddSalaryEntry() {
+        return addSalaryEntry;
     }
 
-  /*  public JButton getEditSalaryEntry() {
+    public JButton getEditSalaryEntry() {
         return editSalaryEntry;
-    }*/
+    }
 
     public JButton getDeleteSalaryEntry() {
         return deleteSalaryEntry;

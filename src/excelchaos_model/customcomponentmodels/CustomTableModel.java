@@ -1,4 +1,4 @@
-package excelchaos_model;
+package excelchaos_model.customcomponentmodels;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;

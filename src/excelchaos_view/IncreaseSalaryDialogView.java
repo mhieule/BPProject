@@ -3,10 +3,10 @@ package excelchaos_view;
 import com.github.lgooddatepicker.components.DatePicker;
 import excelchaos_model.database.ContractDataManager;
 import excelchaos_model.database.EmployeeDataManager;
-import excelchaos_model.IncreaseSalaryOption;
+import excelchaos_model.constants.IncreaseSalaryOption;
 import excelchaos_view.components.CustomTable;
 
-import static excelchaos_model.IncreaseSalaryOption.*;
+import static excelchaos_model.constants.IncreaseSalaryOption.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;

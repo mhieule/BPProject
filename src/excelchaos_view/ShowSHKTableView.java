@@ -1,15 +1,11 @@
 package excelchaos_view;
 
-import excelchaos_model.CustomTableColumnAdjuster;
+import excelchaos_model.customcomponentmodels.CustomTableColumnAdjuster;
 import excelchaos_view.components.CustomTable;
 
 import javax.swing.*;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ShowSHKTableView extends JPanel {
     private CustomTable shkTable;

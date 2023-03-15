@@ -1,4 +1,4 @@
-package excelchaos_model;
+package excelchaos_model.constants;
 
 public enum IncreaseSalaryOption {
     ABSOLUTE,

@@ -1,6 +1,6 @@
 package excelchaos_controller;
 
-import excelchaos_view.DnDCloseButtonTabbedPane;
+import excelchaos_view.components.DnDCloseButtonTabbedPane;
 import excelchaos_view.NewFrame;
 
 public class NewFrameController {

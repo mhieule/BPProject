@@ -8,7 +8,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
-public class CurrentPayRateTableSHK {
+public class PayRateTableSHKCalculations {
     private SHKSalaryTableManager shkSalaryTableManager = new SHKSalaryTableManager();
 
 

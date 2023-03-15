@@ -1,6 +1,6 @@
 package excelchaos_controller;
 
-import excelchaos_view.ToolbarShowProjectsView;
+import excelchaos_view.toolbarviews.ToolbarShowProjectsView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

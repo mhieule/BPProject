@@ -1,6 +1,6 @@
 package excelchaos_view;
 
-import excelchaos_model.calculations.NewAndImprovedSalaryCalculation;
+import excelchaos_model.calculations.SalaryCalculation;
 import excelchaos_model.database.*;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_model.utility.TableColumnAdjuster;
@@ -11,7 +11,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,7 +31,7 @@ public class ProjectParticipationView extends JPanel {
 
     private ProjectParticipationManager participationManager = new ProjectParticipationManager();
 
-    private NewAndImprovedSalaryCalculation salaryCalculation = new NewAndImprovedSalaryCalculation();
+    private SalaryCalculation salaryCalculation = new SalaryCalculation();
 
 
     private JPanel mainPanel, projectParticipationSumPanel;

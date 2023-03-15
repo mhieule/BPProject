@@ -1,4 +1,4 @@
-package excelchaos_view;
+package excelchaos_view.sidepanel;
 
 import javax.swing.*;
 import javax.swing.border.Border;

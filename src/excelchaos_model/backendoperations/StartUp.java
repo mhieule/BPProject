@@ -1,4 +1,4 @@
-package excelchaos_model;
+package excelchaos_model.backendoperations;
 
 import excelchaos_model.database.*;
 import excelchaos_model.export.CSVExporter;

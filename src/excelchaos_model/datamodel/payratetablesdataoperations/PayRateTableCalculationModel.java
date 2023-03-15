@@ -1,4 +1,4 @@
-package excelchaos_model;
+package excelchaos_model.datamodel.payratetablesdataoperations;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;

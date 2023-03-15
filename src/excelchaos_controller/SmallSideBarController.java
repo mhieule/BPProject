@@ -1,7 +1,6 @@
 package excelchaos_controller;
 
-import excelchaos_view.MainFrame;
-import excelchaos_view.SmallSideBar;
+import excelchaos_view.sidepanel.SmallSideBar;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

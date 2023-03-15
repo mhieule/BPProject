@@ -1,6 +1,6 @@
 package excelchaos_view;
 
-import excelchaos_model.*;
+import excelchaos_model.customcomponentmodels.CustomTableColumnAdjuster;
 import excelchaos_view.components.CustomTable;
 
 import javax.swing.*;

@@ -1,11 +1,6 @@
 package excelchaos_controller;
 
-import excelchaos_view.DnDCloseButtonTabbedPane;
-import excelchaos_view.MainFrame;
-import excelchaos_view.TabCloseButton;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import excelchaos_view.components.DnDCloseButtonTabbedPane;
 
 
 public class TabsController {

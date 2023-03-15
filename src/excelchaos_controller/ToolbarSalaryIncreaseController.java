@@ -1,8 +1,7 @@
 package excelchaos_controller;
 
 import excelchaos_model.export.CSVExporter;
-import excelchaos_view.ToolbarManualSalaryEntryView;
-import excelchaos_view.ToolbarSalaryIncreaseView;
+import excelchaos_view.toolbarviews.ToolbarSalaryIncreaseView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

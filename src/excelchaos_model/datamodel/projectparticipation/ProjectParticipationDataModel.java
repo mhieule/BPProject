@@ -1,6 +1,6 @@
-package excelchaos_model;
+package excelchaos_model.datamodel.projectparticipation;
 
-import excelchaos_model.calculations.NewAndImprovedSalaryCalculation;
+import excelchaos_model.calculations.SalaryCalculation;
 import excelchaos_model.database.*;
 import excelchaos_model.sorter.ParticipationSortByDate;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
@@ -18,7 +18,7 @@ public class ProjectParticipationDataModel {
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
     private int[] projectIds;
 
-    private NewAndImprovedSalaryCalculation salaryCalculation = new NewAndImprovedSalaryCalculation();
+    private SalaryCalculation salaryCalculation = new SalaryCalculation();
 
     private BigDecimal[] monthlyProjectPersonalCost;
 

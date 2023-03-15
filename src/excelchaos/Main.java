@@ -2,8 +2,8 @@ package excelchaos;
 
 
 import excelchaos_controller.MainFrameController;
-import excelchaos_model.BackEndUpdates;
-import excelchaos_model.StartUp;
+import excelchaos_model.backendoperations.BackEndUpdates;
+import excelchaos_model.backendoperations.StartUp;
 
 
 public class Main {

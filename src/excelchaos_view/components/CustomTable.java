@@ -1,6 +1,6 @@
 package excelchaos_view.components;
 
-import excelchaos_model.CustomTableModel;
+import excelchaos_model.customcomponentmodels.CustomTableModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

@@ -1,4 +1,4 @@
-package excelchaos_model;
+package excelchaos_model.utility;
 
 import excelchaos_view.components.SearchPanelToolbar;
 

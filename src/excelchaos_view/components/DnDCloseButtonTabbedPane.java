@@ -1,7 +1,7 @@
-package excelchaos_view;
+package excelchaos_view.components;
 
-import excelchaos_controller.MainFrameController;
 import excelchaos_controller.NewFrameController;
+import excelchaos_view.NewFrame;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;

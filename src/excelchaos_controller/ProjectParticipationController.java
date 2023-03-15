@@ -1,6 +1,6 @@
 package excelchaos_controller;
 
-import excelchaos_model.ProjectParticipationDataModel;
+import excelchaos_model.datamodel.projectparticipation.ProjectParticipationDataModel;
 import excelchaos_view.ProjectParticipationView;
 
 import java.awt.event.ActionEvent;

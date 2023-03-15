@@ -1,7 +1,5 @@
 package excelchaos_view.components;
 
-import excelchaos_model.SearchAndFilterModel;
-
 import javax.swing.*;
 import java.awt.*;
 

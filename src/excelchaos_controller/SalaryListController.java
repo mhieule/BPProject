@@ -1,13 +1,13 @@
 package excelchaos_controller;
 
-import excelchaos_model.*;
 import excelchaos_model.calculations.SalaryProjection;
 import excelchaos_model.database.Employee;
 import excelchaos_model.datamodel.employeedataoperations.EmployeeDataAccess;
 import excelchaos_model.export.CSVExporter;
+import excelchaos_model.utility.SearchAndFilterModel;
 import excelchaos_view.SalaryListView;
 import excelchaos_view.ShowSalaryStageDialogView;
-import excelchaos_view.ToolbarSalaryListView;
+import excelchaos_view.toolbarviews.ToolbarSalaryListView;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;

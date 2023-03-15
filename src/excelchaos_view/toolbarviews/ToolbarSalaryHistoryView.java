@@ -1,4 +1,4 @@
-package excelchaos_view;
+package excelchaos_view.toolbarviews;
 
 import excelchaos_model.database.EmployeeDataManager;
 import excelchaos_view.components.SearchPanelToolbar;

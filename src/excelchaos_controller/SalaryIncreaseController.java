@@ -1,10 +1,11 @@
 package excelchaos_controller;
 
-import excelchaos_model.*;
+import excelchaos_model.customcomponentmodels.CustomTableModel;
 import excelchaos_model.database.Employee;
 import excelchaos_model.database.EmployeeDataManager;
 import excelchaos_model.database.SalaryIncreaseHistory;
 import excelchaos_model.database.SalaryIncreaseHistoryManager;
+import excelchaos_model.utility.SearchAndFilterModel;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.SalaryIncreaseView;
 

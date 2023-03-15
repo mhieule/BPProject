@@ -1,6 +1,6 @@
 package excelchaos_controller;
 
-import excelchaos_view.ToolbarShowSHKTableView;
+import excelchaos_view.toolbarviews.ToolbarShowSHKTableView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

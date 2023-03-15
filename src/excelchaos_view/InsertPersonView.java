@@ -1,7 +1,7 @@
 package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
-import excelchaos_model.CountryModel;
+import excelchaos_model.datamodel.employeedataoperations.CountryModel;
 import excelchaos_view.layoutmanager.WrapLayout;
 
 import javax.swing.*;

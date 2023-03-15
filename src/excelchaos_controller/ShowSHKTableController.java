@@ -1,8 +1,8 @@
 package excelchaos_controller;
 
-import excelchaos_model.CustomTableColumnAdjuster;
-import excelchaos_model.CustomTableModel;
-import excelchaos_model.SearchAndFilterModel;
+import excelchaos_model.customcomponentmodels.CustomTableColumnAdjuster;
+import excelchaos_model.customcomponentmodels.CustomTableModel;
+import excelchaos_model.utility.SearchAndFilterModel;
 import excelchaos_model.database.SHKSalaryEntry;
 import excelchaos_model.database.SHKSalaryTableManager;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;

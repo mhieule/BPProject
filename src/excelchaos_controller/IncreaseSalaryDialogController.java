@@ -1,7 +1,7 @@
 package excelchaos_controller;
 
-import excelchaos_model.*;
-import excelchaos_model.calculations.NewAndImprovedSalaryCalculation;
+import excelchaos_model.calculations.SalaryCalculation;
+import excelchaos_model.constants.IncreaseSalaryOption;
 import excelchaos_model.database.*;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_view.IncreaseSalaryDialogView;
@@ -27,7 +27,7 @@ public class IncreaseSalaryDialogController implements ActionListener {
     private String employeeName;
     private StringAndBigDecimalFormatter transformer = new StringAndBigDecimalFormatter();
 
-    private NewAndImprovedSalaryCalculation salaryCalculation = new NewAndImprovedSalaryCalculation();
+    private SalaryCalculation salaryCalculation = new SalaryCalculation();
 
 
     public IncreaseSalaryDialogController(MainFrameController frameController, String name) {

@@ -1,6 +1,6 @@
 package excelchaos_model.export;
 
-import excelchaos_model.calculations.NewAndImprovedSalaryCalculation;
+import excelchaos_model.calculations.SalaryCalculation;
 import excelchaos_model.database.Contract;
 import excelchaos_model.database.Employee;
 import excelchaos_model.datamodel.employeedataoperations.EmployeeDataAccess;
@@ -9,7 +9,6 @@ import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -137,7 +136,7 @@ public class CSVExporter {
     private static void writeSalaryProjectionCSV(String pathToExportTo) {
         EmployeeDataAccess employeeDataAccess = new EmployeeDataAccess();
         List<Employee> allEmployees = employeeDataAccess.getAllEmployees();
-        NewAndImprovedSalaryCalculation salaryCalculation = new NewAndImprovedSalaryCalculation();
+        SalaryCalculation salaryCalculation = new SalaryCalculation();
         DateFormat format = new SimpleDateFormat("MMMM-yyyy");
         File csvFile = new File(pathToExportTo);
         try {

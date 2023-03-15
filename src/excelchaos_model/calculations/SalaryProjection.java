@@ -1,6 +1,5 @@
 package excelchaos_model.calculations;
 
-import excelchaos_model.*;
 import excelchaos_model.database.Contract;
 import excelchaos_model.database.ContractDataManager;
 import excelchaos_model.database.Employee;
@@ -17,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 public class SalaryProjection {
-    private NewAndImprovedSalaryCalculation newAndImprovedSalaryCalculation = new NewAndImprovedSalaryCalculation();
+    private SalaryCalculation newAndImprovedSalaryCalculation = new SalaryCalculation();
     private SalaryTableLookUp salaryTableLookUp = new SalaryTableLookUp();
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
