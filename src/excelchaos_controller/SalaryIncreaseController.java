@@ -77,6 +77,9 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
     }
 
     public void update() {
+        salaryIncreaseView.remove(toolbarSalaryIncreaseController.getToolbar());
+        salaryIncreaseView.revalidate();
+        salaryIncreaseView.repaint();
         toolbarSalaryIncreaseController.update();
         toolbarSalaryIncreaseController.getToolbar().setItemListener(this);
         salaryIncreaseView.add(toolbarSalaryIncreaseController.getToolbar(), BorderLayout.NORTH);

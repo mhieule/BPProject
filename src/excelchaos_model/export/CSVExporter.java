@@ -152,7 +152,7 @@ public class CSVExporter {
             for (Employee employee : allEmployees){
                 Contract contract = employeeDataAccess.getContract(employee.getId());
                 LocalDate startDate = contract.getStart_date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                LocalDate endDate = contract.getEnd_date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate endDate = startDate.plusYears(6);
                 String name = employee.getSurname() + " " + employee.getName();
                 for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusMonths(1)){
                     csv.write(name + ";");

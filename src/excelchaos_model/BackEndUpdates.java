@@ -16,7 +16,4 @@ public class BackEndUpdates {
         newAndImprovedSalaryCalculation.updateCurrentSalaries();
     }
 
-    public void updateAll() {
-
-    }
 }

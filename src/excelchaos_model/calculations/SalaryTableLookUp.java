@@ -13,7 +13,6 @@ import java.util.List;
 
 public class SalaryTableLookUp {
 
-    //TODO Methoden können evtl. Static werden
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
     private SHKSalaryTableManager shkSalaryTableManager = new SHKSalaryTableManager();
@@ -54,7 +53,7 @@ public class SalaryTableLookUp {
                 List<SalaryTable> E13SalaryTableWith1AAnd1B = null;
                 List<SalaryTable> E13SalaryTableWithout1AAnd1B = null;
 
-                //TODO Von hier
+
                 if (currentPayRateTableE13.getCurrentPayRateWith1AAnd1BTable() == null && currentPayRateTableE13.getCurrentPayRateWithout1AAnd1BTable() == null) {
                     resultValue[0] = new BigDecimal(0);
                     resultValue[1] = new BigDecimal(0);
@@ -71,10 +70,10 @@ public class SalaryTableLookUp {
                         if (currentPayRateTableE13.getCurrentPayRateWithout1AAnd1BTable() != null) {
                             E13SalaryTableWithout1AAnd1B = currentPayRateTableE13.getCurrentPayRateWithout1AAnd1BTable();
                             if (contract.getVbl_status()) {
-                                resultValue[0] = E13SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz();
+                                resultValue[0] = E13SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                                 resultValue[1] = E13SalaryTableWith1AAnd1B.get(2).getJsz_als_monatliche_zulage();
                             } else {
-                                resultValue[0] = E13SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz();
+                                resultValue[0] = E13SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                                 resultValue[1] = E13SalaryTableWith1AAnd1B.get(1).getJsz_als_monatliche_zulage();
                             }
                         } else {
@@ -93,40 +92,39 @@ public class SalaryTableLookUp {
                         return resultValue;
                     }
                 }
-                //TODO Bis hier muss noch geklärt werden wie diese Fälle gehandhabt werden
 
                 if (contract.getVbl_status()) {
                     switch (contract.getPaylevel()) {
                         case "1":
-                            resultValue[0] = E13SalaryTableWithout1AAnd1B.get(2).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWithout1AAnd1B.get(2).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWithout1AAnd1B.get(2).getJsz_als_monatliche_zulage();
                             break;
                         case "1A":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(2).getJsz_als_monatliche_zulage();
                             break;
                         case "1B":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(4).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(4).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(4).getJsz_als_monatliche_zulage();
                             break;
                         case "2":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(6).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(6).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(6).getJsz_als_monatliche_zulage();
                             break;
                         case "3":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(8).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(8).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(8).getJsz_als_monatliche_zulage();
                             break;
                         case "4":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(10).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(10).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(10).getJsz_als_monatliche_zulage();
                             break;
                         case "5":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(12).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(12).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(12).getJsz_als_monatliche_zulage();
                             break;
                         case "6":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(14).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(14).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(14).getJsz_als_monatliche_zulage();
                             break;
                     }
@@ -134,35 +132,35 @@ public class SalaryTableLookUp {
                 } else {
                     switch (contract.getPaylevel()) {
                         case "1":
-                            resultValue[0] = E13SalaryTableWithout1AAnd1B.get(1).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWithout1AAnd1B.get(1).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWithout1AAnd1B.get(1).getJsz_als_monatliche_zulage();
                             break;
                         case "1A":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(1).getJsz_als_monatliche_zulage();
                             break;
                         case "1B":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(3).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(3).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(3).getJsz_als_monatliche_zulage();
                             break;
                         case "2":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(5).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(5).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(5).getJsz_als_monatliche_zulage();
                             break;
                         case "3":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(7).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(7).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(7).getJsz_als_monatliche_zulage();
                             break;
                         case "4":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(9).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(9).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(9).getJsz_als_monatliche_zulage();
                             break;
                         case "5":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(11).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(11).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(11).getJsz_als_monatliche_zulage();
                             break;
                         case "6":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(13).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(13).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(13).getJsz_als_monatliche_zulage();
                             break;
                     }
@@ -172,7 +170,7 @@ public class SalaryTableLookUp {
                 List<SalaryTable> E14SalaryTableWith1AAnd1B = null;
                 List<SalaryTable> E14SalaryTableWithout1AAnd1B = null;
 
-                //TODO Von Hier,
+
                 if (currentPayRateTableE14.getCurrentPayRateWith1AAnd1BTable() == null && currentPayRateTableE14.getCurrentPayRateWithout1AAnd1BTable() == null) {
                     resultValue[0] = new BigDecimal(0);
                     resultValue[1] = new BigDecimal(0);
@@ -191,11 +189,11 @@ public class SalaryTableLookUp {
                         if (currentPayRateTableE14.getCurrentPayRateWithout1AAnd1BTable() != null) {
                             E14SalaryTableWithout1AAnd1B = currentPayRateTableE14.getCurrentPayRateWithout1AAnd1BTable();
                             if (contract.getVbl_status()) {
-                                resultValue[0] = E14SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz();
+                                resultValue[0] = E14SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                                 resultValue[1] = E14SalaryTableWith1AAnd1B.get(2).getJsz_als_monatliche_zulage();
 
                             } else {
-                                resultValue[0] = E14SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz();
+                                resultValue[0] = E14SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                                 resultValue[1] = E14SalaryTableWith1AAnd1B.get(1).getJsz_als_monatliche_zulage();
 
                             }
@@ -216,40 +214,40 @@ public class SalaryTableLookUp {
                         return resultValue;
                     }
                 }
-                //TODO Bis hier muss noch geklärt werden wie diese Fälle gehandhabt werden
+
 
                 if (contract.getVbl_status()) {
                     switch (contract.getPaylevel()) {
                         case "1":
-                            resultValue[0] = E14SalaryTableWithout1AAnd1B.get(2).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWithout1AAnd1B.get(2).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWithout1AAnd1B.get(2).getJsz_als_monatliche_zulage();
                             break;
                         case "1A":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(2).getJsz_als_monatliche_zulage();
                             break;
                         case "1B":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(4).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(4).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(4).getJsz_als_monatliche_zulage();
                             break;
                         case "2":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(6).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(6).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(6).getJsz_als_monatliche_zulage();
                             break;
                         case "3":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(8).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(8).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(8).getJsz_als_monatliche_zulage();
                             break;
                         case "4":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(10).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(10).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(10).getJsz_als_monatliche_zulage();
                             break;
                         case "5":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(12).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(12).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(12).getJsz_als_monatliche_zulage();
                             break;
                         case "6":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(14).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(14).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(14).getJsz_als_monatliche_zulage();
                             break;
                     }
@@ -257,35 +255,35 @@ public class SalaryTableLookUp {
                 } else {
                     switch (contract.getPaylevel()) {
                         case "1":
-                            resultValue[0] = E14SalaryTableWithout1AAnd1B.get(1).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWithout1AAnd1B.get(1).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWithout1AAnd1B.get(1).getJsz_als_monatliche_zulage();
                             break;
                         case "1A":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(1).getJsz_als_monatliche_zulage();
                             break;
                         case "1B":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(3).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(3).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(3).getJsz_als_monatliche_zulage();
                             break;
                         case "2":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(5).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(5).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(5).getJsz_als_monatliche_zulage();
                             break;
                         case "3":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(7).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(7).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(7).getJsz_als_monatliche_zulage();
                             break;
                         case "4":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(9).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(9).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(9).getJsz_als_monatliche_zulage();
                             break;
                         case "5":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(11).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(11).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(11).getJsz_als_monatliche_zulage();
                             break;
                         case "6":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(13).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(13).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(13).getJsz_als_monatliche_zulage();
                             break;
 
@@ -332,7 +330,7 @@ public class SalaryTableLookUp {
                 List<SalaryTable> E13SalaryTableWith1AAnd1B = null;
                 List<SalaryTable> E13SalaryTableWithout1AAnd1B = null;
 
-                //TODO Von Hier,
+
 
                 if (chosenDatePayRateTableE13.getPayRateTableBasedOnChosenDateWith1AAnd1BTable(chosenDate) == null && chosenDatePayRateTableE13.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(chosenDate) == null) {
                     resultValue[0] = new BigDecimal(0);
@@ -350,10 +348,10 @@ public class SalaryTableLookUp {
                         if (chosenDatePayRateTableE13.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(chosenDate) != null) {
                             E13SalaryTableWithout1AAnd1B = chosenDatePayRateTableE13.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(chosenDate);
                             if (contract.getVbl_status()) {
-                                resultValue[0] = E13SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz();
+                                resultValue[0] = E13SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                                 resultValue[1] = E13SalaryTableWith1AAnd1B.get(2).getJsz_als_monatliche_zulage();
                             } else {
-                                resultValue[0] = E13SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz();
+                                resultValue[0] = E13SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz().multiply(contract.getScope());;
                                 resultValue[1] = E13SalaryTableWith1AAnd1B.get(1).getJsz_als_monatliche_zulage();
                             }
                         } else {
@@ -373,40 +371,38 @@ public class SalaryTableLookUp {
                     }
                 }
 
-                //TODO Bis hier muss noch geklärt werden wie diese Fälle gehandhabt werden
-
                 if (contract.getVbl_status()) {
                     switch (contract.getPaylevel()) {
                         case "1":
-                            resultValue[0] = E13SalaryTableWithout1AAnd1B.get(2).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWithout1AAnd1B.get(2).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWithout1AAnd1B.get(2).getJsz_als_monatliche_zulage();
                             break;
                         case "1A":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(2).getJsz_als_monatliche_zulage();
                             break;
                         case "1B":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(4).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(4).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(4).getJsz_als_monatliche_zulage();
                             break;
                         case "2":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(6).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(6).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(6).getJsz_als_monatliche_zulage();
                             break;
                         case "3":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(8).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(8).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(8).getJsz_als_monatliche_zulage();
                             break;
                         case "4":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(10).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(10).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(10).getJsz_als_monatliche_zulage();
                             break;
                         case "5":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(12).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(12).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(12).getJsz_als_monatliche_zulage();
                             break;
                         case "6":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(14).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(14).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(14).getJsz_als_monatliche_zulage();
                             break;
                     }
@@ -414,35 +410,35 @@ public class SalaryTableLookUp {
                 } else {
                     switch (contract.getPaylevel()) {
                         case "1":
-                            resultValue[0] = E13SalaryTableWithout1AAnd1B.get(1).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWithout1AAnd1B.get(1).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWithout1AAnd1B.get(1).getJsz_als_monatliche_zulage();
                             break;
                         case "1A":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(1).getJsz_als_monatliche_zulage();
                             break;
                         case "1B":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(3).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(3).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(3).getJsz_als_monatliche_zulage();
                             break;
                         case "2":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(5).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(5).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(5).getJsz_als_monatliche_zulage();
                             break;
                         case "3":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(7).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(7).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(7).getJsz_als_monatliche_zulage();
                             break;
                         case "4":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(9).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(9).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(9).getJsz_als_monatliche_zulage();
                             break;
                         case "5":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(11).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(11).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(11).getJsz_als_monatliche_zulage();
                             break;
                         case "6":
-                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(13).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E13SalaryTableWith1AAnd1B.get(13).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E13SalaryTableWith1AAnd1B.get(13).getJsz_als_monatliche_zulage();
                             break;
                     }
@@ -453,7 +449,6 @@ public class SalaryTableLookUp {
                 List<SalaryTable> E14SalaryTableWith1AAnd1B = null;
                 List<SalaryTable> E14SalaryTableWithout1AAnd1B = null;
 
-                //TODO Von Hier,
 
                 if (choosenDatePayRateTableE14.getPayRateTableBasedOnChosenDateWith1AAnd1BTable(chosenDate) == null && choosenDatePayRateTableE14.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(chosenDate) == null) {
                     resultValue[0] = new BigDecimal(0);
@@ -471,10 +466,10 @@ public class SalaryTableLookUp {
                         if (choosenDatePayRateTableE14.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(chosenDate) != null) {
                             E14SalaryTableWithout1AAnd1B = choosenDatePayRateTableE14.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(chosenDate);
                             if (contract.getVbl_status()) {
-                                resultValue[0] = E14SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz();
+                                resultValue[0] = E14SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                                 resultValue[1] = E14SalaryTableWith1AAnd1B.get(2).getJsz_als_monatliche_zulage();
                             } else {
-                                resultValue[0] = E14SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz();
+                                resultValue[0] = E14SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                                 resultValue[1] = E14SalaryTableWith1AAnd1B.get(1).getJsz_als_monatliche_zulage();
                             }
                         } else {
@@ -494,41 +489,38 @@ public class SalaryTableLookUp {
                     }
                 }
 
-                //TODO Bis hier muss noch geklärt werden wie diese Fälle gehandhabt werden
-
-
                 if (contract.getVbl_status()) {
                     switch (contract.getPaylevel()) {
                         case "1":
-                            resultValue[0] = E14SalaryTableWithout1AAnd1B.get(2).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWithout1AAnd1B.get(2).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWithout1AAnd1B.get(2).getJsz_als_monatliche_zulage();
                             break;
                         case "1A":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(2).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(2).getJsz_als_monatliche_zulage();
                             break;
                         case "1B":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(4).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(4).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(4).getJsz_als_monatliche_zulage();
                             break;
                         case "2":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(6).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(6).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(6).getJsz_als_monatliche_zulage();
                             break;
                         case "3":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(8).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(8).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(8).getJsz_als_monatliche_zulage();
                             break;
                         case "4":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(10).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(10).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(10).getJsz_als_monatliche_zulage();
                             break;
                         case "5":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(12).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(12).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(12).getJsz_als_monatliche_zulage();
                             break;
                         case "6":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(14).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(14).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(14).getJsz_als_monatliche_zulage();
                             break;
                     }
@@ -536,35 +528,35 @@ public class SalaryTableLookUp {
                 } else {
                     switch (contract.getPaylevel()) {
                         case "1":
-                            resultValue[0] = E14SalaryTableWithout1AAnd1B.get(1).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWithout1AAnd1B.get(1).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWithout1AAnd1B.get(1).getJsz_als_monatliche_zulage();
                             break;
                         case "1A":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(1).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(1).getJsz_als_monatliche_zulage();
                             break;
                         case "1B":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(3).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(3).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(3).getJsz_als_monatliche_zulage();
                             break;
                         case "2":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(5).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(5).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(5).getJsz_als_monatliche_zulage();
                             break;
                         case "3":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(7).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(7).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(7).getJsz_als_monatliche_zulage();
                             break;
                         case "4":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(9).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(9).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(9).getJsz_als_monatliche_zulage();
                             break;
                         case "5":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(11).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(11).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(11).getJsz_als_monatliche_zulage();
                             break;
                         case "6":
-                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(13).getMtl_kosten_ohne_jsz();
+                            resultValue[0] = E14SalaryTableWith1AAnd1B.get(13).getMtl_kosten_ohne_jsz().multiply(contract.getScope());
                             resultValue[1] = E14SalaryTableWith1AAnd1B.get(13).getJsz_als_monatliche_zulage();
                             break;
 

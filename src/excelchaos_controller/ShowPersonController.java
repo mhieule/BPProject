@@ -102,6 +102,7 @@ public class ShowPersonController implements ActionListener, TableModelListener 
                     Ids[i] = Integer.parseInt(employeeIds[i]);
                 }
                 deleteData(Ids);
+                mainFrameController.getUpdater().nameListUpdate();
             }
 
 

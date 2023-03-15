@@ -97,6 +97,9 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
     }
 
     public void update() {
+        salaryEntryView.remove(toolbarManualSalaryEntry.getToolbar());
+        salaryEntryView.revalidate();
+        salaryEntryView.repaint();
         toolbarManualSalaryEntry.update();
         toolbarManualSalaryEntry.getToolbar().setItemListener(this);
         salaryEntryView.add(toolbarManualSalaryEntry.getToolbar(), BorderLayout.NORTH);
