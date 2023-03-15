@@ -19,20 +19,22 @@ import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 
 public class InsertPayRateTableController extends MouseAdapter implements ActionListener {
-
     private PayRateTablesDataInserter payRateTablesDataInserter;
-
     private InsertPayRateTableView insertPayRateTableView;
     private MainFrameController frameController;
     private String title;
-
     private String tableName;
-
     private PayRateTableCalculationModel model;
-
     private PayRateTablesController payRateController;
 
-
+    /**
+     * Constructor for the InsertPayRateTableController. Initializes the following attributes.
+     * @param mainFrameController the MainFrameController
+     * @param payRateTablesController the PayRateTablesController
+     * @param name the title of the tab
+     * @param columnNames the column names of the table
+     * @param typeOfTable the type of the table
+     */
     public InsertPayRateTableController(MainFrameController mainFrameController, PayRateTablesController payRateTablesController, String name, String[] columnNames, boolean typeOfTable) {
         frameController = mainFrameController;
         payRateTablesDataInserter = new PayRateTablesDataInserter();
@@ -45,9 +47,12 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
         model = new PayRateTableCalculationModel();
         determineTableName(typeOfTable);
         insertPayRateTableView.getTfNameOfTable().setText(tableName);
-
     }
 
+    /**
+     * Adds the insertPayRateTableView as a tab.
+     * @param mainFrameController the MainFrameController
+     */
     public void showInsertPayRateTableView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
             mainFrameController.addTab(title, insertPayRateTableView);
@@ -56,6 +61,10 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
         }
     }
 
+    /**
+     * determines the form of the table
+     * @param typeOfTable boolean true if the table is a table with 1A and 1B, false if the table is a table with only 1
+     */
     private void determineTableName(boolean typeOfTable) {
         if (typeOfTable) {
             tableName = "Entgelttabelle " + determinePayGrade() + " mit Stufe 1A und 1B";
@@ -64,16 +73,22 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
         }
     }
 
-
+    /**
+     * getter Method for title
+     * @return title
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Depending on the performed action e cancels or saves and exits the insertPayRateTableView.
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == insertPayRateTableView.getCancelButton()) {
             frameController.getTabs().removeTabNewWindow(insertPayRateTableView);
-
         } else if (e.getSource() == insertPayRateTableView.getSaveAndExit()) {
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             String tableName = insertPayRateTableView.getTfNameOfTable().getText() + "_" + insertPayRateTableView.getDatePicker().getDate().format(dateTimeFormatter);
@@ -82,7 +97,6 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
             payRateController.updateview();
             frameController.getUpdater().salaryUpDate();
             frameController.getTabs().removeTabNewWindow(insertPayRateTableView);
-
         }
     }
 
@@ -93,7 +107,6 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
                 highlightRow(e);
                 showPopUp(e);
             }
-
         }
     }
 
@@ -104,11 +117,13 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
                 highlightRow(e);
                 showPopUp(e);
             }
-
         }
-
     }
 
+    /**
+     * Sets selection interval depending on row and column of the mouse event.
+     * @param e the Mous Event to be processed
+     */
     protected void highlightRow(MouseEvent e) {
         JTable table = (JTable) e.getSource();
         Point point = e.getPoint();
@@ -119,6 +134,10 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
         table.setColumnSelectionInterval(col, col);
     }
 
+    /**
+     * Implements the JPopupMenu for the right click.
+     * @param mouseEvent the mouse event to be processed
+     */
     private void showPopUp(MouseEvent mouseEvent) {
         JPopupMenu menu = new JPopupMenu();
         JMenuItem pasteRow = new JMenuItem();
@@ -153,10 +172,8 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
                         continue;
                     } else
                         insertPayRateTableView.getTable().setValueAt(resultString[i], row, columnCounter);
-
                     columnCounter++;
                 }
-
             }
         });
         pasteTable.addActionListener(new ActionListener() {
@@ -196,6 +213,10 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
         menu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
     }
 
+    /**
+     * Prepares the table for the database insertion.
+     * @return BigDecimal[][] with the values of the table
+     */
     private BigDecimal[][] prepareTableForDatabaseInsertion() {
         BigDecimal[][] result = new BigDecimal[insertPayRateTableView.getTable().getRowCount()][insertPayRateTableView.getTable().getRowCount()];
         for (int row = 0; row < insertPayRateTableView.getTable().getRowCount(); row++) {
@@ -210,11 +231,20 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
         return result;
     }
 
+    /**
+     * inserts the values into the database.
+     * @param name String name of salary table
+     * @param paygrade String paygrade of salary table
+     * @param values BigDecimal[][] values of salary table
+     */
     private void insertValuesInDatabase(String name, String paygrade, BigDecimal[][] values) {
         payRateTablesDataInserter.insertNewSalaryTable(name, paygrade, values);
     }
 
-
+    /**
+     * Determines the paygrade of the salary table.
+     * @return paygrade as String
+     */
     private String determinePayGrade() {
         String result;
         if (title.contains("E13")) {
