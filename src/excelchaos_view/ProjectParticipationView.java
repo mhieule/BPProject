@@ -57,6 +57,7 @@ public class ProjectParticipationView extends JPanel {
 
     public void setUpParticipationSumPanel(String[] employeeNames, String[] months, String[][] tableData) {
         projectParticipationSumPanel = new JPanel();
+
         GridLayout gridLayout = new GridLayout(1, 1, 0, 0);
         projectParticipationSumPanel.setLayout(gridLayout);
         DefaultTableModel participationSumTableModel = new DefaultTableModel(tableData, months);
@@ -76,14 +77,14 @@ public class ProjectParticipationView extends JPanel {
         participationSumHeaderTable = setParticipationSumHeaderTable(participationSumTable, employeeNames);
         participationSumTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
-            public Component getTableCellRendererComponent(JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column) {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component comp = super.getTableCellRendererComponent(table,
                         value, isSelected, hasFocus, row, column);
-                String name = (String) participationSumHeaderTable.getValueAt(row,0);
+                String name = (String) participationSumHeaderTable.getValueAt(row, 0);
                 Contract contract = contractDataManager.getContract(employeeDataManager.getEmployeeByName(name).getId());
                 BigDecimal updatedValue = StringAndBigDecimalFormatter.formatStringToPercentageValueForScope((String) value);
-                if(contract.getScope().compareTo(updatedValue) < 0){
-                    comp.setBackground(new Color(255,143,143));
+                if (contract.getScope().compareTo(updatedValue) < 0) {
+                    comp.setBackground(new Color(255, 143, 143));
                 } else {
                     comp.setBackground(Color.WHITE);
                 }
@@ -197,7 +198,7 @@ public class ProjectParticipationView extends JPanel {
                     mainTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(salaryChange), e.getFirstRow() + 1, e.getColumn());
 
                     participationManager.removeProjectParticipationBasedOnDate(projectId, employee.getId(), date);
-                    participationManager.addProjectParticipation(new ProjectParticipation(projectId,employee.getId(),StringAndBigDecimalFormatter.formatStringToPercentageValueForScope((String)mainTable.getValueAt(e.getFirstRow(),e.getColumn())),date));
+                    participationManager.addProjectParticipation(new ProjectParticipation(projectId, employee.getId(), StringAndBigDecimalFormatter.formatStringToPercentageValueForScope((String) mainTable.getValueAt(e.getFirstRow(), e.getColumn())), date));
 
                     BigDecimal sumPersonenMonate = new BigDecimal(0);
                     BigDecimal sumCostPerMonth = new BigDecimal(0);
@@ -515,15 +516,66 @@ public class ProjectParticipationView extends JPanel {
                     oldNames[row] = (String) rowsMainTable.getValueAt(row, 0);
                 }
 
-                LinkedHashSet<String> oldSumTableEmployeeNames =new LinkedHashSet<>();
-                for (int row = 0; row < participationSumHeaderTable.getRowCount() ; row++) {
-                    oldSumTableEmployeeNames.add((String) participationSumHeaderTable.getValueAt(row,0));
+                LinkedHashSet<String> oldSumTableEmployeeNames = new LinkedHashSet<>();
+                for (int row = 0; row < participationSumHeaderTable.getRowCount(); row++) {
+                    oldSumTableEmployeeNames.add((String) participationSumHeaderTable.getValueAt(row, 0));
                 }
 
+                DefaultTableModel participationSumTableModel = (DefaultTableModel) participationSumTable.getModel();
+                String[][] oldParticipationSumTableData = new String[participationSumTable.getRowCount()][participationSumTable.getColumnCount()];
+                String[] monthsArray = new String[participationSumTable.getColumnCount()];
+                for (int row = 0; row < oldParticipationSumTableData.length; row++) {
+                    for (int column = 0; column < oldParticipationSumTableData[0].length; column++) {
+                        if (row == 0) {
+                            monthsArray[column] = participationSumTable.getColumnName(column);
+                        }
+                        oldParticipationSumTableData[row][column] = (String) participationSumTableModel.getValueAt(row, column);
+                    }
+                }
 
                 LinkedHashSet<String> combiningNames = new LinkedHashSet<>(List.of(oldNames));
                 combiningNames.addAll(newlySelectedNames);
                 String[] newNames = combiningNames.toArray(new String[0]);
+                DateFormat testFormat = new SimpleDateFormat("MMM-yyyy");
+
+                for (int i = 0; i < newNames.length; i++) {
+                    if (oldSumTableEmployeeNames.contains(newNames[i])) {
+
+                    } else {
+                        oldSumTableEmployeeNames.add(newNames[i]);
+                    }
+                }
+
+                String[][] newParticipationSumTableData = new String[oldSumTableEmployeeNames.size()][monthsArray.length];
+                Date checkingDate;
+                String[] addedEmployeeNames = oldSumTableEmployeeNames.toArray(new String[0]);
+                for (int row = 0; row < newParticipationSumTableData.length; row++) {
+                    BigDecimal sumToFormat = new BigDecimal(0);
+                    for (int column = 0; column < newParticipationSumTableData[0].length; column++) {
+                        if (row < oldParticipationSumTableData.length) {
+                            newParticipationSumTableData[row][column] = oldParticipationSumTableData[row][column];
+                        } else {
+                            Employee addedEmployee = employeeDataManager.getEmployeeByName(addedEmployeeNames[row]);
+                            List<ProjectParticipation> projectParticipations = participationManager.getProjectParticipationByPersonID(addedEmployee.getId());
+                            try {
+                                checkingDate = testFormat.parse(monthsArray[column]);
+                            } catch (ParseException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                            for (ProjectParticipation participation : projectParticipations) {
+                                if (participation.getParticipation_period().compareTo(checkingDate) == 0) {
+                                    sumToFormat = sumToFormat.add(participation.getScope());
+                                }
+                            }
+                            newParticipationSumTableData[row][column] = StringAndBigDecimalFormatter.formatPercentageToStringForScope(sumToFormat);
+                        }
+                    }
+                }
+                projectParticipationSumPanel.removeAll();
+                remove(projectParticipationSumPanel);
+                setUpParticipationSumPanel(addedEmployeeNames,monthsArray,newParticipationSumTableData);
+
+
 
                 String[][] oldMainTableData = new String[mainTable.getRowCount()][mainTable.getColumnCount()];
                 for (int row = 0; row < mainTable.getRowCount(); row++) {
@@ -559,6 +611,7 @@ public class ProjectParticipationView extends JPanel {
 
                 JLabel projectNameLabel = new JLabel(projectName);
                 projectNameLabel.setFont(new Font("Dialog", Font.BOLD, 22));
+                projectNameLabel.setForeground(Color.RED);
                 projectNamePanel.add(projectNameLabel);
                 projectNamePanel.add(Box.createHorizontalStrut(100));
 
@@ -589,6 +642,7 @@ public class ProjectParticipationView extends JPanel {
                             } catch (ParseException ex) {
                                 throw new RuntimeException(ex);
                             }
+                            Employee employee = employeeDataManager.getEmployeeByName((String) newRowsMainTable.getValueAt(e.getFirstRow() / 2, 0));
                             BigDecimal salaryChange = salaryCalculation.projectSalaryToGivenMonth(employeeDataManager.getEmployeeByName((String) newRowsMainTable.getValueAt(e.getFirstRow() / 2, 0)).getId(), date);
                             salaryChange = salaryChange.multiply(StringAndBigDecimalFormatter.formatStringToPercentageValueForScope((String) newMainTable.getValueAt(e.getFirstRow(), e.getColumn())));
                             newMainTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(salaryChange), e.getFirstRow() + 1, e.getColumn());
@@ -610,6 +664,37 @@ public class ProjectParticipationView extends JPanel {
                                 newTotalCost = newTotalCost.add(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String) newSumTable.getValueAt(1, column)));
                             }
                             totalCostLabel.setText("Gesamtpersonalkosten: " + StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(newTotalCost));
+
+
+                            //ParticipationSum Control Instance
+                            int row = 0;
+                            for (int i = 0; i < participationSumHeaderTable.getRowCount(); i++) {
+                                if (participationSumHeaderTable.getValueAt(i, 0).equals(newRowsMainTable.getValueAt(e.getFirstRow() / 2, 0))) {
+                                    row = i;
+                                    break;
+                                }
+                            }
+                            int column = 0;
+                            for (int i = 0; i < participationSumTable.getColumnCount(); i++) {
+                                if (participationSumTable.getColumnName(i).equals(newMainTable.getColumnName(e.getColumn()))) {
+                                    column = i;
+                                    break;
+                                }
+                            }
+                            BigDecimal updatedScopeValue = StringAndBigDecimalFormatter.formatStringToPercentageValueForScope((String) newMainTable.getValueAt(e.getFirstRow(), e.getColumn()));
+                            List<ProjectParticipation> projectParticipations = participationManager.getProjectParticipationByPersonID(employee.getId());
+                            for (ProjectParticipation projectParticipation : projectParticipations) {
+                                if (date.compareTo(projectParticipation.getParticipation_period()) == 0) {
+                                    if (projectId != projectParticipation.getProject_id()) {
+                                        updatedScopeValue = updatedScopeValue.add(projectParticipation.getScope());
+                                    }
+                                }
+                            }
+                            participationSumTable.setValueAt(StringAndBigDecimalFormatter.formatPercentageToStringForScope(updatedScopeValue), row, column);
+                            participationSumTable.revalidate();
+                            participationSumTable.repaint();
+                            projectNameLabel.setForeground(Color.RED);
+
                         }
 
                     }
@@ -645,6 +730,7 @@ public class ProjectParticipationView extends JPanel {
                                     }
 
                                 }
+                                projectNameLabel.setForeground(Color.BLACK);
 
                             }
                         }
@@ -668,6 +754,8 @@ public class ProjectParticipationView extends JPanel {
                 mainPanel.revalidate();
                 mainPanel.repaint();
                 participationDialog.dispose();
+                projectParticipationSumPanel.revalidate();
+                projectParticipationSumPanel.repaint();
             }
         });
 
@@ -677,7 +765,9 @@ public class ProjectParticipationView extends JPanel {
         buttonPanel.add(closeButton);
 
 
-        participationDialog.setLayout(new BorderLayout());
+        participationDialog.setLayout(new
+
+                BorderLayout());
         participationDialog.add(comboBoxPanel, BorderLayout.CENTER);
         participationDialog.add(buttonPanel, BorderLayout.SOUTH);
         participationDialog.setName("Mitarbeiter hinzufügen");
