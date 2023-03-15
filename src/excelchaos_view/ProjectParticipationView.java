@@ -171,9 +171,11 @@ public class ProjectParticipationView extends JPanel {
         projectPanel.add(projectNamePanel, BorderLayout.NORTH);
 
         JTable mainTable = initMainTable(monthColumns, tableData);
+        mainTable.getTableHeader().setReorderingAllowed(false);
         mainTable.setDefaultEditor(Object.class, new CellEditor(new WorkScopeVerifier()));
         JTable rowsMainTable = initMainTableRows(mainTable, nameRows);
         JTable sumTable = initSumTable(summedTableData, monthColumns);
+        sumTable.getTableHeader().setReorderingAllowed(false);
         JTable rowsSumTable = initSumHeaderTable(sumTable);
 
         JScrollPane mainScrollPane = new JScrollPane(mainTable);
@@ -628,8 +630,10 @@ public class ProjectParticipationView extends JPanel {
                 projectNamePanel.add(totalCostLabel);
 
                 JTable newMainTable = initMainTable(monthColumns, newTableData);
+                newMainTable.getTableHeader().setReorderingAllowed(false);
                 JTable newRowsMainTable = initMainTableRows(newMainTable, newNames);
                 JTable newSumTable = initSumTable(oldSumTableData, monthColumns);
+                newSumTable.getTableHeader().setReorderingAllowed(false);
                 JTable rowsSumTable = initSumHeaderTable(newSumTable);
 
                 newMainTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
@@ -701,7 +705,7 @@ public class ProjectParticipationView extends JPanel {
 
                     }
                 });
-
+                newMainTable.setDefaultEditor(Object.class, new CellEditor(new WorkScopeVerifier()));
                 JScrollPane newMainScrollPane = new JScrollPane(newMainTable);
                 newMainScrollPane.setRowHeaderView(newRowsMainTable);
 
