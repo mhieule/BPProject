@@ -2,28 +2,30 @@ import excelchaos_model.database.ManualSalaryEntry;
 import excelchaos_model.database.ManualSalaryEntryManager;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/*public class ManualSalaryEntryManagerTest {
+public class ManualSalaryEntryManagerTest {
     @Test
     void testRemoveAll(){
-        var manager = ManualSalaryEntryManager.getInstance();
+        var manager = new ManualSalaryEntryManager();
         manager.removeAllManualSalaryEntries();
         assertEquals(manager.getAllManualSalaryEntries().size(), 0);
     }
 
     @Test
     void testGetValid(){
-        var manager = ManualSalaryEntryManager.getInstance();
+        var manager = new ManualSalaryEntryManager();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        var manualSalaryEntry = new ManualSalaryEntry(1, 4.20, calendar.getTime(),
+        BigDecimal num = new BigDecimal("213.21");
+        var manualSalaryEntry = new ManualSalaryEntry(1, num, calendar.getTime(),
                 "test_comment");
         manager.addManualSalaryEntry(manualSalaryEntry);
         var recManualSalaryEntry = manager.getManualSalaryEntry(1).get(0);
@@ -35,14 +37,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetInvalid(){
-        var manager = ManualSalaryEntryManager.getInstance();
+        var manager = new ManualSalaryEntryManager();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        var manualSalaryEntry = new ManualSalaryEntry(1, 4.20, calendar.getTime(),
+        BigDecimal num = new BigDecimal("213.21");
+        var manualSalaryEntry = new ManualSalaryEntry(1, num, calendar.getTime(),
                 "test_comment");
         manager.addManualSalaryEntry(manualSalaryEntry);
         assertEquals(manager.getManualSalaryEntry(2).size(), 0);
@@ -50,14 +53,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetByDateValid(){
-        var manager = ManualSalaryEntryManager.getInstance();
+        var manager = new ManualSalaryEntryManager();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        var manualSalaryEntry = new ManualSalaryEntry(1, 4.20, calendar.getTime(),
+        BigDecimal num = new BigDecimal("213.21");
+        var manualSalaryEntry = new ManualSalaryEntry(1, num, calendar.getTime(),
                 "test_comment");
         manager.addManualSalaryEntry(manualSalaryEntry);
         var recManualSalaryEntry = manager.getManualSalaryEntryByDate(1, calendar.getTime()).get(0);
@@ -69,14 +73,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetByDateInvalid(){
-        var manager = ManualSalaryEntryManager.getInstance();
+        var manager = new ManualSalaryEntryManager();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        var manualSalaryEntry = new ManualSalaryEntry(1, 4.20, calendar.getTime(),
+        BigDecimal num = new BigDecimal("213.21");
+        var manualSalaryEntry = new ManualSalaryEntry(1, num, calendar.getTime(),
                 "test_comment");
         manager.addManualSalaryEntry(manualSalaryEntry);
         assertEquals(manager.getManualSalaryEntryByDate(2, calendar.getTime()).size(), 0);
@@ -84,14 +89,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testRemoveValid(){
-        var manager = ManualSalaryEntryManager.getInstance();
+        var manager = new ManualSalaryEntryManager();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        var manualSalaryEntry = new ManualSalaryEntry(1, 4.20, calendar.getTime(),
+        BigDecimal num = new BigDecimal("213.21");
+        var manualSalaryEntry = new ManualSalaryEntry(1, num, calendar.getTime(),
                 "test_comment");
         manager.addManualSalaryEntry(manualSalaryEntry);
         manager.removeManualSalaryEntry(1, calendar.getTime());
@@ -100,14 +106,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testRemoveInvalid(){
-        var manager = ManualSalaryEntryManager.getInstance();
+        var manager = new ManualSalaryEntryManager();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        var manualSalaryEntry = new ManualSalaryEntry(1, 4.20, calendar.getTime(),
+        BigDecimal num = new BigDecimal("213.21");
+        var manualSalaryEntry = new ManualSalaryEntry(1, num, calendar.getTime(),
                 "test_comment");
         manager.addManualSalaryEntry(manualSalaryEntry);
         manager.removeManualSalaryEntry(2, calendar.getTime());
@@ -116,7 +123,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetAll(){
-        var manager = ManualSalaryEntryManager.getInstance();
+        var manager = new ManualSalaryEntryManager();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -126,7 +133,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         var manualSalaryEntries = new ManualSalaryEntry[10];
 
         for (int i = 0; i < 10; i++){
-            var manualSalaryEntry = new ManualSalaryEntry(i, 4.20, calendar.getTime(),
+            BigDecimal num = new BigDecimal("213.21");
+            var manualSalaryEntry = new ManualSalaryEntry(i, num, calendar.getTime(),
                     "test_comment");
             manager.addManualSalaryEntry(manualSalaryEntry);
             manualSalaryEntries[i] = manualSalaryEntry;
@@ -144,7 +152,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetRowCount(){
-        var manager = ManualSalaryEntryManager.getInstance();
+        var manager = new ManualSalaryEntryManager();
         manager.removeAllManualSalaryEntries();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -153,7 +161,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         calendar.set(Calendar.SECOND, 0);
 
         for (int i = 0; i < 10; i++){
-            var manualSalaryEntry = new ManualSalaryEntry(5, 4.20, calendar.getTime(),
+            BigDecimal num = new BigDecimal("213.21");
+            var manualSalaryEntry = new ManualSalaryEntry(5, num, calendar.getTime(),
                     "test_comment");
             manager.addManualSalaryEntry(manualSalaryEntry);
         }
@@ -162,8 +171,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetRowCountEmpty(){
-        var manager = ManualSalaryEntryManager.getInstance();
+        var manager = new ManualSalaryEntryManager();
         manager.removeAllManualSalaryEntries();
         assertEquals(manager.getRowCount(5), 0);
     }
-}*/
+}
