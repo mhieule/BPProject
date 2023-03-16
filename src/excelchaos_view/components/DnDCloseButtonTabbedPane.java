@@ -55,7 +55,6 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
                 m_isDrawRect = false;
                 s_glassPane.setPoint(new Point(-1000, -1000));
                 s_glassPane.repaint();
-//                System.out.println(e);
             }
 
             @Override
@@ -142,7 +141,6 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         final DragGestureListener dgl = new DragGestureListener() {
             @Override
             public void dragGestureRecognized(DragGestureEvent e) {
-                // System.out.println("dragGestureRecognized");
 
                 Point tabPt = e.getDragOrigin();
                 int dragTabIndex = indexAtLocation(tabPt.x, tabPt.y);
@@ -382,7 +380,6 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
     class CDropTargetListener implements DropTargetListener {
 
         public void dragEnter(DropTargetDragEvent e) {
-//             System.out.println("DropTarget.dragEnter: " + DnDCloseButtonTabbedPane.this);
 
             if (isDragAcceptable(e)) {
                 e.acceptDrag(e.getDropAction());
@@ -392,7 +389,6 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         }
 
         public void dragExit(DropTargetEvent e) {
-//            System.out.println("DropTarget.dragExit: " + DnDCloseButtonTabbedPane.this);
             m_isDrawRect = false;
         }
 
@@ -418,7 +414,6 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
 
         @Override
         public void drop(DropTargetDropEvent a_event) {
-//             System.out.println("DropTarget.drop: " + DnDTabbedPane.this);
 
             if (isDropAcceptable(a_event)) {
                 convertTab(getTabTransferData(a_event),
@@ -551,7 +546,6 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
 
     private void convertTab(TabTransferData a_data, int a_targetIndex) {
         DnDCloseButtonTabbedPane source = a_data.getTabbedPane();
-//        System.out.println("this=source? " + (this == source));
         int sourceIndex = a_data.getTabIndex();
         if (sourceIndex < 0) {
             return;

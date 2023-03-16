@@ -93,7 +93,6 @@ public class CSVExporter {
 
             String fullPathName = prefs.get(LAST_USED_FOLDER,
                     new File(".").getAbsolutePath()) + "\\" + fileName;
-            System.out.println(fullPathName);
             writeToCSV(tableToExport, fullPathName);
         }
     }

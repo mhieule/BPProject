@@ -135,7 +135,6 @@ public class ProjectParticipationDataModel {
         personIds = new int[personIdSet.size()];
         int index = 0;
         for (Integer integer : personIdSet) {
-            System.out.println(integer);
             personIds[index] = integer;
             index++;
         }

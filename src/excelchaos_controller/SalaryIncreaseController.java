@@ -127,7 +127,6 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
             String salary = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(entry.getNew_salary());
             String usageDate = dateFormat.format(entry.getStart_date());
             String absoluteValue = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(entry.getAbsoluteIncreaseValue());
-            System.out.println(entry.getPercentIncreaseValue());
             String relativeValue = StringAndBigDecimalFormatter.formatPercentageToStringSalaryIncreaseReading(entry.getPercentIncreaseValue());
             String comment = entry.getComment();
             String specialPayment;
