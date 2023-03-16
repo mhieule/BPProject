@@ -24,6 +24,7 @@ public class SalaryIncreaseView extends JPanel {
      */
     public void createTable(String[][] tableData, String[] columnNames) {
         salaryIncreaseTable = new CustomTable(tableData, columnNames);
+        salaryIncreaseTable.getTableHeader().setReorderingAllowed(false);
         JScrollPane scrollPane = new JScrollPane(salaryIncreaseTable);
         scrollPane.setVisible(true);
 

@@ -102,11 +102,11 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
     private void createTableWithData(String[][] data) {
         salaryEntryView.createTable(data, columns);
-        salaryEntryView.getTable().getModel().addTableModelListener(this);
-        salaryEntryView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
-        salaryEntryView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
-        salaryEntryView.getTable().getColumnModel().getColumn(1).setWidth(0);
-        SearchAndFilterModel.setUpSearchAndFilterModel(salaryEntryView.getTable(), toolbarManualSalaryEntry.getToolbar());
+        salaryEntryView.getManualSalaryEntryTable().getModel().addTableModelListener(this);
+        salaryEntryView.getManualSalaryEntryTable().getColumnModel().getColumn(1).setMinWidth(0);
+        salaryEntryView.getManualSalaryEntryTable().getColumnModel().getColumn(1).setMaxWidth(0);
+        salaryEntryView.getManualSalaryEntryTable().getColumnModel().getColumn(1).setWidth(0);
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryEntryView.getManualSalaryEntryTable(), toolbarManualSalaryEntry.getToolbar());
     }
 
     /**
@@ -117,14 +117,14 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
     public void setTableData(String[][] data) {
         customTableModel = new CustomTableModel(data, columns);
-        salaryEntryView.getTable().setModel(customTableModel);
-        salaryEntryView.getTable().getModel().addTableModelListener(this);
-        salaryEntryView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
-        salaryEntryView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
-        salaryEntryView.getTable().getColumnModel().getColumn(1).setWidth(0);
+        salaryEntryView.getManualSalaryEntryTable().setModel(customTableModel);
+        salaryEntryView.getManualSalaryEntryTable().getModel().addTableModelListener(this);
+        salaryEntryView.getManualSalaryEntryTable().getColumnModel().getColumn(1).setMinWidth(0);
+        salaryEntryView.getManualSalaryEntryTable().getColumnModel().getColumn(1).setMaxWidth(0);
+        salaryEntryView.getManualSalaryEntryTable().getColumnModel().getColumn(1).setWidth(0);
         toolbarManualSalaryEntry.getToolbar().getEditSalaryEntry().setEnabled(false);
         toolbarManualSalaryEntry.getToolbar().getDeleteSalaryEntry().setEnabled(false);
-        SearchAndFilterModel.setUpSearchAndFilterModel(salaryEntryView.getTable(), toolbarManualSalaryEntry.getToolbar());
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryEntryView.getManualSalaryEntryTable(), toolbarManualSalaryEntry.getToolbar());
 
     }
 
@@ -178,8 +178,8 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
                 toolbarManualSalaryEntry.getToolbar().getEditSalaryEntry().setEnabled(false);
                 toolbarManualSalaryEntry.getToolbar().getDeleteSalaryEntry().setEnabled(false);
                 toolbarManualSalaryEntry.getToolbar().getExportToCSV().setEnabled(false);
-                if (salaryEntryView.getTable() != null) {
-                    salaryEntryView.getTable().setModel(new DefaultTableModel(null, nullColumns));
+                if (salaryEntryView.getManualSalaryEntryTable() != null) {
+                    salaryEntryView.getManualSalaryEntryTable().setModel(new DefaultTableModel(null, nullColumns));
                     frameController.getTabs().setLabel(title);
                 }
             } else {
@@ -187,7 +187,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
                 toolbarManualSalaryEntry.getToolbar().getExportToCSV().setEnabled(true);
                 Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) e.getItem());
                 String[][] data = getDataFromDB(temporaryEmployee);
-                if (salaryEntryView.getTable() == null) {
+                if (salaryEntryView.getManualSalaryEntryTable() == null) {
                     createTableWithData(data);
                 } else {
                     setTableData(data);
@@ -215,7 +215,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
      */
     @Override
     public void tableChanged(TableModelEvent e) {
-        int numberOfSelectedRows = salaryEntryView.getTable().getNumberOfSelectedRows();
+        int numberOfSelectedRows = salaryEntryView.getManualSalaryEntryTable().getNumberOfSelectedRows();
         if (e.getColumn() == 0) {
             if (numberOfSelectedRows == 0) {
                 toolbarManualSalaryEntry.getToolbar().getEditSalaryEntry().setEnabled(false);

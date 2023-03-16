@@ -1,3 +1,5 @@
+package test.database;
+
 import excelchaos_model.database.ProjectParticipation;
 import excelchaos_model.database.ProjectParticipationManager;
 import org.junit.jupiter.api.Test;

@@ -1,3 +1,5 @@
+package test.database;
+
 import excelchaos_model.database.ProjectCategory;
 import excelchaos_model.database.ProjectCategoryManager;
 import org.junit.jupiter.api.Test;

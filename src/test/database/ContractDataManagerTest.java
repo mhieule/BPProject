@@ -1,3 +1,5 @@
+package test.database;
+
 import excelchaos_model.database.Contract;
 import excelchaos_model.database.ContractDataManager;
 import org.junit.jupiter.api.Test;

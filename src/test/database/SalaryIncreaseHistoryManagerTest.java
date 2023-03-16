@@ -1,3 +1,5 @@
+package test.database;
+
 import excelchaos_model.database.SalaryIncreaseHistory;
 import excelchaos_model.database.SalaryIncreaseHistoryManager;
 import excelchaos_model.database.SalaryTableManager;
