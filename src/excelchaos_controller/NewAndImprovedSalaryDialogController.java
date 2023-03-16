@@ -5,7 +5,6 @@ import excelchaos_model.calculations.SalaryTableLookUp;
 import excelchaos_model.constants.IncreaseSalaryOption;
 import excelchaos_model.database.*;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
-import excelchaos_view.IncreaseSalaryDialogView;
 import excelchaos_view.NewAndImprovedIncreaseSalaryDialogView;
 
 import javax.swing.*;
