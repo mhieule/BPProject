@@ -56,6 +56,22 @@ public class StringAndBigDecimalFormatter {
         return result;
     }
 
+    /**
+
+     Formats a BigDecimal value as a percentage string with two decimal places, followed by a percent symbol.
+     @param valueToFormat the BigDecimal value to format
+     @return the formatted percentage string with two decimal places and a percent symbol
+     */
+    public static String formatPercentageToStringSalaryIncreaseInsertion(BigDecimal valueToFormat) {
+        String result;
+        Formatter formatter = new Formatter();
+        formatter.format("%.2f", valueToFormat);
+        result = formatter.toString();
+        result = result.concat("%");
+
+        return result;
+    }
+
 
     /**
      * Formats a BigDecimal value representing a duration in months to a String with comma as decimal separator.
