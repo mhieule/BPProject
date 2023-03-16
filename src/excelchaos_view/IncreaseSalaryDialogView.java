@@ -17,6 +17,11 @@ import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+/**
+ * IncreaseSalaryDialogView is a dialog to increase the salary of the employee. It supports both one or multiple employees' salary increase.
+ * The view is made visible when user clicks either on the toolbar in SalaryListView for multiple employees or on the toolbar in SalaryIncreaseView for one employee
+ */
+
 public class IncreaseSalaryDialogView extends JDialog {
     private JPanel mainPanel, tablePanel, inputPanel,increaseTypePanel, increaseOptionPanel,increaseOptionButtonPanel,increaseOptionTextFieldPanel,datePanel,commentPanel, buttonPanel, westButtonPanel, eastButtonPanel;
     private JTable salaryTable;
@@ -37,7 +42,10 @@ public class IncreaseSalaryDialogView extends JDialog {
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
     private ContractDataManager contractDataManager = new ContractDataManager();
 
-
+    /**
+     * Add all of the visual components to the view
+     * @param employeeIDList list of IDs of the employees whose salaries to be increased
+     */
     public void init(ArrayList<Integer> employeeIDList){
         this.employeeIDList = employeeIDList;
 
@@ -169,6 +177,11 @@ public class IncreaseSalaryDialogView extends JDialog {
 
     }
 
+    /**
+     * Get salary of the employees whose salaries are to be increased in this view
+     * @return 2d String array which represents the names, current salary, current bonus of all employees. The salaryOnIncreaseDate, increaseSalary, salaryDifference are
+     * made blank, because they are used to project the salary later on.
+     */
     private String[][] getSalaryFromDB() {
         String[][] salaryTableData = new String[employeeIDList.size()][];
         int currentIndex = 0;
@@ -188,6 +201,11 @@ public class IncreaseSalaryDialogView extends JDialog {
 
     }
 
+    /**
+     * After the user has chosen the increase options, this method sets up the projection view (last 3 columns in the view's table)
+     * @param before array of the salary of the employee on the date of increase as chosen by the user
+     * @param after array of the salary of the employee after the increase
+     */
     public void setProjectionView(BigDecimal[] before, BigDecimal[] after) {
 
         for (int row = 0; row < salaryTable.getRowCount(); row++) {
@@ -199,6 +217,9 @@ public class IncreaseSalaryDialogView extends JDialog {
         salaryTable.repaint();
     }
 
+    /**
+     * Change the view when the Absolute option is selected by the user
+     */
     public void setAbsoluteRadioButtonSelected(){
         absoluteTextField.setBackground(Color.WHITE);
         absoluteTextField.setEnabled(true);
@@ -209,6 +230,9 @@ public class IncreaseSalaryDialogView extends JDialog {
         repaint();
     }
 
+    /**
+     * Change the view when the Relative option is selected by the user
+     */
     public void setRelativeRadioButtonSelected(){
         relativeTextField.setBackground(Color.WHITE);
         relativeTextField.setEnabled(true);
@@ -218,7 +242,9 @@ public class IncreaseSalaryDialogView extends JDialog {
         revalidate();
         repaint();
     }
-
+    /**
+     * Change the view when the Mixed option is selected by the user
+     */
     public void setMixedRadioButtonSelected(){
         relativeTextField.setText(null);
         absoluteTextField.setText(null);
@@ -231,7 +257,10 @@ public class IncreaseSalaryDialogView extends JDialog {
     }
 
 
-
+    /**
+     * Add same action listener for all buttons in the view, allowing them to share the same controller class which handles the action events.
+     * @param l the action lister to set
+     */
     public void setActionListener(ActionListener l){
         saveAndExitButton.addActionListener(l);
         cancelButton.addActionListener(l);
@@ -241,54 +270,81 @@ public class IncreaseSalaryDialogView extends JDialog {
         mixedRadioButton.addActionListener(l);
     }
 
+    /**
+     * @return the cancel button
+     */
     public JButton getCancelButton() {
         return cancelButton;
     }
-
+    /**
+     * @return the projection button
+     */
     public JButton getProjectButton() {
         return projectButton;
     }
-
+    /**
+     * @return the save and exit button
+     */
     public JButton getSaveAndExitButton() {
         return saveAndExitButton;
     }
-
+    /**
+     * @return the absoluteRadioButton
+     */
     public JRadioButton getAbsoluteRadioButton() {
         return absoluteRadioButton;
     }
-
+    /**
+     * @return the selected start date by user
+     */
     public DatePicker getStartDate() {
         return startDate;
     }
-
+    /**
+     * @return the inputed absolute amount when the user chooses the absolute option
+     */
     public JTextField getAbsoluteTextField() {
         return absoluteTextField;
     }
-
+    /**
+     * @return the inputed comment given by the user
+     */
     public JTextField getCommentTextField() {
         return commentTextField;
     }
-
+    /**
+     * @return the inputed relative amount when the user chooses the relative option
+     */
     public JTextField getRelativeTextField() {
         return relativeTextField;
     }
-
+    /**
+     * @return the bonus radio button
+     */
     public JRadioButton getBonusRadioButton() {
         return bonusRadioButton;
     }
-
+    /**
+     * @return the mixed radio button
+     */
     public JRadioButton getMixedRadioButton() {
         return mixedRadioButton;
     }
-
+    /**
+     * @return the relative radio button
+     */
     public JRadioButton getRelativeRadioButton() {
         return relativeRadioButton;
     }
-
+    /**
+     * @return the salary increase radio button
+     */
     public JRadioButton getSalaryIncreaseRadioButton() {
         return salaryIncreaseRadioButton;
     }
-
+    /**
+     * @return the current salary table
+     */
     public JTable getSalaryTable() {
         return salaryTable;
     }
