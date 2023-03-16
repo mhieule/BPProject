@@ -15,6 +15,9 @@ import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
 
+/**
+ * This view represents a JPanel to insert payrate table
+ */
 public class InsertPayRateTableView extends JPanel {
     private JPanel topPanel;
 
@@ -38,7 +41,10 @@ public class InsertPayRateTableView extends JPanel {
 
     private GridBagConstraints constraints;
 
-
+    /**
+     * initialize the View by setting layout and initialize the top, center and bottom panels
+     * @param columns
+     */
     public void init(String[] columns) {
         setLayout(new BorderLayout());
         topPanelInit();
@@ -46,6 +52,9 @@ public class InsertPayRateTableView extends JPanel {
         bottomPanelInit();
     }
 
+    /**
+     * Initialize the topPanel
+     */
     private void topPanelInit() {
         topPanel = new JPanel();
         topPanel.setLayout(new WrapLayout(FlowLayout.LEFT, 20, 15));
@@ -63,6 +72,9 @@ public class InsertPayRateTableView extends JPanel {
         add(topPanel, BorderLayout.NORTH);
     }
 
+    /**
+     * Initialize the bottomPanel
+     */
     private void bottomPanelInit() {
         bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
@@ -88,31 +100,50 @@ public class InsertPayRateTableView extends JPanel {
 
     }
 
+    /**
+     * @return the cancel button
+     */
     public JButton getCancelButton() {
         return cancelButton;
     }
-
+    /**
+     * @return the save and exit button
+     */
     public JButton getSaveAndExit() {
         return saveAndExit;
     }
-
+    /**
+     * @return the name of the inserted payrate table
+     */
     public JTextField getTfNameOfTable() {
         return tfNameOfTable;
     }
-
+    /**
+     * @return the payrate table
+     */
     public JTable getTable() {
         return table;
     }
-
+    /**
+     * @return the datepicker component
+     */
     public DatePicker getDatePicker() {
         return datePicker;
     }
 
+    /**
+     * Set the same action listener to the cancel button and the save and exit button,allowing them to share the same controller which handles the action events
+     * @param l the action listener to be added
+     */
     public void setActionListener(ActionListener l) {
         cancelButton.addActionListener(l);
         saveAndExit.addActionListener(l);
     }
 
+    /**
+     * Initialize the centerPanel
+     * @param columns the String array which indicates the columns of the new payrate table
+     */
     private void centerPanelInit(String[] columns) {
         centerPanel = new JPanel();
         GridBagLayout layout = new GridBagLayout();
@@ -133,6 +164,9 @@ public class InsertPayRateTableView extends JPanel {
         add(centerPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Initialize the JLabel wageTypeLongtext
+     */
     private void initJLables() {
         wageTypeLongtext = new JLabel("             Lohnart-Langtext");
         //init Column JLabels
@@ -169,6 +203,10 @@ public class InsertPayRateTableView extends JPanel {
 */
     }
 
+    /**
+     * Initialize the payrate table with columns
+     * @param columns of the payrate table to be initialized
+     */
     public void initTable(String[] columns) {
 
         DefaultTableModel mainTableModel = new DefaultTableModel(columns, 15);
@@ -248,6 +286,10 @@ public class InsertPayRateTableView extends JPanel {
 
     }
 
+    /**
+     * Set mouse listener to the table to listen for table changes related to mouse input
+     * @param l
+     */
     public void setMouseListener(MouseAdapter l) {
         table.addMouseListener(l);
     }

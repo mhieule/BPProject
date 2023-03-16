@@ -10,6 +10,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.time.*;
 
+/**
+ * This class represents the manual salary insertion. It is a subsclass of JPanel
+ */
 public class InsertManualSalaryEntryView extends JPanel {
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
     private JLabel nameList, newSalaryLabel, usageDateLabel, commentLabel, puffer;
@@ -29,6 +32,9 @@ public class InsertManualSalaryEntryView extends JPanel {
     private final int FIELD_WIDTH = 400;
     private final int FIELD_HEIGHT = 25;
 
+    /**
+     * Initialize by adding all of the components to the view, organising these components with constraint methods and add layout for the view
+     */
     public void init() {
         setLayout(new BorderLayout());
         centerUp = new JPanel();
@@ -98,6 +104,10 @@ public class InsertManualSalaryEntryView extends JPanel {
         repaint();
     }
 
+    /**
+     * Add same action listener to the buttons submit, reset, cancel, submit and close, allowing them to share the same controller class to handle action events
+     * @param l action listener to set
+     */
     public void setActionListener(ActionListener l) {
         submit.addActionListener(l);
         reset.addActionListener(l);
@@ -105,52 +115,79 @@ public class InsertManualSalaryEntryView extends JPanel {
         submitAndClose.addActionListener(l);
     }
 
+    /**
+     * @return the cancel button
+     */
     public JButton getCancel() {
         return cancel;
     }
-
+    /**
+     * @return the submit and close button
+     */
     public JButton getSubmitAndClose() {
         return submitAndClose;
     }
-
+    /**
+     * @return the comment label
+     */
     public JLabel getCommentLabel() {
         return commentLabel;
     }
-
+    /**
+     * @return the new salary label
+     */
     public JLabel getNewSalaryLabel() {
         return newSalaryLabel;
     }
-
+    /**
+     * @return the datepicker component
+     */
     public DatePicker getDatePicker() {
         return datePicker;
     }
-
+    /**
+     * @return the usage date label component
+     */
     public JLabel getUsageDateLabel() {
         return usageDateLabel;
     }
-
+    /**
+     * @return the reset button component
+     */
     public JButton getReset() {
         return reset;
     }
-
+    /**
+     * @return the submit button component
+     */
     public JButton getSubmit() {
         return submit;
     }
-
+    /**
+     * @return the combobox to choose employee's name
+     */
     public JComboBox getNamePickList() {
         return namePickList;
     }
-
+    /**
+     * @return the textfield which contains the comment
+     */
     public JTextField getTfComment() {
         return tfComment;
     }
 
-
+    /**
+     * @return the textfield which contains the new salary
+     */
     public JTextField getTfNewSalary() {
         return tfNewSalary;
     }
 
-
+    /**
+     * Set constrain for label
+     * @param label whose position needs to be change
+     * @param rowNumber indicating the gridy in the constrained Gridbag Layout
+     */
     private void setConstraintsLabel(JLabel label, int rowNumber) {
         constraints.gridx = 0;
         constraints.gridy = rowNumber;
@@ -158,7 +195,11 @@ public class InsertManualSalaryEntryView extends JPanel {
         constraints.weightx = 0.0;
         centerUp.add(label, constraints);
     }
-
+    /**
+     * Set constrain for text field
+     * @param textField whose position needs to be change
+     * @param rowNumber indicating the gridy in the constrained Gridbag Layout
+     */
     private void setConstraintsTextField(JTextField textField, int rowNumber) {
         textField.setPreferredSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
         constraints.gridx = 1;
@@ -167,7 +208,11 @@ public class InsertManualSalaryEntryView extends JPanel {
         constraints.weightx = 1.0;
         centerUp.add(textField, constraints);
     }
-
+    /**
+     * Set constrain for JComboBox
+     * @param jComboBox whose position needs to be change
+     * @param rowNumber indicating the gridy in the constrained Gridbag Layout
+     */
     private void setConstraintsJComboBox(JComboBox jComboBox, int rowNumber) {
         jComboBox.setPreferredSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
         constraints.gridx = 1;
@@ -176,7 +221,11 @@ public class InsertManualSalaryEntryView extends JPanel {
         constraints.weightx = 1.0;
         centerUp.add(jComboBox, constraints);
     }
-
+    /**
+     * Set constrain for DatePicker
+     * @param datePicker whose position needs to be change
+     * @param rowNumber indicating the gridy in the constrained Gridbag Layout
+     */
     private void setConstraintsDatePicker(DatePicker datePicker, int rowNumber) {
         datePicker.setPreferredSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
         constraints.gridx = 1;
@@ -185,7 +234,11 @@ public class InsertManualSalaryEntryView extends JPanel {
         constraints.weightx = 1.0;
         centerUp.add(datePicker, constraints);
     }
-
+    /**
+     * Set constrain for puffer label
+     * @param label whose position needs to be change
+     * @param rowNumber indicating the gridy in the constrained Gridbag Layout
+     */
     private void setConstraintsPuffer(JLabel label, int rowNumber) {
         constraints.gridx = 0;
         constraints.gridy = rowNumber;

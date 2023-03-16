@@ -14,6 +14,9 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
+/**
+ * This class is used to implement a drag-and-drop tabbed pane with close button
+ */
 public class DnDCloseButtonTabbedPane extends JTabbedPane {
 
     public static final long serialVersionUID = 1L;
@@ -153,6 +156,12 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
 
     }
 
+    /**
+     * This method is used to add new Tab to the tabbedPane
+     * @param title the title to be displayed in this tab
+     * @param component the component to be displayed when this tab is clicked
+     *
+     */
     @Override
     public void addTab(String title, final Component component) {
         JPanel tab = new JPanel(new BorderLayout());
