@@ -29,6 +29,11 @@ public class SalaryListController implements TableModelListener, ActionListener,
     private MainFrameController mainFrameController;
     private String title = "Gehaltsprojektion";
 
+    /**
+     * Constructor for SalaryListController
+     *
+     * @param mainFrameController MainFrameController
+     */
     public SalaryListController(MainFrameController mainFrameController) {
         this.mainFrameController = mainFrameController;
         employeeDataAccess = new EmployeeDataAccess();
@@ -44,6 +49,11 @@ public class SalaryListController implements TableModelListener, ActionListener,
         SearchAndFilterModel.setUpSearchAndFilterModel(salaryListView.getTable(), toolbar);
     }
 
+    /**
+     * Adds the SalaryListView to the MainFrameController
+     *
+     * @param mainFrameController MainFrameController
+     */
     public void showSalaryView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
             mainFrameController.addTab(title, salaryListView);
@@ -52,6 +62,9 @@ public class SalaryListController implements TableModelListener, ActionListener,
         }
     }
 
+    /**
+     * updates the data of SalaryListView
+     */
     public void updateData() {
         salaryListView.updateTable(employeeDataAccess.getSalaryDataFromDataBase());
         salaryListView.getTable().getModel().addTableModelListener(this);
@@ -60,6 +73,11 @@ public class SalaryListController implements TableModelListener, ActionListener,
 
     }
 
+    /**
+     * Builds the table for the future pay level
+     *
+     * @param tableData String[][] with the data for the table
+     */
     public void buildFuturePayLevelTable(String[][] tableData) {
         salaryListView.changeToFuturePayLevelTable(tableData);
         salaryListView.getTable().getModel().addTableModelListener(this);
@@ -67,6 +85,11 @@ public class SalaryListController implements TableModelListener, ActionListener,
         toolbar.getEditEntry().setEnabled(false);
     }
 
+    /**
+     * Builds the table for the projected salary based on the chosen date
+     *
+     * @param tableData String[][] with the data for the table
+     */
     public void buildPayLevelTableBasedOnChosenDate(String[][] tableData) {
         salaryListView.changeToProjectedSalaryTable(tableData);
         salaryListView.getTable().getModel().addTableModelListener(this);
@@ -78,8 +101,10 @@ public class SalaryListController implements TableModelListener, ActionListener,
         return salaryListView;
     }
 
-    ;
-
+    /**
+     * @param e a {@code TableModelEvent} to notify listener that a table model
+     *          has changed
+     */
     @Override
     public void tableChanged(TableModelEvent e) {
         int numberOfSelectedRows = salaryListView.getTable().getNumberOfSelectedRows();
@@ -97,7 +122,11 @@ public class SalaryListController implements TableModelListener, ActionListener,
         }
     }
 
-    //TODO komplett überarbeiten, hier ist noch ein Bug (siehe Word Dokument)
+    /**
+     * Depending on event e, the method calls the corresponding method
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toolbar.getEditEntry()) {
@@ -147,6 +176,11 @@ public class SalaryListController implements TableModelListener, ActionListener,
         }
     }
 
+    /**
+     * Depending on event e, the method selects or deselects the Item
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
