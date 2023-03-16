@@ -80,7 +80,7 @@ public class ProjectParticipationController implements ActionListener {
         String[] allEmployeeNames = model.getAllEmployeesNamesForSelectedProjects();
         String[] allMonths = model.getRuntimeInMonthsForAllProjects();
         String[][] totalParticipations = model.getTotalParticipationsOfShownEmployees();
-        participationView.setUpParticipationSumPanel(allEmployeeNames, allMonths, totalParticipations);
+        participationView.setUpTotalParticipationSumPanel(allEmployeeNames, allMonths, totalParticipations);
 
     }
 

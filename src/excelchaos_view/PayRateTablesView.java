@@ -11,6 +11,9 @@ public class PayRateTablesView extends JPanel {
 
     private JList payRateTableList;
 
+    /**
+     * Initializes this gui component.
+     */
     public void init() {
         setLayout(new BorderLayout());
         centerPanel = new JPanel();
@@ -28,6 +31,7 @@ public class PayRateTablesView extends JPanel {
         add(centerPanel, BorderLayout.CENTER);
 
     }
+
     public JList getPayRateTableList() {
         return payRateTableList;
     }
