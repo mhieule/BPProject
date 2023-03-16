@@ -17,6 +17,9 @@ public class ShowSalaryStageDialogView extends JDialog {
     private JPanel datePanel;
 
 
+    /**
+     * Initalizes this gui component
+     */
     public void init() {
         setLayout(new BorderLayout());
         setTitle("Gehaltsprojektion");
