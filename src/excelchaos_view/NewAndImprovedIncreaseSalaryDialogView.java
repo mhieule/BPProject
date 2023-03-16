@@ -164,6 +164,7 @@ public class NewAndImprovedIncreaseSalaryDialogView extends JDialog {
         pack();
         setResizable(false);
         setLocationRelativeTo(null);
+        setAlwaysOnTop(true);
         setTitle("Gehaltserhöhung");
         setVisible(true);
 
@@ -188,7 +189,7 @@ public class NewAndImprovedIncreaseSalaryDialogView extends JDialog {
 
     }
 
-    public void setProjectionView(IncreaseSalaryOption type, BigDecimal[] before, BigDecimal[] after) {
+    public void setProjectionView(BigDecimal[] before, BigDecimal[] after) {
 
         for (int row = 0; row < salaryTable.getRowCount(); row++) {
            salaryTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(before[row]), row, 3);
