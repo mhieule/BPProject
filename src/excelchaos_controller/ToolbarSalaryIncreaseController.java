@@ -19,8 +19,8 @@ public class ToolbarSalaryIncreaseController implements ActionListener {
     private SalaryIncreaseController salaryIncreaseController;
 
 
-    private EmployeeDataManager employeeDataManager=new EmployeeDataManager();
-    private ContractDataManager contractDataManager=new ContractDataManager();
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+    private ContractDataManager contractDataManager = new ContractDataManager();
 
     public ToolbarSalaryIncreaseController(MainFrameController mainFrameController, SalaryIncreaseController salaryIncreaseController) {
         frameController = mainFrameController;
@@ -38,10 +38,22 @@ public class ToolbarSalaryIncreaseController implements ActionListener {
             int employeeID = employeeDataManager.getEmployeeByName(employeeName).getId();
             ArrayList<Integer> employeeIDList = new ArrayList<>();
             employeeIDList.add(Integer.valueOf(employeeID));
-            new NewAndImprovedSalaryDialogController(frameController,employeeIDList);
-        } /*else if (e.getSource() == toolbar.getEditSalaryEntry()) { //TODO Edit Button Logik implementieren
-
-        }*/ else if (e.getSource() == toolbar.getDeleteSalaryEntry()) {
+            new IncreaseSalaryDialogController(frameController, employeeIDList);
+        } else if (e.getSource() == toolbar.getEditSalaryEntry()) {
+            String employeeName = toolbar.getNameComboBox().getSelectedItem().toString();
+            int employeeID = employeeDataManager.getEmployeeByName(employeeName).getId();
+            ArrayList<Integer> employeeIDList = new ArrayList<>();
+            employeeIDList.add(Integer.valueOf(employeeID));
+            String [] currentselectedRow = salaryIncreaseController.getSalaryIncreaseView().getTable().getCurrentSelectedRowsAsArray()[0];
+            String[] fillingData = new String[6];
+            fillingData[0] = currentselectedRow[1];
+            fillingData[1] = currentselectedRow[2];
+            fillingData[2] = currentselectedRow[3];
+            fillingData[3] = currentselectedRow[4];
+            fillingData[4] = currentselectedRow[5];
+            fillingData[5] = currentselectedRow[6];
+            new IncreaseSalaryDialogController(frameController, employeeIDList).fillFields(fillingData);
+        } else if (e.getSource() == toolbar.getDeleteSalaryEntry()) {
             Object[] options = {"Ok", "Abbrechen"};
             int joptionResult = JOptionPane.showOptionDialog(null, "Sind Sie sicher, dass die ausgewählten Gehaltseinträge gelöscht werden sollen?", "Warnung", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             if (joptionResult == 0) {

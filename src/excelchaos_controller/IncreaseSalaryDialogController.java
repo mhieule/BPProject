@@ -5,20 +5,22 @@ import excelchaos_model.calculations.SalaryTableLookUp;
 import excelchaos_model.constants.IncreaseSalaryOption;
 import excelchaos_model.database.*;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
-import excelchaos_view.NewAndImprovedIncreaseSalaryDialogView;
+import excelchaos_view.IncreaseSalaryDialogView;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class NewAndImprovedSalaryDialogController implements ActionListener {
-    private NewAndImprovedIncreaseSalaryDialogView increaseSalaryDialogView;
+public class IncreaseSalaryDialogController implements ActionListener {
+    private IncreaseSalaryDialogView increaseSalaryDialogView;
     private MainFrameController frameController;
 
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
@@ -30,23 +32,64 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
     private SalaryCalculation salaryCalculation = new SalaryCalculation();
 
     private SalaryTableLookUp salaryTableLookUp = new SalaryTableLookUp();
+
+    private Date editedDate = null;
     /**
-     * Constructor for NewAndImprovedSalaryDialogController
+     * Constructor for  IncreaseSalaryDialogController
+     *
      * @param frameController frame controller
-     * @param employeeIDList list of employee IDs
+     * @param employeeIDList  list of employee IDs
      */
 
-    public NewAndImprovedSalaryDialogController(MainFrameController frameController, ArrayList<Integer> employeeIDList) {
+    public IncreaseSalaryDialogController(MainFrameController frameController, ArrayList<Integer> employeeIDList) {
         this.frameController = frameController;
         this.employeeIDList = employeeIDList;
-        increaseSalaryDialogView = new NewAndImprovedIncreaseSalaryDialogView();
+        increaseSalaryDialogView = new IncreaseSalaryDialogView();
         increaseSalaryDialogView.init(employeeIDList);
         increaseSalaryDialogView.setActionListener(this);
 
     }
 
+    public void fillFields(String[] data) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDate localDate = LocalDate.parse(data[0], formatter);
+        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        increaseSalaryDialogView.getStartDate().setDate(localDate);
+        BigDecimal oldValue = salaryCalculation.projectSalaryToGivenMonth(employeeIDList.get(0), date);
+        BigDecimal newValue = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(data[1]);
+        BigDecimal difference = newValue.subtract(oldValue);
+        increaseSalaryDialogView.getSalaryTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(oldValue), 0, 3);
+        increaseSalaryDialogView.getSalaryTable().setValueAt(data[1], 0, 4);
+        increaseSalaryDialogView.getSalaryTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(difference), 0, 5);
+        data[2] = data[2].replaceAll("\\h"," ");
+        if (data[2].equals("0,00 €")) {
+            increaseSalaryDialogView.getRelativeRadioButton().setSelected(true);
+            increaseSalaryDialogView.getRelativeTextField().setText(data[3]);
+        } else if (data[3].equals("0%")) {
+            increaseSalaryDialogView.getAbsoluteRadioButton().setSelected(true);
+            increaseSalaryDialogView.getAbsoluteTextField().setEnabled(true);
+            increaseSalaryDialogView.getAbsoluteTextField().setBackground(Color.WHITE);
+            increaseSalaryDialogView.getRelativeTextField().setEnabled(false);
+            increaseSalaryDialogView.getRelativeTextField().setBackground(Color.LIGHT_GRAY);
+            increaseSalaryDialogView.getAbsoluteTextField().setText(data[2]);
+        } else {
+            increaseSalaryDialogView.getMixedRadioButton().setSelected(true);
+            increaseSalaryDialogView.getAbsoluteTextField().setEnabled(true);
+            increaseSalaryDialogView.getAbsoluteTextField().setBackground(Color.WHITE);
+            increaseSalaryDialogView.getAbsoluteTextField().setText(data[2]);
+            increaseSalaryDialogView.getRelativeTextField().setText(data[3]);
+        }
+        increaseSalaryDialogView.getCommentTextField().setText(data[4]);
+        if(data[5].equals("Ja")){
+            increaseSalaryDialogView.getBonusRadioButton().setSelected(true);
+        }
+        editedDate = date;
+
+    }
+
     /**
      * Returns list of projected salaries before increase
+     *
      * @return list of projected salaries before increase
      */
 
@@ -61,8 +104,10 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
         }
         return result;
     }
+
     /**
      * Returns list of projected salaries after increase
+     *
      * @param option option specifies increase
      * @return list of projected salaries before increase
      */
@@ -91,7 +136,7 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
                 finalSalary = projectedSalary.add(absoluteSum);
 
             } else if (option == IncreaseSalaryOption.RELATIVE) {
-                finalSalary = projectedSalary.multiply(StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(increaseSalaryDialogView.getRelativeTextField().getText()));
+                finalSalary = projectedSalary.multiply(StringAndBigDecimalFormatter.formatStringToPercentageValueForSalaryIncrease(increaseSalaryDialogView.getRelativeTextField().getText()));
                 finalSalary = finalSalary.add(projectedSalary);
             } else {
                 BigDecimal relative = new BigDecimal(0);
@@ -105,7 +150,7 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
                 absolute = absolute.add(baseIncrease);
                 absolute = absolute.multiply(contract.getScope());
 
-                relative = projectedSalary.multiply(StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(increaseSalaryDialogView.getRelativeTextField().getText()));
+                relative = projectedSalary.multiply(StringAndBigDecimalFormatter.formatStringToPercentageValueForSalaryIncrease(increaseSalaryDialogView.getRelativeTextField().getText()));
 
                 if (relative.compareTo(absolute) < 0) {
                     finalSalary = absolute;
@@ -124,6 +169,7 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
 
     /**
      * Adds salary increase to database
+     *
      * @param option salary increase option
      */
     public void submitSalaryIncreaseToDatabase(IncreaseSalaryOption option) {
@@ -147,7 +193,7 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
                 finalSalary = projectedSalary.add(absoluteSum);
 
             } else if (option == IncreaseSalaryOption.RELATIVE) {
-                finalSalary = projectedSalary.multiply(StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(increaseSalaryDialogView.getRelativeTextField().getText()));
+                finalSalary = projectedSalary.multiply(StringAndBigDecimalFormatter.formatStringToPercentageValueForSalaryIncrease(increaseSalaryDialogView.getRelativeTextField().getText()));
                 finalSalary = finalSalary.add(projectedSalary);
 
             } else {
@@ -162,7 +208,7 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
                 absolute = absolute.add(baseIncrease);
                 absolute = absolute.multiply(contract.getScope());
 
-                relative = projectedSalary.multiply(StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(increaseSalaryDialogView.getRelativeTextField().getText()));
+                relative = projectedSalary.multiply(StringAndBigDecimalFormatter.formatStringToPercentageValueForSalaryIncrease(increaseSalaryDialogView.getRelativeTextField().getText()));
 
                 if (relative.compareTo(absolute) < 0) {
                     finalSalary = absolute;
@@ -182,20 +228,26 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
             if (increaseSalaryDialogView.getRelativeTextField().getText() == null || increaseSalaryDialogView.getRelativeTextField().getText().equals("")) {
                 percentageIncreaseValue = new BigDecimal(0);
             } else {
-                percentageIncreaseValue = StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(increaseSalaryDialogView.getRelativeTextField().getText());
+                percentageIncreaseValue = StringAndBigDecimalFormatter.formatStringToPercentageValueForSalaryIncrease(increaseSalaryDialogView.getRelativeTextField().getText());
             }
             boolean isBonus = increaseSalaryDialogView.getBonusRadioButton().isSelected();
             String comment = increaseSalaryDialogView.getCommentTextField().getText();
-            SalaryIncreaseHistory salaryIncreaseHistory = new SalaryIncreaseHistory(i, finalSalary, startDate, absoluteIncreaseValue, percentageIncreaseValue, comment, isBonus);
-            salaryIncreaseHistoryManager.addSalaryIncreaseHistory(salaryIncreaseHistory);
+            SalaryIncreaseHistory salaryIncreaseHistory = new SalaryIncreaseHistory(employeeIDList.get(i), finalSalary, startDate, absoluteIncreaseValue, percentageIncreaseValue, comment, isBonus);
+            if(editedDate == null){
+                salaryIncreaseHistoryManager.addSalaryIncreaseHistory(salaryIncreaseHistory);
+            } else {
+                salaryIncreaseHistoryManager.removeSalaryIncreaseHistory(employeeIDList.get(i),editedDate);
+                salaryIncreaseHistoryManager.addSalaryIncreaseHistory(salaryIncreaseHistory);
+            }
             SalaryIncreaseController salaryIncreaseController = frameController.getSalaryIncreaseController();
-            salaryIncreaseController.setTableData(salaryIncreaseController.getDataFromDB(employeeDataManager.getEmployee(i)));
+            salaryIncreaseController.setTableData(salaryIncreaseController.getDataFromDB(employeeDataManager.getEmployee(employeeIDList.get(i))));
             frameController.getUpdater().salaryUpDate();
         }
     }
 
     /**
      * Checks if action has been performed
+     *
      * @param e ActionEvent
      */
 
@@ -262,6 +314,7 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
                 JOptionPane.showMessageDialog(increaseSalaryDialogView, "Bitte wählen Sie ein Startdatum aus.", "Kein Startdatum ausgewählt.", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            increaseSalaryDialogView.dispose();
         }
     }
 

@@ -57,13 +57,31 @@ public class StringAndBigDecimalFormatter {
     }
 
     /**
-
-     Formats a BigDecimal value as a percentage string with two decimal places, followed by a percent symbol.
-     @param valueToFormat the BigDecimal value to format
-     @return the formatted percentage string with two decimal places and a percent symbol
+     * Formats a BigDecimal value as a percentage string with two decimal places, followed by a percent symbol.
+     *
+     * @param valueToFormat the BigDecimal value to format
+     * @return the formatted percentage string with two decimal places and a percent symbol
      */
     public static String formatPercentageToStringSalaryIncreaseInsertion(BigDecimal valueToFormat) {
         String result;
+        Formatter formatter = new Formatter();
+        formatter.format("%.2f", valueToFormat);
+        result = formatter.toString();
+        result = result.concat("%");
+
+        return result;
+    }
+
+    /**
+     * Formats a given decimal value representing a percentage into a string, with two decimal places and a percentage sign at the end.
+     *
+     * @param valueToFormat the decimal value representing the percentage to be formatted
+     * @return a string representation of the formatted percentage, with two decimal places and a percentage sign at the end
+     * @throws NullPointerException if the given decimal value is null
+     */
+    public static String formatPercentageToStringSalaryIncreaseReading(BigDecimal valueToFormat) {
+        String result;
+        valueToFormat = valueToFormat.multiply(new BigDecimal(100));
         Formatter formatter = new Formatter();
         formatter.format("%.2f", valueToFormat);
         result = formatter.toString();
@@ -132,6 +150,24 @@ public class StringAndBigDecimalFormatter {
     }
 
     /**
+     * Formats a String containing a percentage value into a BigDecimal value representing the percentage.
+     * This method takes a String input parameter containing a percentage value, removes the percentage sign and any commas
+     * in it, and returns a BigDecimal value representing the same percentage value. The resulting BigDecimal value is
+     * calculated by dividing the original value by 100 and rounding it to five decimal places.
+     *
+     * @param valueToFormat the String containing the percentage value to format
+     * @return a BigDecimal value representing the formatted percentage value
+     */
+    public static BigDecimal formatStringToPercentageValueForSalaryIncrease(String valueToFormat) {
+        BigDecimal result;
+        valueToFormat = valueToFormat.replaceAll("%", "");
+        valueToFormat = valueToFormat.replaceAll(",", ".");
+        result = new BigDecimal(valueToFormat);
+        result = result.divide(new BigDecimal(100));
+        return result;
+    }
+
+    /**
      * This method takes a string value containing a percentage and formats it to a BigDecimal value
      * for use in the pay rate calculation. The string is first stripped of any percentage symbols and any comma
      * separators are replaced with a decimal point. The resulting string is then parsed into a BigDecimal value.
@@ -183,6 +219,7 @@ public class StringAndBigDecimalFormatter {
         try {
             Locale locale = Locale.GERMANY;
             valueToFormat = valueToFormat.replace("€", "");
+            valueToFormat = valueToFormat.replaceAll(" ", "");
             NumberFormat numberFormat = NumberFormat.getInstance(locale);
             number = numberFormat.parse(valueToFormat).doubleValue();
         } catch (ParseException e) {

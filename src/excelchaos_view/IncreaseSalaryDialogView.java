@@ -1,7 +1,6 @@
 package excelchaos_view;
 
 import com.github.lgooddatepicker.components.DatePicker;
-import excelchaos_model.constants.IncreaseSalaryOption;
 import excelchaos_model.database.ContractDataManager;
 import excelchaos_model.database.EmployeeDataManager;
 import excelchaos_model.inputVerifier.SalaryIncreasePercentageVerifier;
@@ -18,7 +17,7 @@ import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class NewAndImprovedIncreaseSalaryDialogView extends JDialog {
+public class IncreaseSalaryDialogView extends JDialog {
     private JPanel mainPanel, tablePanel, inputPanel,increaseTypePanel, increaseOptionPanel,increaseOptionButtonPanel,increaseOptionTextFieldPanel,datePanel,commentPanel, buttonPanel, westButtonPanel, eastButtonPanel;
     private JTable salaryTable;
     private JLabel percentLabel,euroLabel;

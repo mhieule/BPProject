@@ -128,7 +128,7 @@ public class SalaryListController implements TableModelListener, ActionListener,
             for(String IDString:selectedEmployeeID){
                 employeeIDList.add(Integer.parseInt(IDString));
             }
-            NewAndImprovedSalaryDialogController salaryDialogController = new NewAndImprovedSalaryDialogController(mainFrameController,employeeIDList);
+            IncreaseSalaryDialogController salaryDialogController = new IncreaseSalaryDialogController(mainFrameController,employeeIDList);
         } else if (e.getSource() == toolbar.getExportToCSV()) {
             CSVExporter.createCSVSalaryProjection();
         } else if (e.getSource() == showSalaryStageDialogView.getCloseButton()) {

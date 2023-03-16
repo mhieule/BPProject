@@ -89,6 +89,7 @@ public class SalaryTableLookUp {
                     }
                 }
                 if (currentPayRateTableE13.getCurrentPayRateWithout1AAnd1BTable() != null) {
+                    System.out.println(contract.getPaylevel());
                     E13SalaryTableWithout1AAnd1B = currentPayRateTableE13.getCurrentPayRateWithout1AAnd1BTable();
                 } else {
                     if (contract.getPaylevel().equals("1")) {
