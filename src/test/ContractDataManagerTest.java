@@ -3,29 +3,31 @@ import excelchaos_model.database.ContractDataManager;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
-/*public class ContractDataManagerTest {
+public class ContractDataManagerTest {
 
     @Test
     void testRemoveAll(){
-        var manager = ContractDataManager.getInstance();
+        var manager = new ContractDataManager();
         manager.removeAllContracts();
         assertEquals(manager.getAllContracts().size(),0);
     }
 
     @Test
     void testGetValid(){
-        var manager = ContractDataManager.getInstance();
+        var manager = new ContractDataManager();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
+        BigDecimal num = new BigDecimal("3.5");
         var contract = new Contract(12, "E13", "2", calendar.getTime(), calendar.getTime(),
-                50.20, 17.10, 0, "0", false);
+                num, num, num, "0", false);
         manager.addContract(contract);
         Contract recContract = manager.getContract(12);
         assertEquals(contract.getId(), recContract.getId());
@@ -42,15 +44,16 @@ import java.util.List;
 
     @Test
     void testGetInvalid(){
-        var manager = ContractDataManager.getInstance();
+        var manager = new ContractDataManager();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
+        BigDecimal num = new BigDecimal("3.5");
         var contract = new Contract(12, "E13", "2", calendar.getTime(), calendar.getTime(),
-                50.20, 17.10, 0, "0", false);
+                num, num, num, "0", false);
         manager.addContract(contract);
         Contract recContract = manager.getContract(13);
         assertNull(recContract);
@@ -58,15 +61,16 @@ import java.util.List;
 
     @Test
     void testRemoveValid(){
-        var manager = ContractDataManager.getInstance();
+        var manager = new ContractDataManager();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
+        BigDecimal num = new BigDecimal("3.5");
         var contract = new Contract(12, "E13", "2", calendar.getTime(), calendar.getTime(),
-                50.20, 17.10, 0, "0", false);
+                num, num, num, "0", false);
         manager.addContract(contract);
         manager.removeContract(12);
         Contract recContract = manager.getContract(12);
@@ -75,15 +79,16 @@ import java.util.List;
 
     @Test
     void testRemoveInvalid(){
-        var manager =ContractDataManager.getInstance();
+        var manager = new ContractDataManager();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
+        BigDecimal num = new BigDecimal("3.5");
         var contract = new Contract(12, "E13", "2", calendar.getTime(), calendar.getTime(),
-                50.20, 17.10, 0, "0", false);
+                num, num, num, "0", false);
         manager.addContract(contract);
         manager.removeContract(13);
         assertEquals(manager.getAllContracts().size(), 1);
@@ -92,7 +97,7 @@ import java.util.List;
 
     @Test
     void testGetAll(){
-        var manager = ContractDataManager.getInstance();
+        var manager = new ContractDataManager();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -101,8 +106,9 @@ import java.util.List;
         calendar.set(Calendar.SECOND, 0);
         var contracts = new Contract[10];
         for (int i = 0; i < 10; i++){
+            BigDecimal num = new BigDecimal("3.5");
             var contract = new Contract(i, "E13", "2", calendar.getTime(), calendar.getTime(),
-                    50.20, 17.10, 0, "0", false);
+                    num, num, num, "0", false);
             manager.addContract(contract);
             contracts[i] = contract;
         }
@@ -123,7 +129,7 @@ import java.util.List;
 
     @Test
     void testGetRowCoun(){
-        var manager = ContractDataManager.getInstance();
+        var manager = new ContractDataManager();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -131,8 +137,9 @@ import java.util.List;
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         for (int i = 0; i < 10; i++){
+            BigDecimal num = new BigDecimal("3.5");
             var contract = new Contract(i, "E13", "2", calendar.getTime(), calendar.getTime(),
-                    50.20, 17.10, 0, "0", false);
+                    num, num, num, "0", false);
             manager.addContract(contract);
         }
         assertEquals(manager.getRowCount(), 10);
@@ -140,25 +147,27 @@ import java.util.List;
 
     @Test
     void testGetRowCountEmpty(){
-        var manager = ContractDataManager.getInstance();
+        var manager = new ContractDataManager();
         manager.removeAllContracts();
         assertEquals(manager.getRowCount(), 0);
     }
 
     @Test
     void testUpdateValid(){
-        var manager = ContractDataManager.getInstance();
+        var manager = new ContractDataManager();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
+        BigDecimal num = new BigDecimal("3.5");
         var contract = new Contract(12, "E13", "2", calendar.getTime(), calendar.getTime(),
-                50.20, 17.10, 0, "0", false);
+                num, num, num, "0", false);
         manager.addContract(contract);
+        num = new BigDecimal("3.5");
         var contractUpdate = new Contract(12, "E14", "2", calendar.getTime(), calendar.getTime(),
-                50.20, 17.10, 0, "0", false);
+                num, num, num, "0", false);
         manager.updateContract(contractUpdate);
         Contract recContract = manager.getContract(12);
         assertEquals(contractUpdate.getId(), recContract.getId());
@@ -175,18 +184,20 @@ import java.util.List;
 
     @Test
     void testUpdateInvalid(){
-        var manager = ContractDataManager.getInstance();
+        var manager = new ContractDataManager();
         manager.removeAllContracts();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
+        BigDecimal num = new BigDecimal("3.5");
         var contract = new Contract(12, "E13", "2", calendar.getTime(), calendar.getTime(),
-                50.20, 17.10, 0, "0", false);
+                num, num, num, "0", false);
         manager.addContract(contract);
-        var contractUpdate = new Contract(13, "E14", "2", calendar.getTime(), calendar.getTime(),
-                50.20, 17.10, 0, "0", false);
+        num = new BigDecimal("3.5");
+        var contractUpdate = new Contract(14, "E14", "2", calendar.getTime(), calendar.getTime(),
+                num, num, num, "0", false);
         manager.updateContract(contractUpdate);
         manager.updateContract(contractUpdate);
         Contract recContract = manager.getContract(12);
@@ -202,4 +213,4 @@ import java.util.List;
         assertEquals(contract.getShk_hourly_rate(), recContract.getShk_hourly_rate());
         assertNull(manager.getContract(13));
     }
-}*/
+}
