@@ -3,6 +3,9 @@ package excelchaos_view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class needs complete reworking and implementation since it is unfinished.
+ */
 public class SalaryHistoryView extends JPanel {
 
     private JTable table;

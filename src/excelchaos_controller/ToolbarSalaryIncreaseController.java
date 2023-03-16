@@ -44,7 +44,7 @@ public class ToolbarSalaryIncreaseController implements ActionListener {
             int employeeID = employeeDataManager.getEmployeeByName(employeeName).getId();
             ArrayList<Integer> employeeIDList = new ArrayList<>();
             employeeIDList.add(Integer.valueOf(employeeID));
-            String [] currentselectedRow = salaryIncreaseController.getSalaryIncreaseView().getTable().getCurrentSelectedRowsAsArray()[0];
+            String [] currentselectedRow = salaryIncreaseController.getSalaryIncreaseView().getSalaryIncreaseTable().getCurrentSelectedRowsAsArray()[0];
             String[] fillingData = new String[6];
             fillingData[0] = currentselectedRow[1];
             fillingData[1] = currentselectedRow[2];
@@ -57,10 +57,10 @@ public class ToolbarSalaryIncreaseController implements ActionListener {
             Object[] options = {"Ok", "Abbrechen"};
             int joptionResult = JOptionPane.showOptionDialog(null, "Sind Sie sicher, dass die ausgewählten Gehaltseinträge gelöscht werden sollen?", "Warnung", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             if (joptionResult == 0) {
-                salaryIncreaseController.deleteEntries(salaryIncreaseController.getSalaryIncreaseView().getTable().getCurrentSelectedRowsAsArray());
+                salaryIncreaseController.deleteEntries(salaryIncreaseController.getSalaryIncreaseView().getSalaryIncreaseTable().getCurrentSelectedRowsAsArray());
             }
         } else if (e.getSource() == toolbar.getExportToCSV()) {
-            CSVExporter.createCSVVariableName(salaryIncreaseController.getSalaryIncreaseView().getTable());
+            CSVExporter.createCSVVariableName(salaryIncreaseController.getSalaryIncreaseView().getSalaryIncreaseTable());
         }
     }
 
