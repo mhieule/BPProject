@@ -2,21 +2,24 @@ import excelchaos_model.database.ProjectCategory;
 import excelchaos_model.database.ProjectCategoryManager;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-/*public class ProjectCategoryManagerTest {
+public class ProjectCategoryManagerTest {
     @Test
     void testRemoveAll(){
-        var manager = ProjectCategoryManager.getInstance();
+        var manager = new ProjectCategoryManager();
         manager.removeAllProjectCategories();
         assertEquals(manager.getAllProjectCategories().size(), 0);
     }
 
     @Test
     void testGetValid(){
-        var manager = ProjectCategoryManager.getInstance();
+        var manager = new ProjectCategoryManager();
         manager.removeAllProjectCategories();
-        var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
+        BigDecimal num = new BigDecimal("12.22");
+        var projectCategory = new ProjectCategory(1, 1, "test_1", num);
         manager.addProjectCategory(projectCategory);
         var recProjectCategory = manager.getProject(1);
         assertEquals(recProjectCategory.getCategory_id(), projectCategory.getProject_id());
@@ -27,9 +30,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     void testGetInvalid(){
-        var manager = ProjectCategoryManager.getInstance();
+        var manager = new ProjectCategoryManager();
         manager.removeAllProjectCategories();
-        var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
+        BigDecimal num = new BigDecimal("12.22");
+        var projectCategory = new ProjectCategory(1, 1, "test_1", num);
         manager.addProjectCategory(projectCategory);
         var recProjectCategory = manager.getProject(2);
         assertNull(recProjectCategory);
@@ -37,9 +41,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     void testRemoveValid(){
-        var manager = ProjectCategoryManager.getInstance();
-        manager.removeAllProjectCategories();
-        var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
+        var manager = new ProjectCategoryManager();
+        BigDecimal num = new BigDecimal("12.22");
+        var projectCategory = new ProjectCategory(1, 1, "test_1", num);
         manager.addProjectCategory(projectCategory);
         manager.removeProjectCategory(1);
         assertNull(manager.getProject(1));
@@ -47,9 +51,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     void testRemoveInvalid(){
-        var manager = ProjectCategoryManager.getInstance();
+        var manager = new ProjectCategoryManager();
         manager.removeAllProjectCategories();
-        var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
+        BigDecimal num = new BigDecimal("12.22");
+        var projectCategory = new ProjectCategory(1, 1, "test_1", num);
         manager.addProjectCategory(projectCategory);
         manager.removeProjectCategory(2);
         assertEquals(manager.getAllProjectCategories().size(), 1);
@@ -58,11 +63,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     void testGetAll(){
-        var manager = ProjectCategoryManager.getInstance();
+        var manager = new ProjectCategoryManager();
         manager.removeAllProjectCategories();
         var projectCategories = new ProjectCategory[10];
         for (int i = 0 ; i < 10; i++){
-            var projectCategory = new ProjectCategory(i, i, "test_1", 420.0);
+            BigDecimal num = new BigDecimal("12.22");
+            var projectCategory = new ProjectCategory(i, i, "test_1", num);
             manager.addProjectCategory(projectCategory);
             projectCategories[i] = projectCategory;
         }
@@ -77,10 +83,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     void testGetRowCount(){
-        var manager =ProjectCategoryManager.getInstance();
+        var manager = new ProjectCategoryManager();
         manager.removeAllProjectCategories();
         for (int i = 0 ; i < 10; i++){
-            var projectCategory = new ProjectCategory(i, i, "test_1", 420.0);
+            BigDecimal num = new BigDecimal("12.22");
+            var projectCategory = new ProjectCategory(i, i, "test_1", num);
             manager.addProjectCategory(projectCategory);
         }
         assertEquals(manager.getRowCount(), 10);
@@ -88,18 +95,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     void testGetRowCountEmpty(){
-        var manager = ProjectCategoryManager.getInstance();
+        var manager = new ProjectCategoryManager();
         manager.removeAllProjectCategories();
         assertEquals(manager.getRowCount(), 0);
     }
 
     @Test
     void testUpdateValid(){
-        var manager = ProjectCategoryManager.getInstance();
+        var manager = new ProjectCategoryManager();
         manager.removeAllProjectCategories();
-        var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
+        BigDecimal num = new BigDecimal("12.22");
+        var projectCategory = new ProjectCategory(1, 1, "test_1", num);
         manager.addProjectCategory(projectCategory);
-        var upProjectCategory = new ProjectCategory(1, 1, "update_1", 1337.0);
+        var upProjectCategory = new ProjectCategory(1, 1, "update_1", num);
         manager.updateProjectCategory(upProjectCategory);
         var recProjectCategory = manager.getProject(1);
         assertEquals(recProjectCategory.getCategory_id(), upProjectCategory.getProject_id());
@@ -110,11 +118,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     void testUpdateInvalid(){
-        var manager = ProjectCategoryManager.getInstance();
+        var manager = new ProjectCategoryManager();
         manager.removeAllProjectCategories();
-        var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
+        BigDecimal num = new BigDecimal("12.22");
+        var projectCategory = new ProjectCategory(1, 1, "test_1", num);
         manager.addProjectCategory(projectCategory);
-        var upProjectCategory = new ProjectCategory(1, 2, "update_1", 1337.0);
+        var upProjectCategory = new ProjectCategory(1, 2, "update_1", num);
         manager.updateProjectCategory(upProjectCategory);
         var recProjectCategory = manager.getProject(1);
         assertEquals(recProjectCategory.getCategory_id(), projectCategory.getProject_id());
@@ -125,17 +134,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     void testGetNextID(){
-        var manager = ProjectCategoryManager.getInstance();
+        var manager = new ProjectCategoryManager();
         manager.removeAllProjectCategories();
-        var projectCategory = new ProjectCategory(1, 1, "test_1", 420.0);
+        BigDecimal num = new BigDecimal("12.22");
+        var projectCategory = new ProjectCategory(1, 1, "test_1", num);
         manager.addProjectCategory(projectCategory);
         assertEquals(manager.getNextID(), 2);
     }
 
     @Test
     void testGetNextIDEmpty(){
-        var manager = ProjectCategoryManager.getInstance();
+        var manager = new ProjectCategoryManager();
         manager.removeAllProjectCategories();
         assertEquals(manager.getNextID(), 1);
     }
-}*/
+}
