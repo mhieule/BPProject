@@ -12,6 +12,12 @@ public class ToolbarManualSalaryEntryController implements ActionListener {
     private ManualSalaryEntryController manualSalaryEntryController;
     private MainFrameController frameController;
 
+    /**
+     * Constructor for ToolbarManualSalaryEntryController
+     *
+     * @param mainFrameController         mainFrameController
+     * @param manualSalaryEntryController manualSalaryEntryController
+     */
     public ToolbarManualSalaryEntryController(MainFrameController mainFrameController, ManualSalaryEntryController manualSalaryEntryController) {
         frameController = mainFrameController;
         this.manualSalaryEntryController = manualSalaryEntryController;
@@ -20,6 +26,11 @@ public class ToolbarManualSalaryEntryController implements ActionListener {
         toolbar.setActionListener(this);
     }
 
+    /**
+     * Depending on the source of the event, the corresponding action is performed
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toolbar.getAddSalaryEntry()) {
@@ -38,6 +49,9 @@ public class ToolbarManualSalaryEntryController implements ActionListener {
         }
     }
 
+    /**
+     * Updates the toolbar
+     */
     public void update() {
         toolbar = new ToolbarManualSalaryEntryView();
         toolbar.init();

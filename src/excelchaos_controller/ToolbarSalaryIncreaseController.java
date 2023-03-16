@@ -11,17 +11,17 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ToolbarSalaryIncreaseController implements ActionListener {
-
     private ToolbarSalaryIncreaseView toolbar;
-
     private MainFrameController frameController;
-
     private SalaryIncreaseController salaryIncreaseController;
-
-
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
     private ContractDataManager contractDataManager = new ContractDataManager();
 
+    /**
+     * Constructor for ToolbarSalaryIncreaseController
+     * @param mainFrameController mainFrameController
+     * @param salaryIncreaseController salaryIncreaseController
+     */
     public ToolbarSalaryIncreaseController(MainFrameController mainFrameController, SalaryIncreaseController salaryIncreaseController) {
         frameController = mainFrameController;
         this.salaryIncreaseController = salaryIncreaseController;
@@ -30,6 +30,10 @@ public class ToolbarSalaryIncreaseController implements ActionListener {
         toolbar.setActionListener(this);
     }
 
+    /**
+     * Depending on the source of the event, the corresponding action is performed
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toolbar.getDoSalaryIncrease()) {
@@ -44,7 +48,7 @@ public class ToolbarSalaryIncreaseController implements ActionListener {
             int employeeID = employeeDataManager.getEmployeeByName(employeeName).getId();
             ArrayList<Integer> employeeIDList = new ArrayList<>();
             employeeIDList.add(Integer.valueOf(employeeID));
-            String [] currentselectedRow = salaryIncreaseController.getSalaryIncreaseView().getSalaryIncreaseTable().getCurrentSelectedRowsAsArray()[0];
+            String[] currentselectedRow = salaryIncreaseController.getSalaryIncreaseView().getSalaryIncreaseTable().getCurrentSelectedRowsAsArray()[0];
             String[] fillingData = new String[6];
             fillingData[0] = currentselectedRow[1];
             fillingData[1] = currentselectedRow[2];
@@ -64,6 +68,9 @@ public class ToolbarSalaryIncreaseController implements ActionListener {
         }
     }
 
+    /**
+     * Updates the toolbar
+     */
     public void update() {
         toolbar = new ToolbarSalaryIncreaseView();
         toolbar.init();

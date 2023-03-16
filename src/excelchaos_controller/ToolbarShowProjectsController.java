@@ -11,6 +11,12 @@ public class ToolbarShowProjectsController implements ActionListener {
     private MainFrameController frameController;
     private ShowProjectsController showProjectsController;
 
+    /**
+     * Constructor for ToolbarShowProjectsController
+     *
+     * @param mainFrameController    mainFrameController
+     * @param showProjectsController showProjectsController
+     */
     public ToolbarShowProjectsController(MainFrameController mainFrameController, ShowProjectsController showProjectsController) {
         this.showProjectsController = showProjectsController;
         frameController = mainFrameController;
@@ -24,6 +30,11 @@ public class ToolbarShowProjectsController implements ActionListener {
     }
 
 
+    /**
+     * Depending on the source of the event, the corresponding action is performed
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toolbar.getInsertProject()) {
