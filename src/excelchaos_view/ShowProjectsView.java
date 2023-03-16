@@ -26,6 +26,7 @@ public class ShowProjectsView extends JPanel {
     public void createProjectsTable(String[][] tableData, String[] columnNames) {
         projectsTable = new CustomTable(tableData, columnNames);
         projectsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        projectsTable.getTableHeader().setReorderingAllowed(false);
         projectsTable.getColumnModel().getColumn(1).setMinWidth(0);
         projectsTable.getColumnModel().getColumn(1).setMaxWidth(0);
         projectsTable.getColumnModel().getColumn(1).setWidth(0);

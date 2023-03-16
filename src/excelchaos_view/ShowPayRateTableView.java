@@ -146,6 +146,7 @@ public class ShowPayRateTableView extends JPanel {
 
         DefaultTableModel defaultTableModel = new DefaultTableModel(columns, 15);
         showPayRatesTable = new JTable(defaultTableModel);
+        showPayRatesTable.getTableHeader().setReorderingAllowed(false);
         showPayRatesTable.setDefaultEditor(Object.class, new CellEditor(new SalaryVerifier()));
         showPayRatesTable.getColumn("%-Satz").setCellEditor(new CellEditor(new PayRateTablePercentVerifier()));
         DefaultTableModel model = new DefaultTableModel() {
