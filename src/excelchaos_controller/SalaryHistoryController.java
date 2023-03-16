@@ -32,6 +32,7 @@ public class SalaryHistoryController implements ItemListener {
 
     /**
      * Constructor for salary history controller
+     *
      * @param mainFrameController main frame controller
      */
     public SalaryHistoryController(MainFrameController mainFrameController) {
@@ -45,6 +46,7 @@ public class SalaryHistoryController implements ItemListener {
 
     /**
      * Displays salary history view in main frame
+     *
      * @param mainFrameController main frame controller
      */
     public void showSalaryHistoryView(MainFrameController mainFrameController) {
@@ -57,6 +59,7 @@ public class SalaryHistoryController implements ItemListener {
 
     /**
      * Returns array of months for specified employee
+     *
      * @param employee specified employee
      * @return array of months
      */
@@ -77,6 +80,7 @@ public class SalaryHistoryController implements ItemListener {
 
     /**
      * Returns data for specified employee from database
+     *
      * @param temporaryEmployee specified employee
      * @return employee's data
      */
@@ -95,7 +99,7 @@ public class SalaryHistoryController implements ItemListener {
         String month = months[rowCount - 1].format(DateTimeFormatter.ofPattern("MMMM"));
         //String salary = Double.toString(contractDataManager.getContract(id).getRegular_cost());
         String comment = null;
-       // String[] values = {year, month, salary, comment};
+        // String[] values = {year, month, salary, comment};
         //resultData[rowCount - 1] = values;
 
         List<ManualSalaryEntry> manualSalaryEntryList = manualSalaryEntryManager.getManualSalaryEntry(id);
@@ -109,7 +113,7 @@ public class SalaryHistoryController implements ItemListener {
                 if (currDate.getYear() == changeDate.getYear() && currDate.getMonth() == changeDate.getMonth()) {
                     year = months[i].format(DateTimeFormatter.ofPattern("yyyy"));
                     month = months[i].format(DateTimeFormatter.ofPattern("MMMM"));
-                   // salary = transformer.formatDoubleToString(entry.getNew_salary(), 1);
+                    // salary = transformer.formatDoubleToString(entry.getNew_salary(), 1);
                     comment = entry.getComment();
                     //values = new String[]{year, month, salary, comment};
                     //resultData[i] = values;
@@ -119,10 +123,10 @@ public class SalaryHistoryController implements ItemListener {
             if (!found) {
                 year = months[i].format(DateTimeFormatter.ofPattern("yyyy"));
                 month = months[i].format(DateTimeFormatter.ofPattern("MMMM"));
-               // salary = resultData[i + 1][2];
+                // salary = resultData[i + 1][2];
                 comment = null;
-               // values = new String[]{year, month, salary, comment};
-               // resultData[i] = values;
+                // values = new String[]{year, month, salary, comment};
+                // resultData[i] = values;
             }
         }
         return resultData;
@@ -130,7 +134,8 @@ public class SalaryHistoryController implements ItemListener {
 
     /**
      * Creates new table with data
-      * @param data data
+     *
+     * @param data data
      */
     private void createTableWithData(String[][] data) {
         salaryHistoryView.createTable(data, columns);
@@ -138,6 +143,7 @@ public class SalaryHistoryController implements ItemListener {
 
     /**
      * Creates table with data
+     *
      * @param data
      */
 
@@ -148,6 +154,7 @@ public class SalaryHistoryController implements ItemListener {
 
     /**
      * Checks if item has changed and either creates table, updates table or exits
+     *
      * @param e ItemEvent
      */
 

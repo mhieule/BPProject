@@ -103,11 +103,11 @@ public class SalaryListController implements TableModelListener, ActionListener,
         if (e.getSource() == toolbar.getEditEntry()) {
             String employeeID = salaryListView.getTable().getIdsOfCurrentSelectedRows()[0];
             Employee employee = employeeDataAccess.getEmployee(Integer.parseInt(employeeID));
-            if(employee.getStatus().equals("SHK")){
+            if (employee.getStatus().equals("SHK")) {
                 InsertSalarySHKController insertSalarySHKController = new InsertSalarySHKController(mainFrameController);
                 insertSalarySHKController.fillFields(Integer.parseInt(employeeID));
                 insertSalarySHKController.showInsertSalarySHKView(mainFrameController);
-            } else{
+            } else {
                 InsertSalaryController insertSalaryController = new InsertSalaryController(mainFrameController);
                 insertSalaryController.fillFields(Integer.parseInt(employeeID));
                 insertSalaryController.showInsertSalaryView(mainFrameController);
@@ -125,10 +125,10 @@ public class SalaryListController implements TableModelListener, ActionListener,
             toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
             String[] selectedEmployeeID = salaryListView.getTable().getIdsOfCurrentSelectedRows();
             ArrayList<Integer> employeeIDList = new ArrayList<>();
-            for(String IDString:selectedEmployeeID){
+            for (String IDString : selectedEmployeeID) {
                 employeeIDList.add(Integer.parseInt(IDString));
             }
-            IncreaseSalaryDialogController salaryDialogController = new IncreaseSalaryDialogController(mainFrameController,employeeIDList);
+            IncreaseSalaryDialogController salaryDialogController = new IncreaseSalaryDialogController(mainFrameController, employeeIDList);
         } else if (e.getSource() == toolbar.getExportToCSV()) {
             CSVExporter.createCSVSalaryProjection();
         } else if (e.getSource() == showSalaryStageDialogView.getCloseButton()) {
@@ -153,8 +153,9 @@ public class SalaryListController implements TableModelListener, ActionListener,
             SalaryProjection salaryProjection = new SalaryProjection();
             buildFuturePayLevelTable(salaryProjection.getNextPayLevelProjection());
             toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
-        } if(e.getStateChange() == ItemEvent.DESELECTED){
-            if(e.getSource() == toolbar.getShowNextPayGrade()){
+        }
+        if (e.getStateChange() == ItemEvent.DESELECTED) {
+            if (e.getSource() == toolbar.getShowNextPayGrade()) {
                 updateData();
             }
 

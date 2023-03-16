@@ -37,6 +37,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
     /**
      * Constructor for the ManualSalaryController
+     *
      * @param mainFrameController the main frame controller
      */
 
@@ -51,6 +52,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
     /**
      * Enables ManualSalaryEntry view in the main frame
+     *
      * @param mainFrameController the main frame controller
      */
 
@@ -64,6 +66,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
     /**
      * Receives data from database for employee with specified id and returns it's data
+     *
      * @param temporaryEmployee dummy employee to get id from
      * @return employee's data
      */
@@ -93,6 +96,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
     /**
      * Creates a table with the given data
+     *
      * @param data data for the table
      */
 
@@ -107,6 +111,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
     /**
      * Sets table data for costum table model
+     *
      * @param data data for the table
      */
 
@@ -138,6 +143,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
     /**
      * Deletes an entry at specific dates from the table
+     *
      * @param dates dates
      */
 
@@ -161,6 +167,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
     /**
      * Checks if item state has changed
+     *
      * @param e ItemEvent
      */
     @Override
@@ -203,6 +210,7 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
     /**
      * Checks if the table has changed
+     *
      * @param e TableModelEvent
      */
     @Override

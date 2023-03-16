@@ -28,6 +28,7 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
 
     /**
      * Constructor for PayRateTablesController
+     *
      * @param mainFrameController main frame controller
      */
     public PayRateTablesController(MainFrameController mainFrameController) {
@@ -38,6 +39,7 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
 
     /**
      * Displays pay rates view in main frame
+     *
      * @param mainFrameController main frame controller
      */
     public void showPayRatesView(MainFrameController mainFrameController) {
@@ -80,6 +82,7 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
 
     /**
      * Sets pay grade from table's title
+     *
      * @return paygrade
      */
 
@@ -95,6 +98,7 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
 
     /**
      * Deletes pay rate table with specified name
+     *
      * @param tableName name of pay rate table
      */
 
@@ -115,6 +119,7 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
 
     /**
      * Checks if mouse has been clicked
+     *
      * @param e MouseEvent
      */
     @Override
@@ -134,6 +139,7 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
 
     /**
      * Checks if mouse is been pressed
+     *
      * @param e MouseEvent
      */
 
@@ -148,6 +154,7 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
 
     /**
      * Checks if mouse is released
+     *
      * @param e MouseEvent
      */
 
@@ -161,6 +168,7 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
 
     /**
      * Shows popup to edit table
+     *
      * @param e
      */
 
@@ -204,6 +212,7 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
 
     /**
      * Checks if action has been performed and displays corresponding actions
+     *
      * @param e ACtionEvent
      */
 

@@ -11,7 +11,7 @@ public class NewFrameController {
     /**
      * Constructor for new frame controller
      */
-    public NewFrameController(){
+    public NewFrameController() {
         newFrame = new NewFrame();
         newFrame.init();
         tabs = new DnDCloseButtonTabbedPane(newFrame);
@@ -21,6 +21,7 @@ public class NewFrameController {
     public NewFrame getWindow() {
         return newFrame;
     }
+
     public DnDCloseButtonTabbedPane getTabs() {
         return tabs;
     }

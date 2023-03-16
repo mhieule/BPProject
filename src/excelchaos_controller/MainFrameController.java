@@ -16,7 +16,7 @@ public class MainFrameController {
     private SideMenuPanelTablesController sideMenuTables;
     private ShowPersonController showPersonalData;
     private SalaryListController salaryListController;
-   // private SalaryHistoryController salaryHistoryController;
+    // private SalaryHistoryController salaryHistoryController;
     private ShowProjectsController showProjectsController;
     private ManualSalaryEntryController manualSalaryEntryController;
     private SalaryIncreaseController salaryIncreaseController;
@@ -55,12 +55,11 @@ public class MainFrameController {
     }
 
 
-
     public SalaryListController getSalaryListController() {
         return salaryListController;
     }
 
-   /* public SalaryHistoryController getSalaryHistoryController(){return salaryHistoryController;}*/
+    /* public SalaryHistoryController getSalaryHistoryController(){return salaryHistoryController;}*/
 
     public ManualSalaryEntryController getManualSalaryEntryController() {
         return manualSalaryEntryController;
@@ -92,11 +91,12 @@ public class MainFrameController {
 
     /**
      * Adds tab to given JPanel
-     * @param name JPanel to add the tab to
+     *
+     * @param name  JPanel to add the tab to
      * @param panel name of the tab
      */
-    public void addTab(String name, JPanel panel){
-        getTabs().addTab(name,panel);
+    public void addTab(String name, JPanel panel) {
+        getTabs().addTab(name, panel);
         getTabs().setSelectedIndex(getTabs().indexOfTab(name));
     }
 

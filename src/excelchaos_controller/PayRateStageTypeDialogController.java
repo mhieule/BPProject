@@ -31,11 +31,12 @@ public class PayRateStageTypeDialogController implements ActionListener {
 
     /**
      * Constructor for pay rate stage type dialog controller
-     * @param mainFrameController main frame controller
+     *
+     * @param mainFrameController     main frame controller
      * @param payRateTablesController pay rate tables controller
      */
 
-    public PayRateStageTypeDialogController(MainFrameController mainFrameController,PayRateTablesController payRateTablesController){
+    public PayRateStageTypeDialogController(MainFrameController mainFrameController, PayRateTablesController payRateTablesController) {
         frameController = mainFrameController;
         payRateController = payRateTablesController;
         payRateStageTypeDialogView = new PayRateStageTypeDialogView();
@@ -45,50 +46,54 @@ public class PayRateStageTypeDialogController implements ActionListener {
 
     /**
      * Checks if action has been performed
+     *
      * @param e ActionEvent
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == payRateStageTypeDialogView.getCloseButton()){
+        if (e.getSource() == payRateStageTypeDialogView.getCloseButton()) {
             payRateStageTypeDialogView.dispose();
         }
-        if(e.getSource() == payRateStageTypeDialogView.getOkayButton()){
-            if(payRateController.getTitle() == "E13 Entgelttabellen" &&tablePayRateStageType()){
-                createInsertPayRateTable("E13 Entgelttabelle mit Stufe 1A und 1B hinzufügen",columns13WithAAndB,"E13 Entgelttabellen");
-            } else if (payRateController.getTitle() == "E13 Entgelttabellen" &&!tablePayRateStageType()) {
-                createInsertPayRateTable("E13 Entgelttabelle mit Stufe 1 hinzufügen",columns13WithoutAAndB,"E13 Entgelttabellen");
-            } else if (payRateController.getTitle() == "E14 Entgelttabellen" &&tablePayRateStageType()) {
-                createInsertPayRateTable("E14 Entgelttabelle mit Stufe 1A und 1B hinzufügen",columns14WithAAndB,"E14 Entgelttabellen");
-            } else if(payRateController.getTitle() == "E14 Entgelttabellen" &&!tablePayRateStageType()) {
-                createInsertPayRateTable("E14 Entgelttabelle mit Stufe 1 hinzufügen",columns14WithoutAAndB,"E14 Entgelttabellen");
+        if (e.getSource() == payRateStageTypeDialogView.getOkayButton()) {
+            if (payRateController.getTitle() == "E13 Entgelttabellen" && tablePayRateStageType()) {
+                createInsertPayRateTable("E13 Entgelttabelle mit Stufe 1A und 1B hinzufügen", columns13WithAAndB, "E13 Entgelttabellen");
+            } else if (payRateController.getTitle() == "E13 Entgelttabellen" && !tablePayRateStageType()) {
+                createInsertPayRateTable("E13 Entgelttabelle mit Stufe 1 hinzufügen", columns13WithoutAAndB, "E13 Entgelttabellen");
+            } else if (payRateController.getTitle() == "E14 Entgelttabellen" && tablePayRateStageType()) {
+                createInsertPayRateTable("E14 Entgelttabelle mit Stufe 1A und 1B hinzufügen", columns14WithAAndB, "E14 Entgelttabellen");
+            } else if (payRateController.getTitle() == "E14 Entgelttabellen" && !tablePayRateStageType()) {
+                createInsertPayRateTable("E14 Entgelttabelle mit Stufe 1 hinzufügen", columns14WithoutAAndB, "E14 Entgelttabellen");
             }
             payRateStageTypeDialogView.dispose();
         }
 
     }
-    private String getComboBoxSelection(){
+
+    private String getComboBoxSelection() {
         return payRateStageTypeDialogView.getStageTypeSelecter().getSelectedItem().toString();
     }
 
     /**
      * Checks if Entgeldtabelle is with 1A and 1B
+     *
      * @return
      */
-    private boolean tablePayRateStageType(){
-        if(getComboBoxSelection()=="Entgeltabelle mit Stufe 1A und 1B"){
+    private boolean tablePayRateStageType() {
+        if (getComboBoxSelection() == "Entgeltabelle mit Stufe 1A und 1B") {
             return true;
         } else return false;
     }
 
     /**
      * Creates InsertPayRateTable
-     * @param title title of the table
-     * @param columnNames names of the table's columns
+     *
+     * @param title         title of the table
+     * @param columnNames   names of the table's columns
      * @param originalTitle original title
      */
-    private void createInsertPayRateTable(String title, String[] columnNames, String originalTitle){
+    private void createInsertPayRateTable(String title, String[] columnNames, String originalTitle) {
         payRateController.setTitle(title);
-        insertPayRateTableController = new InsertPayRateTableController(frameController,payRateController,payRateController.getTitle(),columnNames,tablePayRateStageType());
+        insertPayRateTableController = new InsertPayRateTableController(frameController, payRateController, payRateController.getTitle(), columnNames, tablePayRateStageType());
         insertPayRateTableController.showInsertPayRateTableView(frameController);
         payRateController.setTitle(originalTitle);
 
