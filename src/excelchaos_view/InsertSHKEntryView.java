@@ -27,6 +27,9 @@ public class InsertSHKEntryView extends JPanel {
     private final int FIELD_WIDTH = 400;
     private final int FIELD_HEIGHT = 25;
 
+    /**
+     * initializes the GUI components
+     */
     public void init() {
         setLayout(new BorderLayout());
         centerUp = new JPanel();
@@ -94,7 +97,7 @@ public class InsertSHKEntryView extends JPanel {
 
     }
 
-    public void setActionListener(ActionListener l){
+    public void setActionListener(ActionListener l) {
         submit.addActionListener(l);
         reset.addActionListener(l);
         cancel.addActionListener(l);

@@ -21,7 +21,7 @@ import java.util.List;
 public class InsertProjectsView extends JPanel {
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
 
-    private JLabel name, approval, start, duration, categoryLabel, categoriesSum,  funderLabel, participationLabel;
+    private JLabel name, approval, start, duration, categoryLabel, categoriesSum, funderLabel, participationLabel;
 
     private JTextField tfName;
 
@@ -33,7 +33,7 @@ public class InsertProjectsView extends JPanel {
 
     private JButton submitAndReset, submitAndClose, reset, cancel;
 
-    private JPanel flowProjectValuesPanel, mainPanel, mixedPanel, projectValuesPanel, categoriesPanel,categoriesSumPanel, projectFunderPanel, projectParticipationPanel, buttonPanel, leftButtons, rightButtons;
+    private JPanel flowProjectValuesPanel, mainPanel, mixedPanel, projectValuesPanel, categoriesPanel, categoriesSumPanel, projectFunderPanel, projectParticipationPanel, buttonPanel, leftButtons, rightButtons;
 
     private GridBagConstraints textFieldConstraints;
 
@@ -42,6 +42,9 @@ public class InsertProjectsView extends JPanel {
     private final int FIELD_WIDTH = 400;
     private final int FIELD_HEIGHT = 25;
 
+    /**
+     * Initializes the GUI components and adds them to the panel.
+     */
     public void init() {
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
@@ -55,10 +58,10 @@ public class InsertProjectsView extends JPanel {
         textFieldConstraints = new GridBagConstraints();
 
         mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout(30,0));
+        mainPanel.setLayout(new BorderLayout(30, 0));
 
         mixedPanel = new JPanel();
-        mixedPanel.setLayout(new GridLayout(3,1,0,20));
+        mixedPanel.setLayout(new GridLayout(3, 1, 0, 20));
 
         projectParticipationPanel = new JPanel();
         projectValuesPanel = new JPanel();
@@ -111,6 +114,9 @@ public class InsertProjectsView extends JPanel {
         repaint();
     }
 
+    /**
+     * Sets the color of the text fields to red.
+     */
     public void markMustBeFilledTextFields() {
         name.setForeground(Color.RED);
         approval.setForeground(Color.RED);
@@ -118,9 +124,12 @@ public class InsertProjectsView extends JPanel {
         duration.setForeground(Color.RED);
     }
 
-    public void setUpProjectValuesPanel(){
+    /**
+     * Sets up the project values panel.
+     */
+    public void setUpProjectValuesPanel() {
         flowProjectValuesPanel.setLayout(new FlowLayout());
-        projectValuesPanel.setLayout(new GridLayout(4,2,0,10));
+        projectValuesPanel.setLayout(new GridLayout(4, 2, 0, 10));
 
         name = new JLabel("Projektname");
         setConstraintsLabel(name, 0);
@@ -146,6 +155,9 @@ public class InsertProjectsView extends JPanel {
         flowProjectValuesPanel.add(projectValuesPanel);
     }
 
+    /**
+     * Sets up the categories panel.
+     */
     public void setUpCategoriesPanel() {
         categoriesPanel.setLayout(new BorderLayout());
         JPanel northPanel = new JPanel();
@@ -160,13 +172,13 @@ public class InsertProjectsView extends JPanel {
         categoriesTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         categoriesTable.getTableHeader().setReorderingAllowed(false);
         categoriesTable.setRowHeight(26);
-        categoriesTable.setValueAt("WiMi",0,0);
-        categoriesTable.setValueAt("HiWi",1,0);
-        categoriesTable.setValueAt("Reise Inland",2,0);
-        categoriesTable.setValueAt("Reise Ausland",3,0);
+        categoriesTable.setValueAt("WiMi", 0, 0);
+        categoriesTable.setValueAt("HiWi", 1, 0);
+        categoriesTable.setValueAt("Reise Inland", 2, 0);
+        categoriesTable.setValueAt("Reise Ausland", 3, 0);
         JScrollPane categoriesScrollpane = new JScrollPane(categoriesTable);
         categoriesScrollpane.setVisible(true);
-        categoriesScrollpane.setPreferredSize(new Dimension(categoriesTable.getWidth(), categoriesTable.getRowHeight()*categoriesTable.getRowCount()+2));
+        categoriesScrollpane.setPreferredSize(new Dimension(categoriesTable.getWidth(), categoriesTable.getRowHeight() * categoriesTable.getRowCount() + 2));
         categoriesPanel.add(categoriesScrollpane, BorderLayout.CENTER);
         northPanel.add(categoryLabel);
         northPanel.add(Box.createHorizontalStrut(14));
@@ -185,13 +197,21 @@ public class InsertProjectsView extends JPanel {
         categoriesPanel.add(northPanel, BorderLayout.NORTH);
     }
 
-    public void setUpCategorySumLabel(){
+    /**
+     * Sets up the Panel for the sum label of the categories.
+     */
+    public void setUpCategorySumLabel() {
         categoriesSumPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         categoriesSum = new JLabel("Summe: ");
         categoriesSumPanel.add(categoriesSum);
-        categoriesPanel.add(categoriesSumPanel,BorderLayout.SOUTH);
+        categoriesPanel.add(categoriesSumPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Sets up the edit categories panel.
+     *
+     * @param data the data to be displayed in the table.
+     */
     public void setUpEditCategoriesPanel(String[][] data) {
         categoriesPanel.removeAll();
         categoriesSumPanel.removeAll();
@@ -212,7 +232,7 @@ public class InsertProjectsView extends JPanel {
         categoriesTable.setModel(categoriesModel);
         JScrollPane categoriesScrollpane = new JScrollPane(categoriesTable);
         categoriesScrollpane.setVisible(true);
-        categoriesScrollpane.setPreferredSize(new Dimension(categoriesTable.getWidth(), categoriesTable.getRowHeight()*categoriesTable.getRowCount()+2));
+        categoriesScrollpane.setPreferredSize(new Dimension(categoriesTable.getWidth(), categoriesTable.getRowHeight() * categoriesTable.getRowCount() + 2));
         categoriesPanel.add(categoriesScrollpane, BorderLayout.CENTER);
         northPanel.add(categoryLabel);
         northPanel.add(Box.createHorizontalStrut(14));
@@ -234,6 +254,9 @@ public class InsertProjectsView extends JPanel {
         setUpCategorySumLabel();
     }
 
+    /**
+     * Sets up the project funder panel.
+     */
     public void setUpProjectFunderPanel() {
         projectFunderPanel.setLayout(new BorderLayout());
         JPanel northPanel = new JPanel();
@@ -250,7 +273,7 @@ public class InsertProjectsView extends JPanel {
         projectFunderTable.setRowHeight(26);
         JScrollPane funderScrollpane = new JScrollPane(projectFunderTable);
         funderScrollpane.setVisible(true);
-        funderScrollpane.setPreferredSize(new Dimension(projectFunderTable.getWidth(), projectFunderTable.getRowHeight()*projectFunderTable.getRowCount()+2));
+        funderScrollpane.setPreferredSize(new Dimension(projectFunderTable.getWidth(), projectFunderTable.getRowHeight() * projectFunderTable.getRowCount() + 2));
         projectFunderPanel.add(funderScrollpane, BorderLayout.CENTER);
         northPanel.add(funderLabel);
         northPanel.add(Box.createHorizontalStrut(6));
@@ -270,6 +293,11 @@ public class InsertProjectsView extends JPanel {
         projectFunderPanel.add(northPanel, BorderLayout.NORTH);
     }
 
+    /**
+     * Sets up the edit project funder panel.
+     *
+     * @param data the data to be displayed in the table.
+     */
     public void setUpEditProjectFunderPanel(String[][] data) {
         projectFunderPanel.removeAll();
         projectFunderPanel.setLayout(new BorderLayout());
@@ -288,7 +316,7 @@ public class InsertProjectsView extends JPanel {
         projectFunderTable.setModel(funderModel);
         JScrollPane funderScrollpane = new JScrollPane(projectFunderTable);
         funderScrollpane.setVisible(true);
-        funderScrollpane.setPreferredSize(new Dimension(projectFunderTable.getWidth(), projectFunderTable.getRowHeight()*projectFunderTable.getRowCount()+2));
+        funderScrollpane.setPreferredSize(new Dimension(projectFunderTable.getWidth(), projectFunderTable.getRowHeight() * projectFunderTable.getRowCount() + 2));
         projectFunderPanel.add(funderScrollpane, BorderLayout.CENTER);
         northPanel.add(funderLabel);
         northPanel.add(Box.createHorizontalStrut(6));
@@ -310,6 +338,9 @@ public class InsertProjectsView extends JPanel {
         projectFunderPanel.add(northPanel, BorderLayout.NORTH);
     }
 
+    /**
+     * Sets up the project participation panel.
+     */
     public void setUpProjectParticipationPanel() {
         projectParticipationPanel.setLayout(new BorderLayout());
         JPanel northPanel = new JPanel();
@@ -346,6 +377,11 @@ public class InsertProjectsView extends JPanel {
         projectParticipationPanel.add(northPanel, BorderLayout.NORTH);
     }
 
+    /**
+     * Sets up the edit project participation panel.
+     *
+     * @param data the data to be displayed in the table.
+     */
     public void setUpEditProjectParticipationPanel(String[][] data) {
         projectParticipationPanel.removeAll();
         projectParticipationPanel.setLayout(new BorderLayout());
@@ -361,7 +397,7 @@ public class InsertProjectsView extends JPanel {
         projectParticipationTable.getTableHeader().setReorderingAllowed(false);
         setUpEditNameSelection(projectParticipationTable, data[1]);
         setUpEditDateSelection(projectParticipationTable, data[3], 3);
-        setUpEditDateSelection(projectParticipationTable,data[4],4);
+        setUpEditDateSelection(projectParticipationTable, data[4], 4);
         for (int i = 0; i < data[0].length; i++) {
             projectParticipationTable.setValueAt(data[0][i], i, 0);
             projectParticipationTable.setValueAt(data[2][i], i, 2);
@@ -388,6 +424,12 @@ public class InsertProjectsView extends JPanel {
         projectParticipationPanel.add(northPanel, BorderLayout.NORTH);
     }
 
+    /**
+     * Sets up the name selection in the table.
+     *
+     * @param table the table to be edited.
+     * @param names the names to be displayed in the table.
+     */
     public void setUpEditNameSelection(JTable table, String[] names) {
         TableColumn nameColumn = table.getColumnModel().getColumn(1);
 
@@ -404,6 +446,13 @@ public class InsertProjectsView extends JPanel {
         }
     }
 
+    /**
+     * Sets up the name selection in the table.
+     *
+     * @param table       the table to be edited.
+     * @param dates       the dates to be displayed in the table.
+     * @param columnIndex the column index of the date.
+     */
     public void setUpEditDateSelection(JTable table, String[] dates, int columnIndex) {
         TableColumn dateColumn = table.getColumnModel().getColumn(columnIndex);
         table.setDefaultEditor(LocalDate.class, new DateTableEditor());
@@ -414,13 +463,18 @@ public class InsertProjectsView extends JPanel {
         LocalDate date;
         for (int i = 0; i < dates.length; i++) {
             date = LocalDate.parse(dates[i], formatter);
-            if(columnIndex == 4){
+            if (columnIndex == 4) {
                 date = date.plusMonths(1).minusDays(1);
             }
             table.setValueAt(date, i, columnIndex);
         }
     }
 
+    /**
+     * Sets up the name selection in the table.
+     *
+     * @param table the corresponding table.
+     */
     public void setUpNameSelection(JTable table) {
         TableColumn nameColumn = table.getColumnModel().getColumn(0);
         ArrayList<String> employeeNames = new ArrayList<String>();
@@ -431,6 +485,11 @@ public class InsertProjectsView extends JPanel {
         nameColumn.setCellEditor(new DefaultCellEditor(nameCombobox));
     }
 
+    /**
+     * Sets up the date selection in the table.
+     *
+     * @param table the corresponding table.
+     */
     public void setUpDateSelection(JTable table) {
         TableColumn dateColumn = table.getColumnModel().getColumn(2);
         table.setDefaultEditor(LocalDate.class, new DateTableEditor());
@@ -453,8 +512,6 @@ public class InsertProjectsView extends JPanel {
     public JLabel getCategoriesSum() {
         return categoriesSum;
     }
-
-
 
     public String[] getCategoryColumns() {
         return categoryColumns;
@@ -546,6 +603,9 @@ public class InsertProjectsView extends JPanel {
         projectValuesPanel.add(datePicker, textFieldConstraints);
     }
 
+    /**
+     * This class is used to verify the input of the user in the table.
+     */
     private class CellEditor extends DefaultCellEditor {
         InputVerifier verifier = null;
 

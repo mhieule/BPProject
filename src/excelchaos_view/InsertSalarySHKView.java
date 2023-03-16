@@ -29,6 +29,9 @@ public class InsertSalarySHKView extends JPanel {
     private final int FIELD_WIDTH = 400;
     private final int FIELD_HEIGHT = 25;
 
+    /**
+     * Initialize the GUI components
+     */
     public void init() {
         setLayout(new BorderLayout());
         centerUp = new JPanel();
@@ -104,6 +107,9 @@ public class InsertSalarySHKView extends JPanel {
         tfHiwiTypeOfPayment.addItemListener(l);
     }
 
+    /**
+     * Sets color of the text fields to red
+     */
     public void markMustBeFilledTextFields() {
         hiwiTypeOfPayment.setForeground(Color.RED);
     }
