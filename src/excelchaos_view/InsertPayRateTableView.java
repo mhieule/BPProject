@@ -211,6 +211,7 @@ public class InsertPayRateTableView extends JPanel {
 
         DefaultTableModel mainTableModel = new DefaultTableModel(columns, 15);
         table = new JTable(mainTableModel);
+        table.getTableHeader().setReorderingAllowed(false);
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);

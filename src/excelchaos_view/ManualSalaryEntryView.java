@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ManualSalaryEntryView extends JPanel {
-    private CustomTable table;
+    private CustomTable manualSalaryEntryTable;
 
     /**
      * sets the layout of the view
@@ -22,8 +22,9 @@ public class ManualSalaryEntryView extends JPanel {
      * @param columnNames String[] containing the column names
      */
     public void createTable(String[][] data, String[] columnNames) {
-        table = new CustomTable(data, columnNames);
-        JScrollPane scrollPane = new JScrollPane(table);
+        manualSalaryEntryTable = new CustomTable(data, columnNames);
+        manualSalaryEntryTable.getTableHeader().setReorderingAllowed(false);
+        JScrollPane scrollPane = new JScrollPane(manualSalaryEntryTable);
         scrollPane.setVisible(true);
 
         add(scrollPane);
@@ -31,7 +32,7 @@ public class ManualSalaryEntryView extends JPanel {
         repaint();
     }
 
-    public CustomTable getTable() {
-        return table;
+    public CustomTable getManualSalaryEntryTable() {
+        return manualSalaryEntryTable;
     }
 }

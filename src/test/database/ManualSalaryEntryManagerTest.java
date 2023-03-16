@@ -1,3 +1,5 @@
+package test.database;
+
 import excelchaos_model.database.ManualSalaryEntry;
 import excelchaos_model.database.ManualSalaryEntryManager;
 import org.junit.jupiter.api.Test;

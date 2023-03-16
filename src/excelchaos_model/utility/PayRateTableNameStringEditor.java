@@ -16,6 +16,7 @@ public class PayRateTableNameStringEditor {
     public static String createReadableTableNameForView(String originalName) {
         String tableName;
         String[] temporaryStringArray = originalName.split("_");
+
         tableName = temporaryStringArray[0] + " " + temporaryStringArray[1];
 
 

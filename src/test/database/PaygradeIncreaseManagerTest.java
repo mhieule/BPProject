@@ -1,3 +1,5 @@
+package test.database;
+
 import excelchaos_model.database.PaygradeIncrease;
 import excelchaos_model.database.PaygradeIncreaseManager;
 import org.junit.jupiter.api.Test;

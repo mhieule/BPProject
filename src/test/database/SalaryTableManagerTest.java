@@ -1,3 +1,5 @@
+package test.database;
+
 import excelchaos_model.database.SalaryTable;
 import excelchaos_model.database.SalaryTableManager;
 import org.junit.jupiter.api.Test;

@@ -1,3 +1,5 @@
+package test.database;
+
 import excelchaos_model.database.ProjectFunder;
 import excelchaos_model.database.ProjectFunderManager;
 

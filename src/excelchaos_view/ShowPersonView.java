@@ -30,6 +30,7 @@ public class ShowPersonView extends JPanel {
      */
     private void createEmployeeTable(String[][] tableData, String[] columnNames) {
         employeeDataTable = new CustomTable(tableData, columnNames);
+        employeeDataTable.getTableHeader().setReorderingAllowed(false);
         employeeDataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         employeeDataTable.getColumnModel().getColumn(1).setMinWidth(0);
         employeeDataTable.getColumnModel().getColumn(1).setMaxWidth(0);

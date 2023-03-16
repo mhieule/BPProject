@@ -39,6 +39,7 @@ public class SalaryListView extends JPanel {
      */
     public void createSalaryTable(String[][] tableData, String[] columnNames) {
         salaryDataTable = new CustomTable(tableData, columnNames);
+        salaryDataTable.getTableHeader().setReorderingAllowed(false);
         salaryDataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         salaryDataTable.getColumnModel().getColumn(1).setMinWidth(0);
         salaryDataTable.getColumnModel().getColumn(1).setMaxWidth(0);

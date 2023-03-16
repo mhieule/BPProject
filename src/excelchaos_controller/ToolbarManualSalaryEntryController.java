@@ -36,16 +36,16 @@ public class ToolbarManualSalaryEntryController implements ActionListener {
         if (e.getSource() == toolbar.getAddSalaryEntry()) {
             new InsertManualSalaryEntryController(frameController, (String) toolbar.getNameComboBox().getSelectedItem()).showInsertManualSalaryEntryView(frameController);
         } else if (e.getSource() == toolbar.getEditSalaryEntry()) {
-            InsertManualSalaryEntryController insertManualSalaryEntryController = new InsertManualSalaryEntryController(frameController, (String) toolbar.getNameComboBox().getSelectedItem(), manualSalaryEntryController.getSalaryEntryView().getTable().getCurrentSelectedRowsAsArray());
+            InsertManualSalaryEntryController insertManualSalaryEntryController = new InsertManualSalaryEntryController(frameController, (String) toolbar.getNameComboBox().getSelectedItem(), manualSalaryEntryController.getSalaryEntryView().getManualSalaryEntryTable().getCurrentSelectedRowsAsArray());
             insertManualSalaryEntryController.showInsertManualSalaryEntryView(frameController);
         } else if (e.getSource() == toolbar.getDeleteSalaryEntry()) {
             Object[] options = {"Ok", "Abbrechen"};
             int joptionResult = JOptionPane.showOptionDialog(null, "Sind Sie sicher, dass die ausgewählten Gehaltseinträge gelöscht werden sollen?", "Warnung", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             if (joptionResult == 0) {
-                manualSalaryEntryController.deleteEntries(manualSalaryEntryController.getSalaryEntryView().getTable().getCurrentSelectedRowsAsArray());
+                manualSalaryEntryController.deleteEntries(manualSalaryEntryController.getSalaryEntryView().getManualSalaryEntryTable().getCurrentSelectedRowsAsArray());
             }
         } else if (e.getSource() == toolbar.getExportToCSV()) {
-            CSVExporter.createCSVVariableName(manualSalaryEntryController.getSalaryEntryView().getTable());
+            CSVExporter.createCSVVariableName(manualSalaryEntryController.getSalaryEntryView().getManualSalaryEntryTable());
         }
     }
 
