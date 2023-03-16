@@ -15,14 +15,21 @@ public class SalaryIncreaseHistory {
     @DatabaseField()
     private Date start_date;
     @DatabaseField()
+    private BigDecimal absoluteIncreaseValue;
+    @DatabaseField()
+    private BigDecimal percentIncreaseValue;
+    @DatabaseField()
     private String comment;
     @DatabaseField()
     private boolean is_additional_payment;
 
-    public SalaryIncreaseHistory(int id, BigDecimal new_salary, Date start_date, String comment, boolean is_additional_payment) {
+
+    public SalaryIncreaseHistory(int id, BigDecimal new_salary, Date start_date, BigDecimal absoluteIncreaseValue, BigDecimal percentIncreaseValue, String comment, boolean is_additional_payment) {
         this.id = id;
         this.new_salary = new_salary;
         this.start_date = start_date;
+        this.absoluteIncreaseValue = absoluteIncreaseValue;
+        this.percentIncreaseValue = percentIncreaseValue;
         this.comment = comment;
         this.is_additional_payment = is_additional_payment;
     }
@@ -49,6 +56,22 @@ public class SalaryIncreaseHistory {
 
     public void setStart_date(Date start_date) {
         this.start_date = start_date;
+    }
+
+    public BigDecimal getAbsoluteIncreaseValue() {
+        return absoluteIncreaseValue;
+    }
+
+    public void setAbsoluteIncreaseValue(BigDecimal absoluteIncreaseValue) {
+        this.absoluteIncreaseValue = absoluteIncreaseValue;
+    }
+
+    public BigDecimal getPercentIncreaseValue() {
+        return percentIncreaseValue;
+    }
+
+    public void setPercentIncreaseValue(BigDecimal percentIncreaseValue) {
+        this.percentIncreaseValue = percentIncreaseValue;
     }
 
     public String getComment() {

@@ -15,10 +15,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Facilitates database integration for PaygradeIncrease
+ */
+
 public class PaygradeIncreaseManager {
     private ConnectionSource connectionSource;
     private Dao<PaygradeIncrease, Object> paygradeIncreasesDao;
 
+    /**
+     * Creates database connection and DAO
+     */
     public PaygradeIncreaseManager() {
         try {
             String databaseUrl = "jdbc:sqlite:Excelchaos.db";
@@ -30,6 +37,10 @@ public class PaygradeIncreaseManager {
         }
     }
 
+    /**
+     * Creates table in the database
+     */
+
     public void createTable() {
         try {
             TableUtils.createTable(connectionSource, PaygradeIncrease.class);
@@ -38,6 +49,10 @@ public class PaygradeIncreaseManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Deletes table from the database
+     */
 
     public void deleteTable() {
         try {
@@ -48,6 +63,11 @@ public class PaygradeIncreaseManager {
         }
     }
 
+    /**
+     * Adds a PaygradeIncrease to the database
+     * @param paygradeIncrease paygradeIncrease to be added to the database
+     */
+
     public void addPaygradeIncrease(PaygradeIncrease paygradeIncrease) {
         try {
             paygradeIncreasesDao.create(paygradeIncrease);
@@ -56,6 +76,12 @@ public class PaygradeIncreaseManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Removes paygradeIncrease from database
+     * @param id id of the paygradeIncrease to be removed
+     * @param date date of the paygradeIncrease to be removed
+     */
 
     public void removePaygradeIncrease(int id, Date date) {
         try {
@@ -68,6 +94,10 @@ public class PaygradeIncreaseManager {
         }
     }
 
+    /**
+     * Removes all paygradeIncreases from the database
+     */
+
     public void removeAllPaygradeIncreases() {
         try {
             TableUtils.clearTable(connectionSource, PaygradeIncrease.class);
@@ -76,6 +106,12 @@ public class PaygradeIncreaseManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Returns all paygradeIncreases with specified id
+     * @param id id of the paygradeIncreases
+     * @return List of paygradeIncreases
+     */
 
     public List<PaygradeIncrease> getPaygradeIncrease(int id) {
         List<PaygradeIncrease> paygradeIncreaseList = new ArrayList<>();
@@ -91,6 +127,13 @@ public class PaygradeIncreaseManager {
         return paygradeIncreaseList;
     }
 
+    /**
+     * Returns all paygradeIncreases with specified id at specified date
+     * @param id id of the paygradeIncreases
+     * @param date date of the paygradeIncrease
+     * @return List of paygradeIncreases
+     */
+
     public List<PaygradeIncrease> getPaygradeIncreaseByDate(int id, Date date) {
         List<PaygradeIncrease> paygradeIncreaseList = new ArrayList<>();
         QueryBuilder<PaygradeIncrease, Object> queryBuilder = paygradeIncreasesDao.queryBuilder();
@@ -105,6 +148,10 @@ public class PaygradeIncreaseManager {
         return paygradeIncreaseList;
     }
 
+    /**
+     * Returns all paygradeIncreases in the table
+     * @return List of all paygradeIncreases
+     */
 
     public List<PaygradeIncrease> getAllPaygradeIncreases() {
         List<PaygradeIncrease> paygradeIncreaseList = new ArrayList<>();
@@ -116,6 +163,12 @@ public class PaygradeIncreaseManager {
         }
         return paygradeIncreaseList;
     }
+
+    /**
+     * Returns row count for specified id
+     * @param id id of paygradeIncreases
+     * @return number of rows
+     */
 
     public int getRowCount(int id) {
         List<PaygradeIncrease> paygradeIncreaseList = getPaygradeIncrease(id);

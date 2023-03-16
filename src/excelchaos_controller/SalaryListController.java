@@ -18,6 +18,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class SalaryListController implements TableModelListener, ActionListener, ItemListener {
@@ -85,10 +86,13 @@ public class SalaryListController implements TableModelListener, ActionListener,
         if (e.getColumn() == 0) {
             if (numberOfSelectedRows == 0) {
                 toolbar.getEditEntry().setEnabled(false);
+                toolbar.getIncreaseSalary().setEnabled(false);
             } else if (numberOfSelectedRows == 1) {
                 toolbar.getEditEntry().setEnabled(true);
+                toolbar.getIncreaseSalary().setEnabled(true);
             } else {
-               toolbar.getEditEntry().setEnabled(false);
+                toolbar.getEditEntry().setEnabled(false);
+                toolbar.getIncreaseSalary().setEnabled(true);
             }
         }
     }
@@ -99,11 +103,11 @@ public class SalaryListController implements TableModelListener, ActionListener,
         if (e.getSource() == toolbar.getEditEntry()) {
             String employeeID = salaryListView.getTable().getIdsOfCurrentSelectedRows()[0];
             Employee employee = employeeDataAccess.getEmployee(Integer.parseInt(employeeID));
-            if(employee.getStatus().equals("SHK")){
+            if (employee.getStatus().equals("SHK")) {
                 InsertSalarySHKController insertSalarySHKController = new InsertSalarySHKController(mainFrameController);
                 insertSalarySHKController.fillFields(Integer.parseInt(employeeID));
                 insertSalarySHKController.showInsertSalarySHKView(mainFrameController);
-            } else{
+            } else {
                 InsertSalaryController insertSalaryController = new InsertSalaryController(mainFrameController);
                 insertSalaryController.fillFields(Integer.parseInt(employeeID));
                 insertSalaryController.showInsertSalaryView(mainFrameController);
@@ -119,7 +123,12 @@ public class SalaryListController implements TableModelListener, ActionListener,
             toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
         } else if (e.getSource() == toolbar.getIncreaseSalary()) {
             toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
-            //increaseSalaryDialogController = new IncreaseSalaryDialogController(frameController);
+            String[] selectedEmployeeID = salaryListView.getTable().getIdsOfCurrentSelectedRows();
+            ArrayList<Integer> employeeIDList = new ArrayList<>();
+            for (String IDString : selectedEmployeeID) {
+                employeeIDList.add(Integer.parseInt(IDString));
+            }
+            IncreaseSalaryDialogController salaryDialogController = new IncreaseSalaryDialogController(mainFrameController, employeeIDList);
         } else if (e.getSource() == toolbar.getExportToCSV()) {
             CSVExporter.createCSVSalaryProjection();
         } else if (e.getSource() == showSalaryStageDialogView.getCloseButton()) {
@@ -144,8 +153,9 @@ public class SalaryListController implements TableModelListener, ActionListener,
             SalaryProjection salaryProjection = new SalaryProjection();
             buildFuturePayLevelTable(salaryProjection.getNextPayLevelProjection());
             toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
-        } if(e.getStateChange() == ItemEvent.DESELECTED){
-            if(e.getSource() == toolbar.getShowNextPayGrade()){
+        }
+        if (e.getStateChange() == ItemEvent.DESELECTED) {
+            if (e.getSource() == toolbar.getShowNextPayGrade()) {
                 updateData();
             }
 

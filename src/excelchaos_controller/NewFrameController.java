@@ -8,7 +8,10 @@ public class NewFrameController {
     private NewFrame newFrame;
     private DnDCloseButtonTabbedPane tabs;
 
-    public NewFrameController(){
+    /**
+     * Constructor for new frame controller
+     */
+    public NewFrameController() {
         newFrame = new NewFrame();
         newFrame.init();
         tabs = new DnDCloseButtonTabbedPane(newFrame);
@@ -18,6 +21,7 @@ public class NewFrameController {
     public NewFrame getWindow() {
         return newFrame;
     }
+
     public DnDCloseButtonTabbedPane getTabs() {
         return tabs;
     }

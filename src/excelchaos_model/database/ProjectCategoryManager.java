@@ -14,12 +14,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  Facilitates database integration for ProjectCategory
+ */
+
 public class ProjectCategoryManager {
     private ConnectionSource connectionSource;
     private Dao<ProjectCategory, Integer> projectCategoriesDao;
 
     private static String databaseURL;
 
+    /**
+     * Creates database connection and DAO
+     */
 
     public ProjectCategoryManager() {
         try {
@@ -32,6 +39,10 @@ public class ProjectCategoryManager {
         }
     }
 
+    /**
+     * Creates table in the database
+     */
+
     public void createTable() {
         try {
             TableUtils.createTable(connectionSource, ProjectCategory.class);
@@ -40,6 +51,10 @@ public class ProjectCategoryManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Deletes table from the database
+     */
 
     public void deleteTable() {
         try {
@@ -50,6 +65,11 @@ public class ProjectCategoryManager {
         }
     }
 
+    /**
+     * Adds a ProjectCategory to the database
+     * @param projectCategory projectCategory to be added to the database
+     */
+
     public void addProjectCategory(ProjectCategory projectCategory) {
         try {
             projectCategoriesDao.create(projectCategory);
@@ -58,6 +78,12 @@ public class ProjectCategoryManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Returns project with specified id from database
+     * @param id id of the project to be returned
+     * @return project with specified id
+     */
 
     public ProjectCategory getProject(int id) {
         ProjectCategory projectCategory = null;
@@ -70,6 +96,11 @@ public class ProjectCategoryManager {
         return projectCategory;
     }
 
+    /**
+     * Returns list of all projects in the database
+     * @return list of all projects
+     */
+
     public List<ProjectCategory> getAllProjectCategories() {
         List<ProjectCategory> projectCategories = null;
         try {
@@ -80,6 +111,12 @@ public class ProjectCategoryManager {
         }
         return projectCategories;
     }
+
+    /**
+     * Returns list of all ProjectCategories for specific project
+     * @param projectId id of the project
+     * @return list of all ProjectCategories with specified project id
+     */
 
     public List<ProjectCategory> getAllProjectCategoriesForProject(int projectId) {
         List<ProjectCategory> projectCategoryList = new ArrayList<>();
@@ -95,6 +132,11 @@ public class ProjectCategoryManager {
         return projectCategoryList;
     }
 
+    /**
+     * Removes ProjectCategory with specified id from database
+     * @param id id of ProjectCategory to be removed
+     */
+
     public void removeProjectCategory(int id) {
         try {
             DeleteBuilder<ProjectCategory, Integer> builder = projectCategoriesDao.deleteBuilder();
@@ -105,6 +147,11 @@ public class ProjectCategoryManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Removes ProjectCategory with specified project id from database
+     * @param projectID project id of the ProjectCategory to be removed
+     */
 
     public void removeProjectCategoryBasedOnProjectId(int projectID) {
         try {
@@ -117,6 +164,10 @@ public class ProjectCategoryManager {
         }
     }
 
+    /**
+     * Removes all ProjectCategories from table
+     */
+
     public void removeAllProjectCategories() {
         try {
             TableUtils.clearTable(connectionSource, ProjectCategory.class);
@@ -126,9 +177,19 @@ public class ProjectCategoryManager {
         }
     }
 
+    /**
+     * Returns total row count of the table
+     * @return row count
+     */
+
     public int getRowCount() {
         return getAllProjectCategories().size();
     }
+
+    /**
+     * Returns next available id
+     * @return next available id
+     */
 
     public int getNextID() {
         int id = 0;
@@ -147,6 +208,11 @@ public class ProjectCategoryManager {
         }
         return id;
     }
+
+    /**
+     * Updates the specified ProjectCategory
+     * @param projectCategory ProjectCategory to be updated
+     */
 
     public void updateProjectCategory(ProjectCategory projectCategory) {
         try {

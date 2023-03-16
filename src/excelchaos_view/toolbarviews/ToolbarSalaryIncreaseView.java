@@ -16,7 +16,7 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
     private JComboBox nameComboBox;
 
-    private JButton doSalaryIncrease, deleteSalaryEntry, exportToCSV;//,editSalaryEntry; TODO Edit Button implementieren, Vielleicht auch nicht
+    private JButton doSalaryIncrease, deleteSalaryEntry, exportToCSV, editSalaryEntry;
 
     private JLabel nameLabel = new JLabel("Person auswählen:");
 
@@ -32,7 +32,7 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
         names.addAll(employeeNames);
 
         doSalaryIncrease = new JButton("Eintrag hinzufügen");
-        //   editSalaryEntry = new JButton("Eintrag bearbeiten");
+        editSalaryEntry = new JButton("Eintrag bearbeiten");
         deleteSalaryEntry = new JButton("Eintrag löschen");
         exportToCSV = new JButton("Daten als CSV exportieren");
         nameComboBox = new JComboBox(names.toArray());
@@ -43,11 +43,11 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
         add(nameComboBox);
         addSeparator(new Dimension(20, 10));
         add(doSalaryIncrease);
-        // add(editSalaryEntry);
+        add(editSalaryEntry);
         add(deleteSalaryEntry);
         setUpSearchPanel();
         add(exportToCSV);
-        //   editSalaryEntry.setEnabled(false);
+        editSalaryEntry.setEnabled(false);
         deleteSalaryEntry.setEnabled(false);
         doSalaryIncrease.setEnabled(false);
         exportToCSV.setEnabled(false);
@@ -55,7 +55,7 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
 
     public void setActionListener(ActionListener l) {
         doSalaryIncrease.addActionListener(l);
-        // editSalaryEntry.addActionListener(l);
+        editSalaryEntry.addActionListener(l);
         deleteSalaryEntry.addActionListener(l);
         exportToCSV.addActionListener(l);
     }
@@ -72,9 +72,9 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
         return doSalaryIncrease;
     }
 
-  /*  public JButton getEditSalaryEntry() {
+    public JButton getEditSalaryEntry() {
         return editSalaryEntry;
-    }*/
+    }
 
     public JButton getDeleteSalaryEntry() {
         return deleteSalaryEntry;

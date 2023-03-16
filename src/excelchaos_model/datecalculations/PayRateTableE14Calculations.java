@@ -81,7 +81,10 @@ public class PayRateTableE14Calculations {
      * @return a List of SalaryTable object(s) containing current pay rates of employees under "1A" and "1B"
      */
     public List<SalaryTable> getCurrentPayRateWith1AAnd1BTable() {
-        return salaryTableManager.getSalaryTable(determinePayRateTableBasedOnCurrentDate(payRateTablesWith1AAnd1B).tableName);
+        if (determinePayRateTableBasedOnCurrentDate(payRateTablesWith1AAnd1B) == null) {
+            return null;
+        } else
+            return salaryTableManager.getSalaryTable(determinePayRateTableBasedOnCurrentDate(payRateTablesWith1AAnd1B).tableName);
     }
 
     /**
@@ -94,7 +97,10 @@ public class PayRateTableE14Calculations {
      * @return a List of SalaryTable object(s) containing current pay rates of employees under "1A" and "1B"
      */
     public List<SalaryTable> getCurrentPayRateWithout1AAnd1BTable() {
-        return salaryTableManager.getSalaryTable(determinePayRateTableBasedOnCurrentDate(payRateTablesWithout1AAnd1B).tableName);
+        if (determinePayRateTableBasedOnCurrentDate(payRateTablesWithout1AAnd1B) == null) {
+            return null;
+        } else
+            return salaryTableManager.getSalaryTable(determinePayRateTableBasedOnCurrentDate(payRateTablesWithout1AAnd1B).tableName);
     }
 
     /**
@@ -104,7 +110,10 @@ public class PayRateTableE14Calculations {
      * @return a list of SalaryTable objects that corresponds to the chosen date and matches the condition.
      */
     public List<SalaryTable> getPayRateTableBasedOnChosenDateWith1AAnd1BTable(LocalDate date) {
-        return salaryTableManager.getSalaryTable(determinePayRateTableBasedOnChosenDate(date, payRateTablesWith1AAnd1B).tableName);
+        if (determinePayRateTableBasedOnChosenDate(date, payRateTablesWith1AAnd1B) == null) {
+            return null;
+        } else
+            return salaryTableManager.getSalaryTable(determinePayRateTableBasedOnChosenDate(date, payRateTablesWith1AAnd1B).tableName);
     }
 
     /**
@@ -114,7 +123,10 @@ public class PayRateTableE14Calculations {
      * @return a list of SalaryTable objects that corresponds to the chosen date and matches the condition.
      */
     public List<SalaryTable> getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(LocalDate date) {
-        return salaryTableManager.getSalaryTable(determinePayRateTableBasedOnChosenDate(date, payRateTablesWithout1AAnd1B).tableName);
+        if (determinePayRateTableBasedOnChosenDate(date, payRateTablesWithout1AAnd1B) == null) {
+            return null;
+        } else
+            return salaryTableManager.getSalaryTable(determinePayRateTableBasedOnChosenDate(date, payRateTablesWithout1AAnd1B).tableName);
     }
 
     /**
@@ -128,15 +140,18 @@ public class PayRateTableE14Calculations {
     private TableNameDateTuple determinePayRateTableBasedOnCurrentDate(TableNameDateTuple[] givenTableNamesAndDates) {
         LocalDate currentDate = LocalDate.now();
         LocalDate currentlyValidDate = null;
-        int resultindex = 0;
+        if (givenTableNamesAndDates.length == 0) {
+            return null;
+        }
+        int resultIndex = 0;
         for (int i = 0; i < givenTableNamesAndDates.length; i++) {
             if (currentDate.compareTo(givenTableNamesAndDates[i].date) >= 0) {
                 if (currentlyValidDate == null) {
                     currentlyValidDate = givenTableNamesAndDates[i].date;
-                    resultindex = i;
+                    resultIndex = i;
                 } else {
                     if (givenTableNamesAndDates[i].date.compareTo(currentlyValidDate) > 0) {
-                        resultindex = i;
+                        resultIndex = i;
                         currentlyValidDate = givenTableNamesAndDates[i].date;
                     }
                 }
@@ -147,7 +162,7 @@ public class PayRateTableE14Calculations {
             }
 
         }
-        return givenTableNamesAndDates[resultindex];
+        return givenTableNamesAndDates[resultIndex];
     }
 
     /**
@@ -162,6 +177,9 @@ public class PayRateTableE14Calculations {
     private TableNameDateTuple determinePayRateTableBasedOnChosenDate(LocalDate chosenDate, TableNameDateTuple[] givenTableNamesAndDates) {
         LocalDate currentDate = chosenDate;
         LocalDate currentlyValidDate = null;
+        if (givenTableNamesAndDates.length == 0) {
+            return null;
+        }
         int resultindex = 0;
         for (int i = 0; i < givenTableNamesAndDates.length; i++) {
             if (currentDate.compareTo(givenTableNamesAndDates[i].date) >= 0) {
@@ -189,7 +207,10 @@ public class PayRateTableE14Calculations {
      * @return the date of the active pay rate table
      */
     public LocalDate getActivePayRateTableDateWithAAndB(LocalDate chosenDate) {
-        return determinePayRateTableBasedOnChosenDate(chosenDate, payRateTablesWith1AAnd1B).date;
+        if (determinePayRateTableBasedOnChosenDate(chosenDate, payRateTablesWith1AAnd1B) == null) {
+            return null;
+        } else
+            return determinePayRateTableBasedOnChosenDate(chosenDate, payRateTablesWith1AAnd1B).date;
     }
 
     /**
@@ -199,7 +220,10 @@ public class PayRateTableE14Calculations {
      * @return the date of the active pay rate table
      */
     public LocalDate getActivePayRateTableDateWithoutAAndB(LocalDate chosenDate) {
-        return determinePayRateTableBasedOnChosenDate(chosenDate, payRateTablesWithout1AAnd1B).date;
+        if (determinePayRateTableBasedOnChosenDate(chosenDate, payRateTablesWithout1AAnd1B) == null) {
+            return null;
+        } else
+            return determinePayRateTableBasedOnChosenDate(chosenDate, payRateTablesWithout1AAnd1B).date;
     }
 
 

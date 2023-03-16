@@ -27,7 +27,7 @@ public class SalaryIncreaseHistoryManagerTest {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         BigDecimal num = new BigDecimal("420.20");
-        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),
+        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),num, num,
                 "test_comment", false);
         manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
         var recSalaryIncreaseHistory = manager.getSalaryIncreaseHistory(1).get(0);
@@ -36,6 +36,8 @@ public class SalaryIncreaseHistoryManagerTest {
         assertEquals(salaryIncreaseHistory.getStart_date(), recSalaryIncreaseHistory.getStart_date());
         assertEquals(salaryIncreaseHistory.getComment(), recSalaryIncreaseHistory.getComment());
         assertEquals(salaryIncreaseHistory.getIs_additional_payment(), recSalaryIncreaseHistory.getIs_additional_payment());
+        assertEquals(salaryIncreaseHistory.getPercentIncreaseValue(), recSalaryIncreaseHistory.getPercentIncreaseValue());
+        assertEquals(salaryIncreaseHistory.getAbsoluteIncreaseValue(), recSalaryIncreaseHistory.getAbsoluteIncreaseValue());
     }
 
     @Test
@@ -49,7 +51,7 @@ public class SalaryIncreaseHistoryManagerTest {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         BigDecimal num = new BigDecimal("420.20");
-        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),
+        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),num, num,
                 "test_comment", false);
         manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
         assertEquals(manager.getSalaryIncreaseHistory(2).size(), 0);
@@ -66,7 +68,7 @@ public class SalaryIncreaseHistoryManagerTest {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         BigDecimal num = new BigDecimal("420.20");
-        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),
+        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),num, num,
                 "test_comment", false);
         manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
         var recSalaryIncreaseHistory = manager.getSalaryIncreaseHistoryByDate(1, calendar.getTime()).get(0);
@@ -75,6 +77,8 @@ public class SalaryIncreaseHistoryManagerTest {
         assertEquals(salaryIncreaseHistory.getStart_date(), recSalaryIncreaseHistory.getStart_date());
         assertEquals(salaryIncreaseHistory.getComment(), recSalaryIncreaseHistory.getComment());
         assertEquals(salaryIncreaseHistory.getIs_additional_payment(), recSalaryIncreaseHistory.getIs_additional_payment());
+        assertEquals(salaryIncreaseHistory.getPercentIncreaseValue(), recSalaryIncreaseHistory.getPercentIncreaseValue());
+        assertEquals(salaryIncreaseHistory.getAbsoluteIncreaseValue(), recSalaryIncreaseHistory.getAbsoluteIncreaseValue());
     }
 
     @Test
@@ -88,7 +92,7 @@ public class SalaryIncreaseHistoryManagerTest {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         BigDecimal num = new BigDecimal("420.20");
-        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),
+        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),num, num,
                 "test_comment", false);
         manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
         assertEquals(manager.getSalaryIncreaseHistoryByDate(2, calendar.getTime()).size(), 0);
@@ -105,7 +109,7 @@ public class SalaryIncreaseHistoryManagerTest {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         BigDecimal num = new BigDecimal("420.20");
-        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),
+        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),num, num,
                 "test_comment", false);
         manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
         manager.removeSalaryIncreaseHistory(1, calendar.getTime());
@@ -123,7 +127,7 @@ public class SalaryIncreaseHistoryManagerTest {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         BigDecimal num = new BigDecimal("420.20");
-        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),
+        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),num, num,
                 "test_comment", false);
         manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
         manager.removeSalaryIncreaseHistory(2, calendar.getTime());
@@ -143,7 +147,7 @@ public class SalaryIncreaseHistoryManagerTest {
 
         for (int i = 0; i < 10; i++){
             BigDecimal num = new BigDecimal("420.20");
-            var salaryIncreaseHistory = new SalaryIncreaseHistory(i, num, calendar.getTime(),
+            var salaryIncreaseHistory = new SalaryIncreaseHistory(i, num, calendar.getTime(),num, num,
                     "test_comment", false);
             manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
             salaryIncreaseHistories[i] = salaryIncreaseHistory;
@@ -157,6 +161,8 @@ public class SalaryIncreaseHistoryManagerTest {
             assertEquals(salaryIncreaseHistories[i].getStart_date(), recSalaryIncreaseHistories.get(i).getStart_date());
             assertEquals(salaryIncreaseHistories[i].getComment(), recSalaryIncreaseHistories.get(i).getComment());
             assertEquals(salaryIncreaseHistories[i].getIs_additional_payment(), recSalaryIncreaseHistories.get(i).getIs_additional_payment());
+            assertEquals(salaryIncreaseHistories[i].getPercentIncreaseValue(), recSalaryIncreaseHistories.get(i).getPercentIncreaseValue());
+            assertEquals(salaryIncreaseHistories[i].getAbsoluteIncreaseValue(), recSalaryIncreaseHistories.get(i).getAbsoluteIncreaseValue());
         }
     }
 
@@ -172,7 +178,7 @@ public class SalaryIncreaseHistoryManagerTest {
 
         for (int i = 0; i < 10; i++){
             BigDecimal num = new BigDecimal("420.20");
-            var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),
+            var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),num, num,
                     "test_comment", false);
             manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
         }

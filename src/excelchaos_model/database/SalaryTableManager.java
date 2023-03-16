@@ -14,12 +14,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  Facilitates database integration for SalaryTable
+ */
+
 public class SalaryTableManager {
     private ConnectionSource connectionSource;
     private Dao<SalaryTable, Object> salaryTablesDao;
 
     private static String databaseURL;
 
+
+    /**
+     * Creates database connection and DAO
+     */
 
     public SalaryTableManager() {
         try {
@@ -32,6 +40,10 @@ public class SalaryTableManager {
         }
     }
 
+    /**
+     * Creates table in the database
+     */
+
     public void createTable() {
         try {
             TableUtils.createTable(connectionSource, SalaryTable.class);
@@ -40,6 +52,10 @@ public class SalaryTableManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Deletes table from the database
+     */
 
     public void deleteTable() {
         try {
@@ -50,6 +66,11 @@ public class SalaryTableManager {
         }
     }
 
+    /**
+     * Adds SalaryTable to the database
+     * @param salaryTable SalaryTable to be added
+     */
+
     public void addSalaryTable(SalaryTable salaryTable) {
         try {
             salaryTablesDao.create(salaryTable);
@@ -58,6 +79,11 @@ public class SalaryTableManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Returns list of all SalaryTables in the database
+     * @return list of all SalaryTables
+     */
 
     public List<SalaryTable> getAllSalaryTables() {
         List<SalaryTable> salaryTableList = null;
@@ -69,6 +95,12 @@ public class SalaryTableManager {
         }
         return salaryTableList;
     }
+
+    /**
+     * Returns SalaryTable with a specified table name
+     * @param tableName table name of the SalaryTable
+     * @return SalaryTable with specified name
+     */
 
     public List<SalaryTable> getSalaryTable(String tableName) {
         List<SalaryTable> salaryTables = new ArrayList<>();
@@ -83,6 +115,12 @@ public class SalaryTableManager {
         }
         return salaryTables;
     }
+
+    /**
+     * Returns list of all distinct table names for a given paygrade
+     * @param paygrade payrade
+     * @return list of all distinct table names for given paygrade
+     */
 
     public List<String> getDistinctTableNames(String paygrade) {
         List<SalaryTable> salaryTables = new ArrayList<>();
@@ -103,10 +141,20 @@ public class SalaryTableManager {
         return tableNames;
     }
 
+    /**
+     * Returns total number of tables with specified paygrade in the table
+     * @param paygrade paygrade
+     * @return number of tables
+     */
+
     public int getNumOfTables(String paygrade) {
         List<String> tableNames = getDistinctTableNames(paygrade);
         return tableNames.size();
     }
+
+    /**
+     * Removes all tables from the database
+     */
 
     public void removeAllTables() {
         try {
@@ -116,6 +164,11 @@ public class SalaryTableManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Removes all tables with specified table name from database
+     * @param tableName name of the table
+     */
 
     public void removeSalaryTable(String tableName) {
         try {

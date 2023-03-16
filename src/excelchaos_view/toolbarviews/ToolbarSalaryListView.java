@@ -35,6 +35,7 @@ public class ToolbarSalaryListView extends SearchPanelToolbar {
 
         add(editEntry);
         editEntry.setEnabled(false);
+        increaseSalary.setEnabled(false);
         removeAdditionalSalaryStage.setEnabled(false);
 
         add(increaseSalary);

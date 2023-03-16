@@ -41,7 +41,7 @@ public class ShowPayRateTableController implements ActionListener {
             "E14 St. 4 VBL-befreit", "E14 St. 4 VBL-pflichtig", "E14 St. 5 VBL-befreit", "E14 St. 5 VBL-pflichtig", "E14 St. 6 VBL-befreit", "E14 St. 6 VBL-pflichtig"
     };
 
-    public ShowPayRateTableController(MainFrameController mainFrameController, String tableName, String actualPaygrade,PayRateTablesController payRateTablesController) {
+    public ShowPayRateTableController(MainFrameController mainFrameController, String tableName, String actualPaygrade, PayRateTablesController payRateTablesController) {
         this.mainFrameController = mainFrameController;
         this.payRateTablesController = payRateTablesController;
         payRateTablesDataAccess = new PayRateTablesDataAccess();
@@ -89,26 +89,26 @@ public class ShowPayRateTableController implements ActionListener {
 
     }
 
-    private BigDecimal[][] prepareDatabaseInsertion(){
+    private BigDecimal[][] prepareDatabaseInsertion() {
         BigDecimal[][] values = new BigDecimal[showPayRateTableView.getShowPayRatesTable().getRowCount()][showPayRateTableView.getShowPayRatesTable().getColumnCount()];
-        for (int row = 0; row < showPayRateTableView.getShowPayRatesTable().getRowCount(); row++){
+        for (int row = 0; row < showPayRateTableView.getShowPayRatesTable().getRowCount(); row++) {
             for (int column = 0; column < showPayRateTableView.getShowPayRatesTable().getColumnCount(); column++) {
-                if(showPayRateTableView.getShowPayRatesTable().getValueAt(row,column) == null){
+                if (showPayRateTableView.getShowPayRatesTable().getValueAt(row, column) == null) {
                     values[row][column] = new BigDecimal(0);
                 } else {
-                    values[row][column] = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String) showPayRateTableView.getShowPayRatesTable().getValueAt(row,column));
+                    values[row][column] = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency((String) showPayRateTableView.getShowPayRatesTable().getValueAt(row, column));
                 }
             }
         }
         return values;
     }
 
-    private void saveEditedValues(){
+    private void saveEditedValues() {
         BigDecimal[][] values = prepareDatabaseInsertion();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String tableName = showPayRateTableView.getTfNameOfTable().getText() + "_" +showPayRateTableView.getDatePicker().getDate().format(dateTimeFormatter);
+        String tableName = showPayRateTableView.getTfNameOfTable().getText() + "_" + showPayRateTableView.getDatePicker().getDate().format(dateTimeFormatter);
         int border = showPayRateTableView.getShowPayRatesTable().getColumnCount() - 1;
-        payRateTablesDataInserter.updateSalaryTable(values,tableTitle,tableName,border);
+        payRateTablesDataInserter.updateSalaryTable(values, tableTitle, tableName, border);
 
 
     }

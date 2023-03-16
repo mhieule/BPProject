@@ -53,7 +53,7 @@ public class ShowPersonController implements ActionListener, TableModelListener 
     public void updateData() {
         showPersonView.updateTable(employeeDataModel.getEmployeeDataFromDataBase());
         showPersonView.getTable().getModel().addTableModelListener(this);
-        SearchAndFilterModel.setUpSearchAndFilterModel(showPersonView.getTable(),toolbar);
+        SearchAndFilterModel.setUpSearchAndFilterModel(showPersonView.getTable(), toolbar);
         toolbar.getEditPerson().setEnabled(false);
         toolbar.getDeletePerson().setEnabled(false);
     }

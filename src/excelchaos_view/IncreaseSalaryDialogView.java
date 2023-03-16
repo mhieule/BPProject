@@ -3,293 +3,294 @@ package excelchaos_view;
 import com.github.lgooddatepicker.components.DatePicker;
 import excelchaos_model.database.ContractDataManager;
 import excelchaos_model.database.EmployeeDataManager;
-import excelchaos_model.constants.IncreaseSalaryOption;
-import excelchaos_view.components.CustomTable;
-
-import static excelchaos_model.constants.IncreaseSalaryOption.*;
+import excelchaos_model.inputVerifier.SalaryIncreasePercentageVerifier;
+import excelchaos_model.inputVerifier.SalaryVerifier;
+import excelchaos_model.utility.StringAndBigDecimalFormatter;
+import excelchaos_model.utility.TableColumnAdjuster;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class IncreaseSalaryDialogView extends JDialog {
-
-    private EmployeeDataManager employeeDataManager= new EmployeeDataManager();
-    private ContractDataManager contractDataManager= new ContractDataManager();
-    private JButton okayButton;
-    private JButton closeButton;
-
-
-   // private JButton projectButton;
-    private JPanel buttonPanel;
-    private JPanel buttonWestPanel;
-    private JPanel buttonEastPanel;
-    private JPanel contentPanel, contentNorthPanel;
-    private CustomTable table;
-
-    private JRadioButton absoluteRadioButton;
-    private JRadioButton relativeRadioButton;
-    private JRadioButton mixedRadioButton;
+    private JPanel mainPanel, tablePanel, inputPanel,increaseTypePanel, increaseOptionPanel,increaseOptionButtonPanel,increaseOptionTextFieldPanel,datePanel,commentPanel, buttonPanel, westButtonPanel, eastButtonPanel;
+    private JTable salaryTable;
+    private JLabel percentLabel,euroLabel;
+    private JButton saveAndExitButton, projectButton, cancelButton;
     private ButtonGroup optionRadioButtonGroup, increaseOptionRadioButtonGroup;
-
-    private JTextField textFieldAbsolute;
-    private JTextField textFieldRelative;
-    private JTextField textFieldComment;
-    private Box payMixedOptionPanel;
-    private JTextField mixedAbsolute, mixedRelative;
-    private JRadioButton mixedMinRadioButton, mixedMaxRadioButton;
-    private ButtonGroup mixedOptionRadioButtonGroup;
-    private JLabel currentSalary, currentBonus, dateQuery, commentQuery, increaseTypeQuery,increaseOptionQuery;
     private JRadioButton salaryIncreaseRadioButton, bonusRadioButton;
+    private JRadioButton absoluteRadioButton, relativeRadioButton, mixedRadioButton;
+    private JTextField absoluteTextField,relativeTextField,commentTextField;
+
+    private Border loweretched;
+    private TitledBorder inputPanelBorder, increaseTypeBorder,increaseOptionBorder,dateBorder,commentBorder;
 
     private DatePicker startDate;
+    private ArrayList<Integer> employeeIDList;
+    private String[] columns = {"Name", "Gehaltskosten", "Sonderzahlung", "Gehaltkosten am Startdatum", "Erhöhte Gehaltskosten","Differenz"};
 
-    public void init(String name){
+    private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+    private ContractDataManager contractDataManager = new ContractDataManager();
 
-        this.table= new CustomTable(null);
 
-        //set some basic properties of the increase salary dialog view
+    public void init(ArrayList<Integer> employeeIDList){
+        this.employeeIDList = employeeIDList;
+
         setLayout(new BorderLayout());
-        setTitle("Gehaltserhöhung "+name);
-
-        //initialize the buttons
-       // projectButton = new JButton("Projizieren");
-        okayButton = new JButton("OK");
-        closeButton = new JButton("Abbrechen");
-
-        //evtl eine eigene Modelle Klasse/Methode
-
-        currentSalary = new JLabel("");
-        currentBonus = new JLabel("");
-        dateQuery = new JLabel("3. Wählen Sie eine Startdatum: ");
-        commentQuery = new JLabel("4. Kommentar");
-        increaseTypeQuery = new JLabel("1. Erhöhungstyp?");
-        increaseOptionQuery = new JLabel("2. Erhöhungsoption auswählen");
-        currentSalary.setText("Aktuelle Gehaltkosten: "+contractDataManager.getContract(employeeDataManager.getEmployeeByName(name).getId()).getRegular_cost()+" €");
-        currentBonus.setText("Aktuelle Sonderzahlung: "+contractDataManager.getContract(employeeDataManager.getEmployeeByName(name).getId()).getBonus_cost()+" €");
 
 
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+
+        tablePanel = new JPanel();
+
+        salaryTable = new JTable(getSalaryFromDB(),columns);
+        salaryTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        TableColumnAdjuster tca = new TableColumnAdjuster(salaryTable);
+        tca.adjustColumns();
+        JScrollPane salaryTableScrollPane = new JScrollPane(salaryTable);
+        salaryTableScrollPane.setPreferredSize(new Dimension(120+salaryTable.getPreferredSize().width/2,salaryTable.getRowHeight()*8));
+        tablePanel.add(salaryTableScrollPane);
+
+
+        loweretched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+        inputPanel = new JPanel();
+        inputPanelBorder = BorderFactory.createTitledBorder(loweretched,"Einstellungen",TitledBorder.CENTER,TitledBorder.ABOVE_TOP);
+        inputPanel.setBorder(inputPanelBorder);
+        inputPanel.setLayout(new BoxLayout(inputPanel,BoxLayout.Y_AXIS));
+
+        increaseTypePanel = new JPanel();
+        increaseTypePanel.setLayout(new FlowLayout());
+        increaseTypeBorder = BorderFactory.createTitledBorder(loweretched,"1. Erhöhungstyp (*)",TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
+        increaseTypePanel.setBorder(increaseTypeBorder);
         salaryIncreaseRadioButton = new JRadioButton("Normale Gehaltserhöhung");
+        salaryIncreaseRadioButton.setSelected(true);
         bonusRadioButton = new JRadioButton("Sonderzahlung");
-        increaseOptionRadioButtonGroup = new ButtonGroup();  increaseOptionRadioButtonGroup.add(salaryIncreaseRadioButton); increaseOptionRadioButtonGroup.add(bonusRadioButton);
-        textFieldComment = new JTextField();
+        increaseOptionRadioButtonGroup = new ButtonGroup();
+        increaseOptionRadioButtonGroup.add(salaryIncreaseRadioButton);
+        increaseOptionRadioButtonGroup.add(bonusRadioButton);
+
+        increaseTypePanel.add(salaryIncreaseRadioButton);
+        increaseTypePanel.add(bonusRadioButton);
+
+        increaseOptionPanel = new JPanel();
+        increaseOptionPanel.setLayout(new GridLayout(2,1));
+        increaseOptionBorder = BorderFactory.createTitledBorder(loweretched,"2. Erhöhungsoption (*)",TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
+        increaseOptionPanel.setBorder(increaseOptionBorder);
+
+        increaseOptionButtonPanel = new JPanel();
+        increaseOptionButtonPanel.setLayout(new FlowLayout());
+        absoluteRadioButton = new JRadioButton("Option 1: Absolut in €");
+        relativeRadioButton = new JRadioButton("Option 2: Relativ in %");
+        relativeRadioButton.setSelected(true);
+        mixedRadioButton = new JRadioButton("Option 3: Gemischt");
+        optionRadioButtonGroup = new ButtonGroup();
+        optionRadioButtonGroup.add(absoluteRadioButton);
+        optionRadioButtonGroup.add(relativeRadioButton);
+        optionRadioButtonGroup.add(mixedRadioButton);
+        increaseOptionButtonPanel.add(absoluteRadioButton);
+        increaseOptionButtonPanel.add(relativeRadioButton);
+        increaseOptionButtonPanel.add(mixedRadioButton);
+
+
+        increaseOptionTextFieldPanel = new JPanel();
+        increaseOptionTextFieldPanel.setLayout(new FlowLayout());
+        absoluteTextField = new JTextField();
+        absoluteTextField.setInputVerifier(new SalaryVerifier());
+        absoluteTextField.setPreferredSize(new Dimension(80,20));
+        absoluteTextField.setEnabled(false);
+        absoluteTextField.setBackground(Color.LIGHT_GRAY);
+        relativeTextField = new JTextField();
+        relativeTextField.setInputVerifier(new SalaryIncreasePercentageVerifier());
+        relativeTextField.setPreferredSize(new Dimension(80,20));
+        percentLabel = new JLabel("Prozentzahl:");
+        euroLabel = new JLabel("Betrag:");
+
+        increaseOptionTextFieldPanel.add(euroLabel);
+        increaseOptionTextFieldPanel.add(absoluteTextField);
+        increaseOptionTextFieldPanel.add(Box.createHorizontalStrut(10));
+        increaseOptionTextFieldPanel.add(percentLabel);
+        increaseOptionTextFieldPanel.add(relativeTextField);
+
+        increaseOptionPanel.add(increaseOptionButtonPanel);
+        increaseOptionPanel.add(increaseOptionTextFieldPanel);
+
+        datePanel = new JPanel();
+        dateBorder = BorderFactory.createTitledBorder(loweretched,"3. Startdatum (*)",TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
+        datePanel.setBorder(dateBorder);
         startDate = new DatePicker();
-        //startDate.setPreferredSize(new Dimension(100,20));
-
-        //initialize components for the south content panel (for the radiobuttons)
-        absoluteRadioButton =new JRadioButton("Option 1: Absolut in €");
-        relativeRadioButton =new JRadioButton("Option 2: Relativ in %");
-        mixedRadioButton =new JRadioButton("Option 3: Gemischt");
-        optionRadioButtonGroup = new ButtonGroup(); optionRadioButtonGroup.add(absoluteRadioButton); optionRadioButtonGroup.add(relativeRadioButton); optionRadioButtonGroup.add(mixedRadioButton);
-        textFieldAbsolute = new JTextField(); textFieldAbsolute.setVisible(false);
-        textFieldRelative = new JTextField(); textFieldRelative.setVisible(false);
-        mixedAbsolute = new JTextField();
-        mixedRelative = new JTextField();
-        mixedMinRadioButton = new JRadioButton("Minimum aus den beiden");
-        mixedMaxRadioButton = new JRadioButton("Maximum aus den beiden");
-        mixedOptionRadioButtonGroup = new ButtonGroup();
-        mixedOptionRadioButtonGroup.add(mixedMinRadioButton); mixedOptionRadioButtonGroup.add(mixedMaxRadioButton);
-
-        payMixedOptionPanel = Box.createVerticalBox();
-        payMixedOptionPanel.add(new JLabel("Absolut in €:"));
-        payMixedOptionPanel.add(mixedAbsolute);
-        payMixedOptionPanel.add(new JLabel("oder relativ in %"));
-        payMixedOptionPanel.add(mixedRelative);
-        payMixedOptionPanel.add(mixedMinRadioButton); payMixedOptionPanel.add(mixedMaxRadioButton);
-        payMixedOptionPanel.setVisible(false);
-        payMixedOptionPanel.setBorder(BorderFactory.createEmptyBorder(10,30,10,30));
-
-
-        //initialize, set some properties and components for the panels
-        contentPanel = new JPanel(new BorderLayout());
-        Border margin = BorderFactory.createEmptyBorder(10, 30, 10, 30);
-        contentPanel.setBorder(margin);
-        contentNorthPanel = new JPanel();
-        contentNorthPanel.setLayout(new BoxLayout(contentNorthPanel, 1));
-        contentNorthPanel.add(currentSalary);
-        contentNorthPanel.add(currentBonus);
-        contentNorthPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        contentNorthPanel.add(increaseTypeQuery);
-        contentNorthPanel.add(salaryIncreaseRadioButton);
-        contentNorthPanel.add(bonusRadioButton);
-        contentNorthPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-
-        JPanel datePanel=new JPanel();
         datePanel.add(startDate);
 
-        contentNorthPanel.add(increaseOptionQuery);
-        contentNorthPanel.add(absoluteRadioButton);
-        contentNorthPanel.add(textFieldAbsolute);
-        contentNorthPanel.add(relativeRadioButton);
-        contentNorthPanel.add(textFieldRelative);
-        contentNorthPanel.add(mixedRadioButton);
-        contentNorthPanel.add(payMixedOptionPanel);
-        contentNorthPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        contentNorthPanel.add(dateQuery);
-        contentNorthPanel.add(datePanel);
-        contentNorthPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        contentNorthPanel.add(commentQuery);
-        contentNorthPanel.add(textFieldComment);
+        commentPanel = new JPanel();
+        commentBorder = BorderFactory.createTitledBorder(loweretched,"4. Kommentar",TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
+        commentPanel.setBorder(commentBorder);
+        commentTextField = new JTextField();
+        commentTextField.setPreferredSize(new Dimension(350,25));
+        commentPanel.add(commentTextField);
 
-
-        contentPanel.add(contentNorthPanel, BorderLayout.CENTER);
-        //contentPanel.add(contentNorthPanel, BorderLayout.SOUTH);
+        inputPanel.add(increaseTypePanel);
+        inputPanel.add(increaseOptionPanel);
+        inputPanel.add(datePanel);
+        inputPanel.add(commentPanel);
 
         buttonPanel = new JPanel(new BorderLayout());
-        buttonWestPanel = new JPanel(new FlowLayout());
-        buttonEastPanel = new JPanel(new FlowLayout());
-       // buttonWestPanel.add(projectButton);
-        buttonWestPanel.add(okayButton);
-        buttonEastPanel.add(closeButton);
-        buttonPanel.add(buttonWestPanel, BorderLayout.WEST);
-        buttonPanel.add(buttonEastPanel, BorderLayout.EAST);
+        westButtonPanel = new JPanel(new FlowLayout());
+        eastButtonPanel = new JPanel(new FlowLayout());
 
-        //add the panel to the dialog
-        //add(instructionLabel, BorderLayout.NORTH);
-        //add(new JSeparator(),BorderLayout.CENTER);
-        add(contentPanel, BorderLayout.NORTH);
-        add(buttonPanel, BorderLayout.SOUTH);
+        saveAndExitButton = new JButton("Auswahl bestätigen");
+        cancelButton = new JButton("Abbrechen");
+        projectButton = new JButton("Projizieren");
 
-        //set properties for the dialog
-        setLocation(100,300);
-        //setLocationRelativeTo(getParent());
+        westButtonPanel.add(saveAndExitButton);
+        westButtonPanel.add(projectButton);
+        eastButtonPanel.add(cancelButton);
+        buttonPanel.add(westButtonPanel,BorderLayout.WEST);
+        buttonPanel.add(eastButtonPanel,BorderLayout.EAST);
+
+        mainPanel.add(tablePanel,BorderLayout.NORTH);
+        mainPanel.add(inputPanel,BorderLayout.CENTER);
+
+        add(mainPanel);
+        add(buttonPanel,BorderLayout.SOUTH);
+
+
+
+        pack();
+        setResizable(false);
+        setLocationRelativeTo(null);
         setAlwaysOnTop(true);
-        setResizable(true);
+        setTitle("Gehaltserhöhung");
         setVisible(true);
-        setSize(800,650);
 
-        addProjectionColumn();
     }
 
-    public void addProjectionColumn(){
-        //this.table.addColumn(new TableColumn());
-        //TableColumn projectedColumn = this.table.getColumnModel().getColumn(table.getColumnCount()-1);
-        //projectedColumn.setHeaderValue("Erhöhte Gehalt");
+    private String[][] getSalaryFromDB() {
+        String[][] salaryTableData = new String[employeeIDList.size()][];
+        int currentIndex = 0;
+        for (Integer ID : employeeIDList) {
+            String employeeName = employeeDataManager.getEmployee(ID).getName() + " " + employeeDataManager.getEmployee(ID).getSurname();
+            String currentSalary = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contractDataManager.getContract(ID).getRegular_cost());
+            String currentBonus = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contractDataManager.getContract(ID).getBonus_cost());
+            String salaryOnIncreaseDate = "";
+            String increasedSalary = "";
+            String salaryDifference = "";
+
+            String[] values = {employeeName, currentSalary, currentBonus, salaryOnIncreaseDate, increasedSalary,salaryDifference};
+            salaryTableData[currentIndex] = values;
+            currentIndex++;
+        }
+        return salaryTableData;
+
     }
+
+    public void setProjectionView(BigDecimal[] before, BigDecimal[] after) {
+
+        for (int row = 0; row < salaryTable.getRowCount(); row++) {
+           salaryTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(before[row]), row, 3);
+           salaryTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(after[row]), row, 4);
+           salaryTable.setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(after[row].subtract(before[row])),row,5);
+        }
+        salaryTable.revalidate();
+        salaryTable.repaint();
+    }
+
+    public void setAbsoluteRadioButtonSelected(){
+        absoluteTextField.setBackground(Color.WHITE);
+        absoluteTextField.setEnabled(true);
+        relativeTextField.setText(null);
+        relativeTextField.setEnabled(false);
+        relativeTextField.setBackground(Color.LIGHT_GRAY);
+        revalidate();
+        repaint();
+    }
+
+    public void setRelativeRadioButtonSelected(){
+        relativeTextField.setBackground(Color.WHITE);
+        relativeTextField.setEnabled(true);
+        absoluteTextField.setText(null);
+        absoluteTextField.setEnabled(false);
+        absoluteTextField.setBackground(Color.LIGHT_GRAY);
+        revalidate();
+        repaint();
+    }
+
+    public void setMixedRadioButtonSelected(){
+        relativeTextField.setText(null);
+        absoluteTextField.setText(null);
+        relativeTextField.setBackground(Color.WHITE);
+        relativeTextField.setEnabled(true);
+        absoluteTextField.setBackground(Color.WHITE);
+        absoluteTextField.setEnabled(true);
+        revalidate();
+        repaint();
+    }
+
+
 
     public void setActionListener(ActionListener l){
-        okayButton.addActionListener(l);
-        closeButton.addActionListener(l);
-       // projectButton.addActionListener(l);
+        saveAndExitButton.addActionListener(l);
+        cancelButton.addActionListener(l);
+        projectButton.addActionListener(l);
         absoluteRadioButton.addActionListener(l);
         relativeRadioButton.addActionListener(l);
         mixedRadioButton.addActionListener(l);
     }
 
-    public void setProjectionColumnInvisible(){
-        if(getCurrentTable().getColumnCount()==8) {
-            getCurrentTable().getColumnModel().getColumn(7).setMinWidth(0);
-            getCurrentTable().getColumnModel().getColumn(7).setMaxWidth(0);
-            getCurrentTable().getColumnModel().getColumn(7).setPreferredWidth(0);
-            getCurrentTable().doLayout();
-        }
+    public JButton getCancelButton() {
+        return cancelButton;
     }
 
-    public void setProjectionColumnVisible(){
-        if(getCurrentTable().getColumnCount()==8) {
-            getCurrentTable().getColumnModel().getColumn(7).setMinWidth(100);
-            getCurrentTable().getColumnModel().getColumn(7).setMaxWidth(100000);
-            getCurrentTable().getColumnModel().getColumn(7).setPreferredWidth(100);
-            getCurrentTable().doLayout();
-        }
+    public JButton getProjectButton() {
+        return projectButton;
     }
 
-    public void setProjectionView(IncreaseSalaryOption type){
-        setProjectionColumnVisible();
-        for(int i=0; i<table.getRowCount();i++) {
-            double currentSalary = Double.parseDouble(String.valueOf(table.getValueAt(i, 5)));
-            double finalSalary = 0;
-            if (type == ABSOLUTE) {
-                finalSalary = currentSalary+Double.parseDouble(textFieldAbsolute.getText());
-            } else if (type == RELATIVE) {
-                finalSalary = currentSalary+Double.parseDouble(textFieldRelative.getText())*currentSalary/100;
-            } else {
-                double finalAbsoluteSalary = currentSalary + Double.parseDouble(mixedAbsolute.getText());
-                double finalRelativeSalary = currentSalary + Double.parseDouble(mixedRelative.getText()) * currentSalary / 100;
-                if (type == MIXED_MIN) {
-                    finalSalary = Math.min(finalAbsoluteSalary, finalRelativeSalary);
-                } else if (type == MIXED_MAX) {
-                    finalSalary = Math.max(finalAbsoluteSalary, finalRelativeSalary);
-                }
-            }
-            table.setValueAt(finalSalary, i, 7);
-        }
-        table.doLayout();
+    public JButton getSaveAndExitButton() {
+        return saveAndExitButton;
     }
 
-    public void setAbsoluteView(){
-        textFieldAbsolute.setVisible(true);
-        textFieldRelative.setVisible(false);
-        payMixedOptionPanel.setVisible(false);
-        revalidate();
-        //setProjectionColumnInvisible();
+    public JRadioButton getAbsoluteRadioButton() {
+        return absoluteRadioButton;
     }
 
-    public void setRelativeView(){
-        textFieldAbsolute.setVisible(false);
-        textFieldRelative.setVisible(true);
-        payMixedOptionPanel.setVisible(false);
-        revalidate();
-        //setProjectionColumnInvisible();
+    public DatePicker getStartDate() {
+        return startDate;
     }
 
-    public void setMixedView(){
-        textFieldAbsolute.setVisible(false);
-        textFieldRelative.setVisible(false);
-        payMixedOptionPanel.setVisible(true);
-        revalidate();
-        //setProjectionColumnInvisible();
+    public JTextField getAbsoluteTextField() {
+        return absoluteTextField;
     }
 
-    public void noIncreaseTypeSelected(){
-        JDialog dialog = new JDialog();
-        dialog.add(new JLabel("Keine Erhöhungstyp ausgewählt !"));
-        dialog.setSize(new Dimension(250,100));
-        dialog.setVisible(true);
+    public JTextField getCommentTextField() {
+        return commentTextField;
     }
 
-    public void noIncreaseOptionSelected() {
-        JDialog dialog = new JDialog();
-        dialog.add(new JLabel("Keine Erhöhungsoption ausgewählt !"));
-        dialog.setSize(new Dimension(300,100));
-        dialog.setVisible(true);
+    public JTextField getRelativeTextField() {
+        return relativeTextField;
     }
 
-    public void noMinMaxSelected() {
-        JDialog dialog = new JDialog();
-        dialog.add(new JLabel("Sie haben gemischte Option ausgewählt, bitte Minimum oder Maximum auswählen"));
-        dialog.setSize(new Dimension(500,100));
-        dialog.setVisible(true);
+    public JRadioButton getBonusRadioButton() {
+        return bonusRadioButton;
     }
 
-    public JButton getCloseButton() {
-        return closeButton;
+    public JRadioButton getMixedRadioButton() {
+        return mixedRadioButton;
     }
-    public JButton getOkayButton() {
-        return okayButton;
+
+    public JRadioButton getRelativeRadioButton() {
+        return relativeRadioButton;
     }
-    /*public JButton getProjectButton(){return projectButton;}*/
-    public CustomTable getCurrentTable(){return table;}
-    public JRadioButton getAbsoluteRadioButton(){return absoluteRadioButton;}
-    public JTextField getTextFieldAbsolute() {return textFieldAbsolute;}
-    public JTextField getTextFieldRelative() {return textFieldRelative;}
-    public Box getPayMixedOptionPanel() {return payMixedOptionPanel;}
-    public JRadioButton getRelativeRadioButton(){return relativeRadioButton;}
-    public JRadioButton getMixedRadioButton(){return mixedRadioButton;}
 
-    public JRadioButton getMixedMinRadioButton() {return mixedMinRadioButton;}
+    public JRadioButton getSalaryIncreaseRadioButton() {
+        return salaryIncreaseRadioButton;
+    }
 
-    public JRadioButton getMixedMaxRadioButton() {return mixedMaxRadioButton;}
+    public JTable getSalaryTable() {
+        return salaryTable;
+    }
 
-    public JRadioButton getSalaryIncreaseRadioButton(){return salaryIncreaseRadioButton;}
-
-    public JRadioButton getBonusRadioButton() {return bonusRadioButton;}
-    public DatePicker getStartDate(){return startDate;}
-
-    public JTextField getMixedAbsolute() {return mixedAbsolute;}
-
-    public JTextField getMixedRelative() {return mixedRelative;}
-
-    public JTextField getTextFieldComment() {return textFieldComment;}
 }

@@ -11,6 +11,9 @@ import excelchaos_model.database.Project;
 
 import java.sql.SQLException;
 import java.util.List;
+/**
+ *  Facilitates database integration for Project
+ */
 
 public class ProjectManager {
     private ConnectionSource connectionSource;
@@ -18,6 +21,10 @@ public class ProjectManager {
 
     private static String databaseURL;
 
+
+    /**
+     * Creates database connection and DAO
+     */
 
     public ProjectManager() {
         try {
@@ -30,6 +37,10 @@ public class ProjectManager {
         }
     }
 
+    /**
+     * Creates table in the database
+     */
+
     public void createTable() {
         try {
             TableUtils.createTable(connectionSource, Project.class);
@@ -38,6 +49,10 @@ public class ProjectManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Deletes table from the database
+     */
 
     public void deleteTable() {
         try {
@@ -48,6 +63,11 @@ public class ProjectManager {
         }
     }
 
+    /**
+     * Adds Project to the table
+     * @param project project to added
+     */
+
     public void addProject(Project project) {
         try {
             projectDao.create(project);
@@ -56,6 +76,12 @@ public class ProjectManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Returns Project with specified id
+     * @param id id of the project
+     * @return Project with specified id
+     */
 
     public Project getProject(int id) {
         Project project = null;
@@ -68,6 +94,11 @@ public class ProjectManager {
         return project;
     }
 
+    /**
+     * Returns list of all Projects in the database
+     * @return list of all projects
+     */
+
     public List<Project> getAllProjects() {
         List<Project> projects = null;
         try {
@@ -78,6 +109,11 @@ public class ProjectManager {
         }
         return projects;
     }
+
+    /**
+     * Removes project with specified id
+     * @param id id of project to be removed
+     */
 
     public void removeProject(int id) {
         try {
@@ -90,6 +126,10 @@ public class ProjectManager {
         }
     }
 
+    /**
+     * Removes all Projects from the databse
+     */
+
     public void removeAllProjects() {
         try {
             TableUtils.clearTable(connectionSource, Project.class);
@@ -99,6 +139,11 @@ public class ProjectManager {
         }
     }
 
+    /**
+     * Updates Project in the database
+     * @param project Project to be updated
+     */
+
     public void updateProject(Project project) {
         try {
             projectDao.update(project);
@@ -107,6 +152,11 @@ public class ProjectManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Returns next available id
+     * @return next available id
+     */
 
     public int getNextID() {
         int id = 0;
@@ -125,6 +175,12 @@ public class ProjectManager {
         }
         return id;
     }
+
+
+    /**
+     * Returns total row count of the table
+     * @return row count
+     */
 
     public int getRowCount() {
         int rowCount = 0;
