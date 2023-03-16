@@ -39,6 +39,11 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
     private String nullColumns[] = {"Gültig ab", "Neue Gehaltkosten", "Absolute Erhöhung in €", "Relative Erhöhung in %", "Kommentar", "Sonderzahlung"};
     private String title = "Gehaltserhöhung";
 
+    /**
+     * Constructor for SalaryIncreaseController
+     *
+     * @param mainFrameController mainFrameController
+     */
     public SalaryIncreaseController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         salaryIncreaseView = new SalaryIncreaseView();
@@ -48,6 +53,11 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
         salaryIncreaseView.add(toolbarSalaryIncreaseController.getToolbar(), BorderLayout.NORTH);
     }
 
+    /**
+     * Displays salary increase view in main frame
+     *
+     * @param mainFrameController mainFrameController
+     */
     public void showManualSalaryEntryView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
             mainFrameController.addTab(title, salaryIncreaseView);
@@ -56,6 +66,11 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
         }
     }
 
+    /**
+     * Creates table with data
+     *
+     * @param data String[][] with data which fill table
+     */
     private void createTableWithData(String[][] data) {
         salaryIncreaseView.createTable(data, columns);
         salaryIncreaseView.getTable().getModel().addTableModelListener(this);
@@ -65,6 +80,11 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
         SearchAndFilterModel.setUpSearchAndFilterModel(salaryIncreaseView.getTable(), toolbarSalaryIncreaseController.getToolbar());
     }
 
+    /**
+     * Sets table data
+     *
+     * @param data String[][] with data which fill table
+     */
     public void setTableData(String[][] data) {
         customTableModel = new CustomTableModel(data, columns);
         salaryIncreaseView.getTable().setModel(customTableModel);
@@ -77,6 +97,9 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
         toolbarSalaryIncreaseController.getToolbar().getDeleteSalaryEntry().setEnabled(false);
     }
 
+    /**
+     * updates salary increase view
+     */
     public void update() {
         salaryIncreaseView.remove(toolbarSalaryIncreaseController.getToolbar());
         salaryIncreaseView.revalidate();
@@ -86,6 +109,12 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
         salaryIncreaseView.add(toolbarSalaryIncreaseController.getToolbar(), BorderLayout.NORTH);
     }
 
+    /**
+     * Returns salary increase view of given employee
+     *
+     * @param temporaryEmployee Employee whose data should be displayed
+     * @return String[][] with data from database
+     */
     public String[][] getDataFromDB(Employee temporaryEmployee) {
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         int id = temporaryEmployee.getId();
@@ -110,12 +139,14 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
             currentIndex++;
 
         }
-
         return resultData;
-
-
     }
 
+    /**
+     * deletes entries with given dates
+     *
+     * @param dates String[][] with dates which should be deleted
+     */
     public void deleteEntries(String[][] dates) {
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         Date date;
@@ -128,12 +159,16 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
                 throw new RuntimeException(e);
             }
             salaryIncreaseHistoryManager.removeSalaryIncreaseHistory(id, date);
-
         }
         setTableData(getDataFromDB(employeeDataManager.getEmployee(id)));
         frameController.getUpdater().salaryUpDate();
     }
 
+    /**
+     * Depending on the event e, the toolbar is updated
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -160,14 +195,18 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
             }
 
         }
-
-
     }
 
     public SalaryIncreaseView getSalaryIncreaseView() {
         return salaryIncreaseView;
     }
 
+    /**
+     * Depending on e, the toolbar is updated
+     *
+     * @param e a {@code TableModelEvent} to notify listener that a table model
+     *          has changed
+     */
     @Override
     public void tableChanged(TableModelEvent e) {
         int numberOfSelectedRows = salaryIncreaseView.getTable().getNumberOfSelectedRows();
