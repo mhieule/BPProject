@@ -34,6 +34,9 @@ public class IncreaseSalaryDialogController implements ActionListener {
     private SalaryTableLookUp salaryTableLookUp = new SalaryTableLookUp();
 
     private Date editedDate = null;
+
+    private SalaryIncreaseHistory editedEntry;
+
     /**
      * Constructor for  IncreaseSalaryDialogController
      *
@@ -61,7 +64,7 @@ public class IncreaseSalaryDialogController implements ActionListener {
         increaseSalaryDialogView.getSalaryTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(oldValue), 0, 3);
         increaseSalaryDialogView.getSalaryTable().setValueAt(data[1], 0, 4);
         increaseSalaryDialogView.getSalaryTable().setValueAt(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(difference), 0, 5);
-        data[2] = data[2].replaceAll("\\h"," ");
+        data[2] = data[2].replaceAll("\\h", " ");
         if (data[2].equals("0,00 €")) {
             increaseSalaryDialogView.getRelativeRadioButton().setSelected(true);
             increaseSalaryDialogView.getRelativeTextField().setText(data[3]);
@@ -80,11 +83,12 @@ public class IncreaseSalaryDialogController implements ActionListener {
             increaseSalaryDialogView.getRelativeTextField().setText(data[3]);
         }
         increaseSalaryDialogView.getCommentTextField().setText(data[4]);
-        if(data[5].equals("Ja")){
+        if (data[5].equals("Ja")) {
             increaseSalaryDialogView.getBonusRadioButton().setSelected(true);
         }
         editedDate = date;
-
+        editedEntry = salaryIncreaseHistoryManager.getSalaryIncreaseHistoryByDate(employeeIDList.get(0), date).get(0);
+        salaryIncreaseHistoryManager.removeSalaryIncreaseHistory(employeeIDList.get(0), date);
     }
 
     /**
@@ -233,10 +237,10 @@ public class IncreaseSalaryDialogController implements ActionListener {
             boolean isBonus = increaseSalaryDialogView.getBonusRadioButton().isSelected();
             String comment = increaseSalaryDialogView.getCommentTextField().getText();
             SalaryIncreaseHistory salaryIncreaseHistory = new SalaryIncreaseHistory(employeeIDList.get(i), finalSalary, startDate, absoluteIncreaseValue, percentageIncreaseValue, comment, isBonus);
-            if(editedDate == null){
+            if (editedDate == null) {
                 salaryIncreaseHistoryManager.addSalaryIncreaseHistory(salaryIncreaseHistory);
             } else {
-                salaryIncreaseHistoryManager.removeSalaryIncreaseHistory(employeeIDList.get(i),editedDate);
+                salaryIncreaseHistoryManager.removeSalaryIncreaseHistory(employeeIDList.get(i), editedDate);
                 salaryIncreaseHistoryManager.addSalaryIncreaseHistory(salaryIncreaseHistory);
             }
             SalaryIncreaseController salaryIncreaseController = frameController.getSalaryIncreaseController();
@@ -250,10 +254,12 @@ public class IncreaseSalaryDialogController implements ActionListener {
      *
      * @param e ActionEvent
      */
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == increaseSalaryDialogView.getCancelButton()) {
+            if (editedDate != null) {
+                salaryIncreaseHistoryManager.addSalaryIncreaseHistory(editedEntry);
+            }
             increaseSalaryDialogView.dispose();
         } else if (e.getSource() == increaseSalaryDialogView.getAbsoluteRadioButton()) {
             increaseSalaryDialogView.setAbsoluteRadioButtonSelected();
