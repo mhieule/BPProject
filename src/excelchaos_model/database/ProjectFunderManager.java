@@ -14,11 +14,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  Facilitates database integration for ProjectFunder
+ */
+
 public class ProjectFunderManager {
     private ConnectionSource connectionSource;
     private Dao<ProjectFunder, Integer> projectFunderDao;
 
     private static String databaseURL;
+
+    /**
+     * Creates database connection and DAO
+     */
 
     public ProjectFunderManager() {
         try {
@@ -31,6 +39,10 @@ public class ProjectFunderManager {
         }
     }
 
+    /**
+     * Creates table in the database
+     */
+
     public void createTable() {
         try {
             TableUtils.createTable(connectionSource, ProjectFunder.class);
@@ -39,6 +51,10 @@ public class ProjectFunderManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Deletes table from the database
+     */
 
     public void deleteTable() {
         try {
@@ -49,6 +65,10 @@ public class ProjectFunderManager {
         }
     }
 
+    /**
+     * Adds ProjectFunder to the database
+     * @param projectFunder ProjectFunder to be added to the database
+     */
     public void addProjectFunder(ProjectFunder projectFunder) {
         try {
             projectFunderDao.create(projectFunder);
@@ -57,6 +77,12 @@ public class ProjectFunderManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Returns ProjectFunder with specified id
+     * @param id id of the ProjectFunder
+     * @return ProjectFunder with specified id
+     */
 
     public ProjectFunder getProjectFunder(int id) {
         ProjectFunder projectFunder = null;
@@ -69,6 +95,11 @@ public class ProjectFunderManager {
         return projectFunder;
     }
 
+    /**
+     * Returns list of all ProjectFunders in the table
+     * @return list of all ProjectFunders
+     */
+
     public List<ProjectFunder> getAllProjectFunder() {
         List<ProjectFunder> projectFunders = null;
         try {
@@ -80,7 +111,11 @@ public class ProjectFunderManager {
         return projectFunders;
     }
 
-
+    /**
+     * Returns list of all ProjectFunders for specific project
+     * @param projectId ID of specified project
+     * @return List of all ProjectFunders for specified project
+     */
     public List<ProjectFunder> getAllProjectFundersForProject(int projectId) {
         List<ProjectFunder> projectFunderList = new ArrayList<>();
         QueryBuilder<ProjectFunder, Integer> queryBuilder = projectFunderDao.queryBuilder();
@@ -95,6 +130,11 @@ public class ProjectFunderManager {
         return projectFunderList;
     }
 
+    /**
+     * Removes ProjectFunder with specified id
+     * @param id id of ProjectFunder to be removed
+     */
+
     public void removeProjectFunder(int id) {
         try {
             DeleteBuilder<ProjectFunder, Integer> builder = projectFunderDao.deleteBuilder();
@@ -105,6 +145,11 @@ public class ProjectFunderManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Removes ProjectFunders involved in project with specified id
+     * @param projectId id of the specified project
+     */
 
     public void removeProjectFunderBasedOnProjectID(int projectId) {
         try {
@@ -117,6 +162,10 @@ public class ProjectFunderManager {
         }
     }
 
+    /**
+     * Removes all ProjectFunders from the database
+     */
+
     public void removeAllProjectFunder() {
         try {
             TableUtils.clearTable(connectionSource, ProjectFunder.class);
@@ -126,9 +175,19 @@ public class ProjectFunderManager {
         }
     }
 
+    /**
+     * Returns total number of rows in the table
+     * @return number of rows
+     */
+
     public int getRowCount() {
         return getAllProjectFunder().size();
     }
+
+    /**
+     * Returns next available id
+     * @return next available id
+     */
 
     public int getNextID() {
         int id = 0;

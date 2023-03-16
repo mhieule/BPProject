@@ -15,12 +15,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ *  Facilitates database integration for SalaryIncreaseHistory
+ */
+
 public class SalaryIncreaseHistoryManager {
     private ConnectionSource connectionSource;
     private Dao<SalaryIncreaseHistory, Object> salaryIncreaseHistoriesDao;
 
     private static String databaseURL;
 
+    /**
+     * Creates database connection and DAO
+     */
 
     public SalaryIncreaseHistoryManager() {
         try {
@@ -33,6 +40,10 @@ public class SalaryIncreaseHistoryManager {
         }
     }
 
+    /**
+     * Creates table in the database
+     */
+
     public void createTable() {
         try {
             TableUtils.createTable(connectionSource, SalaryIncreaseHistory.class);
@@ -41,6 +52,10 @@ public class SalaryIncreaseHistoryManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Deletes table from the database
+     */
 
     public void deleteTable() {
         try {
@@ -51,6 +66,11 @@ public class SalaryIncreaseHistoryManager {
         }
     }
 
+    /**
+     * Adds SalaryIncreaseHistory to database
+     * @param salaryIncreaseHistory SalaryIncreaseHistory to be added
+     */
+
     public void addSalaryIncreaseHistory(SalaryIncreaseHistory salaryIncreaseHistory) {
         try {
             salaryIncreaseHistoriesDao.create(salaryIncreaseHistory);
@@ -59,6 +79,12 @@ public class SalaryIncreaseHistoryManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Removes SalaryIncreaseHistory with specified id on specified date
+     * @param id id associated with the SalaryIncreaseHistory
+     * @param date date of the SalaryIncreaseHistory
+     */
 
     public void removeSalaryIncreaseHistory(int id, Date date) {
         try {
@@ -71,6 +97,11 @@ public class SalaryIncreaseHistoryManager {
         }
     }
 
+    /**
+     * Removes all SalaryIncreaseHistories for specified employee
+     * @param id id of the employee
+     */
+
     public void removeAllSalaryIncreaseHistoryForEmployee(int id) {
         try {
             DeleteBuilder<SalaryIncreaseHistory, Object> builder = salaryIncreaseHistoriesDao.deleteBuilder();
@@ -82,6 +113,10 @@ public class SalaryIncreaseHistoryManager {
         }
     }
 
+    /**
+     * Removes all SalaryIncreaseHistories from table
+     */
+
     public void removeAllSalaryIncreaseHistories() {
         try {
             TableUtils.clearTable(connectionSource, SalaryIncreaseHistory.class);
@@ -90,6 +125,12 @@ public class SalaryIncreaseHistoryManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Returns all SalaryIncreaseHistories for specified employee
+     * @param id id of the employee
+     * @return list with all SalaryIncreaseHistories
+     */
 
     public List<SalaryIncreaseHistory> getSalaryIncreaseHistory(int id) {
         List<SalaryIncreaseHistory> salaryIncreaseHistoryList = new ArrayList<>();
@@ -105,6 +146,13 @@ public class SalaryIncreaseHistoryManager {
         return salaryIncreaseHistoryList;
     }
 
+    /**
+     * Returns all SalaryIncreaseHistories for specified employee on specified date
+     * @param id id of the employee
+     * @param date date of the SalaryIncreaseHistory
+     * @return list with all SalaryIncreaseHistories
+     */
+
     public List<SalaryIncreaseHistory> getSalaryIncreaseHistoryByDate(int id, Date date) {
         List<SalaryIncreaseHistory> salaryIncreaseHistoryList = new ArrayList<>();
         QueryBuilder<SalaryIncreaseHistory, Object> queryBuilder = salaryIncreaseHistoriesDao.queryBuilder();
@@ -119,6 +167,11 @@ public class SalaryIncreaseHistoryManager {
         return salaryIncreaseHistoryList;
     }
 
+    /**
+     * Returns all SalaryIncreaseHistories in the table
+     * @return list of all SalaryIncreaseHistories
+     */
+
     public List<SalaryIncreaseHistory> getAllSalaryIncreaseHistories() {
         List<SalaryIncreaseHistory> salaryIncreaseHistoryList = new ArrayList<>();
         try {
@@ -129,6 +182,11 @@ public class SalaryIncreaseHistoryManager {
         }
         return salaryIncreaseHistoryList;
     }
+
+    /**
+     * Returns total row count of the table
+     * @return row count
+     */
 
     public int getRowCount(int id) {
         List<SalaryIncreaseHistory> salaryIncreaseHistoryList = getSalaryIncreaseHistory(id);

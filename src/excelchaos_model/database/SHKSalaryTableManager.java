@@ -12,12 +12,20 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+/**
+ *  Facilitates database integration for SHKSalaryTable
+ */
+
 public class SHKSalaryTableManager {
     private ConnectionSource connectionSource;
 
     private Dao<SHKSalaryEntry, Integer> SHKDao;
 
     private static String databaseURL;
+
+    /**
+     * Creates database connection and DAO
+     */
 
     public SHKSalaryTableManager() {
         try {
@@ -30,6 +38,10 @@ public class SHKSalaryTableManager {
         }
     }
 
+    /**
+     * Creates table in the database
+     */
+
     public void createTable() {
         try {
             TableUtils.createTable(connectionSource, SHKSalaryEntry.class);
@@ -40,6 +52,10 @@ public class SHKSalaryTableManager {
     }
 
 
+    /**
+     * Deletes table from the database
+     */
+
     public void deleteTable() {
         try {
             TableUtils.dropTable(connectionSource, SHKSalaryEntry.class, true);
@@ -49,6 +65,11 @@ public class SHKSalaryTableManager {
         }
     }
 
+    /**
+     * Adds an SHKSalaryEntry to the database
+     * @param shkSalaryEntry SHKSalaryEntry to be added
+     */
+
     public void addSHKTableEntry(SHKSalaryEntry shkSalaryEntry) {
         try {
             SHKDao.create(shkSalaryEntry);
@@ -57,6 +78,12 @@ public class SHKSalaryTableManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Returns SHKSalaryEntry with given id
+     * @param id id of the SHKSalaryEntry
+     * @return SHKSalaryEntry with specified id
+     */
 
     public SHKSalaryEntry getSHKSalaryEntry(int id) {
         SHKSalaryEntry shkSalaryEntry = null;
@@ -69,6 +96,12 @@ public class SHKSalaryTableManager {
         return shkSalaryEntry;
     }
 
+    /**
+     * Returns SHKSalaryEntry from a given date
+     * @param givenDate date of the SHKSalaryEntry
+     * @return SHKSalaryEntry with specified date
+     */
+
     public SHKSalaryEntry getSHKSalaryEntryBasedOnDate(Date givenDate) {
         List<SHKSalaryEntry> shkSalaryEntries = getAllSHKSalaryEntries();
         SHKSalaryEntry resultEntry = null;
@@ -80,6 +113,10 @@ public class SHKSalaryTableManager {
         return resultEntry;
     }
 
+    /**
+     * Returns all SHKSalaryEntries from the table
+     * @return List of all SHKSalaryEntries
+     */
     public List<SHKSalaryEntry> getAllSHKSalaryEntries() {
         List<SHKSalaryEntry> shkSalaryEntries = null;
         try {
@@ -90,6 +127,11 @@ public class SHKSalaryTableManager {
         }
         return shkSalaryEntries;
     }
+
+    /**
+     * Returns next available id
+     * @return next available id
+     */
 
     public int getNextID() {
         int id = 0;
@@ -109,6 +151,11 @@ public class SHKSalaryTableManager {
         return id;
     }
 
+    /**
+     * Returns total row count of the table
+     * @return row count
+     */
+
     public int getRowCount() {
         long count = 0;
         try {
@@ -121,6 +168,11 @@ public class SHKSalaryTableManager {
         return (int) count;
     }
 
+    /**
+     * Updates SHKSalaryEntry in the table
+     * @param shkSalaryEntry SHKSalaryEntry to be updated
+     */
+
     public void updateSHKSalaryEntry(SHKSalaryEntry shkSalaryEntry) {
         try {
             SHKDao.update(shkSalaryEntry);
@@ -130,6 +182,10 @@ public class SHKSalaryTableManager {
         }
     }
 
+    /**
+     * Removes all SHKSalaryEntry from the database
+     */
+
     public void removeAllSHKSalaryEntries() {
         try {
             TableUtils.clearTable(connectionSource, SHKSalaryEntry.class);
@@ -138,6 +194,11 @@ public class SHKSalaryTableManager {
             System.err.println(e.getClass().getName() + ":" + e.getMessage());
         }
     }
+
+    /**
+     * Removes SHKSalaryEntry with specified id from the database
+     * @param id id of the SHKSalaryEntry to be removed
+     */
 
     public void removeSHKSalaryEntry(int id) {
         try {
