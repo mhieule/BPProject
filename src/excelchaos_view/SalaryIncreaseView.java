@@ -7,16 +7,24 @@ import java.awt.*;
 
 public class SalaryIncreaseView extends JPanel {
 
-    private CustomTable table;
+    private CustomTable salaryIncreaseTable;
 
-
+    /**
+     * Sets the layout for this component.
+     */
     public void init() {
         setLayout(new BorderLayout());
     }
 
-    public void createTable(String[][] data, String[] columnNames) {
-        table = new CustomTable(data, columnNames);
-        JScrollPane scrollPane = new JScrollPane(table);
+    /**
+     * Creates a new salaryIncrease data table using the specified data and column names.
+     *
+     * @param tableData   a 2D array of strings representing the data to be displayed in the table
+     * @param columnNames an array of strings representing the names of the columns in the table
+     */
+    public void createTable(String[][] tableData, String[] columnNames) {
+        salaryIncreaseTable = new CustomTable(tableData, columnNames);
+        JScrollPane scrollPane = new JScrollPane(salaryIncreaseTable);
         scrollPane.setVisible(true);
 
         add(scrollPane);
@@ -24,7 +32,7 @@ public class SalaryIncreaseView extends JPanel {
         repaint();
     }
 
-    public CustomTable getTable() {
-        return table;
+    public CustomTable getSalaryIncreaseTable() {
+        return salaryIncreaseTable;
     }
 }

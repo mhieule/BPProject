@@ -24,10 +24,19 @@ public class SalaryListView extends JPanel {
             "Gehaltskosten zum gewählten Zeitpunkt", "Jahressonderzahlung"
     };
 
+    /**
+     * Sets the layout for this component.
+     */
     public void init() {
         setLayout(new BorderLayout());
     }
 
+    /**
+     * Creates a new salary data table using the specified data and column names.
+     *
+     * @param tableData   a 2D array of strings representing the data to be displayed in the table
+     * @param columnNames an array of strings representing the names of the columns in the table
+     */
     public void createSalaryTable(String[][] tableData, String[] columnNames) {
         salaryDataTable = new CustomTable(tableData, columnNames);
         salaryDataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -44,7 +53,12 @@ public class SalaryListView extends JPanel {
         repaint();
     }
 
-    public void updateTable(String[][] tableData){
+    /**
+     * Updates the salaryDataTable with the given tableData.
+     *
+     * @param tableData a two-dimensional array of Strings containing the data for the table
+     */
+    public void updateTable(String[][] tableData) {
         CustomTableModel customTableModel = new CustomTableModel(tableData, columns);
         salaryDataTable.setModel(customTableModel);
         salaryDataTable.getColumnModel().getColumn(1).setMinWidth(0);
@@ -54,7 +68,15 @@ public class SalaryListView extends JPanel {
         tca.adjustColumns();
     }
 
-    public void changeToFuturePayLevelTable(String[][] tableData){
+    /**
+     * Changes the salary data table to the future pay level table using the provided
+     * 2-dimensional array of table data. The table model is created using the provided
+     * data and the next 2 pay level increase columns. The new model is set as the
+     * model for the salary data table.
+     *
+     * @param tableData a 2-dimensional array of table data containing the future pay level information
+     */
+    public void changeToFuturePayLevelTable(String[][] tableData) {
         CustomTableModel customTableModel = new CustomTableModel(tableData, next2PayLevelIncreaseColumns);
         salaryDataTable.setModel(customTableModel);
         salaryDataTable.getColumnModel().getColumn(1).setMinWidth(0);
@@ -64,7 +86,12 @@ public class SalaryListView extends JPanel {
         tca.adjustColumns();
     }
 
-    public void changeToProjectedSalaryTable(String[][] tableData){
+    /**
+     * Changes the data displayed in the salaryDataTable to show the projected salary table based on the chosen date.
+     *
+     * @param tableData the data to be displayed in the salaryDataTable
+     */
+    public void changeToProjectedSalaryTable(String[][] tableData) {
         CustomTableModel customTableModel = new CustomTableModel(tableData, salaryLevelIncreaseBasedOnChosenDateColumns);
         salaryDataTable.setModel(customTableModel);
         salaryDataTable.getColumnModel().getColumn(1).setMinWidth(0);
@@ -74,6 +101,11 @@ public class SalaryListView extends JPanel {
         tca.adjustColumns();
     }
 
+    /**
+     * Creates a table with the given data and sets it as the salary data table.
+     *
+     * @param tableData a 2-dimensional array of Strings representing the data to be displayed in the table
+     */
     public void createTableWithData(String[][] tableData) {
         createSalaryTable(tableData, columns);
     }

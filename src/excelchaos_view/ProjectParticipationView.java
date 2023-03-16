@@ -2,7 +2,6 @@ package excelchaos_view;
 
 import excelchaos_model.calculations.SalaryCalculation;
 import excelchaos_model.database.*;
-import excelchaos_model.inputVerifier.SalaryVerifier;
 import excelchaos_model.inputVerifier.WorkScopeVerifier;
 import excelchaos_model.utility.StringAndBigDecimalFormatter;
 import excelchaos_model.utility.TableColumnAdjuster;
@@ -41,6 +40,9 @@ public class ProjectParticipationView extends JPanel {
     private JTable participationSumTable, participationSumHeaderTable;
 
 
+    /**
+     * Initializes this gui component.
+     */
     public void init() {
 
         setLayout(new BorderLayout());
@@ -56,7 +58,14 @@ public class ProjectParticipationView extends JPanel {
 
     }
 
-    public void setUpParticipationSumPanel(String[] employeeNames, String[] months, String[][] tableData) {
+    /**
+     * Sets up the panel for displaying the total participation sum for each employee for the given months and employee names.
+     *
+     * @param employeeNames An array of Strings representing the names of the employees.
+     * @param months        An array of Strings representing the months.
+     * @param tableData     A two-dimensional array of Strings representing the participation sum data for each employee and month.
+     */
+    public void setUpTotalParticipationSumPanel(String[] employeeNames, String[] months, String[][] tableData) {
         projectParticipationSumPanel = new JPanel();
 
         GridLayout gridLayout = new GridLayout(1, 1, 0, 0);
@@ -102,6 +111,13 @@ public class ProjectParticipationView extends JPanel {
     }
 
 
+    /**
+     * Sets up a header table for the participation sum table, which displays employee names and their corresponding work scopes.
+     *
+     * @param table the participation summary table for which the header table is being set up
+     * @param rows  an array of employee names to be displayed in the header table
+     * @return a {@link JTable} representing the header table for the participation sum table
+     */
     private JTable setParticipationSumHeaderTable(JTable table, String[] rows) {
         DefaultTableModel model = new DefaultTableModel() {
 
@@ -145,6 +161,17 @@ public class ProjectParticipationView extends JPanel {
         return headerTable;
     }
 
+    /**
+     * This methods creates the panel in which all participation data and employee cost for the given months is displayed
+     *
+     * @param projectName     The name of project the panel gets created for.
+     * @param monthColumns    The runtime of the project in months.
+     * @param nameRows        The names of the employees that are working on the project
+     * @param tableData       The participation data and cost of each employee working on the project
+     * @param summedTableData The sum of aboves data.
+     * @param totalCost       The total employee cost for the project
+     * @param projectId       database project id of the project
+     */
     public void setUpProjectPanel(String projectName, String[] monthColumns, String[] nameRows, String[][] tableData, String[][] summedTableData, String totalCost, int projectId) {
 
         JPanel projectPanel = new JPanel();
@@ -298,6 +325,13 @@ public class ProjectParticipationView extends JPanel {
     }
 
 
+    /**
+     * Initializes the rows of a JTable object with the given strings as row values.
+     *
+     * @param table the JTable object to be modified
+     * @param rows  an array of strings representing the values of the rows to be added to the table
+     * @return the modified JTable object with the initialized rows
+     */
     public JTable initMainTableRows(JTable table, String[] rows) {
         DefaultTableModel model = new DefaultTableModel() {
 
@@ -341,6 +375,15 @@ public class ProjectParticipationView extends JPanel {
         return headerTable;
     }
 
+    /**
+     * Initializes the main table with given months and data. The table is non-editable for odd rows, and alternate row colors are applied to improve visibility. The table columns are adjusted to fit the content and the first column is hidden.
+     *
+     * @param months An array of strings representing the month names for the table header.
+     * @param data   A 2D array of strings containing the data to be displayed in the table.
+     * @return A JTable object representing the initialized main table with data.
+     */
+
+
     public JTable initMainTable(String[] months, String[][] data) {
         JTable table;
         DefaultTableModel mainTableModel = new DefaultTableModel(data, months);
@@ -376,6 +419,13 @@ public class ProjectParticipationView extends JPanel {
         return table;
 
     }
+
+    /**
+     * Initializes a JTable to display the sum header information for the given table.
+     *
+     * @param table the JTable to which the sum header table corresponds
+     * @return the JTable object containing the sum header table with the specified properties
+     */
 
     public JTable initSumHeaderTable(JTable table) {
         DefaultTableModel model = new DefaultTableModel() {
@@ -416,6 +466,15 @@ public class ProjectParticipationView extends JPanel {
         return headerTable;
     }
 
+    /**
+     * Creates a new JTable object to display the summed table data with the given months array as column headers.
+     * The table is initialized with the given summed table data and is not editable. The table rows are sized
+     * to fit the data and are right-aligned. The first column is hidden.
+     *
+     * @param summedTableData a two-dimensional array of Strings containing the summed table data
+     * @param months          an array of Strings containing the column headers for the table
+     * @return a new JTable object initialized with the given summed table data and column headers
+     */
     public JTable initSumTable(String[][] summedTableData, String[] months) {
         JTable table;
         DefaultTableModel mainTableModel = new DefaultTableModel(summedTableData, months);
@@ -440,7 +499,18 @@ public class ProjectParticipationView extends JPanel {
         return table;
     }
 
-
+    /**
+     * This method is continuation of setupProjectPanel and is called when new Employees are added to a project
+     *
+     * @param projectPanel  The originally setup projectpanel
+     * @param mainTable     The maintable containing the original data
+     * @param rowsMainTable The rows of the original table containing all employee names
+     * @param sumTable      The original sum table
+     * @param totalCost     The original total cost
+     * @param projectId     database project id of the project
+     * @param monthColumns  The runtime of the project in months.
+     * @param projectName   The name of project the panel gets created for.
+     */
     private void setUpAddParticipationView(JPanel projectPanel, JTable mainTable, JTable rowsMainTable, JTable sumTable, String totalCost, int projectId, String[] monthColumns, String projectName) {
         JDialog participationDialog = new JDialog();
 
@@ -577,8 +647,7 @@ public class ProjectParticipationView extends JPanel {
                 }
                 projectParticipationSumPanel.removeAll();
                 remove(projectParticipationSumPanel);
-                setUpParticipationSumPanel(addedEmployeeNames,monthsArray,newParticipationSumTableData);
-
+                setUpTotalParticipationSumPanel(addedEmployeeNames, monthsArray, newParticipationSumTableData);
 
 
                 String[][] oldMainTableData = new String[mainTable.getRowCount()][mainTable.getColumnCount()];

@@ -73,11 +73,11 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
      */
     private void createTableWithData(String[][] data) {
         salaryIncreaseView.createTable(data, columns);
-        salaryIncreaseView.getTable().getModel().addTableModelListener(this);
-        salaryIncreaseView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
-        salaryIncreaseView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
-        salaryIncreaseView.getTable().getColumnModel().getColumn(1).setWidth(0);
-        SearchAndFilterModel.setUpSearchAndFilterModel(salaryIncreaseView.getTable(), toolbarSalaryIncreaseController.getToolbar());
+        salaryIncreaseView.getSalaryIncreaseTable().getModel().addTableModelListener(this);
+        salaryIncreaseView.getSalaryIncreaseTable().getColumnModel().getColumn(1).setMinWidth(0);
+        salaryIncreaseView.getSalaryIncreaseTable().getColumnModel().getColumn(1).setMaxWidth(0);
+        salaryIncreaseView.getSalaryIncreaseTable().getColumnModel().getColumn(1).setWidth(0);
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryIncreaseView.getSalaryIncreaseTable(), toolbarSalaryIncreaseController.getToolbar());
     }
 
     /**
@@ -87,13 +87,13 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
      */
     public void setTableData(String[][] data) {
         customTableModel = new CustomTableModel(data, columns);
-        salaryIncreaseView.getTable().setModel(customTableModel);
-        salaryIncreaseView.getTable().getModel().addTableModelListener(this);
-        salaryIncreaseView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
-        salaryIncreaseView.getTable().getColumnModel().getColumn(1).setMaxWidth(0);
-        salaryIncreaseView.getTable().getColumnModel().getColumn(1).setWidth(0);
+        salaryIncreaseView.getSalaryIncreaseTable().setModel(customTableModel);
+        salaryIncreaseView.getSalaryIncreaseTable().getModel().addTableModelListener(this);
+        salaryIncreaseView.getSalaryIncreaseTable().getColumnModel().getColumn(1).setMinWidth(0);
+        salaryIncreaseView.getSalaryIncreaseTable().getColumnModel().getColumn(1).setMaxWidth(0);
+        salaryIncreaseView.getSalaryIncreaseTable().getColumnModel().getColumn(1).setWidth(0);
         toolbarSalaryIncreaseController.getToolbar().getEditSalaryEntry().setEnabled(false);
-        SearchAndFilterModel.setUpSearchAndFilterModel(salaryIncreaseView.getTable(), toolbarSalaryIncreaseController.getToolbar());
+        SearchAndFilterModel.setUpSearchAndFilterModel(salaryIncreaseView.getSalaryIncreaseTable(), toolbarSalaryIncreaseController.getToolbar());
         toolbarSalaryIncreaseController.getToolbar().getDeleteSalaryEntry().setEnabled(false);
     }
 
@@ -176,8 +176,8 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
                 toolbarSalaryIncreaseController.getToolbar().getEditSalaryEntry().setEnabled(false);
                 toolbarSalaryIncreaseController.getToolbar().getDeleteSalaryEntry().setEnabled(false);
                 toolbarSalaryIncreaseController.getToolbar().getExportToCSV().setEnabled(false);
-                if (salaryIncreaseView.getTable() != null) {
-                    salaryIncreaseView.getTable().setModel(new DefaultTableModel(null, nullColumns));
+                if (salaryIncreaseView.getSalaryIncreaseTable() != null) {
+                    salaryIncreaseView.getSalaryIncreaseTable().setModel(new DefaultTableModel(null, nullColumns));
                 }
             } else {
                 toolbarSalaryIncreaseController.getToolbar().getDoSalaryIncrease().setEnabled(true);
@@ -185,7 +185,7 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
                 if (!((String) e.getItem()).equals("Keine Auswahl")) {
                     Employee temporaryEmployee = employeeDataManager.getEmployeeByName((String) e.getItem());
                     String[][] data = getDataFromDB(temporaryEmployee);
-                    if (salaryIncreaseView.getTable() == null) {
+                    if (salaryIncreaseView.getSalaryIncreaseTable() == null) {
                         createTableWithData(data);
                     } else {
                         setTableData(data);
@@ -208,7 +208,7 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
      */
     @Override
     public void tableChanged(TableModelEvent e) {
-        int numberOfSelectedRows = salaryIncreaseView.getTable().getNumberOfSelectedRows();
+        int numberOfSelectedRows = salaryIncreaseView.getSalaryIncreaseTable().getNumberOfSelectedRows();
         if (e.getColumn() == 0) {
             if (numberOfSelectedRows == 0) {
                 toolbarSalaryIncreaseController.getToolbar().getEditSalaryEntry().setEnabled(false);

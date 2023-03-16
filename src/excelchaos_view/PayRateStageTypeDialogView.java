@@ -13,6 +13,9 @@ public class PayRateStageTypeDialogView extends JDialog {
     private JPanel buttonPanel;
     private JPanel pickPanel;
 
+    /**
+     * Initializes this gui component.
+     */
     public void init() {
         setLayout(new BorderLayout());
         setTitle("Entgelttabelle Stufe 1 Variante auswählen");
