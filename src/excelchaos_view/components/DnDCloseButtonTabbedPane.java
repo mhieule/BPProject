@@ -38,6 +38,11 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
     private JLabel label;
 
 
+    /**
+     * Constructor of the DnDCloseButtonTabbedPane
+     *
+     * @param parent component of the tabs
+     */
     public DnDCloseButtonTabbedPane(final Component parent) {
         super();
 
@@ -59,7 +64,6 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
 
             @Override
             public void dragOver(DragSourceDragEvent e) {
-                //e.getLocation()
                 //This method returns a Point indicating the cursor location in screen coordinates at the moment
 
                 TabTransferData data = getTabTransferData(e);
@@ -68,41 +72,15 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
                     e.getDragSourceContext().setCursor(
                             DragSource.DefaultMoveNoDrop);
                     return;
-                } // if
+                }
 
-                /*
-                 Point tabPt = e.getLocation();
-                 SwingUtilities.convertPointFromScreen(tabPt, DnDTabbedPane.this);
-                 if (DnDTabbedPane.this.contains(tabPt)) {
-                 int targetIdx = getTargetTabIndex(tabPt);
-                 int sourceIndex = data.getTabIndex();
-                 if (getTabAreaBound().contains(tabPt)
-                 && (targetIdx >= 0)
-                 && (targetIdx != sourceIndex)
-                 && (targetIdx != sourceIndex + 1)) {
-                 e.getDragSourceContext().setCursor(
-                 DragSource.DefaultMoveDrop);
-
-                 return;
-                 } // if
-
-                 e.getDragSourceContext().setCursor(
-                 DragSource.DefaultMoveNoDrop);
-                 return;
-                 } // if
-                 */
                 e.getDragSourceContext().setCursor(
                         DragSource.DefaultMoveDrop);
             }
 
-            /**
-             * Hier werden relevante Änderungen gemacht. Der Rest des Codes sollte nicht angefasst werden
-             * @param e the {@code DragSourceDropEvent}
-             */
             public void dragDropEnd(DragSourceDropEvent e) {
                 m_isDrawRect = false;
                 m_lineRect.setRect(0, 0, 0, 0);
-                // m_dragTabIndex = -1;
 
                 if (hasGhost()) {
                     s_glassPane.setVisible(false);
@@ -211,6 +189,11 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         setTabComponentAt(indexOfComponent(component), tab);
     }
 
+    /**
+     * Sets the name of a tab
+     *
+     * @param title the new title of the tab
+     */
     public void setLabel(String title) {
         label.setText(title);
     }
@@ -219,6 +202,11 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         button.addActionListener(l);
     }
 
+    /**
+     * Removes a component from the view
+     *
+     * @param component the component to be removed
+     */
     public void removeTabNewWindow(Component component) {
         if (component.getParent().getParent().getParent().getParent().getParent().getClass() == NewFrame.class) {
             if (((DnDCloseButtonTabbedPane) component.getParent()).getTabCount() <= 1) {
@@ -244,6 +232,12 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         m_acceptor = a_value;
     }
 
+    /**
+     * Retrieves the TabTransferData from the given DropTargetDropEvent, if present.
+     *
+     * @param a_event The DropTargetDropEvent to retrieve the data from.
+     * @return The TabTransferData contained within the given DropTargetDropEvent, or null if no such data is present.
+     */
     private TabTransferData getTabTransferData(DropTargetDropEvent a_event) {
         try {
             TabTransferData data = (TabTransferData) a_event.getTransferable().getTransferData(FLAVOR);
@@ -255,6 +249,12 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         return null;
     }
 
+    /**
+     * Retrieves the TabTransferData from the given DropTargetDropEvent, if present.
+     *
+     * @param a_event The DropTargetDropEvent to retrieve the data from.
+     * @return The TabTransferData contained within the given DropTargetDropEvent, or null if no such data is present.
+     */
     private TabTransferData getTabTransferData(DropTargetDragEvent a_event) {
         try {
             TabTransferData data = (TabTransferData) a_event.getTransferable().getTransferData(FLAVOR);
@@ -266,6 +266,12 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         return null;
     }
 
+    /**
+     * Retrieves the TabTransferData from the given DropTargetDropEvent, if present.
+     *
+     * @param a_event The DropTargetDropEvent to retrieve the data from.
+     * @return The TabTransferData contained within the given DropTargetDropEvent, or null if no such data is present.
+     */
     private TabTransferData getTabTransferData(DragSourceDragEvent a_event) {
         try {
             TabTransferData data = (TabTransferData) a_event.getDragSourceContext()
@@ -278,6 +284,13 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
         return null;
     }
 
+
+    /**
+     * Retrieves the TabTransferData from the given DropTargetDropEvent, if present.
+     *
+     * @param a_event The DropTargetDropEvent to retrieve the data from.
+     * @return The TabTransferData contained within the given DropTargetDropEvent, or null if no such data is present.
+     */
     private TabTransferData getTabTransferData(DragSourceDropEvent a_event) {
         try {
             TabTransferData data = (TabTransferData) a_event.getDragSourceContext()
@@ -347,31 +360,6 @@ public class DnDCloseButtonTabbedPane extends JTabbedPane {
     private Point buildGhostLocation(Point a_location) {
         Point retval = new Point(a_location);
 
-//        switch (getTabPlacement()) {
-//            case JTabbedPane.TOP: {
-//                retval.y = 1;
-//                retval.x -= s_glassPane.getGhostWidth() / 2;
-//            }
-//            break;
-//
-//            case JTabbedPane.BOTTOM: {
-//                retval.y = getHeight() - 1 - s_glassPane.getGhostHeight();
-//                retval.x -= s_glassPane.getGhostWidth() / 2;
-//            }
-//            break;
-//
-//            case JTabbedPane.LEFT: {
-//                retval.x = 1;
-//                retval.y -= s_glassPane.getGhostHeight() / 2;
-//            }
-//            break;
-//
-//            case JTabbedPane.RIGHT: {
-//                retval.x = getWidth() - 1 - s_glassPane.getGhostWidth();
-//                retval.y -= s_glassPane.getGhostHeight() / 2;
-//            }
-//            break;
-//        } // switch
         retval = SwingUtilities.convertPoint(DnDCloseButtonTabbedPane.this,
                 retval, s_glassPane);
         return retval;

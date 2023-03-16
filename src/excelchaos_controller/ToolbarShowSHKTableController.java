@@ -7,13 +7,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ToolbarShowSHKTableController implements ActionListener {
-
     private ToolbarShowSHKTableView toolbar;
-
     private ShowSHKTableController showSHKTableController;
-
     private MainFrameController frameController;
 
+    /**
+     * Constructor for ToolbarShowSHKTableController
+     *
+     * @param mainFrameController    mainFrameController
+     * @param showSHKTableController showSHKTableController
+     */
     public ToolbarShowSHKTableController(MainFrameController mainFrameController, ShowSHKTableController showSHKTableController) {
         frameController = mainFrameController;
         this.showSHKTableController = showSHKTableController;
@@ -26,13 +29,18 @@ public class ToolbarShowSHKTableController implements ActionListener {
         return toolbar;
     }
 
+    /**
+     * Depending on the source of the event, the corresponding action is performed
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toolbar.getAddEntry()) {
             InsertSHKEntryController insertSHKEntryController = new InsertSHKEntryController(frameController);
             insertSHKEntryController.showInsertSHKEntryView(frameController);
         } else if (e.getSource() == toolbar.getEditEntry()) {
-            InsertSHKEntryController insertSHKEntryController = new InsertSHKEntryController(frameController,showSHKTableController.getShowSHKTableView().getTable().getCurrentSelectedRowsAsArray());
+            InsertSHKEntryController insertSHKEntryController = new InsertSHKEntryController(frameController, showSHKTableController.getShowSHKTableView().getTable().getCurrentSelectedRowsAsArray());
             insertSHKEntryController.showInsertSHKEntryView(frameController);
         } else if (e.getSource() == toolbar.getDeleteEntry()) {
             Object[] options = {"Ok", "Abbrechen"};

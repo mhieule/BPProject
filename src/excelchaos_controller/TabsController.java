@@ -7,6 +7,11 @@ public class TabsController {
     private DnDCloseButtonTabbedPane tabs;
     private MainFrameController frameController;
 
+    /**
+     * Constructor for TabsController
+     *
+     * @param mainFrameController mainFrameController
+     */
     public TabsController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         tabs = new DnDCloseButtonTabbedPane(frameController.getWindow());
