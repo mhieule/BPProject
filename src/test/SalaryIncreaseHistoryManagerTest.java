@@ -3,21 +3,22 @@ import excelchaos_model.database.SalaryIncreaseHistoryManager;
 import excelchaos_model.database.SalaryTableManager;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/*public class SalaryIncreaseHistoryManagerTest {
+public class SalaryIncreaseHistoryManagerTest {
     @Test
     void testRemoveAll(){
-        var manager = SalaryIncreaseHistoryManager.getInstance();
+        var manager = new SalaryIncreaseHistoryManager();
         manager.removeAllSalaryIncreaseHistories();
         assertEquals(manager.getAllSalaryIncreaseHistories().size(), 0);
     }
 
     @Test
     void testGetValid(){
-        var manager = SalaryIncreaseHistoryManager.getInstance();
+        var manager = new SalaryIncreaseHistoryManager();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -25,7 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, 0.5, calendar.getTime(),
+        BigDecimal num = new BigDecimal("420.20");
+        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),
                 "test_comment", false);
         manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
         var recSalaryIncreaseHistory = manager.getSalaryIncreaseHistory(1).get(0);
@@ -38,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetInvalid(){
-        var manager = SalaryIncreaseHistoryManager.getInstance();
+        var manager = new SalaryIncreaseHistoryManager();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -46,7 +48,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, 0.5, calendar.getTime(),
+        BigDecimal num = new BigDecimal("420.20");
+        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),
                 "test_comment", false);
         manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
         assertEquals(manager.getSalaryIncreaseHistory(2).size(), 0);
@@ -54,7 +57,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetByDateValid(){
-        var manager = SalaryIncreaseHistoryManager.getInstance();
+        var manager = new SalaryIncreaseHistoryManager();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -62,7 +65,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, 0.5, calendar.getTime(),
+        BigDecimal num = new BigDecimal("420.20");
+        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),
                 "test_comment", false);
         manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
         var recSalaryIncreaseHistory = manager.getSalaryIncreaseHistoryByDate(1, calendar.getTime()).get(0);
@@ -75,7 +79,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetByDateInvalid(){
-        var manager = SalaryIncreaseHistoryManager.getInstance();
+        var manager = new SalaryIncreaseHistoryManager();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -83,7 +87,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, 0.5, calendar.getTime(),
+        BigDecimal num = new BigDecimal("420.20");
+        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),
                 "test_comment", false);
         manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
         assertEquals(manager.getSalaryIncreaseHistoryByDate(2, calendar.getTime()).size(), 0);
@@ -91,7 +96,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testRemoveValid(){
-        var manager = SalaryIncreaseHistoryManager.getInstance();
+        var manager = new SalaryIncreaseHistoryManager();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -99,7 +104,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, 0.5, calendar.getTime(),
+        BigDecimal num = new BigDecimal("420.20");
+        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),
                 "test_comment", false);
         manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
         manager.removeSalaryIncreaseHistory(1, calendar.getTime());
@@ -108,7 +114,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testRemoveInvalid(){
-        var manager = SalaryIncreaseHistoryManager.getInstance();
+        var manager = new SalaryIncreaseHistoryManager();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -116,7 +122,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, 0.5, calendar.getTime(),
+        BigDecimal num = new BigDecimal("420.20");
+        var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),
                 "test_comment", false);
         manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
         manager.removeSalaryIncreaseHistory(2, calendar.getTime());
@@ -125,7 +132,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetAll(){
-        var manager = SalaryIncreaseHistoryManager.getInstance();
+        var manager = new SalaryIncreaseHistoryManager();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -135,7 +142,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         var salaryIncreaseHistories = new SalaryIncreaseHistory[10];
 
         for (int i = 0; i < 10; i++){
-            var salaryIncreaseHistory = new SalaryIncreaseHistory(i, 0.5, calendar.getTime(),
+            BigDecimal num = new BigDecimal("420.20");
+            var salaryIncreaseHistory = new SalaryIncreaseHistory(i, num, calendar.getTime(),
                     "test_comment", false);
             manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
             salaryIncreaseHistories[i] = salaryIncreaseHistory;
@@ -154,7 +162,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetRowCount(){
-        var manager = SalaryIncreaseHistoryManager.getInstance();
+        var manager = new SalaryIncreaseHistoryManager();
         manager.removeAllSalaryIncreaseHistories();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -163,7 +171,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         calendar.set(Calendar.SECOND, 0);
 
         for (int i = 0; i < 10; i++){
-            var salaryIncreaseHistory = new SalaryIncreaseHistory(1, 0.5, calendar.getTime(),
+            BigDecimal num = new BigDecimal("420.20");
+            var salaryIncreaseHistory = new SalaryIncreaseHistory(1, num, calendar.getTime(),
                     "test_comment", false);
             manager.addSalaryIncreaseHistory(salaryIncreaseHistory);
         }
@@ -172,8 +181,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetRowCountEmpty(){
-        var manager = SalaryIncreaseHistoryManager.getInstance();
+        var manager = new SalaryIncreaseHistoryManager();
         manager.removeAllSalaryIncreaseHistories();
         assertEquals(manager.getRowCount(1), 0);
     }
-}*/
+}
