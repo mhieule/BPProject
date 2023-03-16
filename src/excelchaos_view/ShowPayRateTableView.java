@@ -40,6 +40,11 @@ public class ShowPayRateTableView extends JPanel {
 
     private GridBagConstraints constraints;
 
+    /**
+     * Initalizes the gui component
+     *
+     * @param columns Names of the columns from the table
+     */
     public void init(String[] columns) {
         setLayout(new BorderLayout());
         topPanelInit();
@@ -47,6 +52,10 @@ public class ShowPayRateTableView extends JPanel {
         bottomPanelInit();
     }
 
+    /**
+     * Initializes the top panel of the user interface that contains the name of the table, the start date,
+     * and a text field for entering the name of the table.
+     */
     private void topPanelInit() {
         topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 15));
@@ -61,6 +70,14 @@ public class ShowPayRateTableView extends JPanel {
         topPanel.add(datePicker);
         add(topPanel, BorderLayout.NORTH);
     }
+
+    /**
+     * Initializes the bottom panel of the GUI.
+     * This panel contains two buttons for canceling and saving the changes made to the table.
+     * The buttons are placed in two different sub-panels, which are then added to the main panel.
+     * The main panel is then added to the center of the GUI using the constraints layout.
+     */
+
 
     private void bottomPanelInit() {
         bottomPanel = new JPanel();
@@ -84,6 +101,11 @@ public class ShowPayRateTableView extends JPanel {
         centerPanel.add(bottomPanel, constraints);
     }
 
+    /**
+     * Initializes the center panel of the UI with a GridBagLayout and adds JLabels and a JTable.
+     *
+     * @param columns The column names for the JTable.
+     */
     private void centerPanelInit(String[] columns) {
         centerPanel = new JPanel();
         GridBagLayout layout = new GridBagLayout();
@@ -92,7 +114,7 @@ public class ShowPayRateTableView extends JPanel {
         constraints.anchor = GridBagConstraints.FIRST_LINE_START;
         constraints.gridx = 0;
         constraints.gridy = 0;
-        initJLables();
+        initJLable();
         initTable(columns);
         constraints.insets.top = 10;
         constraints.weightx = 0.0;
@@ -104,10 +126,22 @@ public class ShowPayRateTableView extends JPanel {
         add(centerPanel, BorderLayout.CENTER);
     }
 
-    private void initJLables() {
+    /**
+     * Initializes a JLable
+     */
+    private void initJLable() {
         wageTypeLongtext = new JLabel("             Lohnart-Langtext");
     }
 
+    /**
+     * Initializes the pay rates table with the given columns and default values. Also, sets up the header table for
+     * the pay rates table. The pay rates table is made editable with custom cell editors, and the header table is
+     * made non-editable. Both tables have a custom cell renderer and a fixed row height. The header table has a fixed
+     * column width and a custom cell renderer to support multiple lines in a cell. The pay rates table is added to a
+     * scroll pane with the header table as a row header.
+     *
+     * @param columns an array of column names to be used in the pay rates table
+     */
     public void initTable(String[] columns) {
 
         DefaultTableModel defaultTableModel = new DefaultTableModel(columns, 15);
@@ -174,6 +208,20 @@ public class ShowPayRateTableView extends JPanel {
         scrollPane.setRowHeaderView(headerTable);
     }
 
+    /**
+     * Inserts pay rate values in a table.
+     * The values are obtained from a list of SalaryTable objects, which contains the pay rate data.
+     * This method populates a GUI table with the pay rate data, using the values from the SalaryTable objects.
+     * If a pay rate value is zero, the corresponding cell in the table will be empty.
+     * If a pay rate value is non-zero, the corresponding cell in the table will contain a formatted string representation of the value.
+     * The table is filled column by column, with each column corresponding to a SalaryTable object in the list.
+     * If there are more columns in the table than there are SalaryTable objects in the list, the remaining columns are left blank.
+     * If there are more SalaryTable objects in the list than there are columns in the table, the remaining SalaryTable objects are ignored.
+     * If the table is completely filled, the method stops populating the table and exits.
+     * This method also updates the name of the table and the date associated with the table, based on the name of the last SalaryTable object in the list.
+     *
+     * @param salaryTables a List of SalaryTable objects containing the pay rate data
+     */
     public void insertPayRateValuesInTable(List<SalaryTable> salaryTables) {
         int column = 0;
         int row = 0;

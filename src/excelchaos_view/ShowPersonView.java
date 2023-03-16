@@ -15,10 +15,19 @@ public class ShowPersonView extends JPanel {
             "Anstellungsart", "Beschäftigungsbeginn", "Beschäftigungsende", "Beschäftigungsumfgang", "Gehaltsklasse", "Gehaltsstufe", "VBL-Status", "SHK Stundensatz", "Gehalt Eingeplant bis"
     };
 
+    /**
+     * Sets the layout for this component.
+     */
     public void init() {
         setLayout(new BorderLayout());
     }
 
+    /**
+     * Creates a new employee data table using the specified data and column names.
+     *
+     * @param tableData   a 2D array of strings representing the data to be displayed in the table
+     * @param columnNames an array of strings representing the names of the columns in the table
+     */
     private void createEmployeeTable(String[][] tableData, String[] columnNames) {
         employeeDataTable = new CustomTable(tableData, columnNames);
         employeeDataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -35,11 +44,22 @@ public class ShowPersonView extends JPanel {
         repaint();
     }
 
+    /**
+     * Creates a table with the given data and sets it as the employee data table.
+     *
+     * @param tableData a 2-dimensional array of Strings representing the data to be displayed in the table
+     */
     public void createTableWithData(String[][] tableData) {
-       createEmployeeTable(tableData, columns);
+        createEmployeeTable(tableData, columns);
     }
 
-    public void updateTable(String[][] tableData){
+    /**
+     * Updates the employeeDataTable with the given tableData.
+     *
+     * @param tableData a two-dimensional array of Strings containing the data for the table
+     *
+     */
+    public void updateTable(String[][] tableData) {
         CustomTableModel customTableModel = new CustomTableModel(tableData, columns);
         employeeDataTable.setModel(customTableModel);
         employeeDataTable.getColumnModel().getColumn(1).setMinWidth(0);

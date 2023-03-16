@@ -27,6 +27,10 @@ public class ProjectParticipationDataModel {
     private HashSet<String> allShownEmployeeNames;
 
 
+    /**
+     * Constructor of ProjectParticipationDataModel
+     * @param projectIds The projectIds for the participation
+     */
     public ProjectParticipationDataModel(String[] projectIds) {
         this.projectIds = new int[projectIds.length];
         for (int i = 0; i < this.projectIds.length; i++) {
