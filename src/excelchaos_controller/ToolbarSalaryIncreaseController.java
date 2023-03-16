@@ -17,7 +17,7 @@ public class ToolbarSalaryIncreaseController implements ActionListener {
     private MainFrameController frameController;
 
     private SalaryIncreaseController salaryIncreaseController;
-    private IncreaseSalaryDialogController increaseSalaryDialogController;
+
 
     private EmployeeDataManager employeeDataManager=new EmployeeDataManager();
     private ContractDataManager contractDataManager=new ContractDataManager();
@@ -38,8 +38,6 @@ public class ToolbarSalaryIncreaseController implements ActionListener {
             int employeeID = employeeDataManager.getEmployeeByName(employeeName).getId();
             ArrayList<Integer> employeeIDList = new ArrayList<>();
             employeeIDList.add(Integer.valueOf(employeeID));
-            increaseSalaryDialogController = new IncreaseSalaryDialogController(frameController, employeeIDList);
-            increaseSalaryDialogController.showSalaryIncreaseView();
             new NewAndImprovedSalaryDialogController(frameController,employeeIDList);
         } /*else if (e.getSource() == toolbar.getEditSalaryEntry()) { //TODO Edit Button Logik implementieren
 

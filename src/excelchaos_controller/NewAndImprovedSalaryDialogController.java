@@ -56,7 +56,6 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
     public BigDecimal[] projectedSalaryAfterIncrease(IncreaseSalaryOption option) {
         BigDecimal[] result = new BigDecimal[employeeIDList.size()];
 
-        int currentIndex = 0;
 
         for (int i = 0; i < employeeIDList.size(); i++) {
             Contract contract = contractDataManager.getContract(employeeIDList.get(i));
@@ -87,7 +86,7 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
                 BigDecimal baseIncrease = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(increaseSalaryDialogView.getAbsoluteTextField().getText());
 
                 for (int j = 0; j < percentages.length; j++) {
-                    absolute = absolute.add(baseIncrease.multiply(percentages[j]));
+                    absolute = absolute.add(baseIncrease.multiply(percentages[j].divide(new BigDecimal(100), 5, RoundingMode.HALF_EVEN)));
                 }
                 absolute = absolute.add(baseIncrease);
                 absolute = absolute.multiply(contract.getScope());
@@ -131,7 +130,6 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
 
             } else if (option == IncreaseSalaryOption.RELATIVE) {
                 finalSalary = projectedSalary.multiply(StringAndBigDecimalFormatter.formatStringToPercentageValueForScope(increaseSalaryDialogView.getRelativeTextField().getText()));
-
                 finalSalary = finalSalary.add(projectedSalary);
 
             } else {
@@ -141,7 +139,7 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
                 BigDecimal baseIncrease = StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(increaseSalaryDialogView.getAbsoluteTextField().getText());
 
                 for (int j = 0; j < percentages.length; j++) {
-                    absolute = absolute.add(baseIncrease.multiply(percentages[j]));
+                    absolute = absolute.add(baseIncrease.multiply(percentages[j].divide(new BigDecimal(100), 5, RoundingMode.HALF_EVEN)));
                 }
                 absolute = absolute.add(baseIncrease);
                 absolute = absolute.multiply(contract.getScope());
@@ -213,6 +211,32 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
                 }
             } else {
 
+                JOptionPane.showMessageDialog(increaseSalaryDialogView, "Bitte wählen Sie ein Startdatum aus.", "Kein Startdatum ausgewählt.", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } else if (e.getSource() == increaseSalaryDialogView.getSaveAndExitButton()) {
+            if (increaseSalaryDialogView.getStartDate().getDate() != null) {
+                if (increaseSalaryDialogView.getAbsoluteRadioButton().isSelected()) {
+                    if (increaseSalaryDialogView.getAbsoluteTextField().getText() == null || increaseSalaryDialogView.getAbsoluteTextField().getText().equals("")) {
+                        JOptionPane.showMessageDialog(increaseSalaryDialogView, "Bitte geben sie einen Absoluten Betrag zur Erhöhung ein.", "Kein Betrag eingegeben.", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        submitSalaryIncreaseToDatabase(IncreaseSalaryOption.ABSOLUTE);
+                    }
+                } else if (increaseSalaryDialogView.getRelativeRadioButton().isSelected()) {
+                    if (increaseSalaryDialogView.getRelativeTextField().getText() == null || increaseSalaryDialogView.getRelativeTextField().getText().equals("")) {
+                        JOptionPane.showMessageDialog(increaseSalaryDialogView, "Bitte geben sie einen Prozentwert zur Erhöhung ein.", "Kein Prozentwert eingegeben.", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        submitSalaryIncreaseToDatabase(IncreaseSalaryOption.RELATIVE);
+                    }
+                } else if (increaseSalaryDialogView.getMixedRadioButton().isSelected()) {
+                    if (increaseSalaryDialogView.getRelativeTextField().getText() == null || increaseSalaryDialogView.getRelativeTextField().getText().equals("") || increaseSalaryDialogView.getAbsoluteTextField().getText() == null || increaseSalaryDialogView.getAbsoluteTextField().getText().equals("")) {
+                        JOptionPane.showMessageDialog(increaseSalaryDialogView, "Bitte geben sie in beide Felder einen Wert zur Erhöhung ein.", "Fehlender Wert.", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        submitSalaryIncreaseToDatabase(IncreaseSalaryOption.MIXED);
+
+                    }
+                }
+            } else {
                 JOptionPane.showMessageDialog(increaseSalaryDialogView, "Bitte wählen Sie ein Startdatum aus.", "Kein Startdatum ausgewählt.", JOptionPane.ERROR_MESSAGE);
                 return;
             }

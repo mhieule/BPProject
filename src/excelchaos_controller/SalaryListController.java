@@ -123,15 +123,12 @@ public class SalaryListController implements TableModelListener, ActionListener,
             toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
         } else if (e.getSource() == toolbar.getIncreaseSalary()) {
             toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
-            //TODO migrate to model
             String[] selectedEmployeeID = salaryListView.getTable().getIdsOfCurrentSelectedRows();
             ArrayList<Integer> employeeIDList = new ArrayList<>();
             for(String IDString:selectedEmployeeID){
                 employeeIDList.add(Integer.parseInt(IDString));
             }
-            IncreaseSalaryDialogController increaseSalaryDialogController = new IncreaseSalaryDialogController(mainFrameController, employeeIDList);
-            increaseSalaryDialogController.showSalaryIncreaseView();
-            //increaseSalaryDialogController = new IncreaseSalaryDialogController(frameController);
+            NewAndImprovedSalaryDialogController salaryDialogController = new NewAndImprovedSalaryDialogController(mainFrameController,employeeIDList);
         } else if (e.getSource() == toolbar.getExportToCSV()) {
             CSVExporter.createCSVSalaryProjection();
         } else if (e.getSource() == showSalaryStageDialogView.getCloseButton()) {
