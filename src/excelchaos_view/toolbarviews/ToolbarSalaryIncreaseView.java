@@ -11,6 +11,13 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ToolbarSalaryIncreaseView is a class that extends the SearchPanelToolbar class to create a toolbar viewed for managing
+ * employee salary data in the SalaryIncreaseView. It provides buttons for adding, editing, and deleting salary entries, as well as exporting
+ * data to CSV. It also includes a search panel and a combo box for selecting an employee by name.
+ *
+ * @see excelchaos_view.SalaryIncreaseView
+ */
 public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
 
     private EmployeeDataManager employeeDataManager = new EmployeeDataManager();
@@ -20,6 +27,10 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
 
     private JLabel nameLabel = new JLabel("Person auswählen:");
 
+    /**
+     * Initializes the ToolbarSalaryIncreaseView by setting its layout, adding buttons and components to it,
+     * and disabling them by default (as per default, no row is selected, so no buttons should be made available).
+     */
     public void init() {
         setFloatable(false);
         setBackground(Color.WHITE);
@@ -53,6 +64,11 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
         exportToCSV.setEnabled(false);
     }
 
+    /**
+     * Sets the same ActionListener for the buttons in the toolbar, allowing them to share the same controller which control event handling
+     * @see excelchaos_controller.ToolbarSalaryIncreaseController
+     * @param l the ActionListener to be set
+     */
     public void setActionListener(ActionListener l) {
         doSalaryIncrease.addActionListener(l);
         editSalaryEntry.addActionListener(l);
@@ -60,26 +76,42 @@ public class ToolbarSalaryIncreaseView extends SearchPanelToolbar {
         exportToCSV.addActionListener(l);
     }
 
+    /**
+     * Sets an ItemListener for the nameComboBox in the toolbar.
+     *
+     * @param l the ItemListener to be set
+     */
     public void setItemListener(ItemListener l) {
         nameComboBox.addItemListener(l);
     }
 
+    /**
+     * @return {@link #nameComboBox}
+     */
     public JComboBox getNameComboBox() {
         return nameComboBox;
     }
-
+    /**
+     * @return {@link #doSalaryIncrease}
+     */
     public JButton getDoSalaryIncrease() {
         return doSalaryIncrease;
     }
-
+    /**
+     * @return {@link #editSalaryEntry}
+     */
     public JButton getEditSalaryEntry() {
         return editSalaryEntry;
     }
-
+    /**
+     * @return {@link #deleteSalaryEntry}
+     */
     public JButton getDeleteSalaryEntry() {
         return deleteSalaryEntry;
     }
-
+    /**
+     * @return {@link #exportToCSV}
+     */
     public JButton getExportToCSV() {
         return exportToCSV;
     }
