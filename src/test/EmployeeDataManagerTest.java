@@ -9,17 +9,17 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-/*
+
 public class EmployeeDataManagerTest {
     @Test
     void testRemoveAll(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         assertEquals(manager.getAllEmployees().size(),0);
     }
     @Test
     void testGetValid(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -34,7 +34,6 @@ public class EmployeeDataManagerTest {
         String status = "status_1";
         String transponder_number = "2345";
         String office_number = "a1";
-        String salaryPlannedUntil = "1234";
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -43,6 +42,7 @@ public class EmployeeDataManagerTest {
         calendar.set(Calendar.MILLISECOND, 0);
         Date visaExpiration = calendar.getTime();
         Date dateOfBirth = calendar.getTime();
+        Date salaryPlannedUntil = calendar.getTime();
         String phone_tuda = "1234";
         String houseNumber = "test_1";
         String zip_code = "test_2";
@@ -75,7 +75,7 @@ public class EmployeeDataManagerTest {
     }
     @Test
     void testGetValidNoVisa(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -90,7 +90,6 @@ public class EmployeeDataManagerTest {
         String status = "status_1";
         String transponder_number = "2345";
         String office_number = "a1";
-        String salaryPlannedUntil = "1234";
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -99,6 +98,7 @@ public class EmployeeDataManagerTest {
         calendar.set(Calendar.MILLISECOND, 0);
         Date visaExpiration = null;
         Date dateOfBirth = calendar.getTime();
+        Date salaryPlannedUntil = calendar.getTime();
         String phone_tuda = "1234";
         String houseNumber = "test_1";
         String zip_code = "test_2";
@@ -132,7 +132,7 @@ public class EmployeeDataManagerTest {
 
     @Test
     void testGetInvalid(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -147,13 +147,13 @@ public class EmployeeDataManagerTest {
         String status = "status_1";
         String transponder_number = "2345";
         String office_number = "a1";
-        String salaryPlannedUntil = "1234";
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
+        Date salaryPlannedUntil = calendar.getTime();
         Date visaExpiration = null;
         Date dateOfBirth = calendar.getTime();
         String phone_tuda = "1234";
@@ -171,7 +171,7 @@ public class EmployeeDataManagerTest {
     }
     @Test
     void testRemoveValid(){
-        var manager =EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -186,13 +186,13 @@ public class EmployeeDataManagerTest {
         String status = "status_1";
         String transponder_number = "2345";
         String office_number = "a1";
-        String salaryPlannedUntil = "1234";
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
+        Date salaryPlannedUntil = calendar.getTime();
         Date visaExpiration = null;
         Date dateOfBirth = calendar.getTime();
         String phone_tuda = "1234";
@@ -212,7 +212,7 @@ public class EmployeeDataManagerTest {
 
     @Test
     void testRemoveInvalid(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -227,7 +227,6 @@ public class EmployeeDataManagerTest {
         String status = "status_1";
         String transponder_number = "2345";
         String office_number = "a1";
-        String salaryPlannedUntil = "1234";
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -242,6 +241,7 @@ public class EmployeeDataManagerTest {
         String additional_address = "test_3";
         String city = "test_4";
         String street = "test_1";
+        Date salaryPlannedUntil = calendar.getTime();
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
                 salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
@@ -252,7 +252,7 @@ public class EmployeeDataManagerTest {
 
     @Test
     void testGetAll(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         String surname = "Surname1";
         String name  = "Name1";
@@ -266,7 +266,6 @@ public class EmployeeDataManagerTest {
         String status = "status_1";
         String transponder_number = "2345";
         String office_number = "a1";
-        String salaryPlannedUntil = "1234";
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -281,6 +280,7 @@ public class EmployeeDataManagerTest {
         String additional_address = "test_3";
         String city = "test_4";
         String street = "test_1";
+        Date salaryPlannedUntil = calendar.getTime();
         var employees = new Employee[10];
         for (int i = 0; i < 10; i++){
             Employee employee = new Employee(i, surname, name, email_private, phone_private, citizenship_1,
@@ -313,7 +313,7 @@ public class EmployeeDataManagerTest {
     }
     @Test
     void testGetNextID(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -328,7 +328,6 @@ public class EmployeeDataManagerTest {
         String status = "status_1";
         String transponder_number = "2345";
         String office_number = "a1";
-        String salaryPlannedUntil = "1234";
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -343,6 +342,7 @@ public class EmployeeDataManagerTest {
         String additional_address = "test_3";
         String city = "test_4";
         String street = "test_1";
+        Date salaryPlannedUntil = calendar.getTime();
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
                 salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
@@ -351,13 +351,13 @@ public class EmployeeDataManagerTest {
     }
     @Test
     void testGetNextIDEmpty(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         assertEquals(manager.getNextID(),1);
     }
     @Test
     void testGetRowCount(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         String surname = "Surname1";
         String name  = "Name1";
@@ -371,7 +371,6 @@ public class EmployeeDataManagerTest {
         String status = "status_1";
         String transponder_number = "2345";
         String office_number = "a1";
-        String salaryPlannedUntil = "1234";
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -386,6 +385,7 @@ public class EmployeeDataManagerTest {
         String additional_address = "test_3";
         String city = "test_4";
         String street = "test_1";
+        Date salaryPlannedUntil = calendar.getTime();
         for (int i = 0; i < 10; i++){
             Employee employee = new Employee(i, surname, name, email_private, phone_private, citizenship_1,
                     citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
@@ -397,14 +397,14 @@ public class EmployeeDataManagerTest {
 
     @Test
     void testGetRowCountEmpty(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         assertEquals(manager.getRowCount(),0);
     }
 
     @Test
     void testUpdateEmployeeValid(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -419,7 +419,6 @@ public class EmployeeDataManagerTest {
         String status = "status_1";
         String transponder_number = "2345";
         String office_number = "a1";
-        String salaryPlannedUntil = "1234";
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -434,6 +433,7 @@ public class EmployeeDataManagerTest {
         String additional_address = "test_3";
         String city = "test_4";
         String street = "test_1";
+        Date salaryPlannedUntil = calendar.getTime();
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
                 salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, "street");
@@ -464,7 +464,7 @@ public class EmployeeDataManagerTest {
     }
     @Test
     void testUpdateEmployeeInvalid(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -479,7 +479,6 @@ public class EmployeeDataManagerTest {
         String status = "status_1";
         String transponder_number = "2345";
         String office_number = "a1";
-        String salaryPlannedUntil = "1234";
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -494,6 +493,7 @@ public class EmployeeDataManagerTest {
         String additional_address = "test_3";
         String city = "test_4";
         String street = "test_1";
+        Date salaryPlannedUntil = calendar.getTime();
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
                 salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
@@ -525,7 +525,7 @@ public class EmployeeDataManagerTest {
     }
     @Test
     void testGetEmployeeByNameValid(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -540,7 +540,6 @@ public class EmployeeDataManagerTest {
         String status = "status_1";
         String transponder_number = "2345";
         String office_number = "a1";
-        String salaryPlannedUntil = "1234";
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -555,6 +554,7 @@ public class EmployeeDataManagerTest {
         String additional_address = "test_3";
         String city = "test_4";
         String street = "test_1";
+        Date salaryPlannedUntil = calendar.getTime();
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
                 salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
@@ -582,7 +582,7 @@ public class EmployeeDataManagerTest {
 
     @Test
     void testGetEmployeeByNameInvalid(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         int id = 1;
         String surname = "Surname1";
@@ -597,7 +597,6 @@ public class EmployeeDataManagerTest {
         String status = "status_1";
         String transponder_number = "2345";
         String office_number = "a1";
-        String salaryPlannedUntil = "1234";
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -612,6 +611,7 @@ public class EmployeeDataManagerTest {
         String additional_address = "test_3";
         String city = "test_4";
         String street = "test_1";
+        Date salaryPlannedUntil = calendar.getTime();
         Employee employee = new Employee(id, surname, name, email_private, phone_private, citizenship_1,
                 citizenship_2, employeeNumber, tu_id, visa_required, status, transponder_number, office_number, phone_tuda,
                 salaryPlannedUntil,visaExpiration, dateOfBirth, houseNumber, zip_code, additional_address, city, street);
@@ -622,7 +622,7 @@ public class EmployeeDataManagerTest {
 
     @Test
     void testGetAllEmployeesNamesList(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         String surname = "Surname1";
         String name  = "Name1";
@@ -636,7 +636,6 @@ public class EmployeeDataManagerTest {
         String status = "status_1";
         String transponder_number = "2345";
         String office_number = "a1";
-        String salaryPlannedUntil = "1234";
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -651,6 +650,7 @@ public class EmployeeDataManagerTest {
         String additional_address = "test_3";
         String city = "test_4";
         String street = "test_1";
+        Date salaryPlannedUntil = calendar.getTime();
         var employees = new Employee[10];
         for (int i = 0; i < 10; i++){
             Employee employee = new Employee(i, surname, name, email_private, phone_private, citizenship_1,
@@ -667,9 +667,9 @@ public class EmployeeDataManagerTest {
 
     @Test
     void testGetAllEmployeesNamesListEmpty(){
-        var manager = EmployeeDataManager.getInstance();
+        var manager = new EmployeeDataManager();
         manager.removeAllEmployees();
         String[] namesList = manager.getAllEmployeesNameList();
         assertEquals(namesList.length, 0);
     }
-}*/
+}
