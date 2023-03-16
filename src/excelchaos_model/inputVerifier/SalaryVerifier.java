@@ -12,10 +12,10 @@ public class SalaryVerifier extends InputVerifier {
         if (text.matches("") || text.matches("\\d+\\.\\d{3},\\d{2}\\h€") || text.matches("\\d+,\\d{2}\\h€")) {
             return true;
         }
-        else if(text.matches("\\d+") || text.matches("\\d+\\h€") || text.matches("\\d+\\.\\d{3}") || text.matches("\\d+\\.\\d{3},\\d{1,2}") || text.matches("\\d+,\\d{1,2}")){
+        else if(text.matches("\\d+") || text.matches("\\d+\\h€") || text.matches("\\d+€") || text.matches("\\d+\\.\\d{3}") || text.matches("\\d+\\.\\d{3},\\d{1,2}") || text.matches("\\d+,\\d{1,2}")){
             ((JTextField) input).setText(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(text)));
             return true;
-        } else if (text.matches("\\d+\\.\\d{3}\\.\\d{1,2}\\h€") || text.matches("\\d+\\.\\d{3}\\.\\d{1,2}") || text.matches("\\d+\\.\\d{1,2}\\h€") || text.matches("\\d+\\.\\d{1,2}")) {
+        } else if (text.matches("\\d+\\.\\d{3}\\.\\d{1,2}\\h€") || text.matches("\\d+\\.\\d{3}\\.\\d{1,2}€") ||text.matches("\\d+\\.\\d{3}\\.\\d{1,2}") || text.matches("\\d+\\.\\d{1,2}\\h€") || text.matches("\\d+\\.\\d{1,2}€") || text.matches("\\d+\\.\\d{1,2}")) {
             //replaceFirst written to replaceLast
             ((JTextField) input).setText(StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(StringAndBigDecimalFormatter.formatStringToBigDecimalCurrency(text.replaceFirst("(?s)(.*)" + "\\.","$1" + ","))));
             return true;
