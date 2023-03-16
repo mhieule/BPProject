@@ -2,28 +2,30 @@ import excelchaos_model.database.ProjectParticipation;
 import excelchaos_model.database.ProjectParticipationManager;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/*public class ProjectParticipationManagerTest {
+public class ProjectParticipationManagerTest {
     @Test
     void testRemoveAll(){
-        var manager = ProjectParticipationManager.getInstance();
+        var manager = new ProjectParticipationManager();
         manager.removeAllProjectParticipations();
         assertEquals(manager.getAllProjectParticipations().size(), 0);
     }
 
     @Test
     void testGetByProjectIDValid(){
-        var manager =ProjectParticipationManager.getInstance();
+        var manager = new ProjectParticipationManager();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
+        BigDecimal num = new BigDecimal("123.3");
+        var projectParticipation = new ProjectParticipation(1,1,num, calendar.getTime());
         manager.addProjectParticipation(projectParticipation);
         var recProjectParticipation = manager.getProjectParticipationByProjectID(1).get(0);
         assertEquals(projectParticipation.getParticipation_period(), recProjectParticipation.getParticipation_period());
@@ -34,28 +36,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetByProjectIDInvalid(){
-        var manager = ProjectParticipationManager.getInstance();
+        var manager = new ProjectParticipationManager();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
+        BigDecimal num = new BigDecimal("123.3");
+        var projectParticipation = new ProjectParticipation(1,1,num, calendar.getTime());
         manager.addProjectParticipation(projectParticipation);
         assertEquals(manager.getProjectParticipationByProjectID(2).size(), 0);
     }
 
     @Test
     void testGetByPersonIDValid(){
-        var manager = ProjectParticipationManager.getInstance();
+        var manager = new ProjectParticipationManager();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
+        BigDecimal num = new BigDecimal("123.3");
+        var projectParticipation = new ProjectParticipation(1,1,num, calendar.getTime());
         manager.addProjectParticipation(projectParticipation);
         var recProjectParticipation = manager.getProjectParticipationByPersonID(1).get(0);
         assertEquals(projectParticipation.getParticipation_period(), recProjectParticipation.getParticipation_period());
@@ -66,27 +70,29 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetByPersonIDInvalid(){
-        var manager = ProjectParticipationManager.getInstance();
+        var manager = new ProjectParticipationManager();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
+        BigDecimal num = new BigDecimal("123.3");
+        var projectParticipation = new ProjectParticipation(1,1,num, calendar.getTime());
         manager.addProjectParticipation(projectParticipation);
         assertEquals(manager.getProjectParticipationByPersonID(2).size(), 0);
     }
     @Test
     void testGetByPersonAndProjectIDValid(){
-        var manager = ProjectParticipationManager.getInstance();
+        var manager = new ProjectParticipationManager();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
+        BigDecimal num = new BigDecimal("123.3");
+        var projectParticipation = new ProjectParticipation(1,1,num, calendar.getTime());
         manager.addProjectParticipation(projectParticipation);
         var recProjectParticipation = manager.getProjectParticipationByProjectIDAndPersonID(1, 1).get(0);
         assertEquals(projectParticipation.getParticipation_period(), recProjectParticipation.getParticipation_period());
@@ -97,28 +103,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetByPersonAndProjectIDInvalid(){
-        var manager =ProjectParticipationManager.getInstance();
+        var manager = new ProjectParticipationManager();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
+        BigDecimal num = new BigDecimal("123.3");
+        var projectParticipation = new ProjectParticipation(1,1,num, calendar.getTime());
         manager.addProjectParticipation(projectParticipation);
         assertEquals(manager.getProjectParticipationByProjectIDAndPersonID(2, 2).size(), 0);
     }
 
     @Test
     void testRemoveValid(){
-        var manager = ProjectParticipationManager.getInstance();
+        var manager = new ProjectParticipationManager();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
+        BigDecimal num = new BigDecimal("123.3");
+        var projectParticipation = new ProjectParticipation(1,1,num, calendar.getTime());
         manager.addProjectParticipation(projectParticipation);
         manager.removeProjectParticipation(1, 1);
         assertEquals(manager.getProjectParticipationByProjectIDAndPersonID(1 ,1).size(), 0);
@@ -126,14 +134,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testRemoveInvalid(){
-        var manager = ProjectParticipationManager.getInstance();
+        var manager = new ProjectParticipationManager();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        var projectParticipation = new ProjectParticipation(1,1,0.5, calendar.getTime());
+        BigDecimal num = new BigDecimal("123.3");
+        var projectParticipation = new ProjectParticipation(1,1,num, calendar.getTime());
         manager.addProjectParticipation(projectParticipation);
         manager.removeProjectParticipation(2, 1);
         assertEquals(manager.getProjectParticipationByProjectIDAndPersonID(1 ,1).size(), 1);
@@ -141,7 +150,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetAll(){
-        var manager = ProjectParticipationManager.getInstance();
+        var manager = new ProjectParticipationManager();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -151,7 +160,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         var projectParticipations = new ProjectParticipation[10];
 
         for (int i = 0; i < 10; i++){
-            var projectParticipation = new ProjectParticipation(i,i,0.5, calendar.getTime());
+            BigDecimal num = new BigDecimal("123.3");
+            var projectParticipation = new ProjectParticipation(i,i,num, calendar.getTime());
             manager.addProjectParticipation(projectParticipation);
             projectParticipations[i] = projectParticipation;
         }
@@ -168,7 +178,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetRowCount(){
-        var manager = ProjectParticipationManager.getInstance();
+        var manager = new ProjectParticipationManager();
         manager.removeAllProjectParticipations();
         Calendar calendar = Calendar.getInstance();
         calendar.set(1970,12,30);
@@ -177,7 +187,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         calendar.set(Calendar.SECOND, 0);
 
         for (int i = 0; i < 10; i++){
-            var projectParticipation = new ProjectParticipation(5,5,0.5, calendar.getTime());
+            BigDecimal num = new BigDecimal("123.3");
+            var projectParticipation = new ProjectParticipation(5,5,num, calendar.getTime());
             manager.addProjectParticipation(projectParticipation);
         }
         assertEquals(manager.getRowCountByProjectID(5),10);
@@ -186,9 +197,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetRowCountEmpty(){
-        var manager = ProjectParticipationManager.getInstance();
+        var manager = new ProjectParticipationManager();
         manager.removeAllProjectParticipations();
         assertEquals(manager.getRowCountByProjectID(5),0);
         assertEquals(manager.getRowCountByPersonID(5),0);
     }
-}*/
+}
