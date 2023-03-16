@@ -11,6 +11,11 @@ public class ToolbarSalaryHistoryController implements ActionListener {
 
     private MainFrameController frameController;
 
+    /**
+     * Constructor for ToolbarSalaryHistoryController
+     *
+     * @param mainFrameController mainFrameController
+     */
     public ToolbarSalaryHistoryController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         toolbar = new ToolbarSalaryHistoryView();
