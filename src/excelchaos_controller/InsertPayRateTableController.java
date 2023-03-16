@@ -207,7 +207,6 @@ public class InsertPayRateTableController extends MouseAdapter implements Action
                         if (row == 10 && column % 2 == 0 && column != 0) {
                             continue;
                         }
-                        System.out.println(resultString[index]);
                         insertPayRateTableView.getTable().setValueAt(resultString[index], row, column);
                         index++;
 

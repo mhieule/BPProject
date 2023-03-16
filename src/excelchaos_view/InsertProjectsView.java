@@ -401,7 +401,6 @@ public class InsertProjectsView extends JPanel {
 
         for (int i = 0; i < names.length; i++) {
             table.setValueAt(names[i], i, 1);
-            System.out.println(names[i]);
         }
     }
 

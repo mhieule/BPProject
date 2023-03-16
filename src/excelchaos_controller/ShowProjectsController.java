@@ -28,6 +28,10 @@ public class ShowProjectsController implements ActionListener, TableModelListene
     private String columns[] = {"ID", "Name", "Bewilligungsdatum", "Anfangsdatum", "Enddatum"};
 
 
+    /**
+     * Constructor for ShowProjectsController
+     * @param mainFrameController mainFrameController
+     */
     public ShowProjectsController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         showProjectsView = new ShowProjectsView();
@@ -42,6 +46,10 @@ public class ShowProjectsController implements ActionListener, TableModelListene
         return showProjectsView;
     }
 
+    /**
+     * Adds the showProjectsView to the MainFrameController
+     * @param mainFrameController
+     */
     public void showProjectsView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
             mainFrameController.addTab(title, showProjectsView);
@@ -50,6 +58,10 @@ public class ShowProjectsController implements ActionListener, TableModelListene
         }
     }
 
+    /**
+     * Gets the data from the database and returns it as a String[][]
+     * @return String[][] with the data from the database
+     */
     public String[][] getProjectsDataFromDataBase() {
         int lines = projectManager.getRowCount();
         String resultData[][] = new String[lines][];
@@ -70,11 +82,19 @@ public class ShowProjectsController implements ActionListener, TableModelListene
         return resultData;
     }
 
+    /**
+     * Creates the table with the data from the database
+     * @param tableData String[][] with the data from the database
+     */
     private void createTableWithData(String[][] tableData) {
         showProjectsView.createProjectsTable(tableData, columns);
         showProjectsView.getTable().getModel().addTableModelListener(this);
     }
 
+    /**
+     * Updates the table with the data from the database
+     * @param tableData String[][] with the data from the database
+     */
     public void updateData(String[][] tableData) {
         CustomTableModel customTableModel = new CustomTableModel(tableData, columns);
         showProjectsView.getTable().setModel(customTableModel);
@@ -90,6 +110,10 @@ public class ShowProjectsController implements ActionListener, TableModelListene
         toolbarShowProjects.getToolbar().getCostOverview().setEnabled(false);
     }
 
+    /**
+     * Deletes the selected projects from the database
+     * @param projectIds int[] with the projectIds
+     */
     public void deleteData(int[] projectIds) {
         for (int i = 0; i < projectIds.length; i++) {
             projectCategoryManager.removeProjectCategoryBasedOnProjectId(projectIds[i]);
@@ -105,6 +129,11 @@ public class ShowProjectsController implements ActionListener, TableModelListene
 
     }
 
+    /**
+     * Depending on the number of selected rows, the buttons in the toolbar are enabled or disabled
+     * @param e a {@code TableModelEvent} to notify listener that a table model
+     *          has changed
+     */
     @Override
     public void tableChanged(TableModelEvent e) {
         int numberOfSelectedRows = showProjectsView.getTable().getNumberOfSelectedRows();

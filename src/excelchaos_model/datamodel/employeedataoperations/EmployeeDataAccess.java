@@ -120,7 +120,6 @@ public class EmployeeDataAccess {
             }
             String group = contract.getPaygrade();
             String stufe = contract.getPaylevel();
-            System.out.println("Gehalt: " + contract.getRegular_cost());
             String gehalt = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getRegular_cost());
             String sonderzahlungen = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(contract.getBonus_cost());
 

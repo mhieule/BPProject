@@ -18,9 +18,7 @@ public class ShowPayRateTableController implements ActionListener {
     private PayRateTablesDataAccess payRateTablesDataAccess;
     private PayRateTablesDataInserter payRateTablesDataInserter;
     private ShowPayRateTableView showPayRateTableView;
-
     private MainFrameController mainFrameController;
-
     private PayRateTablesController payRateTablesController;
     private String tableTitle, paygrade;
 
@@ -41,6 +39,14 @@ public class ShowPayRateTableController implements ActionListener {
             "E14 St. 4 VBL-befreit", "E14 St. 4 VBL-pflichtig", "E14 St. 5 VBL-befreit", "E14 St. 5 VBL-pflichtig", "E14 St. 6 VBL-befreit", "E14 St. 6 VBL-pflichtig"
     };
 
+    /**
+     * Constructor for ShowPayRateTableController
+     *
+     * @param mainFrameController     mainFrameController
+     * @param tableName               name of the table
+     * @param actualPaygrade          paygrade of the table
+     * @param payRateTablesController payRateTablesController
+     */
     public ShowPayRateTableController(MainFrameController mainFrameController, String tableName, String actualPaygrade, PayRateTablesController payRateTablesController) {
         this.mainFrameController = mainFrameController;
         this.payRateTablesController = payRateTablesController;
@@ -54,7 +60,11 @@ public class ShowPayRateTableController implements ActionListener {
         showPayRateTableView(this.mainFrameController);
     }
 
-
+    /**
+     * Adds showPayRateTableView to mainFrameController
+     *
+     * @param mainFrameController mainFrameController
+     */
     public void showPayRateTableView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(tableTitle) == -1) {
             mainFrameController.addTab(tableTitle, showPayRateTableView);
@@ -63,6 +73,11 @@ public class ShowPayRateTableController implements ActionListener {
         }
     }
 
+    /**
+     * returns column names for the table
+     *
+     * @return String[] with the column names
+     */
     private String[] determineTableColumns() {
         if (paygrade.equals("E13")) {
             if (hasAAndB()) {
@@ -83,12 +98,19 @@ public class ShowPayRateTableController implements ActionListener {
         }
     }
 
+    /**
+     * inserts values in the table
+     */
     public void insertValuesInTable() {
         List<SalaryTable> salaryTables = payRateTablesDataAccess.getSalaryTable(tableTitle);
         showPayRateTableView.insertPayRateValuesInTable(salaryTables);
-
     }
 
+    /**
+     * prepares the values of the table to be inserted in the database
+     *
+     * @return BigDecimal[][] with the values of the table to be inserted in the database
+     */
     private BigDecimal[][] prepareDatabaseInsertion() {
         BigDecimal[][] values = new BigDecimal[showPayRateTableView.getShowPayRatesTable().getRowCount()][showPayRateTableView.getShowPayRatesTable().getColumnCount()];
         for (int row = 0; row < showPayRateTableView.getShowPayRatesTable().getRowCount(); row++) {
@@ -103,22 +125,33 @@ public class ShowPayRateTableController implements ActionListener {
         return values;
     }
 
+    /**
+     * saves the edited values in the database
+     */
     private void saveEditedValues() {
         BigDecimal[][] values = prepareDatabaseInsertion();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String tableName = showPayRateTableView.getTfNameOfTable().getText() + "_" + showPayRateTableView.getDatePicker().getDate().format(dateTimeFormatter);
         int border = showPayRateTableView.getShowPayRatesTable().getColumnCount() - 1;
         payRateTablesDataInserter.updateSalaryTable(values, tableTitle, tableName, border);
-
-
     }
 
+    /**
+     * checks if the table contains A and B
+     *
+     * @return
+     */
     private boolean hasAAndB() {
         if (tableTitle.contains("1A") || tableTitle.contains("1B")) {
             return true;
         } else return false;
     }
 
+    /**
+     * Depending on the source of the event, the corresponding method is called
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == showPayRateTableView.getCancelButton()) {
