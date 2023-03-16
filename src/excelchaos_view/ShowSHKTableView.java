@@ -10,10 +10,20 @@ import java.awt.*;
 public class ShowSHKTableView extends JPanel {
     private CustomTable shkTable;
 
+    /**
+     * Sets the layout for this component.
+     */
     public void init(){
         setLayout(new BorderLayout());
     }
 
+    /**
+
+     Creates a custom JTable with the provided data and column names, and adds it to the current container.
+     The second column of the table is hidden.
+     @param tableData a 2D array of String containing the data to be displayed in the table
+     @param columnNames an array of String containing the names of the columns to be displayed in the table
+     */
     public void createSHKTable(String [][] tableData, String[] columnNames){
         shkTable = new CustomTable(tableData,columnNames);
         shkTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

@@ -11,13 +11,23 @@ import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class CustomTable represents the view of one CustomTable. CustomTable extends the functionality of JTable in which it supports multiple rows selection (currently disable,
+ * see the setAutoCheckboxSelection method below and hide/unhide multiple columns in the view.
+ */
+
 public class CustomTable extends JTable {
     //This attribute indicates weather the select dialog is already opened
     boolean isSelectDialogOpened = false;
 
-    //This attribute indicates if a column is visible or it is currently hidden
+    //This attribute indicates if a column is visible or it is currently hidden. It represents the mapping (index of column, visibility)
     Map<Integer, Boolean> columnVisibility = new HashMap<>();
 
+    /**
+     * Constructor of the CustomTable class
+     * @param data the row values
+     * @param header the header values of the columns
+     */
     public CustomTable(String[][] data, String[] header) {
         super(new CustomTableModel(data, header));
         for (int i = 0; i < getColumnCount(); i++) {
@@ -31,6 +41,10 @@ public class CustomTable extends JTable {
 
     }
 
+    /**
+     *  Purpose: This method is used to support multiple rows selection in the custom table view/model
+     *  Side-effect: current implementation is not used because when a row is selected, it can only be deselected with 2 clicks on the checkbox
+     */
     private void setAutoCheckboxSelection() {
         ListSelectionModel rowSM = getSelectionModel();
         rowSM.addListSelectionListener(new ListSelectionListener() {
@@ -39,7 +53,7 @@ public class CustomTable extends JTable {
                 //Ignore extra messages.
                 if (e.getValueIsAdjusting()) return;
 
-
+                //Handle the case when no rows are selected or when one or multiple rows are selected
                 if (rowSM.isSelectionEmpty()) {
                     System.out.println("No rows are selected.");
                 } else {
@@ -53,6 +67,10 @@ public class CustomTable extends JTable {
         });
     }
 
+    /**
+     * Second constructor of the CustomTable class. It allows user to create a CustomTable from an existing DefaultTableModel
+     * @param model the DefaultTableModel which the to-be-created CustomTable bases on
+     */
     public CustomTable(DefaultTableModel model) {
         super(model);
     }
@@ -61,10 +79,7 @@ public class CustomTable extends JTable {
      * This method adds mouse listener to the table in order to open up the choose dialog when user right-clicks on any cell. Popupmenu can't be used
      * directly because it would not expose the location where the popupmenu is triggered. Therefore there would be no information about the column which
      * was clicked. Hence I opted for the workaround adding MouseListener to the component which triggers Popupmenu, in this case the table header.
-     * Further details are explained in code.
-     *
-     * @author Minh Hieu, Le
-     * @version 1.0
+     * Further details are explained in the comments in code.
      */
 
     private void init() {
@@ -194,7 +209,7 @@ public class CustomTable extends JTable {
     /**
      * The method is used to return the current selected row as a complete table with header to assist tasks involving selecting table rows
      *
-     * @return JTable with header
+     * @return CustomTable with header and without the first column of the normal CustomTable (checkbox column)
      */
     public CustomTable getCurrentSelectedRowAsTable() {
         DefaultTableModel result = new DefaultTableModel(null, getTableHeaderAsStringArray());
@@ -212,6 +227,11 @@ public class CustomTable extends JTable {
         return resultTable;
     }
 
+    /**
+     * Purpose: Loop through the CustomTable to retrieve the number of currently selected rows.
+     * @return the number of the currently selected rows.
+     */
+
     public int getNumberOfSelectedRows() {
         int selectedRows = 0;
         for (int row = 0; row < this.getRowCount(); row++) {
@@ -223,6 +243,10 @@ public class CustomTable extends JTable {
         return selectedRows;
     }
 
+    /**
+     * Purpose: Loop through the CustomTable to retrieve the ID of the employees in currently selected rows.
+     * @return the ID of the employees in currently selected rows as String array.
+     */
     public String[] getIdsOfCurrentSelectedRows() {
         int selectedRows = getNumberOfSelectedRows();
 
@@ -238,6 +262,9 @@ public class CustomTable extends JTable {
         return result;
     }
 
+    /**
+     * Purpose: deselect all the selected rows in current view
+     */
     public void deselectSelectedRows() {
         for (int row = 0; row < this.getRowCount(); row++) {
             if ((Boolean) getValueAt(row, 0)) {
@@ -245,6 +272,11 @@ public class CustomTable extends JTable {
             }
         }
     }
+
+    /**
+     * Purpose: retrieve all the currently selected rows as a 2D String array.
+     * @return all the currently selected rows as a 2D String array.
+     */
 
     public String[][] getCurrentSelectedRowsAsArray() {
         int selectedRows = 0;
@@ -271,6 +303,11 @@ public class CustomTable extends JTable {
         }
         return result;
     }
+
+    /**
+     * Purpose: check if there's any row in the view currently selected
+     * @return true if there's any selected row, false otherwise
+     */
 
     public boolean isRowCurrentlySelected() {
         int selectedRows = 0;
