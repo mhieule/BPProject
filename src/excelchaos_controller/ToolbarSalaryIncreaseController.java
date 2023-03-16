@@ -1,11 +1,14 @@
 package excelchaos_controller;
 
+import excelchaos_model.database.ContractDataManager;
+import excelchaos_model.database.EmployeeDataManager;
 import excelchaos_model.export.CSVExporter;
 import excelchaos_view.toolbarviews.ToolbarSalaryIncreaseView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class ToolbarSalaryIncreaseController implements ActionListener {
 
@@ -15,6 +18,9 @@ public class ToolbarSalaryIncreaseController implements ActionListener {
 
     private SalaryIncreaseController salaryIncreaseController;
     private IncreaseSalaryDialogController increaseSalaryDialogController;
+
+    private EmployeeDataManager employeeDataManager=new EmployeeDataManager();
+    private ContractDataManager contractDataManager=new ContractDataManager();
 
     public ToolbarSalaryIncreaseController(MainFrameController mainFrameController, SalaryIncreaseController salaryIncreaseController) {
         frameController = mainFrameController;
@@ -27,7 +33,14 @@ public class ToolbarSalaryIncreaseController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toolbar.getDoSalaryIncrease()) {
-            increaseSalaryDialogController = new IncreaseSalaryDialogController(frameController, toolbar.getNameComboBox().getSelectedItem().toString());
+            //Not directly accessible through the table because sometimes the table does not exist (when the employee is new for example)
+            String employeeName = toolbar.getNameComboBox().getSelectedItem().toString();
+            int employeeID = employeeDataManager.getEmployeeByName(employeeName).getId();
+            ArrayList<Integer> employeeIDList = new ArrayList<>();
+            employeeIDList.add(Integer.valueOf(employeeID));
+            increaseSalaryDialogController = new IncreaseSalaryDialogController(frameController, employeeIDList);
+            increaseSalaryDialogController.showSalaryIncreaseView();
+            new NewAndImprovedSalaryDialogController(frameController,employeeIDList);
         } /*else if (e.getSource() == toolbar.getEditSalaryEntry()) { //TODO Edit Button Logik implementieren
 
         }*/ else if (e.getSource() == toolbar.getDeleteSalaryEntry()) {

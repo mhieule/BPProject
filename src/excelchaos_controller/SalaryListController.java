@@ -18,6 +18,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class SalaryListController implements TableModelListener, ActionListener, ItemListener {
@@ -85,10 +86,13 @@ public class SalaryListController implements TableModelListener, ActionListener,
         if (e.getColumn() == 0) {
             if (numberOfSelectedRows == 0) {
                 toolbar.getEditEntry().setEnabled(false);
+                toolbar.getIncreaseSalary().setEnabled(false);
             } else if (numberOfSelectedRows == 1) {
                 toolbar.getEditEntry().setEnabled(true);
+                toolbar.getIncreaseSalary().setEnabled(true);
             } else {
-               toolbar.getEditEntry().setEnabled(false);
+                toolbar.getEditEntry().setEnabled(false);
+                toolbar.getIncreaseSalary().setEnabled(true);
             }
         }
     }
@@ -119,6 +123,14 @@ public class SalaryListController implements TableModelListener, ActionListener,
             toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
         } else if (e.getSource() == toolbar.getIncreaseSalary()) {
             toolbar.getRemoveAdditionalSalaryStage().setEnabled(false);
+            //TODO migrate to model
+            String[] selectedEmployeeID = salaryListView.getTable().getIdsOfCurrentSelectedRows();
+            ArrayList<Integer> employeeIDList = new ArrayList<>();
+            for(String IDString:selectedEmployeeID){
+                employeeIDList.add(Integer.parseInt(IDString));
+            }
+            IncreaseSalaryDialogController increaseSalaryDialogController = new IncreaseSalaryDialogController(mainFrameController, employeeIDList);
+            increaseSalaryDialogController.showSalaryIncreaseView();
             //increaseSalaryDialogController = new IncreaseSalaryDialogController(frameController);
         } else if (e.getSource() == toolbar.getExportToCSV()) {
             CSVExporter.createCSVSalaryProjection();

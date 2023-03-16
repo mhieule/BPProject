@@ -35,8 +35,8 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
 
     private CustomTableModel customTableModel;
 
-    private String columns[] = {"ID", "Gültig ab", "Neues Gehalt", "Kommentar", "Sonderzahlung"};
-    private String nullColumns[] = {"Gültig ab", "Neues Gehalt", "Kommentar", "Sonderzahlung"};
+    private String columns[] = {"ID", "Gültig ab", "Neues Gehalt", "Absolute Erhöhung in €", "Relative Erhöhung in %", "Kommentar", "Sonderzahlung"};
+    private String nullColumns[] = {"Gültig ab", "Neues Gehalt", "Absolute Erhöhung in €", "Relative Erhöhung in %", "Kommentar", "Sonderzahlung"};
     private String title = "Gehaltserhöhung";
 
     public SalaryIncreaseController(MainFrameController mainFrameController) {
@@ -97,6 +97,8 @@ public class SalaryIncreaseController implements ItemListener, TableModelListene
         for (SalaryIncreaseHistory entry : salaryIncreaseHistory) {
             String salary = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(entry.getNew_salary());
             String usageDate = dateFormat.format(entry.getStart_date());
+            String absoluteValue = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(entry.getAbsoluteIncreaseValue());
+            String relativeValue = StringAndBigDecimalFormatter.formatPercentageToStringForScope(entry.getPercentIncreaseValue());
             String comment = entry.getComment();
             String specialPayment;
             if (entry.getIs_additional_payment()) {

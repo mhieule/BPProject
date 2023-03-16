@@ -297,7 +297,7 @@ public class StartUp {
     }
 
     /**
-     * Sets up the database connection URL for all the data managers required to work with the specified database.
+     * Sets up the database connection URL for all the data managers required to work with the specified database and creates the database.
      *
      * @param databasePath the file path of the database to set up
      */
@@ -313,6 +313,28 @@ public class StartUp {
         ProjectFunderManager.setDatabaseURL(databasePath);
         ProjectParticipationManager.setDatabaseURL(databasePath);
         SHKSalaryTableManager.setDatabaseURL(databasePath);
+
+        ContractDataManager contractDataManager = new ContractDataManager();
+        contractDataManager.createTable();
+        EmployeeDataManager employeeDataManager = new EmployeeDataManager();
+        employeeDataManager.createTable();
+        ManualSalaryEntryManager manualSalaryEntryManager = new ManualSalaryEntryManager();
+        manualSalaryEntryManager.createTable();
+        SalaryIncreaseHistoryManager salaryIncreaseHistoryManager = new SalaryIncreaseHistoryManager();
+        salaryIncreaseHistoryManager.createTable();
+        SalaryTableManager salaryTableManager = new SalaryTableManager();
+        salaryTableManager.createTable();
+        ProjectManager projectManager = new ProjectManager();
+        projectManager.createTable();
+        ProjectCategoryManager projectCategoryManager = new ProjectCategoryManager();
+        projectCategoryManager.createTable();
+        ProjectFunderManager projectFunderManager = new ProjectFunderManager();
+        projectFunderManager.createTable();
+        ProjectParticipationManager projectParticipationManager = new ProjectParticipationManager();
+        projectParticipationManager.createTable();
+        SHKSalaryTableManager shkSalaryTableManager = new SHKSalaryTableManager();
+        shkSalaryTableManager.createTable();
+
     }
 
     /**

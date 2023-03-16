@@ -651,4 +651,81 @@ public class SalaryTableLookUp {
 
         }
     }
+
+    /**
+     * Returns an array of BigDecimal percentages based on the pay grade and level of the given contract
+     * and the chosen date. If the pay grade is "E13" or "E14" and the VBL status is true, the returned
+     * array will have 9 elements, otherwise it will have 8.
+     *
+     * @param contract   The contract for which to get the percentages
+     * @param chosenDate The chosen date to base the pay rate table on
+     * @return An array of BigDecimal percentages based on the contract and chosen date
+     */
+    public BigDecimal[] getPercentagesOfPayRateTable(Contract contract, LocalDate chosenDate) {
+        BigDecimal[] percentages = null;
+
+        if (contract.getPaygrade().equals("E13")) {
+            PayRateTableE13Calculations chosenDatePayRateTableE13 = new PayRateTableE13Calculations();
+            List<SalaryTable> salaryTables;
+            if (contract.getPaylevel().equals("1")) {
+                salaryTables = chosenDatePayRateTableE13.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(chosenDate);
+            } else {
+                salaryTables = chosenDatePayRateTableE13.getPayRateTableBasedOnChosenDateWith1AAnd1BTable(chosenDate);
+            }
+            if (contract.getVbl_status()) {
+                percentages = new BigDecimal[9];
+                percentages[0] = salaryTables.get(0).getAv_ag_anteil_lfd_entgelt();
+                percentages[1] = salaryTables.get(0).getKv_ag_anteil_lfd_entgelt();
+                percentages[2] = salaryTables.get(0).getZusbei_af_lfd_entgelt();
+                percentages[3] = salaryTables.get(0).getPv_ag_anteil_lfd_entgelt();
+                percentages[4] = salaryTables.get(0).getRv_ag_anteil_lfd_entgelt();
+                percentages[5] = salaryTables.get(0).getSv_umlage_u2();
+                percentages[6] = salaryTables.get(0).getSteuern_ag();
+                percentages[7] = salaryTables.get(0).getZv_Sanierungsbeitrag();
+                percentages[8] = salaryTables.get(0).getZv_umlage_allgemein();
+            } else {
+                percentages = new BigDecimal[8];
+                percentages[0] = salaryTables.get(0).getAv_ag_anteil_lfd_entgelt();
+                percentages[1] = salaryTables.get(0).getKv_ag_anteil_lfd_entgelt();
+                percentages[2] = salaryTables.get(0).getZusbei_af_lfd_entgelt();
+                percentages[3] = salaryTables.get(0).getPv_ag_anteil_lfd_entgelt();
+                percentages[4] = salaryTables.get(0).getRv_ag_anteil_lfd_entgelt();
+                percentages[5] = salaryTables.get(0).getSv_umlage_u2();
+                percentages[6] = salaryTables.get(0).getSteuern_ag();
+                percentages[7] = salaryTables.get(0).getVbl_wiss_4perc_ag_buchung();
+            }
+        } else if (contract.getPaygrade().equals("E14")) {
+            PayRateTableE14Calculations chosenDatePayRateTableE14 = new PayRateTableE14Calculations();
+            List<SalaryTable> salaryTables;
+            if (contract.getPaylevel().equals("1")) {
+                salaryTables = chosenDatePayRateTableE14.getPayRateTableBasedOnChosenDateWithout1AAnd1BTable(chosenDate);
+            } else {
+                salaryTables = chosenDatePayRateTableE14.getPayRateTableBasedOnChosenDateWith1AAnd1BTable(chosenDate);
+            }
+            if (contract.getVbl_status()) {
+                percentages = new BigDecimal[9];
+                percentages[0] = salaryTables.get(0).getAv_ag_anteil_lfd_entgelt();
+                percentages[1] = salaryTables.get(0).getKv_ag_anteil_lfd_entgelt();
+                percentages[2] = salaryTables.get(0).getZusbei_af_lfd_entgelt();
+                percentages[3] = salaryTables.get(0).getPv_ag_anteil_lfd_entgelt();
+                percentages[4] = salaryTables.get(0).getRv_ag_anteil_lfd_entgelt();
+                percentages[5] = salaryTables.get(0).getSv_umlage_u2();
+                percentages[6] = salaryTables.get(0).getSteuern_ag();
+                percentages[7] = salaryTables.get(0).getZv_Sanierungsbeitrag();
+                percentages[8] = salaryTables.get(0).getZv_umlage_allgemein();
+            } else {
+                percentages = new BigDecimal[8];
+                percentages[0] = salaryTables.get(0).getAv_ag_anteil_lfd_entgelt();
+                percentages[1] = salaryTables.get(0).getKv_ag_anteil_lfd_entgelt();
+                percentages[2] = salaryTables.get(0).getZusbei_af_lfd_entgelt();
+                percentages[3] = salaryTables.get(0).getPv_ag_anteil_lfd_entgelt();
+                percentages[4] = salaryTables.get(0).getRv_ag_anteil_lfd_entgelt();
+                percentages[5] = salaryTables.get(0).getSv_umlage_u2();
+                percentages[6] = salaryTables.get(0).getSteuern_ag();
+                percentages[7] = salaryTables.get(0).getVbl_wiss_4perc_ag_buchung();
+            }
+
+        }
+        return percentages;
+    }
 }
