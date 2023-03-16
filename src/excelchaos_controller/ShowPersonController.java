@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ShowPersonController implements ActionListener, TableModelListener {
-
     private EmployeeDataAccess employeeDataModel;
     private EmployeeDataDeleter employeeDataDeleter;
     private ShowPersonView showPersonView;
@@ -22,6 +21,11 @@ public class ShowPersonController implements ActionListener, TableModelListener 
     private MainFrameController mainFrameController;
     private String title = "Personalstammdaten";
 
+    /**
+     * Constructor for ShowPersonController
+     *
+     * @param mainFrameController mainFrameController
+     */
     public ShowPersonController(MainFrameController mainFrameController) {
         this.mainFrameController = mainFrameController;
         employeeDataModel = new EmployeeDataAccess();
@@ -41,6 +45,11 @@ public class ShowPersonController implements ActionListener, TableModelListener 
         return showPersonView;
     }
 
+    /**
+     * Adds the showPersonView to the MainFrameController
+     *
+     * @param mainFrameController MainFrameController
+     */
     public void showPersonView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
             mainFrameController.addTab(title, showPersonView);
@@ -49,7 +58,9 @@ public class ShowPersonController implements ActionListener, TableModelListener 
         }
     }
 
-
+    /**
+     * Updates the data in the table
+     */
     public void updateData() {
         showPersonView.updateTable(employeeDataModel.getEmployeeDataFromDataBase());
         showPersonView.getTable().getModel().addTableModelListener(this);
@@ -58,12 +69,22 @@ public class ShowPersonController implements ActionListener, TableModelListener 
         toolbar.getDeletePerson().setEnabled(false);
     }
 
+    /**
+     * Deletes the data from the table and the database
+     *
+     * @param employeeIds
+     */
     public void deleteData(int[] employeeIds) {
         employeeDataDeleter.deleteData(employeeIds);
         updateData();
     }
 
-
+    /**
+     * Depending on the number of selected rows, the edit and delete buttons are enabled or disabled
+     *
+     * @param e a {@code TableModelEvent} to notify listener that a table model
+     *          has changed
+     */
     @Override
     public void tableChanged(TableModelEvent e) {
         int numberOfSelectedRows = showPersonView.getTable().getNumberOfSelectedRows();
@@ -82,6 +103,11 @@ public class ShowPersonController implements ActionListener, TableModelListener 
         }
     }
 
+    /**
+     * Depending on the source of the event, the corresponding action is performed
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toolbar.getInsertPerson()) {
@@ -104,8 +130,6 @@ public class ShowPersonController implements ActionListener, TableModelListener 
                 deleteData(Ids);
                 mainFrameController.getUpdater().nameListUpdate();
             }
-
-
         } else if (e.getSource() == toolbar.getExportToCSV()) {
             CSVExporter.createCSV(showPersonView.getTable(), "Personendaten.csv");
 

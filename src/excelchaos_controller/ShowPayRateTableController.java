@@ -41,9 +41,10 @@ public class ShowPayRateTableController implements ActionListener {
 
     /**
      * Constructor for ShowPayRateTableController
-     * @param mainFrameController mainFrameController
-     * @param tableName name of the table
-     * @param actualPaygrade paygrade of the table
+     *
+     * @param mainFrameController     mainFrameController
+     * @param tableName               name of the table
+     * @param actualPaygrade          paygrade of the table
      * @param payRateTablesController payRateTablesController
      */
     public ShowPayRateTableController(MainFrameController mainFrameController, String tableName, String actualPaygrade, PayRateTablesController payRateTablesController) {
@@ -61,6 +62,7 @@ public class ShowPayRateTableController implements ActionListener {
 
     /**
      * Adds showPayRateTableView to mainFrameController
+     *
      * @param mainFrameController mainFrameController
      */
     public void showPayRateTableView(MainFrameController mainFrameController) {
@@ -73,6 +75,7 @@ public class ShowPayRateTableController implements ActionListener {
 
     /**
      * returns column names for the table
+     *
      * @return String[] with the column names
      */
     private String[] determineTableColumns() {
@@ -105,6 +108,7 @@ public class ShowPayRateTableController implements ActionListener {
 
     /**
      * prepares the values of the table to be inserted in the database
+     *
      * @return BigDecimal[][] with the values of the table to be inserted in the database
      */
     private BigDecimal[][] prepareDatabaseInsertion() {
@@ -134,6 +138,7 @@ public class ShowPayRateTableController implements ActionListener {
 
     /**
      * checks if the table contains A and B
+     *
      * @return
      */
     private boolean hasAAndB() {
@@ -144,6 +149,7 @@ public class ShowPayRateTableController implements ActionListener {
 
     /**
      * Depending on the source of the event, the corresponding method is called
+     *
      * @param e the event to be processed
      */
     @Override

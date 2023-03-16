@@ -55,7 +55,6 @@ public class CustomTable extends JTable {
 
                 //Handle the case when no rows are selected or when one or multiple rows are selected
                 if (rowSM.isSelectionEmpty()) {
-                    System.out.println("No rows are selected.");
                 } else {
                     int selectedRowStart = rowSM.getMinSelectionIndex();
                     int selectedRowEnd = rowSM.getMaxSelectionIndex();

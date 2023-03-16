@@ -422,7 +422,6 @@ public class InsertProjectsController implements ActionListener, TableModelListe
                     insertProjectsView.markMustBeFilledTextFields();
                     JOptionPane.showConfirmDialog(null, "Bitte füllen Sie die Felder \"Projektname\", \"Bewilligungsdatum\", \"Startdatum\" und \"Enddatum\" aus.", "Spalten nicht vollständig ausgefüllt", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 } else {
-                    System.out.println("Here");
                     updateProjectDataInDatabase(project, name, approval, startDate, endLocalDate);
                     frameController.getShowProjectsController().updateData(frameController.getShowProjectsController().getProjectsDataFromDataBase());
                     frameController.getTabs().removeTabNewWindow(insertProjectsView);
