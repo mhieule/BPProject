@@ -18,6 +18,12 @@ public class ProjectParticipationController implements ActionListener {
 
     private ProjectParticipationDataModel model;
 
+    /**
+     * Constructor for ProjectParticipationController
+     * @param mainFrameController main frame controller
+     * @param selectedProjectIds selected project ids
+     */
+
     public ProjectParticipationController(MainFrameController mainFrameController,String[] selectedProjectIds){
         frameController = mainFrameController;
         model = new ProjectParticipationDataModel(selectedProjectIds);
@@ -30,6 +36,11 @@ public class ProjectParticipationController implements ActionListener {
         }
     }
 
+    /**
+     * Displays insert projects view in main frame
+     * @param mainFrameController main frame controller
+     */
+
     public void showInsertProjectsView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(addParticipationTab) == -1) {
             mainFrameController.getTabs().addTab(addParticipationTab, participationView);
@@ -37,6 +48,10 @@ public class ProjectParticipationController implements ActionListener {
         } else
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(addParticipationTab));
     }
+
+    /**
+     * Fills table with project data
+     */
 
     public void fillTables(){
         for (int projectId = 0; projectId < selectedProjectIds.length; projectId++) {

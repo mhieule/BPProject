@@ -29,6 +29,12 @@ public class PayRateStageTypeDialogController implements ActionListener {
             "E14 St. 4 VBL-befreit", "E14 St. 4 VBL-pflichtig", "E14 St. 5 VBL-befreit", "E14 St. 5 VBL-pflichtig", "E14 St. 6 VBL-befreit", "E14 St. 6 VBL-pflichtig"
     };
 
+    /**
+     * Constructor for pay rate stage type dialog controller
+     * @param mainFrameController main frame controller
+     * @param payRateTablesController pay rate tables controller
+     */
+
     public PayRateStageTypeDialogController(MainFrameController mainFrameController,PayRateTablesController payRateTablesController){
         frameController = mainFrameController;
         payRateController = payRateTablesController;
@@ -37,6 +43,10 @@ public class PayRateStageTypeDialogController implements ActionListener {
         payRateStageTypeDialogView.setActionListener(this);
     }
 
+    /**
+     * Checks if action has been performed
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == payRateStageTypeDialogView.getCloseButton()){
@@ -59,11 +69,23 @@ public class PayRateStageTypeDialogController implements ActionListener {
     private String getComboBoxSelection(){
         return payRateStageTypeDialogView.getStageTypeSelecter().getSelectedItem().toString();
     }
+
+    /**
+     * Checks if Entgeldtabelle is with 1A and 1B
+     * @return
+     */
     private boolean tablePayRateStageType(){
         if(getComboBoxSelection()=="Entgeltabelle mit Stufe 1A und 1B"){
             return true;
         } else return false;
     }
+
+    /**
+     * Creates InsertPayRateTable
+     * @param title title of the table
+     * @param columnNames names of the table's columns
+     * @param originalTitle original title
+     */
     private void createInsertPayRateTable(String title, String[] columnNames, String originalTitle){
         payRateController.setTitle(title);
         insertPayRateTableController = new InsertPayRateTableController(frameController,payRateController,payRateController.getTitle(),columnNames,tablePayRateStageType());

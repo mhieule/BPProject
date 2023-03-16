@@ -8,6 +8,9 @@ public class NewFrameController {
     private NewFrame newFrame;
     private DnDCloseButtonTabbedPane tabs;
 
+    /**
+     * Constructor for new frame controller
+     */
     public NewFrameController(){
         newFrame = new NewFrame();
         newFrame.init();

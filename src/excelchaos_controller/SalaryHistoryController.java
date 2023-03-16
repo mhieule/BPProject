@@ -30,6 +30,10 @@ public class SalaryHistoryController implements ItemListener {
     String columns[] = {"Jahr", "Monat", "Gehalt", "Anmerkung"};
     private String title = "Gehaltshistorie";
 
+    /**
+     * Constructor for salary history controller
+     * @param mainFrameController main frame controller
+     */
     public SalaryHistoryController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         salaryHistoryView = new SalaryHistoryView();
@@ -39,6 +43,10 @@ public class SalaryHistoryController implements ItemListener {
         salaryHistoryView.add(toolbarSalaryHistory.getToolbar(), BorderLayout.NORTH);
     }
 
+    /**
+     * Displays salary history view in main frame
+     * @param mainFrameController main frame controller
+     */
     public void showSalaryHistoryView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
             mainFrameController.addTab(title, salaryHistoryView);
@@ -46,6 +54,12 @@ public class SalaryHistoryController implements ItemListener {
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(title));
         }
     }
+
+    /**
+     * Returns array of months for specified employee
+     * @param employee specified employee
+     * @return array of months
+     */
 
     public LocalDate[] getMonths(Employee employee) {
 
@@ -61,6 +75,11 @@ public class SalaryHistoryController implements ItemListener {
         return months;
     }
 
+    /**
+     * Returns data for specified employee from database
+     * @param temporaryEmployee specified employee
+     * @return employee's data
+     */
     public String[][] getDataFromDB(Employee temporaryEmployee) {
         LocalDate[] months = getMonths(temporaryEmployee);
         StringAndBigDecimalFormatter transformer = new StringAndBigDecimalFormatter();
@@ -109,14 +128,28 @@ public class SalaryHistoryController implements ItemListener {
         return resultData;
     }
 
+    /**
+     * Creates new table with data
+      * @param data data
+     */
     private void createTableWithData(String[][] data) {
         salaryHistoryView.createTable(data, columns);
     }
+
+    /**
+     * Creates table with data
+     * @param data
+     */
 
     private void setTableData(String[][] data) {
         jTable = new JTable(data, columns);
         salaryHistoryView.getTable().setModel(jTable.getModel());
     }
+
+    /**
+     * Checks if item has changed and either creates table, updates table or exits
+     * @param e ItemEvent
+     */
 
     @Override
     public void itemStateChanged(ItemEvent e) {

@@ -26,14 +26,20 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
     private MainFrameController mainFrameController;
     private String title;
 
-
+    /**
+     * Constructor for PayRateTablesController
+     * @param mainFrameController main frame controller
+     */
     public PayRateTablesController(MainFrameController mainFrameController) {
         this.mainFrameController = mainFrameController;
         payRateTablesDataAccess = new PayRateTablesDataAccess();
         payRateTablesDataDeleter = new PayRateTablesDataDeleter();
     }
 
-
+    /**
+     * Displays pay rates view in main frame
+     * @param mainFrameController main frame controller
+     */
     public void showPayRatesView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
             payRateTablesView = new PayRateTablesView();
@@ -61,12 +67,21 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
         return title;
     }
 
+    /**
+     * Fills list with names of the tables
+     */
+
     public void fillListWithPayRateTableNames() {
         String paygrade = getPayGradeFromTitle(); //PayGrade ist Gruppe/Klasse
         Vector<String> presentVector = payRateTablesDataAccess.getPayRateTablesNameVectorForList(paygrade);
         payRateTablesView.getPayRateTableList().setListData(presentVector);
 
     }
+
+    /**
+     * Sets pay grade from table's title
+     * @return paygrade
+     */
 
     public String getPayGradeFromTitle() {
         String result = "";
@@ -78,6 +93,11 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
         return result;
     }
 
+    /**
+     * Deletes pay rate table with specified name
+     * @param tableName name of pay rate table
+     */
+
     public void deletePayRateTable(String tableName) {
         String revertedTableName = PayRateTableNameStringEditor.revertToCorrectTableName(tableName);
         payRateTablesDataDeleter.deletePayRateTable(revertedTableName);
@@ -85,11 +105,18 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
         mainFrameController.getUpdater().salaryUpDate();
     }
 
+    /**
+     * Updates view
+     */
+
     public void updateview() {
         fillListWithPayRateTableNames();
     }
 
-
+    /**
+     * Checks if mouse has been clicked
+     * @param e MouseEvent
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         JList list = (JList) e.getSource();
@@ -105,6 +132,11 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
 
     }
 
+    /**
+     * Checks if mouse is been pressed
+     * @param e MouseEvent
+     */
+
     @Override
     public void mousePressed(MouseEvent e) {
         JList list = (JList) e.getSource();
@@ -114,6 +146,11 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
         }
     }
 
+    /**
+     * Checks if mouse is released
+     * @param e MouseEvent
+     */
+
     @Override
     public void mouseReleased(MouseEvent e) {
         if (SwingUtilities.isRightMouseButton(e)) {
@@ -121,6 +158,11 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
         }
 
     }
+
+    /**
+     * Shows popup to edit table
+     * @param e
+     */
 
     private void showPopUp(MouseEvent e) {
         JList list = (JList) e.getSource();
@@ -159,6 +201,11 @@ public class PayRateTablesController extends MouseAdapter implements ListSelecti
         }
 
     }
+
+    /**
+     * Checks if action has been performed and displays corresponding actions
+     * @param e ACtionEvent
+     */
 
     @Override
     public void actionPerformed(ActionEvent e) {

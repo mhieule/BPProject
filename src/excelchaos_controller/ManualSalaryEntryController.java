@@ -35,6 +35,11 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
     private String nullColumns[] = {"Gültig ab", "Gehalt", "Kommentar"};
     private String title = "Gehaltsanpassung SAP";
 
+    /**
+     * Constructor for the ManualSalaryController
+     * @param mainFrameController the main frame controller
+     */
+
     public ManualSalaryEntryController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         salaryEntryView = new ManualSalaryEntryView();
@@ -44,6 +49,11 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
         salaryEntryView.add(toolbarManualSalaryEntry.getToolbar(), BorderLayout.NORTH);
     }
 
+    /**
+     * Enables ManualSalaryEntry view in the main frame
+     * @param mainFrameController the main frame controller
+     */
+
     public void showManualSalaryEntryView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
             mainFrameController.addTab(title, salaryEntryView);
@@ -51,6 +61,12 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
             mainFrameController.getTabs().setSelectedIndex(mainFrameController.getTabs().indexOfTab(title));
         }
     }
+
+    /**
+     * Receives data from database for employee with specified id and returns it's data
+     * @param temporaryEmployee dummy employee to get id from
+     * @return employee's data
+     */
 
     public String[][] getDataFromDB(Employee temporaryEmployee) {
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -75,6 +91,11 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
     }
 
+    /**
+     * Creates a table with the given data
+     * @param data data for the table
+     */
+
     private void createTableWithData(String[][] data) {
         salaryEntryView.createTable(data, columns);
         salaryEntryView.getTable().getModel().addTableModelListener(this);
@@ -83,6 +104,11 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
         salaryEntryView.getTable().getColumnModel().getColumn(1).setWidth(0);
         SearchAndFilterModel.setUpSearchAndFilterModel(salaryEntryView.getTable(), toolbarManualSalaryEntry.getToolbar());
     }
+
+    /**
+     * Sets table data for costum table model
+     * @param data data for the table
+     */
 
     public void setTableData(String[][] data) {
         customTableModel = new CustomTableModel(data, columns);
@@ -97,6 +123,10 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
 
     }
 
+    /**
+     * Updates the table
+     */
+
     public void update() {
         salaryEntryView.remove(toolbarManualSalaryEntry.getToolbar());
         salaryEntryView.revalidate();
@@ -105,6 +135,11 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
         toolbarManualSalaryEntry.getToolbar().setItemListener(this);
         salaryEntryView.add(toolbarManualSalaryEntry.getToolbar(), BorderLayout.NORTH);
     }
+
+    /**
+     * Deletes an entry at specific dates from the table
+     * @param dates dates
+     */
 
     public void deleteEntries(String[][] dates) {
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
@@ -124,6 +159,10 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
         frameController.getUpdater().salaryUpDate();
     }
 
+    /**
+     * Checks if item state has changed
+     * @param e ItemEvent
+     */
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -162,6 +201,10 @@ public class ManualSalaryEntryController implements ItemListener, TableModelList
         return toolbarManualSalaryEntry;
     }
 
+    /**
+     * Checks if the table has changed
+     * @param e TableModelEvent
+     */
     @Override
     public void tableChanged(TableModelEvent e) {
         int numberOfSelectedRows = salaryEntryView.getTable().getNumberOfSelectedRows();

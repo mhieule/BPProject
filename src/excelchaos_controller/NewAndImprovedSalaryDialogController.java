@@ -31,6 +31,13 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
 
     private SalaryTableLookUp salaryTableLookUp = new SalaryTableLookUp();
 
+
+    /**
+     * Constructor for NewAndImprovedSalaryDialogController
+     * @param frameController frame controller
+     * @param employeeIDList list of employee IDs
+     */
+
     public NewAndImprovedSalaryDialogController(MainFrameController frameController, ArrayList<Integer> employeeIDList) {
         this.frameController = frameController;
         this.employeeIDList = employeeIDList;
@@ -41,6 +48,10 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
 
     }
 
+    /**
+     * Returns list of projected salaries before increase
+     * @return list of projected salaries before increase
+     */
     public BigDecimal[] projectedSalaryBeforeIncrease(){
         BigDecimal[] result = new BigDecimal[employeeIDList.size()];
         LocalDate startLocalDate = increaseSalaryDialogView.getStartDate().getDate();
@@ -53,6 +64,11 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
         return result;
     }
 
+    /**
+     * Returns list of projected salaries after increase
+     * @param option option specifies increase
+     * @return list of projected salaries before increase
+     */
     public BigDecimal[] projectedSalaryAfterIncrease(IncreaseSalaryOption option){
         BigDecimal[] result = new BigDecimal[employeeIDList.size()];
 
@@ -112,7 +128,10 @@ public class NewAndImprovedSalaryDialogController implements ActionListener {
     }
 
 
-
+    /**
+     * Checks if action has been performed
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == increaseSalaryDialogView.getCancelButton()){

@@ -90,6 +90,11 @@ public class MainFrameController {
         return tabsController.getTabs();
     }
 
+    /**
+     * Adds tab to given JPanel
+     * @param name JPanel to add the tab to
+     * @param panel name of the tab
+     */
     public void addTab(String name, JPanel panel){
         getTabs().addTab(name,panel);
         getTabs().setSelectedIndex(getTabs().indexOfTab(name));
