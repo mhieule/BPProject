@@ -31,18 +31,27 @@ public class ShowSHKTableController implements TableModelListener {
             "ID", "Stundensätze gültig ab", "SHK Basisvergütung", "SHK erhöhter Stundensatz", "WHK"
     };
 
-
-    public ShowSHKTableController(MainFrameController mainFrameController){
+    /**
+     * Constructor for ShowSHKTableController
+     *
+     * @param mainFrameController mainFrameController
+     */
+    public ShowSHKTableController(MainFrameController mainFrameController) {
         frameController = mainFrameController;
         showSHKTableView = new ShowSHKTableView();
         showSHKTableView.init();
         createTableWithData(getSHKDataFromDatabase());
-        toolbarShowSHKTableController = new ToolbarShowSHKTableController(frameController,this);
+        toolbarShowSHKTableController = new ToolbarShowSHKTableController(frameController, this);
         showSHKTableView.add(toolbarShowSHKTableController.getToolbar(), BorderLayout.NORTH);
-        SearchAndFilterModel.setUpSearchAndFilterModel(showSHKTableView.getTable(),toolbarShowSHKTableController.getToolbar());
+        SearchAndFilterModel.setUpSearchAndFilterModel(showSHKTableView.getTable(), toolbarShowSHKTableController.getToolbar());
     }
 
-    public void showSHKTableView(MainFrameController mainFrameController){
+    /**
+     * Adds the showSHKTableView to the MainFrameController
+     *
+     * @param mainFrameController mainFrameController
+     */
+    public void showSHKTableView(MainFrameController mainFrameController) {
         if (mainFrameController.getTabs().indexOfTab(title) == -1) {
             mainFrameController.addTab(title, showSHKTableView);
         } else {
@@ -50,35 +59,47 @@ public class ShowSHKTableController implements TableModelListener {
         }
     }
 
-    public String[][] getSHKDataFromDatabase(){
+    /**
+     * gets the SHK data from the database and returns it as a String[][]
+     *
+     * @return String[][] with the SHK data from the database
+     */
+    public String[][] getSHKDataFromDatabase() {
         int lines = shkSalaryTableManager.getRowCount();
         String[][] resultData = new String[lines][];
         int currentIndex = 0;
         List<SHKSalaryEntry> shkSalaryEntries = shkSalaryTableManager.getAllSHKSalaryEntries();
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        for (SHKSalaryEntry entry : shkSalaryEntries){
+        for (SHKSalaryEntry entry : shkSalaryEntries) {
             String id = String.valueOf(entry.getId());
             String validationDate = dateFormat.format(entry.getValidationDate());
             String basePayRate = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(entry.getBasePayRate());
             String extendedPayRate = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(entry.getExtendedPayRate());
             String whkPayRate = StringAndBigDecimalFormatter.formatBigDecimalCurrencyToString(entry.getWHKPayRate());
 
-            String[] values = {id,validationDate,basePayRate,extendedPayRate,whkPayRate};
+            String[] values = {id, validationDate, basePayRate, extendedPayRate, whkPayRate};
             resultData[currentIndex] = values;
             currentIndex++;
         }
-
         return resultData;
-
     }
 
-
-    private void createTableWithData(String [][] tableData){
-        showSHKTableView.createSHKTable(tableData,columns);
+    /**
+     * Creates the table with the given data
+     *
+     * @param tableData String[][] with the data for the table
+     */
+    private void createTableWithData(String[][] tableData) {
+        showSHKTableView.createSHKTable(tableData, columns);
         showSHKTableView.getTable().getModel().addTableModelListener(this);
     }
 
-    public void updateData(String[][] tableData){
+    /**
+     * Updates the table with the given data
+     *
+     * @param tableData String[][] with the data for the table
+     */
+    public void updateData(String[][] tableData) {
         CustomTableModel customTableModel = new CustomTableModel(tableData, columns);
         showSHKTableView.getTable().setModel(customTableModel);
         showSHKTableView.getTable().getColumnModel().getColumn(1).setMinWidth(0);
@@ -92,14 +113,18 @@ public class ShowSHKTableController implements TableModelListener {
         toolbarShowSHKTableController.getToolbar().getEditEntry().setEnabled(false);
     }
 
-    public void deleteSHKEntries(String[] entryIDs){
+    /**
+     * Deletes the SHK entries with the given IDs
+     *
+     * @param entryIDs String[] with the IDs of the entries to be deleted
+     */
+    public void deleteSHKEntries(String[] entryIDs) {
         int id = 0;
         for (int i = 0; i < entryIDs.length; i++) {
             id = Integer.parseInt(entryIDs[i]);
             shkSalaryTableManager.removeSHKSalaryEntry(id);
         }
         updateData(getSHKDataFromDatabase());
-        //TODO Wahrscheinlich SalaryUpdate aufrufen
     }
 
     public ShowSHKTableView getShowSHKTableView() {
@@ -110,6 +135,12 @@ public class ShowSHKTableController implements TableModelListener {
         return toolbarShowSHKTableController;
     }
 
+    /**
+     * Depending on the number of selected rows in the table, the edit and delete buttons are enabled or disabled
+     *
+     * @param e a {@code TableModelEvent} to notify listener that a table model
+     *          has changed
+     */
     @Override
     public void tableChanged(TableModelEvent e) {
         int numberOfSelectedRows = showSHKTableView.getTable().getNumberOfSelectedRows();
