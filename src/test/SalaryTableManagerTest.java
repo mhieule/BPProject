@@ -2,12 +2,14 @@ import excelchaos_model.database.SalaryTable;
 import excelchaos_model.database.SalaryTableManager;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/*public class SalaryTableManagerTest {
+public class SalaryTableManagerTest {
     @Test
     void testRemoveAll(){
-        var manager = SalaryTableManager.getInstance();
+        var manager = new SalaryTableManager();
         manager.removeAllTables();
         assertEquals(manager.getAllSalaryTables().size(), 0);
     }
@@ -15,10 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetValid(){
-        var manager = SalaryTableManager.getInstance();
+        var manager = new SalaryTableManager();
         manager.removeAllTables();
-        var salaryTable = new SalaryTable("test_01",  0.25, 4.0,
-                2.0, 3.0, 1.9, 1.7, 2.9, 3.1, 6.0, 5.1, 5.2, 5.3, 5.6, 5.7, 6.3, "E13");
+        BigDecimal num = new BigDecimal("3.0");
+        var salaryTable = new SalaryTable("test_01",  num, num,
+                num, num, num, num, num, num, num, num, num, num, num, num, num, "E13");
         manager.addSalaryTable(salaryTable);
         var recTable = manager.getSalaryTable("test_01").get(0);
         assertEquals(salaryTable.getTable_name(), recTable.getTable_name());
@@ -44,10 +47,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetInvalid(){
-        var manager = SalaryTableManager.getInstance();
+        var manager = new SalaryTableManager();
         manager.removeAllTables();
-        var salaryTable = new SalaryTable("test_01",  0.25, 4.0,
-                2.0, 3.0, 1.9, 1.7, 2.9, 3.1, 6.0, 5.1, 5.2, 5.3, 5.6, 5.7, 6.3, "E13");
+        BigDecimal num = new BigDecimal("3.0");
+        var salaryTable = new SalaryTable("test_01",  num, num,
+                num, num, num, num, num, num, num, num, num, num, num, num, num, "E13");
         manager.addSalaryTable(salaryTable);
         var recTable = manager.getSalaryTable("test_02");
         assertEquals(recTable.size(), 0);
@@ -55,10 +59,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testRemoveValid(){
-        var manager = SalaryTableManager.getInstance();
+        var manager = new SalaryTableManager();
         manager.removeAllTables();
-        var salaryTable = new SalaryTable("test_01",  0.25, 4.0,
-                2.0, 3.0, 1.9, 1.7, 2.9, 3.1, 6.0, 5.1, 5.2, 5.3, 5.6, 5.7, 6.3, "E13");
+        BigDecimal num = new BigDecimal("3.0");
+        var salaryTable = new SalaryTable("test_01",  num, num,
+                num, num, num, num, num, num, num, num, num, num, num, num, num, "E13");
         manager.addSalaryTable(salaryTable);
         manager.removeSalaryTable("test_01");
         var recTable = manager.getSalaryTable("test_01");
@@ -67,12 +72,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetAll(){
-        var manager = SalaryTableManager.getInstance();
+        var manager = new SalaryTableManager();
         manager.removeAllTables();
         var salaryTables = new SalaryTable[10];
         for (int i = 0; i < 10; i++){
-            var salaryTable = new SalaryTable("test_0"+i,  0.25, 4.0,
-                    2.0, 3.0, 1.9, 1.7, 2.9, 3.1, 6.0, 5.1, 5.2, 5.3, 5.6, 5.7, 6.3, "E13");
+            BigDecimal num = new BigDecimal("3.0");
+            var salaryTable = new SalaryTable("test"+ i ,  num, num,
+                    num, num, num, num, num, num, num, num, num, num, num, num, num, "E13");
             manager.addSalaryTable(salaryTable);
             salaryTables[i] = salaryTable;
         }
@@ -102,35 +108,38 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetNum(){
-        var manager = SalaryTableManager.getInstance();
+        var manager = new SalaryTableManager();
         manager.removeAllTables();
-        var salaryTable = new SalaryTable("test_01",  0.25, 4.0,
-                2.0, 3.0, 1.9, 1.7, 2.9, 3.1, 6.0, 5.1, 5.2, 5.3, 5.6, 5.7, 6.3, "E13");
+        BigDecimal num = new BigDecimal("3.0");
+        var salaryTable = new SalaryTable("test_01",  num, num,
+                num, num, num, num, num, num, num, num, num, num, num, num, num, "E13");
         manager.addSalaryTable(salaryTable);
         manager.addSalaryTable(salaryTable);
-        salaryTable = new SalaryTable("test_02",  0.25, 4.0,
-                2.0, 3.0, 1.9, 1.7, 2.9, 3.1, 6.0, 5.1, 5.2, 5.3, 5.6, 5.7, 6.3, "E13");
+        salaryTable = new SalaryTable("test_02",  num, num,
+                num, num, num, num, num, num, num, num, num, num, num, num, num, "E13");
         manager.addSalaryTable(salaryTable);
         assertEquals(manager.getNumOfTables("E13"), 2);
     }
 
     @Test
     void testGetNumEmpty(){
-        var manager =SalaryTableManager.getInstance();
+        var manager = new SalaryTableManager();
         manager.removeAllTables();
         assertEquals(manager.getNumOfTables("E13"), 0);
     }
 
     @Test
     void testGetDistinct(){
-        var manager = SalaryTableManager.getInstance();
+        var manager = new SalaryTableManager();
         manager.removeAllTables();
-        var salaryTable = new SalaryTable("test_01",  0.25, 4.0,
-                2.0, 3.0, 1.9, 1.7, 2.9, 3.1, 6.0, 5.1, 5.2, 5.3, 5.6, 5.7, 6.3, "E13");
+        BigDecimal num = new BigDecimal("3.0");
+        var salaryTable = new SalaryTable("test_01",  num, num,
+                num, num, num, num, num, num, num, num, num, num, num, num, num, "E13");
         manager.addSalaryTable(salaryTable);
         manager.addSalaryTable(salaryTable);
-        salaryTable = new SalaryTable("test_02",  0.25, 4.0,
-                2.0, 3.0, 1.9, 1.7, 2.9, 3.1, 6.0, 5.1, 5.2, 5.3, 5.6, 5.7, 6.3, "E13");
+        num = new BigDecimal("3.0");
+        salaryTable = new SalaryTable("test_02",  num, num,
+                num, num, num, num, num, num, num, num, num, num, num, num, num, "E13");
         manager.addSalaryTable(salaryTable);
         assertEquals(manager.getDistinctTableNames("E13").get(0), "test_01");
         assertEquals(manager.getDistinctTableNames("E13").get(1), "test_02");
@@ -138,8 +147,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
     @Test
     void testGetDistinctEmpty(){
-        var manager = SalaryTableManager.getInstance();
+        var manager = new SalaryTableManager();
         manager.removeAllTables();
         assertEquals(manager.getDistinctTableNames("E13").size(), 0);
     }
-}*/
+}
